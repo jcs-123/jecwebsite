@@ -378,27 +378,21 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   <stop offset="85%" stopColor="#FDE68A" />
                   <stop offset="100%" stopColor="#DFC06A" />
                 </linearGradient>
-                <linearGradient id="goldBottomCrescentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#C9902C" stopOpacity="0" />
-                  <stop offset="25%" stopColor="#DFC06A" stopOpacity="0.95" />
-                  <stop offset="60%" stopColor="#FDE68A" stopOpacity="1" />
-                  <stop offset="100%" stopColor="#C9902C" stopOpacity="0" />
-                </linearGradient>
                 <filter id="bannerShadow" x="0" y="-15%" width="100%" height="130%">
                   <feDropShadow dx="0" dy="-4" stdDeviation="6" floodColor="#15021E" floodOpacity="0.25" />
                 </filter>
               </defs>
 
-              {/* Main Purple Banner Surface: Rounded corner on left, flat across text, subtle dip, then swoops up on right */}
+              {/* Main Purple Banner Surface: Rounded corner on left, flat across text, dip, then swoops up on right */}
               <path
-                d="M 0 120 L 0 105 C 18 80, 42 72, 70 72 L 914 72 C 990 72, 1040 94, 1085 94 C 1170 94, 1310 40, 1440 14 L 1440 120 Z"
+                d="M 0 120 L 0 105 C 18 80, 42 72, 70 72 L 600 72 C 700 72, 790 88, 860 88 C 1020 88, 1220 38, 1440 12 L 1440 120 Z"
                 fill="url(#purpleBottomWaveGrad)"
                 filter="url(#bannerShadow)"
               />
 
               {/* Primary Metallic Gold Contour Line along the wave */}
               <path
-                d="M 0 105 C 18 80, 42 72, 70 72 L 914 72 C 990 72, 1040 94, 1085 94 C 1170 94, 1310 40, 1440 14"
+                d="M 0 105 C 18 80, 42 72, 70 72 L 600 72 C 700 72, 790 88, 860 88 C 1020 88, 1220 38, 1440 12"
                 stroke="url(#goldContourGrad)"
                 strokeWidth="4"
                 strokeLinecap="round"
@@ -406,27 +400,26 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 fill="none"
               />
 
-              {/* Glowing Hairline Specular Highlight along top edge */}
+              {/* Glowing Hairline Specular Highlight along top wave edge */}
               <path
-                d="M 0 105 C 18 80, 42 72, 70 72 L 914 72 C 990 72, 1040 94, 1085 94 C 1170 94, 1310 40, 1440 14"
-                stroke="#FFF6D1"
+                d="M 0 105 C 18 80, 42 72, 70 72 L 600 72 C 700 72, 790 88, 860 88 C 1020 88, 1220 38, 1440 12"
+                stroke="#FFF8D6"
                 strokeWidth="1.2"
-                strokeOpacity="0.85"
+                strokeOpacity="0.9"
                 vectorEffect="non-scaling-stroke"
                 fill="none"
               />
 
-              {/* Under-Wave Golden Accent Crescent along Bottom */}
-              <path
-                d="M 720 120 C 800 102, 920 102, 1000 120 Z"
-                fill="url(#goldBottomCrescentGrad)"
-              />
-              <path
-                d="M 720 120 C 800 102, 920 102, 1000 120"
+              {/* Subtle Continuous Gold Hairline along Bottom */}
+              <line
+                x1="0"
+                y1="110"
+                x2="1440"
+                y2="110"
                 stroke="url(#goldContourGrad)"
-                strokeWidth="2.5"
+                strokeWidth="1.2"
+                strokeOpacity="0.75"
                 vectorEffect="non-scaling-stroke"
-                fill="none"
               />
             </svg>
 
@@ -440,9 +433,9 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   </linearGradient>
                 </defs>
                 {/* Radiating Drafting Blueprint Arcs */}
-                <path d="M 15 110 A 90 90 0 0 1 150 25" stroke="url(#compassGoldTool)" strokeWidth="0.8" strokeDasharray="3 3" />
-                <path d="M 45 110 A 70 70 0 0 1 155 45" stroke="url(#compassGoldTool)" strokeWidth="0.8" />
-                <path d="M -10 110 A 120 120 0 0 1 150 0" stroke="url(#compassGoldTool)" strokeWidth="0.6" strokeDasharray="2 4" />
+                <path d="M 15 110 A 87 87 0 0 1 150 25" stroke="url(#compassGoldTool)" strokeWidth="0.8" strokeDasharray="3 3" />
+                <path d="M 45 110 A 67 67 0 0 1 155 45" stroke="url(#compassGoldTool)" strokeWidth="0.8" />
+                <path d="M -10 110 A 115 115 0 0 1 150 0" stroke="url(#compassGoldTool)" strokeWidth="0.6" strokeDasharray="2 4" />
 
                 {/* Engineering Drafting Divider / Compass Tool */}
                 <g>
@@ -450,11 +443,8 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   <circle cx="134" cy="23" r="6" stroke="url(#compassGoldTool)" strokeWidth="1.8" />
                   <circle cx="134" cy="23" r="2.5" fill="#FDE68A" />
                   {/* Compass Legs */}
-                  <line x1="131" y1="28" x2="100" y2="105" stroke="url(#compassGoldTool)" strokeWidth="2" strokeLinecap="round" />
-                  <line x1="137" y1="28" x2="168" y2="105" stroke="url(#compassGoldTool)" strokeWidth="2" strokeLinecap="round" />
-                  {/* Needle points */}
-                  <line x1="100" y1="105" x2="98" y2="114" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
-                  <line x1="168" y1="105" x2="170" y2="114" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <line x1="131" y1="28" x2="102" y2="110" stroke="url(#compassGoldTool)" strokeWidth="2" strokeLinecap="round" />
+                  <line x1="137" y1="28" x2="166" y2="110" stroke="url(#compassGoldTool)" strokeWidth="2" strokeLinecap="round" />
                   {/* Horizontal Cross Strut & Dial */}
                   <line x1="116" y1="56" x2="152" y2="56" stroke="url(#compassGoldTool)" strokeWidth="1.4" />
                   <circle cx="134" cy="56" r="4" stroke="url(#compassGoldTool)" strokeWidth="1.2" fill="#250836" />

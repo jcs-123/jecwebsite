@@ -207,33 +207,33 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 <stop offset="100%" stopColor="#15021E" />
               </linearGradient>
               <filter id="softRibbonShadow" x="-5%" y="-5%" width="115%" height="115%">
-                <feDropShadow dx="4" dy="0" stdDeviation="7" floodColor="#15021E" floodOpacity="0.18" />
+                <feDropShadow dx="5" dy="0" stdDeviation="8" floodColor="#15021E" floodOpacity="0.16" />
               </filter>
             </defs>
 
-            {/* Left Warm Ivory Editorial Surface (Leaves Right 57% Fully Open for College) */}
+            {/* Left Warm Ivory Editorial Surface (Seamlessly flows down to bottom y=640 behind purple banner) */}
             <path
-              d="M 0 0 L 415 0 C 445 60 430 180 395 310 C 365 430 415 550 435 640 L 0 640 Z"
+              d="M 0 0 L 425 0 C 460 80 440 200 400 340 C 368 450 376 540 392 640 L 0 640 Z"
               fill="#FFFDFA"
               filter="url(#softRibbonShadow)"
             />
 
-            {/* 3D Under-Ribbon Deep Purple Shadow Contour (Creates Depth Effect) */}
+            {/* 3D Under-Ribbon Deep Purple Shadow Contour */}
             <path
-              d="M 419 0 C 449 60 434 180 399 310 C 369 430 419 550 439 640"
+              d="M 429 0 C 464 80 444 200 404 340 C 372 450 380 540 396 640"
               stroke="url(#purpleShadowGrad)"
               strokeWidth="7"
               vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               fill="none"
-              opacity="0.45"
+              opacity="0.4"
             />
 
             {/* Primary Golden Metallic Swooshing Ribbon Along Curve */}
             <path
-              d="M 415 0 C 445 60 430 180 395 310 C 365 430 415 550 435 640"
+              d="M 425 0 C 460 80 440 200 400 340 C 368 450 376 540 392 640"
               stroke="url(#goldSwooshGrad)"
-              strokeWidth="5"
+              strokeWidth="4.5"
               vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               fill="none"
@@ -241,11 +241,11 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
             {/* Inner Metallic Gold Hairline Accent */}
             <path
-              d="M 425 0 C 455 65 440 185 405 315 C 375 435 425 555 445 640"
+              d="M 433 0 C 468 82 448 202 408 342 C 376 452 384 542 400 640"
               stroke="url(#goldSwooshGrad)"
-              strokeWidth="1.6"
+              strokeWidth="1.5"
               vectorEffect="non-scaling-stroke"
-              strokeOpacity="0.8"
+              strokeOpacity="0.75"
               fill="none"
             />
           </svg>
@@ -357,21 +357,21 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
         {/* BOTTOM ARCHITECTURAL PURPLE & GOLD SWOOPING BANNER (1:1 TARGET MATCH) */}
         <div className="relative w-full z-20 mt-auto">
-          <div className="relative w-full h-[64px] sm:h-[72px] md:h-[80px] overflow-hidden">
+          <div className="relative w-full h-[84px] sm:h-[96px] md:h-[110px] lg:h-[122px] overflow-hidden">
             
             {/* Full-Width SVG Swooping Banner Surface with Dual Metallic Gold Waves */}
             <svg 
               className="absolute inset-0 w-full h-full pointer-events-none" 
-              viewBox="0 0 1440 80" 
+              viewBox="0 0 1440 120" 
               fill="none" 
               preserveAspectRatio="none"
             >
               <defs>
                 <linearGradient id="purpleBottomWaveGrad" x1="0%" y1="0%" x2="100%" y2="50%">
                   <stop offset="0%" stopColor="#210532" />
-                  <stop offset="35%" stopColor="#2F0A47" />
-                  <stop offset="70%" stopColor="#240637" />
-                  <stop offset="100%" stopColor="#180222" />
+                  <stop offset="35%" stopColor="#2E0946" />
+                  <stop offset="70%" stopColor="#230635" />
+                  <stop offset="100%" stopColor="#170221" />
                 </linearGradient>
                 <linearGradient id="goldContourGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#DFC06A" />
@@ -380,68 +380,73 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   <stop offset="85%" stopColor="#FDE68A" />
                   <stop offset="100%" stopColor="#DFC06A" />
                 </linearGradient>
+                <linearGradient id="goldAccentSwoopGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#C9902C" stopOpacity="0" />
+                  <stop offset="30%" stopColor="#DFC06A" stopOpacity="0.9" />
+                  <stop offset="70%" stopColor="#FDE68A" stopOpacity="0.95" />
+                  <stop offset="100%" stopColor="#C9902C" stopOpacity="0.7" />
+                </linearGradient>
                 <filter id="bannerShadow" x="0" y="-15%" width="100%" height="130%">
-                  <feDropShadow dx="0" dy="-4" stdDeviation="6" floodColor="#15021E" floodOpacity="0.28" />
+                  <feDropShadow dx="0" dy="-4" stdDeviation="6" floodColor="#15021E" floodOpacity="0.25" />
                 </filter>
               </defs>
 
-              {/* Main Purple Swooping Banner Surface - Curves from left and swoops up into right corner */}
+              {/* Main Purple Banner Surface: Rounded corner on left, flat across text, swoops up on right */}
               <path
-                d="M 0 28 Q 18 0 45 0 L 820 0 Q 1020 18 1220 14 Q 1350 8 1440 -35 L 1440 80 L 0 80 Z"
+                d="M 0 120 L 0 95 C 14 68, 38 56, 78 56 L 870 56 C 1050 56, 1230 30, 1440 12 L 1440 120 Z"
                 fill="url(#purpleBottomWaveGrad)"
                 filter="url(#bannerShadow)"
               />
 
               {/* Primary Metallic Gold Contour Line */}
               <path
-                d="M 0 28 Q 18 0 45 0 L 820 0 Q 1020 18 1220 14 Q 1350 8 1440 -35"
+                d="M 0 95 C 14 68, 38 56, 78 56 L 870 56 C 1050 56, 1230 30, 1440 12"
                 stroke="url(#goldContourGrad)"
                 strokeWidth="3.5"
                 vectorEffect="non-scaling-stroke"
                 fill="none"
               />
 
-              {/* Inner Metallic Gold Hairline Accent */}
+              {/* Under-Wave Golden Accent Swoop along Bottom-Right */}
               <path
-                d="M 0 34 Q 20 5 47 5 L 820 5 Q 1020 23 1220 19 Q 1350 13 1440 -30"
-                stroke="url(#goldContourGrad)"
-                strokeWidth="1.2"
-                strokeOpacity="0.75"
+                d="M 680 120 C 850 106, 1080 114, 1360 88"
+                stroke="url(#goldAccentSwoopGrad)"
+                strokeWidth="2.5"
                 vectorEffect="non-scaling-stroke"
                 fill="none"
               />
             </svg>
 
-            {/* Engineering Compass Draft Illustration in Bottom-Right Corner */}
-            <div className="absolute right-4 sm:right-8 md:right-12 bottom-0 pointer-events-none opacity-90 hidden sm:block">
-              <svg width="190" height="80" viewBox="0 0 190 80" fill="none">
+            {/* Engineering Compass Draft Illustration in Bottom-Right Corner (Unclipped & Crisp) */}
+            <div className="absolute right-4 sm:right-8 md:right-14 bottom-1 pointer-events-none opacity-90 hidden sm:block">
+              <svg width="210" height="115" viewBox="0 0 210 115" fill="none">
                 <defs>
                   <linearGradient id="compassGoldTool" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#F5D076" />
                     <stop offset="100%" stopColor="#B88029" />
                   </linearGradient>
                 </defs>
-                {/* Radiating Drafting Arcs */}
-                <path d="M 40 75 A 90 90 0 0 1 155 5" stroke="url(#compassGoldTool)" strokeWidth="0.8" strokeDasharray="3 3" />
-                <path d="M 65 75 A 70 70 0 0 1 160 25" stroke="url(#compassGoldTool)" strokeWidth="0.8" />
-                <path d="M 15 75 A 120 120 0 0 1 155 -15" stroke="url(#compassGoldTool)" strokeWidth="0.6" strokeDasharray="2 4" />
+                {/* Radiating Drafting Blueprint Arcs */}
+                <path d="M 35 110 A 105 105 0 0 1 165 14" stroke="url(#compassGoldTool)" strokeWidth="0.8" strokeDasharray="3 3" />
+                <path d="M 68 110 A 82 82 0 0 1 170 34" stroke="url(#compassGoldTool)" strokeWidth="0.8" />
+                <path d="M 10 110 A 135 135 0 0 1 165 -6" stroke="url(#compassGoldTool)" strokeWidth="0.6" strokeDasharray="2 4" />
 
                 {/* Engineering Drafting Divider / Compass Tool */}
-                <g transform="translate(142, 4)">
+                <g transform="translate(150, 14)">
                   <circle cx="15" cy="12" r="5" stroke="url(#compassGoldTool)" strokeWidth="1.5" />
                   <circle cx="15" cy="12" r="2" fill="#E5B84B" />
-                  <line x1="13" y1="17" x2="-8" y2="65" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="17" y1="17" x2="38" y2="65" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="-8" y1="65" x2="-10" y2="73" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
-                  <line x1="38" y1="65" x2="40" y2="73" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
-                  <line x1="1" y1="40" x2="29" y2="40" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
-                  <circle cx="15" cy="40" r="3.5" stroke="url(#compassGoldTool)" strokeWidth="1.2" fill="#210532" />
+                  <line x1="13" y1="17" x2="-10" y2="82" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="17" y1="17" x2="40" y2="82" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="-10" y1="82" x2="-12" y2="92" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <line x1="40" y1="82" x2="42" y2="92" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <line x1="-1" y1="48" x2="31" y2="48" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <circle cx="15" cy="48" r="3.5" stroke="url(#compassGoldTool)" strokeWidth="1.2" fill="#210532" />
                 </g>
               </svg>
             </div>
 
             {/* Banner Text Items - Completely Clean, Sharp & Unobstructed */}
-            <div className="max-w-[1440px] h-full mx-auto px-4 sm:px-8 md:px-10 lg:px-14 flex flex-wrap items-center justify-start gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-[13px] md:text-sm text-white font-medium relative z-10 pt-1">
+            <div className="max-w-[1440px] h-full mx-auto px-4 sm:px-8 md:px-10 lg:px-14 flex flex-wrap items-end justify-start gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-[13px] md:text-sm text-white font-medium relative z-10 pb-3 sm:pb-3.5 md:pb-4.5">
               <div className="flex items-center gap-2.5">
                 <Layers className="w-4 h-4 text-[#F5CB6C] shrink-0" />
                 <span className="whitespace-nowrap font-semibold">KTU Autonomous Scheme</span>

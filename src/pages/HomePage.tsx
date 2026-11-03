@@ -49,12 +49,61 @@ interface Props {
   onOpenTour: () => void;
 }
 
+// Hero typing animation rotating dialog phrases
+const TYPING_PHRASES = [
+  "Creative Engineering",
+  "Developing a New Generation",
+  "Autonomous Innovation",
+  "Future-Ready Leadership"
+];
+
 export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'computer' | 'circuits' | 'core'>('all');
   const [activeNewsTab, setActiveNewsTab] = useState<'notices' | 'events' | 'calendar'>('notices');
   const [activePillar, setActivePillar] = useState<number>(0);
   const [selectedStreamId, setSelectedStreamId] = useState<string>('cse');
   const [activeLifeTab, setActiveLifeTab] = useState<'tharang' | 'clubs' | 'sports' | 'hostel'>('tharang');
+
+  // Typewriter typing animation state for rotating hero dialog
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(TYPING_PHRASES[0].length);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [isPaused, setIsPaused] = useState(true);
+
+  useEffect(() => {
+    const currentPhrase = TYPING_PHRASES[textIndex];
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (isPaused) {
+      timer = setTimeout(() => {
+        setIsPaused(false);
+        setIsDeleting(true);
+      }, 2200);
+      return () => clearTimeout(timer);
+    }
+
+    if (isDeleting) {
+      if (charIndex > 0) {
+        timer = setTimeout(() => {
+          setCharIndex(prev => prev - 1);
+        }, 35);
+      } else {
+        setIsDeleting(false);
+        setTextIndex(prev => (prev + 1) % TYPING_PHRASES.length);
+        timer = setTimeout(() => {}, 280);
+      }
+    } else {
+      if (charIndex < currentPhrase.length) {
+        timer = setTimeout(() => {
+          setCharIndex(prev => prev + 1);
+        }, 70);
+      } else {
+        setIsPaused(true);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [charIndex, isDeleting, isPaused, textIndex]);
 
   // Scroll Reveal triggers for interactive staggered card entries
   const [portalsRef, portalsInView] = useScrollReveal(0.08);
@@ -119,73 +168,77 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
     <div className="space-y-12 sm:space-y-16 md:space-y-24 overflow-x-hidden bg-white text-jyothi-charcoal-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
       
       {/* ============================================================== */}
-      {/* 1. EDITORIAL LUXURY ARCHITECTURAL HERO (EXACT USER SPEC) */}
+      {/* 1. LUXURY EDITORIAL ARCHITECTURAL HERO (EXACT REPLICA OF IMAGE 3) */}
       {/* ============================================================== */}
-      <section className="relative min-h-[90vh] lg:min-h-[94vh] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
+      <section className="relative w-full min-h-[540px] sm:min-h-[580px] lg:h-[600px] xl:h-[620px] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
         
-        {/* Full-Bleed Authentic Sunlit Campus Background Image */}
-        <div className="absolute inset-0 z-0">
+        {/* RIGHT SIDE: Authentic Sunlit Campus Building - Perfectly Fitted & Centered in Right Frame */}
+        <div className="absolute top-0 right-0 w-full md:w-[60%] lg:w-[58%] xl:w-[57%] h-full z-0 overflow-hidden">
           <img 
             src="/assets/jyothi_campus_hero.jpg" 
             alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus" 
-            className="w-full h-full object-cover object-[center_35%] lg:object-[68%_center] scale-100 brightness-[1.0] contrast-[1.02]" 
+            className="w-full h-full object-cover object-[50%_35%] lg:object-[50%_38%] scale-100 brightness-[1.0] contrast-[1.02]" 
           />
-          {/* Mobile luminous gradient mask */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#FFFDFA] via-[#FFFDFA]/95 to-transparent lg:hidden z-[1]" />
+          {/* Subtle soft edge gradient transition */}
+          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#FFFDFA] via-[#FFFDFA]/60 to-transparent hidden md:block z-[1]" />
+          {/* Mobile & Small Tablet Adaptive Luminous Mask */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDFA] via-[#FFFDFA]/95 to-[#FFFDFA]/40 md:hidden z-[1]" />
         </div>
 
-        {/* DESKTOP LUXURIOUS ORGANIC IVORY CANVAS WITH GOLD SWOOPING DIVIDER RIBBON */}
-        <div className="hidden lg:block absolute inset-0 pointer-events-none z-[2]">
+        {/* TABLET & DESKTOP: PROPORTIONAL ORGANIC IVORY CANVAS WITH 3D GOLD SWOOPING DIVIDER */}
+        <div className="hidden md:block absolute inset-0 pointer-events-none z-[2]">
           <svg 
             className="w-full h-full" 
-            viewBox="0 0 1440 760" 
+            viewBox="0 0 1000 620" 
             fill="none" 
             preserveAspectRatio="none"
           >
             <defs>
               <linearGradient id="goldSwooshGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#DFC06A" />
-                <stop offset="30%" stopColor="#FDE68A" />
-                <stop offset="65%" stopColor="#C9902C" />
+                <stop offset="0%" stopColor="#E0B854" />
+                <stop offset="25%" stopColor="#FDE68A" />
+                <stop offset="60%" stopColor="#C9902C" />
                 <stop offset="100%" stopColor="#926214" />
               </linearGradient>
-              <filter id="softRibbonShadow" x="-10%" y="-10%" width="120%" height="120%">
-                <feDropShadow dx="4" dy="0" stdDeviation="8" floodColor="#1A0426" floodOpacity="0.12" />
+              <filter id="softRibbonShadow" x="-5%" y="-5%" width="115%" height="115%">
+                <feDropShadow dx="3" dy="0" stdDeviation="6" floodColor="#1A0426" floodOpacity="0.16" />
               </filter>
             </defs>
 
-            {/* Pristine Warm Ivory Editorial Surface */}
+            {/* Left Warm Ivory Editorial Surface (Terminates around 43% width, leaving Right 57% fully open) */}
             <path
-              d="M 0 0 L 640 0 C 610 140 550 260 620 420 C 670 540 730 660 760 760 L 0 760 Z"
+              d="M 0 0 L 420 0 C 445 70 425 180 395 310 C 370 430 420 540 440 620 L 0 620 Z"
               fill="#FFFDFA"
               filter="url(#softRibbonShadow)"
             />
 
-            {/* Primary Glowing Golden Swooshing Ribbon Along Curve */}
+            {/* Primary Golden Metallic Swooshing Ribbon Along Curve */}
             <path
-              d="M 640 0 C 610 140 550 260 620 420 C 670 540 730 660 760 760"
+              d="M 420 0 C 445 70 425 180 395 310 C 370 430 420 540 440 620"
               stroke="url(#goldSwooshGrad)"
               strokeWidth="5"
+              vectorEffect="non-scaling-stroke"
               strokeLinecap="round"
               fill="none"
             />
 
             {/* Inner Metallic Gold Hairline Accent */}
             <path
-              d="M 654 0 C 624 145 565 265 634 425 C 684 545 744 665 774 760"
+              d="M 430 0 C 455 75 435 185 405 315 C 380 435 430 545 450 620"
               stroke="url(#goldSwooshGrad)"
               strokeWidth="1.6"
-              strokeOpacity="0.75"
+              vectorEffect="non-scaling-stroke"
+              strokeOpacity="0.8"
               fill="none"
             />
           </svg>
         </div>
 
         {/* UPPER-LEFT ARCHITECTURAL DRAFTING BLUEPRINT ARCS (SUBTLE GOLD LINE ART) */}
-        <div className="absolute top-0 left-0 w-[360px] sm:w-[480px] h-[360px] sm:h-[480px] pointer-events-none z-[3] opacity-25">
+        <div className="absolute top-0 left-0 w-64 sm:w-80 md:w-96 lg:w-[420px] h-64 sm:h-80 md:h-96 lg:h-[420px] pointer-events-none z-[3] opacity-20 sm:opacity-25">
           <svg viewBox="0 0 400 400" fill="none" className="w-full h-full">
             <circle cx="30" cy="40" r="140" stroke="#C9902C" strokeWidth="0.8" strokeDasharray="4 4" />
-            <circle cx="30" cy="40" r="220" stroke="#C9902C" strokeWidth="0.6" />
+            <circle cx="30" cy="220" r="180" stroke="#C9902C" strokeWidth="0.6" />
             <circle cx="30" cy="40" r="300" stroke="#C9902C" strokeWidth="0.8" strokeDasharray="3 5" />
             <line x1="30" y1="40" x2="380" y2="190" stroke="#C9902C" strokeWidth="0.6" />
             <line x1="30" y1="40" x2="280" y2="340" stroke="#C9902C" strokeWidth="0.6" />
@@ -195,74 +248,75 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* HERO EDITORIAL CONTENT CONTAINER */}
-        <div className="max-w-[1440px] mx-auto px-5 sm:px-8 lg:px-14 pt-12 sm:pt-16 md:pt-20 pb-4 relative z-10 w-full">
-          <div className="max-w-2xl lg:max-w-[530px] xl:max-w-[560px] space-y-5 text-left">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-6 sm:pt-8 md:pt-10 lg:pt-12 pb-2 relative z-10 w-full">
+          <div className="w-full md:max-w-[44%] lg:max-w-[41%] xl:max-w-[480px] space-y-3.5 sm:space-y-4 text-left">
             
             {/* Elegant Capsule Badge: Admissions Open 2025–26 */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FAF3E6] border border-[#E7D3B0] text-[#7E5218] shadow-2xs">
-              <GraduationCap className="w-4 h-4 text-[#A87627] shrink-0" />
-              <span className="text-xs sm:text-[13px] font-semibold tracking-wide font-sans">
+            <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FAF3E6]/95 backdrop-blur-xs border border-[#E7D3B0] text-[#7E5218] shadow-2xs">
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A87627] shrink-0" />
+              <span className="text-[11px] sm:text-xs md:text-[13px] font-semibold tracking-wide font-sans">
                 Admissions Open 2025–26
               </span>
             </div>
 
             {/* Majestic Editorial Typography: "Where Passion Meets Creative Engineering" */}
-            <div className="space-y-2">
-              <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-bold tracking-tight text-[#250836] leading-[1.08]">
+            <div className="space-y-1 sm:space-y-1.5">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[36px] lg:text-[44px] xl:text-[50px] font-bold tracking-tight text-[#250836] leading-[1.08]">
                 <span className="font-['Playfair_Display',serif] block font-bold">
                   Where Passion Meets
                 </span>
-                <span className="font-['Playfair_Display',serif] italic font-normal text-[#B5802B] block pt-1">
-                  Creative Engineering
+                <span className="font-['Playfair_Display',serif] italic font-normal text-[#B5802B] min-h-[1.2em] flex items-center pt-0.5">
+                  <span>{TYPING_PHRASES[textIndex].substring(0, charIndex)}</span>
+                  <span className="inline-block w-[3px] h-[0.8em] bg-[#B5802B] ml-1.5 animate-pulse rounded-full shrink-0" />
                 </span>
               </h1>
 
               {/* Gold Bar & All-Caps Institution Tagline */}
-              <div className="flex items-center gap-3 pt-1">
-                <span className="w-9 h-[2.5px] bg-[#C99638] rounded-full shrink-0" />
-                <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.25em] text-[#250836] uppercase font-sans">
+              <div className="flex items-center gap-2.5 sm:gap-3 pt-0.5">
+                <span className="w-6 sm:w-8 h-[2px] sm:h-[2.5px] bg-[#C99638] rounded-full shrink-0" />
+                <span className="text-[10px] sm:text-[11px] font-extrabold tracking-[0.2em] sm:tracking-[0.25em] text-[#250836] uppercase font-sans truncate">
                   JYOTHI ENGINEERING COLLEGE
                 </span>
               </div>
             </div>
 
             {/* Editorial Lead Paragraph */}
-            <p className="text-xs sm:text-sm text-slate-700 font-normal leading-relaxed max-w-lg pt-1">
+            <p className="text-xs sm:text-[13px] text-slate-700 font-normal leading-relaxed max-w-md pt-0.5">
               Managed by the <strong className="text-slate-900 font-semibold">Catholic Archdiocese of Trichur</strong> since 2002. Set on 30+ scenic green acres in Cheruthuruthy, Jyothi equips aspiring engineers with autonomous curricula, MIT-modeled FabLab prototyping, and high-impact global careers.
             </p>
 
-            {/* CTA Buttons: Deep Purple with Gold Border + White/Stone Pill */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+            {/* Responsive CTA Buttons */}
+            <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2.5 sm:gap-3 pt-1">
               <button
                 onClick={onOpenApply}
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-[#29073D] via-[#3B1159] to-[#250638] text-white font-semibold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] flex items-center justify-center gap-2.5 hover:brightness-115 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group"
+                className="px-5 sm:px-6 py-2.5 rounded-full bg-gradient-to-r from-[#29073D] via-[#3B1159] to-[#250638] text-white font-semibold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] flex items-center justify-center gap-2 hover:brightness-115 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group"
               >
                 <span>Apply for Admissions</span>
-                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:translate-x-0.5 transition-transform" />
               </button>
 
               <button
                 onClick={onOpenTour}
-                className="px-5 py-3 rounded-full bg-white hover:bg-slate-50 text-[#250836] font-semibold text-xs sm:text-sm border border-[#C5B498] shadow-2xs flex items-center justify-center gap-2.5 transition-all duration-300 group"
+                className="px-4 sm:px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-[#250836] font-semibold text-xs sm:text-sm border border-[#C5B498] shadow-2xs flex items-center justify-center gap-2 transition-all duration-300 group"
               >
-                <div className="w-5 h-5 rounded-full border border-[#250836] flex items-center justify-center group-hover:scale-110 transition-transform">
+                <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-[#250836] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
                   <Play className="w-2.5 h-2.5 text-[#250836] fill-[#250836] ml-0.5" />
                 </div>
-                <span>360° Virtual Campus Tour</span>
+                <span className="whitespace-nowrap">360° Virtual Campus Tour</span>
               </button>
             </div>
 
-            {/* Stream Finder Bar */}
-            <div className="pt-2 max-w-[440px]">
-              <div className="p-1 pl-4 rounded-full bg-white border border-[#E2D8C7] shadow-xs flex items-center justify-between gap-3">
-                <span className="font-bold text-xs text-[#250836] whitespace-nowrap">
+            {/* Responsive Stream Finder Bar */}
+            <div className="pt-0.5 w-full max-w-sm sm:max-w-md">
+              <div className="p-1 pl-3.5 sm:pl-4 rounded-full bg-white/98 border border-[#E2D8C7] shadow-xs flex items-center justify-between gap-2 sm:gap-3">
+                <span className="font-bold text-[11px] sm:text-xs text-[#250836] whitespace-nowrap shrink-0">
                   Find Your Stream
                 </span>
-                <span className="text-slate-300">|</span>
+                <span className="text-slate-300 shrink-0">|</span>
                 <select
                   value={selectedStreamId}
                   onChange={(e) => setSelectedStreamId(e.target.value)}
-                  className="bg-transparent text-xs text-slate-800 font-medium focus:outline-none cursor-pointer w-full py-1.5"
+                  className="bg-transparent text-[11px] sm:text-xs text-slate-800 font-medium focus:outline-none cursor-pointer w-full py-1 truncate"
                 >
                   {DEPARTMENTS.map(d => (
                     <option key={d.id} value={d.id}>
@@ -272,8 +326,9 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 </select>
                 <button
                   onClick={() => onNavigate('departments', selectedStreamId)}
-                  className="w-8 h-8 rounded-full bg-[#250836] hover:bg-[#3C1361] text-white flex items-center justify-center shrink-0 transition-all shadow-2xs"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#250836] hover:bg-[#3C1361] text-white flex items-center justify-center shrink-0 transition-all shadow-2xs"
                   title="View Stream"
+                  aria-label="View Stream"
                 >
                   <ArrowRight className="w-3.5 h-3.5" />
                 </button>
@@ -283,35 +338,16 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
         </div>
 
-        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD BANNER WITH ENGINEERING COMPASS */}
-        <div className="relative w-full z-20 mt-8">
-          <div className="relative overflow-hidden rounded-tl-[36px] bg-gradient-to-r from-[#230635] via-[#330B4D] to-[#1E042D] border-t-2 border-[#DCA842] shadow-xl">
+        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD BANNER WITH ENGINEERING COMPASS (IMAGE 3 EXACT) */}
+        <div className="relative w-full z-20 mt-4 sm:mt-6">
+          <div className="relative overflow-hidden rounded-tl-2xl sm:rounded-tl-[36px] bg-gradient-to-r from-[#210532] via-[#2F0A47] to-[#1C0327] border-t-[2.5px] border-[#DCA842] shadow-[0_-4px_20px_rgba(33,5,50,0.35)]">
             
-            {/* Golden Wave Contour at Top of Banner */}
-            <svg 
-              className="absolute top-0 left-0 w-full h-[60px] pointer-events-none opacity-80" 
-              viewBox="0 0 1440 60" 
-              fill="none" 
-              preserveAspectRatio="none"
-            >
-              <defs>
-                <linearGradient id="bottomGoldSweep" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#DFAD42" />
-                  <stop offset="50%" stopColor="#F9DF8D" />
-                  <stop offset="100%" stopColor="#C9902C" />
-                </linearGradient>
-              </defs>
-              <path 
-                d="M 0 5 Q 350 40 700 20 T 1440 8" 
-                stroke="url(#bottomGoldSweep)" 
-                strokeWidth="2.5" 
-                fill="none" 
-              />
-            </svg>
+            {/* Top Metallic Gold Glow Accent Line Strictly on Top Rim */}
+            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-[#E0B854] via-[#FDE68A] to-[#C9902C] opacity-90 pointer-events-none" />
 
-            {/* Engineering Compass Draft Illustration in Bottom-Right Corner */}
-            <div className="absolute right-4 sm:right-10 bottom-0 pointer-events-none opacity-85 hidden sm:block">
-              <svg width="180" height="90" viewBox="0 0 180 90" fill="none">
+            {/* Engineering Compass Draft Illustration in Bottom-Right Corner (Desktop/Tablet) */}
+            <div className="absolute right-4 sm:right-8 md:right-12 bottom-0 pointer-events-none opacity-85 hidden md:block">
+              <svg width="180" height="75" viewBox="0 0 180 75" fill="none">
                 <defs>
                   <linearGradient id="compassGold" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#F5D076" />
@@ -319,46 +355,39 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   </linearGradient>
                 </defs>
                 {/* Radiating Drafting Arcs */}
-                <path d="M 40 85 A 90 90 0 0 1 150 5" stroke="url(#compassGold)" strokeWidth="0.8" strokeDasharray="3 3" />
-                <path d="M 60 85 A 70 70 0 0 1 155 25" stroke="url(#compassGold)" strokeWidth="0.8" />
-                <path d="M 10 85 A 120 120 0 0 1 150 -15" stroke="url(#compassGold)" strokeWidth="0.6" strokeDasharray="2 4" />
+                <path d="M 40 70 A 90 90 0 0 1 150 5" stroke="url(#compassGold)" strokeWidth="0.8" strokeDasharray="3 3" />
+                <path d="M 60 70 A 70 70 0 0 1 155 25" stroke="url(#compassGold)" strokeWidth="0.8" />
+                <path d="M 10 70 A 120 120 0 0 1 150 -15" stroke="url(#compassGold)" strokeWidth="0.6" strokeDasharray="2 4" />
 
                 {/* Engineering Drafting Divider / Compass */}
-                <g transform="translate(135, 10)">
-                  {/* Top Hinge */}
+                <g transform="translate(135, 4)">
                   <circle cx="15" cy="12" r="5" stroke="url(#compassGold)" strokeWidth="1.5" />
                   <circle cx="15" cy="12" r="2" fill="#E5B84B" />
-                  
-                  {/* Compass Legs */}
-                  <line x1="13" y1="17" x2="-8" y2="75" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="17" y1="17" x2="38" y2="75" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
-
-                  {/* Points */}
-                  <line x1="-8" y1="75" x2="-10" y2="84" stroke="url(#compassGold)" strokeWidth="1.2" />
-                  <line x1="38" y1="75" x2="40" y2="84" stroke="url(#compassGold)" strokeWidth="1.2" />
-
-                  {/* Adjuster Wheel */}
-                  <line x1="1" y1="45" x2="29" y2="45" stroke="url(#compassGold)" strokeWidth="1.2" />
-                  <circle cx="15" cy="45" r="3.5" stroke="url(#compassGold)" strokeWidth="1.2" fill="#230635" />
+                  <line x1="13" y1="17" x2="-8" y2="65" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="17" y1="17" x2="38" y2="65" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="-8" y1="65" x2="-10" y2="73" stroke="url(#compassGold)" strokeWidth="1.2" />
+                  <line x1="38" y1="65" x2="40" y2="73" stroke="url(#compassGold)" strokeWidth="1.2" />
+                  <line x1="1" y1="39" x2="29" y2="39" stroke="url(#compassGold)" strokeWidth="1.2" />
+                  <circle cx="15" cy="39" r="3.5" stroke="url(#compassGold)" strokeWidth="1.2" fill="#210532" />
                 </g>
               </svg>
             </div>
 
-            {/* Banner Text Items */}
-            <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 py-3.5 sm:py-4 flex flex-wrap items-center gap-4 sm:gap-8 text-xs sm:text-sm text-white font-medium relative z-10">
+            {/* Banner Text Items - Completely Clean, Sharp & Unobstructed */}
+            <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-10 lg:px-14 py-3 sm:py-3.5 flex flex-wrap items-center justify-start gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-[13px] md:text-sm text-white font-medium relative z-10">
               <div className="flex items-center gap-2.5">
                 <Layers className="w-4 h-4 text-[#F5CB6C] shrink-0" />
-                <span>KTU Autonomous Scheme</span>
+                <span className="whitespace-nowrap font-semibold">KTU Autonomous Scheme</span>
               </div>
-              <span className="text-[#8F6B27] hidden sm:inline">|</span>
+              <span className="text-[#8F6B27] hidden sm:inline select-none">|</span>
               <div className="flex items-center gap-2.5">
                 <GraduationCap className="w-4 h-4 text-[#F5CB6C] shrink-0" />
-                <span>₹3 Cr+ Scholarships</span>
+                <span className="whitespace-nowrap font-semibold">₹3 Cr+ Scholarships</span>
               </div>
-              <span className="text-[#8F6B27] hidden sm:inline">|</span>
+              <span className="text-[#8F6B27] hidden sm:inline select-none">|</span>
               <div className="flex items-center gap-2.5">
                 <Bus className="w-4 h-4 text-[#F5CB6C] shrink-0" />
-                <span>25+ Fleet Bus Routes</span>
+                <span className="whitespace-nowrap font-semibold">25+ Fleet Bus Routes</span>
               </div>
             </div>
 

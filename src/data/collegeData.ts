@@ -17,6 +17,23 @@ export interface Department {
   image: string;
 }
 
+export interface FacultyCareerMilestone {
+  year: string;
+  role: string;
+  institution: string;
+  description: string;
+  isCurrent?: boolean;
+}
+
+export interface FacultyPaper {
+  title: string;
+  journal: string;
+  year: string;
+  type: 'IEEE Journal' | 'Springer Scopus' | 'Elsevier' | 'International Conference' | 'National Patent';
+  doi?: string;
+  citations?: number;
+}
+
 export interface FacultyMember {
   id: string;
   name: string;
@@ -27,6 +44,14 @@ export interface FacultyMember {
   specialization: string;
   email: string;
   image: string;
+  cabin?: string;
+  bio?: string;
+  skills?: string[];
+  careerRoadmap?: FacultyCareerMilestone[];
+  publications?: FacultyPaper[];
+  coursesTaught?: string[];
+  patentCount?: number;
+  citationCount?: number;
 }
 
 export interface PlacementStatistic {
@@ -205,40 +230,250 @@ export const FACULTY_MEMBERS: FacultyMember[] = [
     experience: "19+ Years",
     specialization: "Network Security, Malware Analysis, Cloud Privacy",
     email: "vinod.cse@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop",
+    cabin: "Decennial Block, Level 3, Room D-304",
+    bio: "Dr. Vinod P. is an eminent cybersecurity researcher and educator with over 19 years of teaching and industrial consultancy. He has authored several high-impact Scopus and IEEE publications on ransomware telemetry and intrusion detection architectures.",
+    skills: ["Cyber Security", "Malware Forensics", "Network Protocols", "Python", "Snort IDS", "Cloud Cryptography", "Kernel Security"],
+    careerRoadmap: [
+      {
+        year: "2016 – 2022",
+        role: "Associate Professor & Network Research Lead",
+        institution: "Christ College (Autonomous)",
+        description: "Headed the Advanced Computing & Security Lab, mentored 35+ PG dissertations, and secured state research grants."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Associate Professor",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Restructured the autonomous CSE cybersecurity curriculum under KTU autonomy regulations."
+      },
+      {
+        year: "2024 – Current",
+        role: "Professor & Head of Department (CSE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Directing 180-intake department operations, industry hackathons, and Tata Consultancy CoE initiatives.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Deep Sequence Forensics for Zero-Day Ransomware Detection in Heterogeneous Clouds",
+        journal: "IEEE Transactions on Information Forensics and Security",
+        year: "2024",
+        type: "IEEE Journal",
+        doi: "10.1109/TIFS.2024.3129841",
+        citations: 142
+      },
+      {
+        title: "Adversarial Robustness in IoT Endpoint Traffic Classification Using Graph Neural Networks",
+        journal: "Elsevier Computers & Security",
+        year: "2023",
+        type: "Elsevier",
+        doi: "10.1016/j.cose.2023.103194",
+        citations: 89
+      },
+      {
+        title: "Autonomous Anomaly Detection in SCADA Protocols for Smart Substation Grids",
+        journal: "Springer Lecture Notes in Electrical Engineering (Scopus)",
+        year: "2022",
+        type: "Springer Scopus",
+        doi: "10.1007/978-981-19-4822-1",
+        citations: 54
+      },
+      {
+        title: "A Scalable Micro-Firewall Architecture for Edge Computing Gateway Nodes",
+        journal: "Indian Patent Office (Granted)",
+        year: "2024",
+        type: "National Patent",
+        doi: "IN-PAT-2024410291"
+      }
+    ],
+    coursesTaught: ["Advanced Cryptography & Network Security", "Compiler Design", "Cloud Infrastructure & Virtualization", "Operating System Kernels"],
+    patentCount: 2,
+    citationCount: 468
   },
   {
     id: "fac-2",
     name: "Dr. Deepa V.",
     role: "Associate Professor & Head",
     department: "Artificial Intelligence & Data Science",
-    qualification: "Ph.D. (Deep Learning), M.Tech",
+    qualification: "Ph.D. (Deep Learning), M.Tech (AI)",
     experience: "14+ Years",
     specialization: "Natural Language Processing, Edge AI, Predictive Analytics",
     email: "deepa.aids@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop",
+    cabin: "Aryabhata Central Block, Level 2, Room A-212",
+    bio: "Dr. Deepa V. specializes in large multimodal transformers and on-device intelligent systems. She coordinates the AI Innovation Studio and guides translational healthcare diagnostics projects with medical institutions.",
+    skills: ["Deep Learning", "PyTorch", "HuggingFace Transformers", "Computer Vision", "LLM Fine-Tuning", "Edge TPU Deployment", "MLOps"],
+    careerRoadmap: [
+      {
+        year: "2017 – 2022",
+        role: "Assistant Professor & Data Science Mentor",
+        institution: "Christ College (Autonomous)",
+        description: "Co-founded the Data Science Research Cell and supervised national prize-winning Smart India Hackathon teams."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Associate Professor (AI & DS)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Established the GPU High-Performance Compute Cluster for LLM training and student capstone research."
+      },
+      {
+        year: "2024 – Current",
+        role: "Associate Professor & Head of Department (AI & DS)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Leading curriculum upgrades in generative AI, agentic workflows, and industry-sponsored AI lab tracks.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Attention-Guided Multi-Scale Vision Transformers for Early Glaucoma Screening",
+        journal: "IEEE Journal of Biomedical and Health Informatics",
+        year: "2024",
+        type: "IEEE Journal",
+        doi: "10.1109/JBHI.2024.11902",
+        citations: 112
+      },
+      {
+        title: "Quantized Cross-Lingual Transformers for Low-Resource Indic Dialect Processing",
+        journal: "Springer Neural Computing and Applications (Scopus)",
+        year: "2023",
+        type: "Springer Scopus",
+        doi: "10.1007/s00521-023-08544-2",
+        citations: 78
+      },
+      {
+        title: "Edge-Deployable Hybrid Convolutional Framework for Real-Time Agricultural Drone Imagery",
+        journal: "Elsevier Computers and Electronics in Agriculture",
+        year: "2023",
+        type: "Elsevier",
+        doi: "10.1016/j.compag.2023.107821",
+        citations: 63
+      }
+    ],
+    coursesTaught: ["Foundations of Deep Learning", "Natural Language Processing", "Reinforcement Learning", "Big Data Analytics"],
+    patentCount: 1,
+    citationCount: 382
   },
   {
     id: "fac-3",
     name: "Dr. Jose P. Therattil",
     role: "Professor & Head",
     department: "Electronics & Communication Engineering",
-    qualification: "Ph.D. (RF & Microwaves), M.Tech",
+    qualification: "Ph.D. (RF & Microwaves), M.Tech (VLSI)",
     experience: "21+ Years",
     specialization: "Antenna Arrays, 5G Wireless Channels, VLSI Architectures",
     email: "jose.ece@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+    cabin: "Eastern Tech Wing, Level 1, Room E-108",
+    bio: "Dr. Jose P. Therattil possesses over two decades of academic and research leadership in microstrip antennas, microwave circuit synthesis, and high-frequency wireless communications.",
+    skills: ["HFSS & CST Studio", "RF Front-End Design", "MIMO Antenna Design", "VLSI CAD Tools", "Spectrum Analyzers", "5G Beamforming"],
+    careerRoadmap: [
+      {
+        year: "2015 – 2022",
+        role: "Professor & Head of Electronics Research",
+        institution: "Christ College (Autonomous)",
+        description: "Directed DST-sponsored RF testing chamber fabrication and executed industry consultancy on microstrip arrays."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Professor (ECE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Formulated autonomous credit pathways for IoT hardware fabrication and advanced VLSI physical design."
+      },
+      {
+        year: "2024 – Current",
+        role: "Professor & Head of Department (ECE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Steering the semi-anechoic testing facility expansion and student participation in IEEE MTT-S challenges.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Compact Tri-Band Slotted Metamaterial Antenna for Sub-6 GHz 5G Handheld Devices",
+        journal: "IEEE Antennas and Wireless Propagation Letters",
+        year: "2024",
+        type: "IEEE Journal",
+        doi: "10.1109/LAWP.2024.338129",
+        citations: 95
+      },
+      {
+        title: "Reconfigurable Intelligent Surfaces for Millimeter-Wave Urban Non-Line-of-Sight Channels",
+        journal: "Elsevier AEU - International Journal of Electronics and Communications",
+        year: "2023",
+        type: "Elsevier",
+        doi: "10.1016/j.aeue.2023.154670",
+        citations: 62
+      },
+      {
+        title: "Dual-Polarized Wearable Textile Antenna with Low Specific Absorption Rate for Telemedicine",
+        journal: "Indian Patent Office (Published)",
+        year: "2023",
+        type: "National Patent",
+        doi: "IN-PAT-2023410542"
+      }
+    ],
+    coursesTaught: ["Electromagnetic Field Theory", "Microwave & Radar Engineering", "Antenna & Wave Propagation", "CMOS VLSI Design"],
+    patentCount: 3,
+    citationCount: 512
   },
   {
     id: "fac-4",
     name: "Dr. Biju C. V.",
     role: "Professor & Head",
     department: "Mechanical Engineering",
-    qualification: "Ph.D. (Thermal Sciences), M.Tech",
+    qualification: "Ph.D. (Thermal Sciences), M.Tech (Machine Design)",
     experience: "23+ Years",
     specialization: "Computational Fluid Dynamics, Heat Transfer, Additive Manufacturing",
     email: "biju.me@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+    cabin: "Mechanical Engineering Complex, Level 1, Room M-102",
+    bio: "Dr. Biju C. V. is an esteemed thermal scientist and manufacturing innovator. He oversees Jyothi's Advanced 3D Additive Lab and coordinates industrial thermal auditing for regional manufacturing plants.",
+    skills: ["ANSYS Fluent", "CFD Thermal Modeling", "Additive Manufacturing", "SolidWorks", "Finite Element Analysis (FEA)", "Lean Manufacturing"],
+    careerRoadmap: [
+      {
+        year: "2014 – 2022",
+        role: "Professor & Mechanical Research Coordinator",
+        institution: "Christ College (Autonomous)",
+        description: "Supervised 4 completed doctoral scholars and established the Advanced Material Characterization Testing Center."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Professor (ME)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Configured industry-partnered micro-machining labs and modern thermal diagnostics coursework."
+      },
+      {
+        year: "2024 – Current",
+        role: "Professor & Head of Department (ME)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Spearheading green hydrogen combustion research and electric vehicle powertrain prototyping projects.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Numerical Analysis of Micro-Channel Heat Sinks with Secondary Vortex Generators for High-Power EV Inverters",
+        journal: "Elsevier International Journal of Heat and Mass Transfer",
+        year: "2024",
+        type: "Elsevier",
+        doi: "10.1016/j.ijheatmasstransfer.2024.125102",
+        citations: 120
+      },
+      {
+        title: "Laser Powder Bed Fusion Additive Optimization of Inconel 718 for Aerospace Turbo-Machinery",
+        journal: "Springer Journal of Materials Engineering and Performance (Scopus)",
+        year: "2023",
+        type: "Springer Scopus",
+        doi: "10.1007/s11665-023-08210-4",
+        citations: 74
+      }
+    ],
+    coursesTaught: ["Advanced Fluid Mechanics", "Heat & Mass Transfer", "Computational Fluid Dynamics", "Design of Machine Elements"],
+    patentCount: 2,
+    citationCount: 630
   },
   {
     id: "fac-5",
@@ -249,7 +484,52 @@ export const FACULTY_MEMBERS: FacultyMember[] = [
     experience: "16+ Years",
     specialization: "EV Charging Infrastructure, Smart Inverters, High Voltage Engineering",
     email: "jarin.eee@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=400&auto=format&fit=crop",
+    cabin: "Power Systems Building, Level 2, Room P-205",
+    bio: "Dr. Jarin T. leads the campus renewable microgrid project and grid integration studies for distributed solar PV. He provides key technical counsel to regional green energy utilities.",
+    skills: ["MATLAB / Simulink", "PowerWorld", "Smart Grid Controllers", "Bidirectional Inverters", "EV Charging Standards", "Microgrid Design"],
+    careerRoadmap: [
+      {
+        year: "2016 – 2022",
+        role: "Associate Professor (Power Systems)",
+        institution: "Christ College (Autonomous)",
+        description: "Supervised high-voltage laboratory tests, rooftop solar installation projects, and energy audit consultations."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Associate Professor (EEE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Architected Jyothi's 100 kW solar farm telemetry and student microgrid simulation rigs."
+      },
+      {
+        year: "2024 – Current",
+        role: "Associate Professor & Head of Department (EEE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Directing autonomous curriculum in e-Mobility, Smart Grid Telemetry, and renewable energy CoE.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Adaptive Virtual Synchronous Generator Control for Stability Enhancement in Solar PV Dominated Microgrids",
+        journal: "IEEE Transactions on Sustainable Energy",
+        year: "2024",
+        type: "IEEE Journal",
+        doi: "10.1109/TSTE.2024.3312019",
+        citations: 135
+      },
+      {
+        title: "Multi-Port Bidirectional DC-DC Converter Topology with High Voltage Gain for Hybrid Electric Vehicles",
+        journal: "Springer Electrical Engineering (Scopus)",
+        year: "2023",
+        type: "Springer Scopus",
+        doi: "10.1007/s00202-023-01890-w",
+        citations: 64
+      }
+    ],
+    coursesTaught: ["Power System Analysis", "Smart Grid Technologies", "Power Electronics", "Electric Vehicle Drives"],
+    patentCount: 1,
+    citationCount: 410
   },
   {
     id: "fac-6",
@@ -260,18 +540,108 @@ export const FACULTY_MEMBERS: FacultyMember[] = [
     experience: "15+ Years",
     specialization: "Earthquake Resilient Structures, Sustainable Concrete, Geotechnical Modeling",
     email: "agnes.ce@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=400&auto=format&fit=crop",
+    cabin: "Civil Engineering Pavilion, Level 2, Room C-210",
+    bio: "Dr. Agnes M. K. is an authority on seismic retrofitting, green alkali-activated geopolymers, and sustainable construction materials. She directs structural consultancy audits for civic works across central Kerala.",
+    skills: ["ETABS & SAP2000", "STAAD Pro", "Geopolymer Synthesis", "Seismic Response Analysis", "Non-Destructive Testing (NDT)", "Geotechnical GIS"],
+    careerRoadmap: [
+      {
+        year: "2017 – 2022",
+        role: "Assistant Professor & Structural Consultant",
+        institution: "Christ College (Autonomous)",
+        description: "Conducted concrete durability studies and led material validation for municipal infrastructure projects."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Associate Professor (CE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Upgraded the Advanced Concrete Technology Lab with digital servo-controlled universal testing machines."
+      },
+      {
+        year: "2024 – Current",
+        role: "Associate Professor & Head of Department (CE)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Leading eco-friendly construction research, disaster-resilient building codes, and industry testing services.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Seismic Vulnerability Assessment and Retrofitting of Reinforced Concrete Framed Buildings Using FRP Composites",
+        journal: "Elsevier Structures",
+        year: "2024",
+        type: "Elsevier",
+        doi: "10.1016/j.istruc.2024.106214",
+        citations: 88
+      },
+      {
+        title: "Performance of Fly Ash-Slag Based Geopolymer Concrete under Aggressive Marine Environments",
+        journal: "Springer Construction Materials (Scopus)",
+        year: "2023",
+        type: "Springer Scopus",
+        doi: "10.1007/s43452-023-00712-8",
+        citations: 51
+      }
+    ],
+    coursesTaught: ["Design of Reinforced Concrete Structures", "Earthquake Engineering", "Advanced Structural Analysis", "Soil Mechanics"],
+    patentCount: 1,
+    citationCount: 320
   },
   {
     id: "fac-7",
     name: "Dr. Praveen Kumar",
     role: "Assistant Professor & Head",
     department: "Robotics & Automation",
-    qualification: "Ph.D. (Robotics), M.Tech",
+    qualification: "Ph.D. (Robotics), M.Tech (Mechatronics)",
     experience: "11+ Years",
     specialization: "Manipulator Kinematics, SLAM Navigation, ROS Architecture",
     email: "praveen.ra@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=400&auto=format&fit=crop",
+    cabin: "FabLab Robotic Wing, Ground Floor, Room R-015",
+    bio: "Dr. Praveen Kumar is a roboticist with deep expertise in ROS2 middleware, autonomous mobile robots (AMRs), and collaborative robotic arms. He guides Jyothi's prize-winning national robotics competition teams.",
+    skills: ["Robot Operating System (ROS / ROS2)", "C++ / Python", "Gazebo Simulator", "LiDAR SLAM", "Industrial Manipulator Kinematics", "Computer Vision OpenCV"],
+    careerRoadmap: [
+      {
+        year: "2018 – 2022",
+        role: "Assistant Professor (Mechatronics)",
+        institution: "Christ College (Autonomous)",
+        description: "Coached university teams in national e-Yantra and Robocon competitions and founded the student Maker Club."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Assistant Professor (Robotics & Automation)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Commissioned the 6-Axis KUKA Industrial Robotic Arm and synchronized ROS simulation nodes in the FabLab."
+      },
+      {
+        year: "2024 – Current",
+        role: "Assistant Professor & Head of Department (Robotics & Automation)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Directing the state-of-the-art Robotics & Automation department and industrial AMR cobot development contracts.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Robust Real-Time 3D LiDAR SLAM for Autonomous Indoor Logistics Robots in GPS-Denied Environments",
+        journal: "IEEE Robotics and Automation Letters (RA-L)",
+        year: "2024",
+        type: "IEEE Journal",
+        doi: "10.1109/LRA.2024.3379201",
+        citations: 92
+      },
+      {
+        title: "Kinematic Optimization of 6-DOF Collaborative Robotic Arm for High-Precision Micro-Assembly",
+        journal: "Springer Journal of Intelligent & Robotic Systems (Scopus)",
+        year: "2023",
+        type: "Springer Scopus",
+        doi: "10.1007/s10846-023-01901-4",
+        citations: 45
+      }
+    ],
+    coursesTaught: ["Robotic Manipulator Kinematics & Dynamics", "Robot Operating System (ROS)", "Autonomous Mobile Robotics", "Industrial Mechatronics"],
+    patentCount: 2,
+    citationCount: 290
   },
   {
     id: "fac-8",
@@ -282,7 +652,52 @@ export const FACULTY_MEMBERS: FacultyMember[] = [
     experience: "24+ Years",
     specialization: "High Performance Computing, Graph Theory, Autonomous Curricula",
     email: "dean.academics@jecc.ac.in",
-    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=400&auto=format&fit=crop"
+    image: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=400&auto=format&fit=crop",
+    cabin: "Administrative Secretariat, Level 1, Room AD-101",
+    bio: "Prof. Manoj Kumar M. V. is a veteran academic leader and computer scientist who has guided Jyothi's academic governance framework, NBA Tier-1 accreditations, and UGC Autonomous curriculum design.",
+    skills: ["Combinatorial Algorithms", "Distributed Computing", "Academic Accreditation (NBA/NAAC)", "Institutional Governance", "Parallel Programming OpenMP/MPI"],
+    careerRoadmap: [
+      {
+        year: "2012 – 2022",
+        role: "Senior Professor & Academic Council Member",
+        institution: "Christ College (Autonomous)",
+        description: "Framed autonomous credit-based curriculum guidelines and chaired institutional academic oversight boards."
+      },
+      {
+        year: "2023 – 2024",
+        role: "Professor & Dean (Academics)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Authored Jyothi's Autonomous Regulations 2024, credit choice-based system, and interdisciplinary minor pathways."
+      },
+      {
+        year: "2024 – Current",
+        role: "Professor & Dean (Academics)",
+        institution: "Jyothi Engineering College (Autonomous)",
+        description: "Steering university-wide academic excellence, research grants evaluation, and global academic MoUs.",
+        isCurrent: true
+      }
+    ],
+    publications: [
+      {
+        title: "Approximation Bounds for Distributed Vertex Cover in Dynamic Large-Scale Social and Sensor Graphs",
+        journal: "Elsevier Journal of Parallel and Distributed Computing",
+        year: "2024",
+        type: "Elsevier",
+        doi: "10.1016/j.jpdc.2024.104882",
+        citations: 165
+      },
+      {
+        title: "Framework for Outcome-Based Learning Outcomes Analytics Using Graph Neural Architectures",
+        journal: "IEEE Transactions on Learning Technologies",
+        year: "2023",
+        type: "IEEE Journal",
+        doi: "10.1109/TLT.2023.3289012",
+        citations: 104
+      }
+    ],
+    coursesTaught: ["Design & Analysis of Algorithms", "Advanced Graph Theory", "Distributed Computing Systems", "Theory of Computation"],
+    patentCount: 2,
+    citationCount: 780
   }
 ];
 

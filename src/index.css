@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Caldina';
+  src: url('/fonts/Caldina-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AcuminConcept';
+  src: url('/fonts/Acumin-Semibold.otf') format('opentype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@layer base {
+  *, ::before, ::after {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  h1, h2, h3, h4, .font-brand {
+    font-family: 'Caldina', 'Outfit', system-ui, sans-serif;
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Hide scrollbars on overflow elements while maintaining touch-scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphism effects */
+.glass-purple {
+  background: rgba(45, 12, 73, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 199, 104, 0.25);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.glass-dark-card {
+  background: rgba(30, 8, 48, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 199, 104, 0.22);
+}
+
+/* Gradients */
+.gold-gradient-text {
+  background: linear-gradient(135deg, #FFF6DD 0%, #F5C768 50%, #D89F26 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.purple-gradient-bg {
+  background: linear-gradient(135deg, #260A3D 0%, #3C1361 50%, #4E197C 100%);
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #FBE7B6 0%, #F5C768 50%, #E8B854 100%);
+}
+
+/* Ken Burns Hero Pan/Zoom Animation */
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-ken-burns {
+  animation: kenBurns 20s ease-in-out infinite alternate;
+}
+
+/* Floating animation */
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+/* Glow Shimmer */
+@keyframes shimmerGold {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-shimmer-btn {
+  background: linear-gradient(90deg, #F5C768 0%, #FFF3D4 50%, #F5C768 100%);
+  background-size: 200% 100%;
+  animation: shimmerGold 4s infinite linear;
+}
+
+/* Luxury Tech Grid & Glass Effects */
+.bg-tech-grid {
+  background-image: radial-gradient(rgba(245, 199, 104, 0.15) 1.2px, transparent 1.2px);
+  background-size: 28px 28px;
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(rgba(60, 19, 97, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.glass-specular {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.glass-specular-gold {
+  background: linear-gradient(135deg, rgba(38, 10, 61, 0.85) 0%, rgba(25, 6, 43, 0.92) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(245, 199, 104, 0.28);
+  box-shadow: 0 20px 40px -15px rgba(25, 6, 43, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.gold-border-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+.gold-border-glow:hover {
+  border-color: rgba(245, 199, 104, 0.6);
+  box-shadow: 0 12px 28px -8px rgba(60, 19, 97, 0.18), 0 0 20px -3px rgba(245, 199, 104, 0.25);
+  transform: translateY(-3px);
+}
+
+/* GPU-Accelerated Infinite Marquee Animations */
+@keyframes marqueeScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes marqueeScrollReverse {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.infinite-marquee-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: marqueeScroll 26s linear infinite !important;
+  will-change: transform;
+}
+
+.infinite-marquee-track-reverse {
+  display: flex !important;
+  width: max-content !important;
+  animation: marqueeScrollReverse 26s linear infinite !important;
+  will-change: transform;
+}
+
+.infinite-marquee-track:hover,
+.infinite-marquee-track-reverse:hover {
+  animation-play-state: paused !important;
+}
+
+/* Custom Scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #3C1361;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #E8B854;
+}
+
+/* Reduced motion with marquee exemption */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.infinite-marquee-track):not(.infinite-marquee-track-reverse) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

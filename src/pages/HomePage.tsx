@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Sparkles, ArrowRight, ShieldCheck, GraduationCap, Briefcase, 
-  Microscope, Building2, BellRing, CheckCircle2, 
+import {
+  Sparkles, ArrowRight, ShieldCheck, GraduationCap, Briefcase,
+  Microscope, Building2, BellRing, CheckCircle2,
   Compass, ChevronRight, Layers, FileText, MapPin,
   Calendar, Award, Globe, Quote, ExternalLink, ChevronLeft,
-  Search, Cpu, Zap, Car, BookOpen, Check, Phone, Users, 
-  Landmark, Flame, Play, Star, ChevronDown, TrendingUp, 
+  Search, Cpu, Zap, Car, BookOpen, Check, Phone, Users,
+  Landmark, Flame, Play, Star, ChevronDown, TrendingUp,
   ArrowUpRight, Download, Laptop, Radio, Wrench, Shield,
   HeartHandshake, Coffee, Bus, CheckCircle
 } from 'lucide-react';
-import { 
-  COLLEGE_INFO, ANNOUNCEMENTS, DEPARTMENTS, 
-  RECRUITERS, FACILITIES, STUDENT_CLUBS, RESEARCH_CENTRES, ALUMNI_TESTIMONIALS 
+import {
+  COLLEGE_INFO, ANNOUNCEMENTS, DEPARTMENTS,
+  RECRUITERS, FACILITIES, STUDENT_CLUBS, RESEARCH_CENTRES, ALUMNI_TESTIMONIALS
 } from '../data/collegeData';
 import { VerificationBadge } from '../components/VerificationBadge';
 import { AnimatedCounter } from '../components/AnimatedCounter';
@@ -52,9 +52,9 @@ interface Props {
 // Hero typing animation rotating dialog phrases
 const TYPING_PHRASES = [
   "Creative Engineering",
-  "Developing a New Generation",
-  "Autonomous Innovation",
-  "Future-Ready Leadership"
+  "Shaping Tomorrow",
+  "Ready to Lead",
+  "Future Starts Here"
 ];
 
 export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour }) => {
@@ -90,7 +90,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       } else {
         setIsDeleting(false);
         setTextIndex(prev => (prev + 1) % TYPING_PHRASES.length);
-        timer = setTimeout(() => {}, 280);
+        timer = setTimeout(() => { }, 280);
       }
     } else {
       if (charIndex < currentPhrase.length) {
@@ -166,55 +166,72 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
   return (
     <div className="space-y-12 sm:space-y-16 md:space-y-24 overflow-x-hidden bg-white text-jyothi-charcoal-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
-      
+
       {/* ============================================================== */}
-      {/* 1. LUXURY EDITORIAL ARCHITECTURAL HERO (EXACT REPLICA OF IMAGE 3) */}
+      {/* 1. LUXURY EDITORIAL ARCHITECTURAL HERO (1:1 TARGET MATCH) */}
       {/* ============================================================== */}
-      <section className="relative w-full min-h-[540px] sm:min-h-[580px] lg:h-[600px] xl:h-[620px] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
-        
-        {/* RIGHT SIDE: Authentic Sunlit Campus Building - Perfectly Fitted & Centered in Right Frame */}
+      <section className="relative w-full min-h-[560px] sm:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
+
+        {/* RIGHT SIDE: Authentic Sunlit Campus Building - Perfectly Fitted & Centered */}
         <div className="absolute top-0 right-0 w-full md:w-[60%] lg:w-[58%] xl:w-[57%] h-full z-0 overflow-hidden">
-          <img 
-            src="/assets/jyothi_campus_hero.jpg" 
-            alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus" 
-            className="w-full h-full object-cover object-[50%_35%] lg:object-[50%_38%] scale-100 brightness-[1.0] contrast-[1.02]" 
+          <img
+            src="/assets/jyothi_campus_hero.jpg"
+            alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
+            className="w-full h-full object-cover object-[50%_35%] lg:object-[50%_38%] scale-100 brightness-[1.0] contrast-[1.02]"
           />
           {/* Subtle soft edge gradient transition */}
-          <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#FFFDFA] via-[#FFFDFA]/60 to-transparent hidden md:block z-[1]" />
+          <div className="absolute inset-y-0 left-0 w-28 bg-gradient-to-r from-[#FFFDFA] via-[#FFFDFA]/60 to-transparent hidden md:block z-[1]" />
           {/* Mobile & Small Tablet Adaptive Luminous Mask */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDFA] via-[#FFFDFA]/95 to-[#FFFDFA]/40 md:hidden z-[1]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDFA] via-[#FFFDFA]/95 to-[#FFFDFA]/45 md:hidden z-[1]" />
         </div>
 
         {/* TABLET & DESKTOP: PROPORTIONAL ORGANIC IVORY CANVAS WITH 3D GOLD SWOOPING DIVIDER */}
         <div className="hidden md:block absolute inset-0 pointer-events-none z-[2]">
-          <svg 
-            className="w-full h-full" 
-            viewBox="0 0 1000 620" 
-            fill="none" 
+          <svg
+            className="w-full h-full"
+            viewBox="0 0 1000 640"
+            fill="none"
             preserveAspectRatio="none"
           >
             <defs>
               <linearGradient id="goldSwooshGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#E0B854" />
+                <stop offset="0%" stopColor="#DFC06A" />
                 <stop offset="25%" stopColor="#FDE68A" />
-                <stop offset="60%" stopColor="#C9902C" />
-                <stop offset="100%" stopColor="#926214" />
+                <stop offset="55%" stopColor="#C9902C" />
+                <stop offset="85%" stopColor="#F3D580" />
+                <stop offset="100%" stopColor="#8A5A12" />
+              </linearGradient>
+              <linearGradient id="purpleShadowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1B0326" />
+                <stop offset="50%" stopColor="#2A073E" />
+                <stop offset="100%" stopColor="#15021E" />
               </linearGradient>
               <filter id="softRibbonShadow" x="-5%" y="-5%" width="115%" height="115%">
-                <feDropShadow dx="3" dy="0" stdDeviation="6" floodColor="#1A0426" floodOpacity="0.16" />
+                <feDropShadow dx="4" dy="0" stdDeviation="7" floodColor="#15021E" floodOpacity="0.18" />
               </filter>
             </defs>
 
-            {/* Left Warm Ivory Editorial Surface (Terminates around 43% width, leaving Right 57% fully open) */}
+            {/* Left Warm Ivory Editorial Surface (Leaves Right 57% Fully Open for College) */}
             <path
-              d="M 0 0 L 420 0 C 445 70 425 180 395 310 C 370 430 420 540 440 620 L 0 620 Z"
+              d="M 0 0 L 415 0 C 445 60 430 180 395 310 C 365 430 415 550 435 640 L 0 640 Z"
               fill="#FFFDFA"
               filter="url(#softRibbonShadow)"
             />
 
+            {/* 3D Under-Ribbon Deep Purple Shadow Contour (Creates Depth Effect) */}
+            <path
+              d="M 419 0 C 449 60 434 180 399 310 C 369 430 419 550 439 640"
+              stroke="url(#purpleShadowGrad)"
+              strokeWidth="7"
+              vectorEffect="non-scaling-stroke"
+              strokeLinecap="round"
+              fill="none"
+              opacity="0.45"
+            />
+
             {/* Primary Golden Metallic Swooshing Ribbon Along Curve */}
             <path
-              d="M 420 0 C 445 70 425 180 395 310 C 370 430 420 540 440 620"
+              d="M 415 0 C 445 60 430 180 395 310 C 365 430 415 550 435 640"
               stroke="url(#goldSwooshGrad)"
               strokeWidth="5"
               vectorEffect="non-scaling-stroke"
@@ -224,7 +241,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
             {/* Inner Metallic Gold Hairline Accent */}
             <path
-              d="M 430 0 C 455 75 435 185 405 315 C 380 435 430 545 450 620"
+              d="M 425 0 C 455 65 440 185 405 315 C 375 435 425 555 445 640"
               stroke="url(#goldSwooshGrad)"
               strokeWidth="1.6"
               vectorEffect="non-scaling-stroke"
@@ -250,7 +267,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         {/* HERO EDITORIAL CONTENT CONTAINER */}
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-6 sm:pt-8 md:pt-10 lg:pt-12 pb-2 relative z-10 w-full">
           <div className="w-full md:max-w-[44%] lg:max-w-[41%] xl:max-w-[480px] space-y-3.5 sm:space-y-4 text-left">
-            
+
             {/* Elegant Capsule Badge: Admissions Open 2025–26 */}
             <div className="inline-flex items-center gap-2 px-3 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-[#FAF3E6]/95 backdrop-blur-xs border border-[#E7D3B0] text-[#7E5218] shadow-2xs">
               <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#A87627] shrink-0" />
@@ -338,43 +355,93 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
         </div>
 
-        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD BANNER WITH ENGINEERING COMPASS (IMAGE 3 EXACT) */}
-        <div className="relative w-full z-20 mt-4 sm:mt-6">
-          <div className="relative overflow-hidden rounded-tl-2xl sm:rounded-tl-[36px] bg-gradient-to-r from-[#210532] via-[#2F0A47] to-[#1C0327] border-t-[2.5px] border-[#DCA842] shadow-[0_-4px_20px_rgba(33,5,50,0.35)]">
+        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD SWOOPING BANNER (1:1 TARGET MATCH) */}
+        <div className="relative w-full z-20 mt-auto">
+          <div className="relative w-full h-[64px] sm:h-[72px] md:h-[80px] overflow-hidden">
             
-            {/* Top Metallic Gold Glow Accent Line Strictly on Top Rim */}
-            <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-[#E0B854] via-[#FDE68A] to-[#C9902C] opacity-90 pointer-events-none" />
+            {/* Full-Width SVG Swooping Banner Surface with Dual Metallic Gold Waves */}
+            <svg 
+              className="absolute inset-0 w-full h-full pointer-events-none" 
+              viewBox="0 0 1440 80" 
+              fill="none" 
+              preserveAspectRatio="none"
+            >
+              <defs>
+                <linearGradient id="purpleBottomWaveGrad" x1="0%" y1="0%" x2="100%" y2="50%">
+                  <stop offset="0%" stopColor="#210532" />
+                  <stop offset="35%" stopColor="#2F0A47" />
+                  <stop offset="70%" stopColor="#240637" />
+                  <stop offset="100%" stopColor="#180222" />
+                </linearGradient>
+                <linearGradient id="goldContourGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#DFC06A" />
+                  <stop offset="25%" stopColor="#FDE68A" />
+                  <stop offset="55%" stopColor="#C9902C" />
+                  <stop offset="85%" stopColor="#FDE68A" />
+                  <stop offset="100%" stopColor="#DFC06A" />
+                </linearGradient>
+                <filter id="bannerShadow" x="0" y="-15%" width="100%" height="130%">
+                  <feDropShadow dx="0" dy="-4" stdDeviation="6" floodColor="#15021E" floodOpacity="0.28" />
+                </filter>
+              </defs>
 
-            {/* Engineering Compass Draft Illustration in Bottom-Right Corner (Desktop/Tablet) */}
-            <div className="absolute right-4 sm:right-8 md:right-12 bottom-0 pointer-events-none opacity-85 hidden md:block">
-              <svg width="180" height="75" viewBox="0 0 180 75" fill="none">
+              {/* Main Purple Swooping Banner Surface - Curves from left and swoops up into right corner */}
+              <path
+                d="M 0 28 Q 18 0 45 0 L 820 0 Q 1020 18 1220 14 Q 1350 8 1440 -35 L 1440 80 L 0 80 Z"
+                fill="url(#purpleBottomWaveGrad)"
+                filter="url(#bannerShadow)"
+              />
+
+              {/* Primary Metallic Gold Contour Line */}
+              <path
+                d="M 0 28 Q 18 0 45 0 L 820 0 Q 1020 18 1220 14 Q 1350 8 1440 -35"
+                stroke="url(#goldContourGrad)"
+                strokeWidth="3.5"
+                vectorEffect="non-scaling-stroke"
+                fill="none"
+              />
+
+              {/* Inner Metallic Gold Hairline Accent */}
+              <path
+                d="M 0 34 Q 20 5 47 5 L 820 5 Q 1020 23 1220 19 Q 1350 13 1440 -30"
+                stroke="url(#goldContourGrad)"
+                strokeWidth="1.2"
+                strokeOpacity="0.75"
+                vectorEffect="non-scaling-stroke"
+                fill="none"
+              />
+            </svg>
+
+            {/* Engineering Compass Draft Illustration in Bottom-Right Corner */}
+            <div className="absolute right-4 sm:right-8 md:right-12 bottom-0 pointer-events-none opacity-90 hidden sm:block">
+              <svg width="190" height="80" viewBox="0 0 190 80" fill="none">
                 <defs>
-                  <linearGradient id="compassGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <linearGradient id="compassGoldTool" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stopColor="#F5D076" />
                     <stop offset="100%" stopColor="#B88029" />
                   </linearGradient>
                 </defs>
                 {/* Radiating Drafting Arcs */}
-                <path d="M 40 70 A 90 90 0 0 1 150 5" stroke="url(#compassGold)" strokeWidth="0.8" strokeDasharray="3 3" />
-                <path d="M 60 70 A 70 70 0 0 1 155 25" stroke="url(#compassGold)" strokeWidth="0.8" />
-                <path d="M 10 70 A 120 120 0 0 1 150 -15" stroke="url(#compassGold)" strokeWidth="0.6" strokeDasharray="2 4" />
+                <path d="M 40 75 A 90 90 0 0 1 155 5" stroke="url(#compassGoldTool)" strokeWidth="0.8" strokeDasharray="3 3" />
+                <path d="M 65 75 A 70 70 0 0 1 160 25" stroke="url(#compassGoldTool)" strokeWidth="0.8" />
+                <path d="M 15 75 A 120 120 0 0 1 155 -15" stroke="url(#compassGoldTool)" strokeWidth="0.6" strokeDasharray="2 4" />
 
-                {/* Engineering Drafting Divider / Compass */}
-                <g transform="translate(135, 4)">
-                  <circle cx="15" cy="12" r="5" stroke="url(#compassGold)" strokeWidth="1.5" />
+                {/* Engineering Drafting Divider / Compass Tool */}
+                <g transform="translate(142, 4)">
+                  <circle cx="15" cy="12" r="5" stroke="url(#compassGoldTool)" strokeWidth="1.5" />
                   <circle cx="15" cy="12" r="2" fill="#E5B84B" />
-                  <line x1="13" y1="17" x2="-8" y2="65" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="17" y1="17" x2="38" y2="65" stroke="url(#compassGold)" strokeWidth="1.8" strokeLinecap="round" />
-                  <line x1="-8" y1="65" x2="-10" y2="73" stroke="url(#compassGold)" strokeWidth="1.2" />
-                  <line x1="38" y1="65" x2="40" y2="73" stroke="url(#compassGold)" strokeWidth="1.2" />
-                  <line x1="1" y1="39" x2="29" y2="39" stroke="url(#compassGold)" strokeWidth="1.2" />
-                  <circle cx="15" cy="39" r="3.5" stroke="url(#compassGold)" strokeWidth="1.2" fill="#210532" />
+                  <line x1="13" y1="17" x2="-8" y2="65" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="17" y1="17" x2="38" y2="65" stroke="url(#compassGoldTool)" strokeWidth="1.8" strokeLinecap="round" />
+                  <line x1="-8" y1="65" x2="-10" y2="73" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <line x1="38" y1="65" x2="40" y2="73" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <line x1="1" y1="40" x2="29" y2="40" stroke="url(#compassGoldTool)" strokeWidth="1.2" />
+                  <circle cx="15" cy="40" r="3.5" stroke="url(#compassGoldTool)" strokeWidth="1.2" fill="#210532" />
                 </g>
               </svg>
             </div>
 
             {/* Banner Text Items - Completely Clean, Sharp & Unobstructed */}
-            <div className="max-w-[1440px] mx-auto px-4 sm:px-8 md:px-10 lg:px-14 py-3 sm:py-3.5 flex flex-wrap items-center justify-start gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-[13px] md:text-sm text-white font-medium relative z-10">
+            <div className="max-w-[1440px] h-full mx-auto px-4 sm:px-8 md:px-10 lg:px-14 flex flex-wrap items-center justify-start gap-4 sm:gap-6 lg:gap-8 text-xs sm:text-[13px] md:text-sm text-white font-medium relative z-10 pt-1">
               <div className="flex items-center gap-2.5">
                 <Layers className="w-4 h-4 text-[#F5CB6C] shrink-0" />
                 <span className="whitespace-nowrap font-semibold">KTU Autonomous Scheme</span>
@@ -459,11 +526,10 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 style={{
                   transitionDelay: `${i * 90}ms`,
                 }}
-                className={`p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 text-left group flex flex-col justify-between transform ${
-                  portalsInView 
-                    ? 'opacity-100 translate-y-0 scale-100' 
-                    : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                } hover:-translate-y-1.5`}
+                className={`p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 text-left group flex flex-col justify-between transform ${portalsInView
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                  } hover:-translate-y-1.5`}
               >
                 <div className="flex items-center justify-between mb-3 w-full">
                   <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${portal.color}`}>
@@ -549,25 +615,21 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 style={{
                   transitionDelay: `${idx * 100}ms`,
                 }}
-                className={`p-4 sm:p-5 rounded-3xl text-left transition-all duration-700 border transform ${
-                  pillarsInView
-                    ? 'opacity-100 translate-y-0 scale-100'
-                    : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                } ${
-                  isSelected 
-                    ? 'bg-jyothi-purple-900 text-white border-jyothi-purple-900 shadow-xl' 
+                className={`p-4 sm:p-5 rounded-3xl text-left transition-all duration-700 border transform ${pillarsInView
+                  ? 'opacity-100 translate-y-0 scale-100'
+                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                  } ${isSelected
+                    ? 'bg-jyothi-purple-900 text-white border-jyothi-purple-900 shadow-xl'
                     : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200 shadow-xs'
-                }`}
+                  }`}
               >
                 <div className="flex items-center justify-between mb-3">
-                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${
-                    isSelected ? 'bg-jyothi-gold-400 text-jyothi-purple-950' : 'bg-slate-100 text-jyothi-purple-900'
-                  }`}>
+                  <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${isSelected ? 'bg-jyothi-gold-400 text-jyothi-purple-950' : 'bg-slate-100 text-jyothi-purple-900'
+                    }`}>
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${
-                    isSelected ? 'bg-white/20 text-jyothi-gold-300' : 'bg-slate-100 text-slate-600'
-                  }`}>
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-jyothi-gold-300' : 'bg-slate-100 text-slate-600'
+                    }`}>
                     0{idx + 1}
                   </span>
                 </div>
@@ -667,11 +729,10 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
-                  activeTab === tab.id
-                    ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-jyothi-purple-900'
-                }`}
+                className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${activeTab === tab.id
+                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-jyothi-purple-900'
+                  }`}
               >
                 {tab.label}
               </button>
@@ -682,16 +743,15 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         {/* Bento Grid Layout */}
         <div ref={bentoRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {filteredDepts.map((dept, i) => (
-            <div 
+            <div
               key={dept.id}
               style={{
                 transitionDelay: `${i * 90}ms`,
               }}
-              className={`p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 flex flex-col justify-between group space-y-4 transform ${
-                bentoInView
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-              }`}
+              className={`p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 flex flex-col justify-between group space-y-4 transform ${bentoInView
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                }`}
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -704,10 +764,10 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 </div>
 
                 <div className="relative h-44 rounded-2xl overflow-hidden bg-slate-100">
-                  <img 
-                    src={dept.image} 
-                    alt={dept.name} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                  <img
+                    src={dept.image}
+                    alt={dept.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3.5">
                     <span className="text-xs font-bold text-white flex items-center gap-1.5">
@@ -761,7 +821,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-8 sm:p-12 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl relative overflow-hidden">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
               <span className="text-xs font-bold uppercase tracking-wider text-jyothi-gold-400 bg-white/10 px-3.5 py-1 rounded-full border border-jyothi-gold-400/30 inline-block">
@@ -865,24 +925,23 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             { end: 94, suffix: "+", label: "Companies Visited", sub: "MNCs & Core Leaders", color: "text-jyothi-purple-900", subColor: "text-jyothi-purple-700" },
             { end: 87.4, suffix: "%", decimals: 1, label: "Placement Rate", sub: "Eligible Graduates", color: "text-jyothi-purple-900", subColor: "text-emerald-600" },
           ].map((stat, i) => (
-            <div 
+            <div
               key={i}
               style={{
                 transitionDelay: `${i * 100}ms`,
               }}
-              className={`p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-700 text-center transform ${
-                statsInView
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-              }`}
+              className={`p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-700 text-center transform ${statsInView
+                ? 'opacity-100 translate-y-0 scale-100'
+                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+                }`}
             >
               <div className={`text-3xl sm:text-4xl font-black font-brand ${stat.color}`}>
-                <AnimatedCounter 
-                  end={stat.end} 
-                  prefix={stat.prefix || ''} 
-                  suffix={stat.suffix || ''} 
-                  decimals={stat.decimals || 0} 
-                  duration={1800} 
+                <AnimatedCounter
+                  end={stat.end}
+                  prefix={stat.prefix || ''}
+                  suffix={stat.suffix || ''}
+                  decimals={stat.decimals || 0}
+                  duration={1800}
                 />
               </div>
               <div className="text-xs font-semibold text-slate-600 mt-1">{stat.label}</div>
@@ -901,13 +960,13 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               <span>94+ Visiting MNCs & Global Tech Leaders</span>
             </span>
           </div>
-          
+
           {/* Row 1: Forward Infinite Scroll */}
           <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)] py-1">
             <div className="infinite-marquee-track gap-3.5">
               {[...RECRUITERS, ...RECRUITERS].map((r, i) => (
-                <div 
-                  key={`r1-${i}`} 
+                <div
+                  key={`r1-${i}`}
                   className="px-4 py-3 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-purple-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
                 >
                   <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-jyothi-gold-400 to-jyothi-gold-500 shadow-xs" />
@@ -929,8 +988,8 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_8%,white_92%,transparent)] py-1">
             <div className="infinite-marquee-track-reverse gap-3.5">
               {[...RECRUITERS.slice().reverse(), ...RECRUITERS.slice().reverse()].map((r, i) => (
-                <div 
-                  key={`r2-${i}`} 
+                <div
+                  key={`r2-${i}`}
                   className="px-4 py-3 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-gold-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
                 >
                   <div className="w-2.5 h-2.5 rounded-full bg-jyothi-purple-800 shadow-xs" />
@@ -969,16 +1028,16 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
           {ALUMNI_TESTIMONIALS.map((alumni) => (
-            <div 
+            <div
               key={alumni.id}
               className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg hover:border-jyothi-purple-300 transition-all flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center gap-3.5">
-                  <img 
-                    src={alumni.image} 
-                    alt={alumni.name} 
-                    className="w-12 h-12 rounded-full object-cover border-2 border-jyothi-gold-400 shrink-0" 
+                  <img
+                    src={alumni.image}
+                    alt={alumni.name}
+                    className="w-12 h-12 rounded-full object-cover border-2 border-jyothi-gold-400 shrink-0"
                   />
                   <div>
                     <h4 className="font-bold text-sm text-jyothi-purple-950">{alumni.name}</h4>
@@ -1031,11 +1090,10 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               <button
                 key={tab.id}
                 onClick={() => setActiveLifeTab(tab.id as any)}
-                className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${
-                  activeLifeTab === tab.id
-                    ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-jyothi-purple-900'
-                }`}
+                className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${activeLifeTab === tab.id
+                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-jyothi-purple-900'
+                  }`}
               >
                 {tab.label}
               </button>
@@ -1168,31 +1226,28 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           <div className="inline-flex p-1.5 rounded-2xl bg-slate-100 border border-slate-200 max-w-full overflow-x-auto no-scrollbar">
             <button
               onClick={() => setActiveNewsTab('notices')}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeNewsTab === 'notices'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
-              }`}
+              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'notices'
+                ? 'bg-jyothi-purple-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-jyothi-purple-900'
+                }`}
             >
               Circulars & Notices
             </button>
             <button
               onClick={() => setActiveNewsTab('events')}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeNewsTab === 'events'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
-              }`}
+              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'events'
+                ? 'bg-jyothi-purple-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-jyothi-purple-900'
+                }`}
             >
               Campus Events
             </button>
             <button
               onClick={() => setActiveNewsTab('calendar')}
-              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${
-                activeNewsTab === 'calendar'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
-              }`}
+              className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'calendar'
+                ? 'bg-jyothi-purple-900 text-white shadow-xs'
+                : 'text-slate-600 hover:text-jyothi-purple-900'
+                }`}
             >
               Academic Calendar
             </button>
@@ -1216,7 +1271,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                     </div>
                     <div className="font-bold text-xs sm:text-sm text-jyothi-purple-950">{ann.title}</div>
                   </div>
-                  <button 
+                  <button
                     onClick={() => onNavigate('admissions')}
                     className="p-2 text-jyothi-purple-800 hover:bg-jyothi-purple-100 rounded-xl shrink-0"
                     aria-label="View Notice"
@@ -1273,7 +1328,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
         <div className="rounded-3xl bg-gradient-to-r from-jyothi-purple-900 via-jyothi-purple-800 to-jyothi-purple-950 text-white p-8 sm:p-12 md:p-16 border border-jyothi-purple-700 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
-          
+
           {/* Ambient Glow */}
           <div className="absolute right-0 bottom-0 w-80 h-80 rounded-full bg-jyothi-gold-500/10 blur-3xl pointer-events-none" />
 

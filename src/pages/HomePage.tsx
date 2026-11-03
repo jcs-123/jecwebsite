@@ -173,11 +173,11 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       <section className="relative w-full min-h-[560px] sm:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
 
         {/* RIGHT SIDE: Authentic Sunlit Campus Building - Perfectly Fitted & Centered */}
-        <div className="absolute top-0 right-0 w-full md:w-[60%] lg:w-[58%] xl:w-[57%] h-full z-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-full md:w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden">
           <img
             src="/assets/jyothi_campus_hero.jpg"
             alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
-            className="w-full h-full object-cover object-[50%_35%] lg:object-[50%_38%] scale-100 brightness-[1.0] contrast-[1.02]"
+            className="w-full h-full object-cover object-[50%_32%] lg:object-[50%_34%] scale-100 brightness-[1.0] contrast-[1.02]"
           />
           {/* Mobile & Small Tablet Adaptive Luminous Mask */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDFA] via-[#FFFDFA]/95 to-[#FFFDFA]/45 md:hidden z-[1]" />

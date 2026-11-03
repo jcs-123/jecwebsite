@@ -58,8 +58,8 @@ export function App() {
       window.location.hash = `${page}/${subId}`;
     } else {
       window.location.hash = page;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const scrollToTop = () => {
@@ -90,6 +90,7 @@ export function App() {
 
         {currentPage === 'about' && (
           <AboutPage
+            subSection={subParam}
             onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
             onOpenTour={() => setIsTourOpen(true)}

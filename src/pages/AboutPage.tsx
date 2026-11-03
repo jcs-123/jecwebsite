@@ -311,15 +311,35 @@ const LEADERSHIP = [
 ];
 
 interface Props {
+  subSection?: string;
   onNavigate: (page: string, subId?: string) => void;
   onOpenApply: () => void;
   onOpenTour: () => void;
 }
 
-export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour }) => {
+export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply, onOpenTour }) => {
   const [selectedEra, setSelectedEra] = useState<'all' | 'foundation' | 'expansion' | 'innovation' | 'autonomy'>('all');
   const [expandedYear, setExpandedYear] = useState<string | null>("2023");
   const [activePillarTab, setActivePillarTab] = useState<'vision' | 'mission' | 'values' | 'autonomy'>('autonomy');
+
+  // Auto-scroll to target section on subSection navigation (e.g. #about/vision, #about/leadership)
+  useEffect(() => {
+    if (subSection) {
+      if (['vision', 'mission', 'values'].includes(subSection)) {
+        setActivePillarTab(subSection as any);
+      }
+      const timer = setTimeout(() => {
+        const targetId = subSection === 'overview' ? 'overview' : subSection;
+        const element = document.getElementById(targetId);
+        if (element) {
+          const yOffset = -90;
+          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }, 120);
+      return () => clearTimeout(timer);
+    }
+  }, [subSection]);
 
   // Scroll reveal triggers
   const [statsRef, statsInView] = useScrollReveal(0.08);
@@ -338,7 +358,7 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       {/* ============================================================== */}
       {/* 1. LUXURY EDITORIAL HERO: 25-YEAR INSTITUTIONAL PROFILE */}
       {/* ============================================================== */}
-      <section className="relative w-full overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80 pt-6 pb-12 sm:pb-16 md:pb-20">
+      <section id="overview" className="relative w-full overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80 pt-6 pb-12 sm:pb-16 md:pb-20 scroll-mt-24">
         
         {/* Subtle Architectural Blueprint Arc Lines Background */}
         <div className="absolute top-0 right-0 w-80 sm:w-96 md:w-[500px] h-80 sm:h-96 md:h-[500px] pointer-events-none opacity-20 z-0">
@@ -360,18 +380,24 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-amber-800 font-bold">About Jyothi</span>
             </div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs">
+              <a href="#vision" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
+                🌟 Vision & Values
+              </a>
               <a href="#roadmap" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
                 📜 25-Year Roadmap
-              </a>
-              <a href="#leadership" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                👥 Leadership
               </a>
               <a href="#autonomy" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
                 ⚡ Autonomous KTU
               </a>
+              <a href="#leadership" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
+                👥 Leadership
+              </a>
               <a href="#campus" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
                 🌲 30-Acre Campus
+              </a>
+              <a href="#accreditations" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
+                🏆 Accreditations
               </a>
             </div>
           </div>
@@ -708,9 +734,141 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       </section>
 
       {/* ============================================================== */}
-      {/* 4. THE AUTONOMOUS ADVANTAGE BREAKTHROUGH (EDUCATIONAL FREEDOM) */}
+      {/* 4. VISION, MISSION & CORE INSTITUTIONAL VALUES (ID: vision) */}
       {/* ============================================================== */}
-      <section id="autonomy" ref={pillarsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section id="vision" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
+        
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold tracking-wide">
+            <Compass className="w-3.5 h-3.5 text-amber-600" />
+            <span>Guiding Principles & Moral Anchor</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
+            Vision, Mission & Institutional Values
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Rooted in the Catholic Archdiocesan educational philosophy, Jyothi equips aspiring engineers to lead with intellectual mastery, profound compassion, and unwavering ethical courage.
+          </p>
+        </div>
+
+        {/* Vision & Mission Highlight Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          
+          {/* Vision Card */}
+          <div className="p-8 rounded-3xl bg-gradient-to-br from-white via-[#FFFDF8] to-[#FAF5EB] border-2 border-amber-300/80 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#250836] to-[#3C1361] text-[#FDE68A] flex items-center justify-center font-bold shadow-md">
+              <Compass className="w-6 h-6" />
+            </div>
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-extrabold tracking-widest text-[#B5802B] uppercase">Institutional North Star</span>
+              <h3 className="text-2xl font-bold font-['Playfair_Display',serif] text-[#250836]">
+                Our Vision
+              </h3>
+            </div>
+            <p className="text-sm sm:text-base text-slate-800 leading-relaxed italic font-serif">
+              "Creating technology leaders who foster groundbreaking innovation, maintain the highest standards of professional ethics, and dedicate their intellectual potential towards sustainable national and global progress."
+            </p>
+            <div className="pt-2 flex items-center gap-2 text-xs font-bold text-amber-900">
+              <Sparkles className="w-4 h-4 text-amber-600" />
+              <span>Technology Grounded in Human Values</span>
+            </div>
+          </div>
+
+          {/* Mission Card */}
+          <div className="p-8 rounded-3xl bg-gradient-to-br from-white via-[#FBF8FF] to-[#F5EEFB] border-2 border-purple-200 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
+            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center font-bold shadow-md">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+            <div className="space-y-1.5">
+              <span className="text-[11px] font-extrabold tracking-widest text-jyothi-purple-900 uppercase">Educational Mandate</span>
+              <h3 className="text-2xl font-bold font-['Playfair_Display',serif] text-[#250836]">
+                Our Mission
+              </h3>
+            </div>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
+                <span>Deliver rigorous technical education through agile autonomous curricula benchmarked with international industry standards.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
+                <span>Stimulate multidisciplinary research, student entrepreneurship, and intellectual property creation via the MIT FabLab & TBI.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
+                <span>Nurture high ethical standards, social sensitivity, and environmental stewardship among emerging technocrats.</span>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
+                <span>Cultivate global professional competitiveness anchored in selfless service to humanity.</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+
+        {/* 5 Core Institutional Values */}
+        <div className="pt-4 space-y-4 text-left">
+          <div className="text-center">
+            <span className="text-xs font-bold uppercase tracking-widest text-slate-500">The Five Pillars of Character</span>
+            <h3 className="text-xl sm:text-2xl font-bold font-['Playfair_Display',serif] text-[#250836] mt-1">
+              Core Institutional Values
+            </h3>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
+            {[
+              {
+                title: "Faith & Moral Truth",
+                desc: "Spiritual discernment, unyielding integrity, and moral fortitude guiding every engineering decision.",
+                icon: HeartHandshake,
+                color: "text-amber-800 bg-amber-50 border-amber-200"
+              },
+              {
+                title: "Academic Rigor",
+                desc: "Continuous autonomous learning, Washington Accord standards, and deep technical competencies.",
+                icon: BookOpen,
+                color: "text-purple-900 bg-purple-50 border-purple-200"
+              },
+              {
+                title: "Creative Innovation",
+                desc: "Hands-on prototype mastery in the MIT FabLab, filing patents, and solving societal challenges.",
+                icon: Lightbulb,
+                color: "text-blue-900 bg-blue-50 border-blue-200"
+              },
+              {
+                title: "Social Justice",
+                desc: "Equitable empowerment through ₹3 Cr+ scholarships, NSS community service, and accessible education.",
+                icon: Users,
+                color: "text-emerald-900 bg-emerald-50 border-emerald-200"
+              },
+              {
+                title: "Eco Stewardship",
+                desc: "100 kW solar energy, rainwater harvesting, zero-discharge campus, and green technology commitment.",
+                icon: Sun,
+                color: "text-teal-900 bg-teal-50 border-teal-200"
+              }
+            ].map((val, idx) => {
+              const VIcon = val.icon;
+              return (
+                <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all space-y-2">
+                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold border ${val.color}`}>
+                    <VIcon className="w-4 h-4" />
+                  </div>
+                  <h4 className="font-bold text-sm text-[#250836] font-brand">{val.title}</h4>
+                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">{val.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+      </section>
+
+      {/* ============================================================== */}
+      {/* 5. THE AUTONOMOUS ADVANTAGE BREAKTHROUGH (EDUCATIONAL FREEDOM) */}
+      {/* ============================================================== */}
+      <section id="autonomy" ref={pillarsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-jyothi-purple-900 text-xs font-bold tracking-wide">
@@ -797,9 +955,9 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       </section>
 
       {/* ============================================================== */}
-      {/* 5. PATRONAGE & INSPIRING LEADERSHIP (ARCHDIOCESAN LEGACY) */}
+      {/* 6. PATRONAGE & INSPIRING LEADERSHIP (ARCHDIOCESAN LEGACY) */}
       {/* ============================================================== */}
-      <section id="leadership" ref={leadershipRef} className="bg-[#FAF7F0] py-16 sm:py-20 border-y border-amber-200/70">
+      <section id="leadership" ref={leadershipRef} className="bg-[#FAF7F0] py-16 sm:py-20 border-y border-amber-200/70 scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-3xl mx-auto space-y-3">
@@ -857,9 +1015,9 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       </section>
 
       {/* ============================================================== */}
-      {/* 6. 30+ ACRE HILLTOP CAMPUS INFRASTRUCTURE (BENTO GRID) */}
+      {/* 7. 30+ ACRE HILLTOP CAMPUS INFRASTRUCTURE (BENTO GRID) */}
       {/* ============================================================== */}
-      <section id="campus" ref={infraRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section id="campus" ref={infraRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold tracking-wide">
@@ -994,7 +1152,50 @@ export const AboutPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       </section>
 
       {/* ============================================================== */}
-      {/* 7. ADMISSIONS & 360° TOUR CTA BANNER */}
+      {/* 8. NATIONAL ACCREDITATIONS & RECOGNITIONS (ID: accreditations) */}
+      {/* ============================================================== */}
+      <section id="accreditations" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-24">
+        <div className="text-center max-w-3xl mx-auto space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold tracking-wide">
+            <Award className="w-3.5 h-3.5 text-amber-600" />
+            <span>National Standards of Quality</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
+            Recognized & Accredited by Apex National Bodies
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Every academic degree conferred at Jyothi adheres strictly to rigorous Washington Accord benchmarks, verified by supreme regulatory and accreditation councils.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+          {[
+            { title: "UGC Autonomous", desc: "10-Year Academic Autonomy", badge: "2023 Conferred", icon: ShieldCheck, color: "text-purple-900 bg-purple-50 border-purple-200" },
+            { title: "NAAC 'A' Grade", desc: "Top Institutional Quality Rating", badge: "Grade A", icon: Award, color: "text-amber-800 bg-amber-50 border-amber-200" },
+            { title: "NBA Accredited", desc: "CSE, ECE, EEE & Mech B.Tech", badge: "Tier-II Washington", icon: GraduationCap, color: "text-blue-900 bg-blue-50 border-blue-200" },
+            { title: "APJ KTU Affiliated", desc: "State Technological University", badge: "Charter Member", icon: Compass, color: "text-emerald-900 bg-emerald-50 border-emerald-200" },
+            { title: "AICTE Approved", desc: "Ministry of Education, GoI", badge: "Since 2002", icon: Building2, color: "text-rose-900 bg-rose-50 border-rose-200" },
+            { title: "ISO 9001:2015", desc: "Certified Educational Processes", badge: "Certified", icon: CheckCircle2, color: "text-teal-900 bg-teal-50 border-teal-200" },
+          ].map((acc, idx) => {
+            const AIcon = acc.icon;
+            return (
+              <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all text-center space-y-2 group">
+                <div className={`w-10 h-10 mx-auto rounded-xl flex items-center justify-center font-bold border ${acc.color} group-hover:scale-110 transition-transform`}>
+                  <AIcon className="w-5 h-5" />
+                </div>
+                <div className="font-bold text-xs sm:text-sm text-[#250836] font-brand">{acc.title}</div>
+                <div className="text-[10px] text-slate-500 leading-tight">{acc.desc}</div>
+                <span className="inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-[#250836] text-[#FDE68A]">
+                  {acc.badge}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* 9. ADMISSIONS & 360° TOUR CTA BANNER */}
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-8 sm:p-12 md:p-14 rounded-3xl bg-gradient-to-r from-[#210532] via-[#2E0946] to-[#170221] text-white border-2 border-[#D4A346] shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 text-left">

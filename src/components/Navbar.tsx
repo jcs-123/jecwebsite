@@ -80,9 +80,11 @@ export const Navbar: React.FC<Props> = ({
       label: 'About',
       dropdown: [
         { label: 'Overview & History', page: 'about', section: 'overview', desc: 'Estd. 2002 by Trichur Archdiocese' },
-        { label: 'Vision, Mission & Motto', page: 'about', section: 'vision', desc: 'Creating technology leaders' },
+        { label: 'Vision, Mission & Values', page: 'about', section: 'vision', desc: 'Creating technology leaders', badge: 'Core' },
+        { label: '25-Year Roadmap', page: 'about', section: 'roadmap', desc: '2002 to 2027+ Silver Jubilee milestones', badge: 'Milestones' },
         { label: 'Autonomous Advantage', page: 'about', section: 'autonomy', desc: 'UGC & KTU academic autonomy' },
         { label: 'Leadership & Trust', page: 'about', section: 'leadership', desc: 'Governing board and trustees' },
+        { label: '30-Acre Campus & Labs', page: 'about', section: 'campus', desc: 'Eco-sanctuary & MIT FabLab' },
         { label: 'Accreditations (NAAC & NBA)', page: 'about', section: 'accreditations', desc: 'NAAC A Grade & NBA tier' },
       ]
     },
@@ -156,7 +158,9 @@ export const Navbar: React.FC<Props> = ({
     setActiveDropdown(null);
     setMobileMenuOpen(false);
     onNavigate(pageId, subId);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (!subId) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
 
   const toggleMobileDropdown = (id: string) => {

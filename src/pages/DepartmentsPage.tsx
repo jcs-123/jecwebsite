@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building2, GraduationCap, CheckCircle2, 
   FlaskConical, Briefcase, ArrowRight, ShieldCheck, UserCheck, Sparkles 
@@ -13,6 +13,18 @@ interface Props {
 
 export const DepartmentsPage: React.FC<Props> = ({ selectedDeptId, onOpenApply }) => {
   const [activeDeptId, setActiveDeptId] = useState<string>(selectedDeptId || DEPARTMENTS[0].id);
+
+  useEffect(() => {
+    if (selectedDeptId) {
+      setActiveDeptId(selectedDeptId);
+      const el = document.getElementById('dept-content');
+      if (el) {
+        const yOffset = -90;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
+  }, [selectedDeptId]);
 
   const activeDept = DEPARTMENTS.find(d => d.id === activeDeptId) || DEPARTMENTS[0];
 

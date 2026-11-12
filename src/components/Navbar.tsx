@@ -13,6 +13,7 @@ interface Props {
   onOpenApply: () => void;
   onOpenTour: () => void;
   onOpenSearch: () => void;
+  onOpenAlumni?: () => void;
 }
 
 export const Navbar: React.FC<Props> = ({ 
@@ -20,7 +21,8 @@ export const Navbar: React.FC<Props> = ({
   onNavigate, 
   onOpenApply, 
   onOpenTour, 
-  onOpenSearch 
+  onOpenSearch,
+  onOpenAlumni
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -171,51 +173,85 @@ export const Navbar: React.FC<Props> = ({
     <header ref={navRef} className="sticky top-0 z-50 w-full transition-all duration-300">
       
       {/* 1. Top Utility Info Bar */}
-      <div className="bg-jyothi-purple-950 text-slate-300 text-[11px] md:text-xs py-1.5 px-3 sm:px-6 md:px-8 border-b border-jyothi-gold-500/20">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <div className="bg-[#170524] text-slate-200 text-[11px] md:text-xs py-2 px-3 sm:px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1.5 gap-x-3">
           
-          {/* Credentials / Affiliations */}
-          <div className="flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs">
-            <span className="inline-flex items-center gap-1.5 text-jyothi-gold-300 font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-jyothi-gold-400" />
-              Autonomous Institution
+          {/* Credentials / Affiliations (Left) */}
+          <div className="flex items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs whitespace-nowrap overflow-x-auto scrollbar-none py-0.5">
+            <span className="inline-flex items-center gap-1.5 text-[#DFC06A] font-bold tracking-wide">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
+              <span>Autonomous Institution</span>
             </span>
-            <span className="text-slate-600 hidden sm:inline">|</span>
-            <span className="hidden sm:inline text-slate-300 font-medium">
-              NAAC 'A' Grade • NBA Accredited B.Tech
+            <span className="text-slate-600 select-none font-light">|</span>
+            <span className="inline-flex items-center gap-1.5 text-slate-200 font-medium">
+              <Award className="w-3.5 h-3.5 text-[#DFC06A] shrink-0 hidden sm:inline" />
+              <span>NAAC 'A' Grade • NBA Accredited B.Tech</span>
             </span>
-            <span className="text-slate-600 hidden lg:inline">|</span>
-            <span className="hidden lg:inline text-slate-400">
+            <span className="text-slate-600 select-none font-light hidden lg:inline">|</span>
+            <span className="hidden lg:inline text-slate-300">
               Affiliated to KTU • Catholic Archdiocese of Trichur
             </span>
           </div>
 
-          {/* Quick Contact & Portals */}
-          <div className="flex items-center gap-3 sm:gap-4 ml-auto text-[11px] sm:text-xs">
+          {/* Quick Contact, 360 Tour, Alumni & Portals (Right) */}
+          <div className="flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-xs whitespace-nowrap ml-auto overflow-x-auto scrollbar-none py-0.5">
+            
+            {/* 360° Campus Tour Button */}
             <button 
               onClick={onOpenTour}
-              className="inline-flex items-center gap-1 text-jyothi-gold-300 hover:text-white transition-colors font-semibold"
+              className="inline-flex items-center gap-1.5 text-[#FDE68A] hover:text-white transition-colors font-bold cursor-pointer group"
+              title="Launch 360° Virtual Campus Experience"
             >
-              <Compass className="w-3.5 h-3.5 text-jyothi-gold-400 animate-spin-slow" />
+              <Compass className="w-3.5 h-3.5 text-[#DFC06A] group-hover:rotate-45 transition-transform shrink-0 animate-spin-slow" />
               <span>360° Campus Tour</span>
             </button>
-            <span className="text-slate-600 hidden sm:inline">|</span>
+
+            <span className="text-slate-600 select-none font-light">|</span>
+
+            {/* Helpline Phone */}
             <a 
               href="tel:+919526924455" 
-              className="hidden sm:inline-flex items-center gap-1 text-slate-200 hover:text-white transition-colors"
+              className="inline-flex items-center gap-1.5 text-slate-200 hover:text-[#DFC06A] transition-colors font-semibold"
+              title="Call Admissions Helpline"
             >
-              <Phone className="w-3 h-3 text-emerald-400" />
+              <Phone className="w-3 h-3 text-emerald-400 shrink-0" />
               <span>+91 95269 24455</span>
             </a>
-            <span className="text-slate-600 hidden md:inline">|</span>
+
+            <span className="text-slate-600 select-none font-light">|</span>
+
+            {/* Alumni Network Button */}
+            <button
+              onClick={() => {
+                if (onOpenAlumni) {
+                  onOpenAlumni();
+                } else {
+                  handleNavClick('home');
+                  setTimeout(() => {
+                    const el = document.getElementById('alumni');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 150);
+                }
+              }}
+              className="inline-flex items-center gap-1.5 text-slate-200 hover:text-[#DFC06A] transition-colors font-semibold cursor-pointer group"
+              title="Jyothi Alumni Association & Global Directory"
+            >
+              <GraduationCap className="w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
+              <span>Alumni</span>
+            </button>
+
+            <span className="text-slate-600 select-none font-light hidden md:inline">|</span>
+
+            {/* Student ERP Portal Login */}
             <a 
               href="https://jecc.ac.in" 
               target="_blank" 
               rel="noreferrer"
-              className="hidden md:inline-flex items-center gap-1 hover:text-jyothi-gold-300 transition-colors"
+              className="hidden md:inline-flex items-center gap-1 hover:text-[#DFC06A] transition-colors text-slate-300"
+              title="Official Student ERP Portal Login"
             >
               <span>Student ERP Login</span>
-              <ExternalLink className="w-2.5 h-2.5" />
+              <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
             </a>
           </div>
 
@@ -477,17 +513,36 @@ export const Navbar: React.FC<Props> = ({
 
             {/* Mobile Helpline & 360 Tour Quick Launch */}
             <div className="pt-4 pb-2 space-y-2.5 text-xs text-slate-600 border-t border-slate-200 mt-3">
+              <div className="flex items-center gap-2 text-[11px] text-[#DFC06A] bg-[#170524] p-2 rounded-xl">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
+                <span className="font-bold">Autonomous Institution • NAAC 'A' Grade • NBA</span>
+              </div>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Admissions Helpline: <strong className="text-slate-900">+91 95269 24455</strong></span>
+                <span>Admissions Helpline: <a href="tel:+919526924455" className="text-slate-900 font-bold hover:underline">+91 95269 24455</a></span>
               </div>
               <div className="flex items-center gap-2">
                 <Compass className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
                 <button 
                   onClick={() => { setMobileMenuOpen(false); onOpenTour(); }} 
-                  className="text-jyothi-purple-900 font-bold hover:underline"
+                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
                 >
-                  Launch 360° Virtual Campus Tour →
+                  <span>Launch 360° Virtual Campus Tour</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <GraduationCap className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+                <button 
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (onOpenAlumni) onOpenAlumni();
+                    else handleNavClick('home', 'alumni');
+                  }} 
+                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                >
+                  <span>Jyothi Alumni Association & Directory</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>

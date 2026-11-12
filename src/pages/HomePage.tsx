@@ -302,22 +302,35 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
             {/* Responsive CTA Buttons */}
             <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2.5 sm:gap-3 pt-1">
+              
+              {/* Button 1: Purple -> Golden on Hover, Border turns Purple, Text turns Purple */}
               <button
                 onClick={onOpenApply}
-                className="px-5 sm:px-6 py-2.5 rounded-full bg-gradient-to-r from-[#29073D] via-[#3B1159] to-[#250638] text-white font-semibold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] flex items-center justify-center gap-2 hover:brightness-115 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 group"
+                className="relative px-5 sm:px-6 py-2.5 rounded-full bg-[#29073D] text-white font-bold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] hover:border-[#250836] flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.98] hover:shadow-glow-gold transition-all duration-300 cursor-pointer group overflow-hidden"
               >
-                <span>Apply for Admissions</span>
-                <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:translate-x-0.5 transition-transform" />
+                {/* Smooth Golden Hover Layer */}
+                <span className="absolute inset-0 bg-gradient-to-r from-[#DFC06A] via-[#FDE68A] to-[#C9902C] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                <span className="relative z-10 transition-colors duration-300 group-hover:text-[#250836]">
+                  Apply for Admissions
+                </span>
+                <ArrowRight className="relative z-10 w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:text-[#250836] group-hover:translate-x-1 transition-all duration-300" />
               </button>
 
+              {/* Button 2: White/Gold -> Royal Purple on Hover, Border turns Gold, Text turns Gold */}
               <button
                 onClick={onOpenTour}
-                className="px-4 sm:px-5 py-2.5 rounded-full bg-white/95 hover:bg-white text-[#250836] font-semibold text-xs sm:text-sm border border-[#C5B498] shadow-2xs flex items-center justify-center gap-2 transition-all duration-300 group"
+                className="relative px-4 sm:px-5 py-2.5 rounded-full bg-white text-[#250836] font-bold text-xs sm:text-sm border-2 border-[#D4A346] hover:border-[#DFC06A] shadow-xs hover:shadow-glow-purple hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer group overflow-hidden"
               >
-                <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-[#250836] flex items-center justify-center group-hover:scale-110 transition-transform shrink-0">
-                  <Play className="w-2.5 h-2.5 text-[#250836] fill-[#250836] ml-0.5" />
+                {/* Smooth Royal Purple Hover Layer */}
+                <span className="absolute inset-0 bg-gradient-to-r from-[#29073D] via-[#3C1361] to-[#250836] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                <div className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-[#250836] group-hover:border-[#DFC06A] group-hover:bg-[#DFC06A]/20 flex items-center justify-center group-hover:scale-115 transition-all duration-300 shrink-0">
+                  <Play className="w-2.5 h-2.5 text-[#250836] fill-[#250836] group-hover:text-[#DFC06A] group-hover:fill-[#DFC06A] ml-0.5 transition-all duration-300" />
                 </div>
-                <span className="whitespace-nowrap">360° Virtual Campus Tour</span>
+                <span className="relative z-10 whitespace-nowrap transition-colors duration-300 group-hover:text-[#FDE68A]">
+                  360° Virtual Campus Tour
+                </span>
               </button>
             </div>
 
@@ -1025,7 +1038,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* ============================================================== */}
       {/* 8. ALUMNI IN GLOBAL TECH (AWS, BOSCH, ISRO) */}
       {/* ============================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+      <section id="alumni" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 scroll-mt-28">
         <div className="text-center max-w-2xl mx-auto space-y-2">
           <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 border border-jyothi-purple-200/80 px-3.5 py-1 rounded-full">
             Alumni Success

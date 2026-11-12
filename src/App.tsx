@@ -13,6 +13,7 @@ import { FacilitiesPage } from './pages/FacilitiesPage';
 import { ApplyModal } from './components/ApplyModal';
 import { VirtualTourModal } from './components/VirtualTourModal';
 import { SearchModal } from './components/SearchModal';
+import { AlumniModal } from './components/AlumniModal';
 import { Phone, MessageSquare, Sparkles, ArrowUp } from 'lucide-react';
 
 export function App() {
@@ -21,6 +22,7 @@ export function App() {
   const [isApplyOpen, setIsApplyOpen] = useState(false);
   const [isTourOpen, setIsTourOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isAlumniOpen, setIsAlumniOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Sync with URL Hash for seamless routing and back button
@@ -76,6 +78,7 @@ export function App() {
         onOpenApply={() => setIsApplyOpen(true)}
         onOpenTour={() => setIsTourOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
+        onOpenAlumni={() => setIsAlumniOpen(true)}
       />
 
       {/* Main Page Content Body */}
@@ -195,6 +198,18 @@ export function App() {
         isOpen={isSearchOpen}
         onClose={() => setIsSearchOpen(false)}
         onNavigate={navigateTo}
+      />
+
+      <AlumniModal
+        isOpen={isAlumniOpen}
+        onClose={() => setIsAlumniOpen(false)}
+        onNavigateHomeAlumni={() => {
+          navigateTo('home');
+          setTimeout(() => {
+            const el = document.getElementById('alumni');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }, 150);
+        }}
       />
 
     </div>

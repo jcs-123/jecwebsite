@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { 
-  Menu, X, ChevronDown, Search, Sparkles, Phone, Compass, 
-  ExternalLink, GraduationCap, Building2, Users, BookOpen, 
+import {
+  Menu, X, ChevronDown, Search, Sparkles, Phone, Compass,
+  ExternalLink, GraduationCap, Building2, Users, BookOpen,
   Briefcase, Award, ShieldCheck, Microscope, HeartHandshake,
-  ChevronRight, MapPin, Layers
+  ChevronRight, MapPin, Layers, LogIn
 } from 'lucide-react';
 import { DEPARTMENTS, COLLEGE_INFO } from '../data/collegeData';
 
@@ -16,11 +16,11 @@ interface Props {
   onOpenAlumni?: () => void;
 }
 
-export const Navbar: React.FC<Props> = ({ 
-  currentPage, 
-  onNavigate, 
-  onOpenApply, 
-  onOpenTour, 
+export const Navbar: React.FC<Props> = ({
+  currentPage,
+  onNavigate,
+  onOpenApply,
+  onOpenTour,
   onOpenSearch,
   onOpenAlumni
 }) => {
@@ -77,21 +77,21 @@ export const Navbar: React.FC<Props> = ({
 
   const navItems = [
     { id: 'home', label: 'Home' },
-    { 
-      id: 'about', 
+    {
+      id: 'about',
       label: 'About',
       dropdown: [
         { label: 'Overview & History', page: 'about', section: 'overview', desc: 'Estd. 2002 by Trichur Archdiocese' },
         { label: 'Vision, Mission & Values', page: 'about', section: 'vision', desc: 'Creating technology leaders', badge: 'Core' },
         { label: '25-Year Roadmap', page: 'about', section: 'roadmap', desc: '2002 to 2027+ Silver Jubilee milestones', badge: 'Milestones' },
-        { label: 'Autonomous Advantage', page: 'about', section: 'autonomy', desc: 'UGC & KTU academic autonomy' },
+        { label: 'Autonomous Governance & Syllabi', page: 'autonomous', desc: 'Governing Body, BoS, Regulations, CBCS & Calendar', badge: 'UGC' },
         { label: 'Leadership & Trust', page: 'about', section: 'leadership', desc: 'Governing board and trustees' },
         { label: '30-Acre Campus & Labs', page: 'about', section: 'campus', desc: 'Eco-sanctuary & MIT FabLab' },
-        { label: 'Accreditations (NAAC & NBA)', page: 'about', section: 'accreditations', desc: 'NAAC A Grade & NBA tier' },
+        { label: 'Accreditations (NAAC & NBA - IQAC)', page: 'iqac', desc: 'NAAC A Grade, NBA & NIRF' },
       ]
     },
-    { 
-      id: 'departments', 
+    {
+      id: 'departments',
       label: 'Departments',
       isWide: true,
       dropdown: DEPARTMENTS.map(d => ({
@@ -103,8 +103,8 @@ export const Navbar: React.FC<Props> = ({
       }))
     },
     { id: 'faculty', label: 'Faculty' },
-    { 
-      id: 'student-life', 
+    {
+      id: 'student-life',
       label: 'Student Life',
       dropdown: [
         { label: 'Clubs & Societies', page: 'student-life', section: 'clubs', desc: 'IEEE, CSI, IEDC, and FOSS' },
@@ -113,8 +113,8 @@ export const Navbar: React.FC<Props> = ({
         { label: 'NSS & Social Outreach', page: 'student-life', section: 'nss', desc: 'Community welfare initiatives' },
       ]
     },
-    { 
-      id: 'research', 
+    {
+      id: 'research',
       label: 'Research',
       dropdown: [
         { label: 'MIT FabLab Kerala', page: 'research', section: 'centres', desc: 'Rapid hardware prototyping center' },
@@ -123,8 +123,8 @@ export const Navbar: React.FC<Props> = ({
         { label: 'Funded Projects & MoUs', page: 'research', section: 'projects', desc: 'Govt & industry sponsored' },
       ]
     },
-    { 
-      id: 'admissions', 
+    {
+      id: 'admissions',
       label: 'Admissions',
       dropdown: [
         { label: 'B.Tech Admissions 2025-26', page: 'admissions', section: 'btech', desc: '7 Engineering streams' },
@@ -134,8 +134,8 @@ export const Navbar: React.FC<Props> = ({
         { label: 'Admission Enquiry', page: 'admissions', section: 'enquiry', desc: 'Direct counselor assistance' },
       ]
     },
-    { 
-      id: 'placements', 
+    {
+      id: 'placements',
       label: 'Placements',
       dropdown: [
         { label: 'Placement Records & Stats', page: 'placements', section: 'stats', desc: '₹24 LPA highest package' },
@@ -144,8 +144,8 @@ export const Navbar: React.FC<Props> = ({
         { label: 'Industry Collaborations', page: 'placements', section: 'mous', desc: 'Corporate tech partnerships' },
       ]
     },
-    { 
-      id: 'facilities', 
+    {
+      id: 'facilities',
       label: 'Facilities',
       dropdown: [
         { label: 'Central Digital Library', page: 'facilities', section: 'fac-library', desc: '42,000+ volumes and e-journals' },
@@ -171,22 +171,34 @@ export const Navbar: React.FC<Props> = ({
 
   return (
     <header ref={navRef} className="sticky top-0 z-50 w-full transition-all duration-300">
-      
+
       {/* 1. Top Utility Info Bar */}
       <div className="bg-[#170524] text-slate-200 text-[11px] md:text-xs py-2 px-3 sm:px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1.5 gap-x-3">
-          
+
           {/* Credentials / Affiliations (Left) */}
           <div className="flex items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs whitespace-nowrap overflow-x-auto scrollbar-none py-0.5">
-            <span className="inline-flex items-center gap-1.5 text-[#DFC06A] font-bold tracking-wide">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
-              <span>Autonomous Institution</span>
-            </span>
+            <button
+              onClick={() => handleNavClick('autonomous')}
+              className="inline-flex items-center gap-1.5 text-[#DFC06A] hover:text-white transition-colors font-bold tracking-wide cursor-pointer group"
+              title="Click to view UGC Autonomous Governance, Regulations & Syllabi"
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] group-hover:scale-110 transition-transform shrink-0" />
+              <span className="group-hover:underline">Autonomous Institution</span>
+            </button>
             <span className="text-slate-600 select-none font-light">|</span>
-            <span className="inline-flex items-center gap-1.5 text-slate-200 font-medium">
-              <Award className="w-3.5 h-3.5 text-[#DFC06A] shrink-0 hidden sm:inline" />
-              <span>NAAC 'A' Grade • NBA Accredited B.Tech</span>
-            </span>
+            <button
+              onClick={() => handleNavClick('iqac')}
+              className={`inline-flex items-center gap-1.5 transition-colors font-medium cursor-pointer group ${
+                currentPage === 'iqac'
+                  ? 'text-[#DFC06A] font-bold'
+                  : 'text-slate-200 hover:text-[#DFC06A]'
+              }`}
+              title="Internal Quality Assurance Cell (IQAC) - NAAC 'A' Grade & NBA Accreditations"
+            >
+              <Award className="w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0 hidden sm:inline" />
+              <span className="group-hover:underline">NAAC 'A' Grade • NBA Accredited B.Tech</span>
+            </button>
             <span className="text-slate-600 select-none font-light hidden lg:inline">|</span>
             <span className="hidden lg:inline text-slate-300">
               Affiliated to KTU • Catholic Archdiocese of Trichur
@@ -195,9 +207,9 @@ export const Navbar: React.FC<Props> = ({
 
           {/* Quick Contact, 360 Tour, Alumni & Portals (Right) */}
           <div className="flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-xs whitespace-nowrap ml-auto overflow-x-auto scrollbar-none py-0.5">
-            
+
             {/* 360° Campus Tour Button */}
-            <button 
+            <button
               onClick={onOpenTour}
               className="inline-flex items-center gap-1.5 text-[#FDE68A] hover:text-white transition-colors font-bold cursor-pointer group"
               title="Launch 360° Virtual Campus Experience"
@@ -209,8 +221,8 @@ export const Navbar: React.FC<Props> = ({
             <span className="text-slate-600 select-none font-light">|</span>
 
             {/* Helpline Phone */}
-            <a 
-              href="tel:+919526924455" 
+            <a
+              href="tel:+919526924455"
               className="inline-flex items-center gap-1.5 text-slate-200 hover:text-[#DFC06A] transition-colors font-semibold"
               title="Call Admissions Helpline"
             >
@@ -222,62 +234,56 @@ export const Navbar: React.FC<Props> = ({
 
             {/* Alumni Network Button */}
             <button
-              onClick={() => {
-                if (onOpenAlumni) {
-                  onOpenAlumni();
-                } else {
-                  handleNavClick('home');
-                  setTimeout(() => {
-                    const el = document.getElementById('alumni');
-                    if (el) el.scrollIntoView({ behavior: 'smooth' });
-                  }, 150);
-                }
-              }}
-              className="inline-flex items-center gap-1.5 text-slate-200 hover:text-[#DFC06A] transition-colors font-semibold cursor-pointer group"
+              onClick={() => handleNavClick('alumni')}
+              className={`inline-flex items-center gap-1.5 transition-colors font-semibold cursor-pointer group ${currentPage === 'alumni'
+                  ? 'text-[#DFC06A] font-bold'
+                  : 'text-slate-200 hover:text-[#DFC06A]'
+                }`}
               title="Jyothi Alumni Association & Global Directory"
             >
-              <GraduationCap className="w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
+              <GraduationCap className={`w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0 ${currentPage === 'alumni' ? 'scale-110' : ''
+                }`} />
               <span>Alumni</span>
             </button>
 
             <span className="text-slate-600 select-none font-light hidden md:inline">|</span>
 
-            {/* Student ERP Portal Login */}
-            <a 
-              href="https://jecc.ac.in" 
-              target="_blank" 
-              rel="noreferrer"
-              className="hidden md:inline-flex items-center gap-1 hover:text-[#DFC06A] transition-colors text-slate-300"
-              title="Official Student ERP Portal Login"
+            {/* Campus Portals Login */}
+            <button
+              onClick={() => handleNavClick('login')}
+              className={`hidden md:inline-flex items-center gap-1.5 transition-colors font-semibold cursor-pointer group ${currentPage === 'login'
+                  ? 'text-[#DFC06A] font-bold'
+                  : 'text-slate-200 hover:text-[#DFC06A]'
+                }`}
+              title="Campus Portals Login (Student, Faculty, Parent, Hostel)"
             >
-              <span>Student ERP Login</span>
-              <ExternalLink className="w-2.5 h-2.5 text-slate-400" />
-            </a>
+              <LogIn className="w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
+              <span>Login</span>
+            </button>
           </div>
 
         </div>
       </div>
 
       {/* 2. Main Pristine White Navigation Bar */}
-      <nav 
-        className={`w-full transition-all duration-300 ${
-          isScrolled 
-            ? 'bg-white/98 backdrop-blur-md shadow-md py-2 border-b border-slate-200' 
+      <nav
+        className={`w-full transition-all duration-300 ${isScrolled
+            ? 'bg-white/98 backdrop-blur-md shadow-md py-2 border-b border-slate-200'
             : 'bg-white py-2.5 sm:py-3 border-b border-slate-200/80 shadow-xs'
-        }`}
+          }`}
       >
         <div className="max-w-[1440px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 flex items-center justify-between gap-2">
-          
+
           {/* Brand Vector Logo (Dark Royal Purple on White Canvas) */}
-          <button 
+          <button
             onClick={() => handleNavClick('home')}
             className="flex items-center gap-2 group text-left focus:outline-none shrink-0"
             aria-label="Jyothi Engineering College Home"
           >
             <div className="h-8 xs:h-9 sm:h-10 md:h-11 xl:h-11 w-auto transition-transform group-hover:scale-[1.02]">
-              <img 
-                src="/assets/jyothi_logo_dark.svg" 
-                alt="Jyothi Engineering College (Autonomous)" 
+              <img
+                src="/assets/jyothi_logo_dark.svg"
+                alt="Jyothi Engineering College (Autonomous)"
                 className="h-full w-auto object-contain"
               />
             </div>
@@ -290,7 +296,7 @@ export const Navbar: React.FC<Props> = ({
               const hasDropdown = Boolean(item.dropdown);
 
               return (
-                <div 
+                <div
                   key={item.id}
                   className="relative group shrink-0"
                   onMouseEnter={() => hasDropdown && handleMouseEnter(item.id)}
@@ -304,35 +310,31 @@ export const Navbar: React.FC<Props> = ({
                         handleNavClick(item.id);
                       }
                     }}
-                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-semibold rounded-xl transition-all flex items-center gap-1 select-none whitespace-nowrap shrink-0 ${
-                      currentPage === item.id || isOpen
+                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-semibold rounded-xl transition-all flex items-center gap-1 select-none whitespace-nowrap shrink-0 ${currentPage === item.id || isOpen
                         ? 'text-jyothi-purple-900 bg-jyothi-purple-50 font-bold border border-jyothi-purple-200/80 shadow-xs'
                         : 'text-slate-700 hover:text-jyothi-purple-900 hover:bg-slate-100/90'
-                    }`}
+                      }`}
                   >
                     <span className="whitespace-nowrap">{item.label}</span>
                     {hasDropdown && (
-                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${
-                        isOpen ? 'rotate-180 text-jyothi-purple-900' : 'text-slate-400'
-                      }`} />
+                      <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 shrink-0 ${isOpen ? 'rotate-180 text-jyothi-purple-900' : 'text-slate-400'
+                        }`} />
                     )}
                   </button>
 
                   {/* Desktop Dropdown Flyout with Zero-Gap Hover Bridge (pt-2 wrapper) */}
                   {hasDropdown && isOpen && (
-                    <div 
-                      className={`absolute top-full pt-2 z-50 animate-fade-in ${
-                        item.id === 'facilities' || item.id === 'placements' || item.id === 'admissions' 
-                          ? 'right-0' 
+                    <div
+                      className={`absolute top-full pt-2 z-50 animate-fade-in ${item.id === 'facilities' || item.id === 'placements' || item.id === 'admissions'
+                          ? 'right-0'
                           : 'left-0'
-                      }`}
+                        }`}
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${
-                        item.isWide ? 'w-96' : 'w-80'
-                      }`}>
-                        
+                      <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${item.isWide ? 'w-96' : 'w-80'
+                        }`}>
+
                         {/* Dropdown Header Card */}
                         <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-1.5">
                           <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
@@ -386,7 +388,7 @@ export const Navbar: React.FC<Props> = ({
 
           {/* Right Action Buttons (Search & Apply Now & Mobile Menu Toggle) */}
           <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-            
+
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
@@ -423,7 +425,7 @@ export const Navbar: React.FC<Props> = ({
         {/* 3. Fully Responsive Mobile & Tablet Navigation Drawer */}
         {mobileMenuOpen && (
           <div className="xl:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-2 max-h-[82vh] overflow-y-auto animate-fade-in shadow-2xl">
-            
+
             {/* Admissions Banner inside Mobile Menu */}
             <div className="p-3.5 mb-2 rounded-2xl bg-jyothi-purple-50 border border-jyothi-purple-200 flex items-center justify-between">
               <div>
@@ -450,7 +452,7 @@ export const Navbar: React.FC<Props> = ({
 
                 return (
                   <div key={item.id} className="rounded-2xl border border-slate-150 overflow-hidden bg-slate-50/50">
-                    
+
                     {/* Header Row */}
                     <div className="flex items-center justify-between">
                       <button
@@ -461,17 +463,15 @@ export const Navbar: React.FC<Props> = ({
                             handleNavClick(item.id);
                           }
                         }}
-                        className={`w-full text-left py-3 px-4 text-sm font-bold transition-colors flex items-center justify-between ${
-                          isCurrent 
-                            ? 'text-jyothi-purple-900 bg-jyothi-purple-100/70' 
+                        className={`w-full text-left py-3 px-4 text-sm font-bold transition-colors flex items-center justify-between ${isCurrent
+                            ? 'text-jyothi-purple-900 bg-jyothi-purple-100/70'
                             : 'text-slate-800 hover:text-jyothi-purple-900'
-                        }`}
+                          }`}
                       >
                         <span>{item.label}</span>
                         {hasDropdown && (
-                          <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
-                            isExpanded ? 'rotate-180 text-jyothi-purple-900' : ''
-                          }`} />
+                          <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-jyothi-purple-900' : ''
+                            }`} />
                         )}
                       </button>
                     </div>
@@ -513,18 +513,37 @@ export const Navbar: React.FC<Props> = ({
 
             {/* Mobile Helpline & 360 Tour Quick Launch */}
             <div className="pt-4 pb-2 space-y-2.5 text-xs text-slate-600 border-t border-slate-200 mt-3">
-              <div className="flex items-center gap-2 text-[11px] text-[#DFC06A] bg-[#170524] p-2 rounded-xl">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
-                <span className="font-bold">Autonomous Institution • NAAC 'A' Grade • NBA</span>
-              </div>
+              <button
+                onClick={() => { setMobileMenuOpen(false); handleNavClick('autonomous'); }}
+                className="w-full text-left flex items-center justify-between gap-2 text-[11px] text-[#DFC06A] bg-[#170524] p-2.5 rounded-xl cursor-pointer hover:bg-[#250836] transition-colors"
+              >
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
+                  <span className="font-bold">Autonomous Institution • UGC & KTU</span>
+                </div>
+                <ChevronRight className="w-3.5 h-3.5 text-[#DFC06A]" />
+              </button>
               <div className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Admissions Helpline: <a href="tel:+919526924455" className="text-slate-900 font-bold hover:underline">+91 95269 24455</a></span>
               </div>
               <div className="flex items-center gap-2">
+                <Award className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick('iqac');
+                  }}
+                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                >
+                  <span>NAAC 'A' Grade & NBA Accreditations (IQAC)</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
                 <Compass className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
-                <button 
-                  onClick={() => { setMobileMenuOpen(false); onOpenTour(); }} 
+                <button
+                  onClick={() => { setMobileMenuOpen(false); onOpenTour(); }}
                   className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
                 >
                   <span>Launch 360° Virtual Campus Tour</span>
@@ -533,15 +552,27 @@ export const Navbar: React.FC<Props> = ({
               </div>
               <div className="flex items-center gap-2">
                 <GraduationCap className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
-                <button 
+                <button
                   onClick={() => {
                     setMobileMenuOpen(false);
-                    if (onOpenAlumni) onOpenAlumni();
-                    else handleNavClick('home', 'alumni');
-                  }} 
+                    handleNavClick('alumni');
+                  }}
                   className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
                 >
                   <span>Jyothi Alumni Association & Directory</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <div className="flex items-center gap-2">
+                <LogIn className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick('login');
+                  }}
+                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                >
+                  <span>Campus Portals Login (Student, Faculty, Parent, Hostel)</span>
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>
               </div>

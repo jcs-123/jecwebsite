@@ -720,7 +720,7 @@ export const RECRUITERS = [
   { name: "Wipro Technologies", sector: "IT Services", category: "Tier 1 Recruiter" },
   { name: "Quest Global", sector: "Engineering Services", category: "Core Mechanical/ECE" },
   { name: "Amazon AWS", sector: "Cloud Systems", category: "Top CTC Recruiter" },
-  { name: "L&T Technology Services", sector: "Infrastructure & Heavy Tech", category: "Core Core" },
+  { name: "L&T Technology Services", sector: "Infrastructure & Heavy Tech", category: "Core Engineering" },
 ];
 
 export const FACILITIES: Facility[] = [
@@ -773,7 +773,7 @@ export const FACILITIES: Facility[] = [
     id: "fac-sports",
     title: "Sports Complex & Athletic Grounds",
     category: "Recreation",
-    description: "Expansive campus sports grounds including a standard 400m track, football stadium, cricket pitch, basketball courts with floodlights, volleyball courts, badminton indoor arena, and physical fitness fitness gym.",
+    description: "Expansive campus sports grounds including a standard 400m track, football stadium, cricket pitch, basketball courts with floodlights, volleyball courts, badminton indoor arena, and physical fitness gym.",
     specs: ["Standard Football & Cricket Turf", "Floodlit Basketball Court", "Indoor Badminton Arena", "Annual Archdiocesan Inter-Collegiate Tournaments"],
     status: "Confirmed by College",
     image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop"

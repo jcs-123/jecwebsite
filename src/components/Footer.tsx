@@ -43,9 +43,14 @@ export const Footer: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour })
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-jyothi-gold-500/15 border border-jyothi-gold-400/30 text-xs font-semibold text-jyothi-gold-300">
                 <ShieldCheck className="w-3.5 h-3.5 text-jyothi-gold-400" /> UGC Autonomous Institution
               </span>
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs font-semibold text-white">
-                <Award className="w-3.5 h-3.5 text-jyothi-gold-400" /> NAAC 'A' Grade Accredited
-              </span>
+              <button
+                onClick={() => onNavigate('iqac')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 text-xs font-semibold text-white transition-colors cursor-pointer group"
+                title="View NAAC 'A' Grade & NBA Accreditations (IQAC)"
+              >
+                <Award className="w-3.5 h-3.5 text-jyothi-gold-400 group-hover:scale-110 transition-transform" /> 
+                <span>NAAC 'A' Grade Accredited</span>
+              </button>
             </div>
 
             {/* Social Icons */}
@@ -74,7 +79,11 @@ export const Footer: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour })
               {[
                 { label: 'About Us', page: 'about' },
                 { label: 'Academic Departments', page: 'departments' },
+                { label: 'Autonomous Governance', page: 'autonomous' },
+                { label: 'IQAC & Accreditations (NAAC/NBA)', page: 'iqac' },
+                { label: 'Campus Portals Login', page: 'login' },
                 { label: 'Faculty Directory', page: 'faculty' },
+                { label: 'Alumni Network & Directory', page: 'alumni' },
                 { label: 'Student Life & Clubs', page: 'student-life' },
                 { label: 'Research & TBI Incubator', page: 'research' },
                 { label: 'Campus Placements', page: 'placements' },

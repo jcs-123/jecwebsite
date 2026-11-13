@@ -10,6 +10,10 @@ import { ResearchPage } from './pages/ResearchPage';
 import { AdmissionsPage } from './pages/AdmissionsPage';
 import { PlacementsPage } from './pages/PlacementsPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
+import { AutonomousPage } from './pages/AutonomousPage';
+import { AlumniPage } from './pages/AlumniPage';
+import { LoginPage } from './pages/LoginPage';
+import { IQACPage } from './pages/IQACPage';
 import { ApplyModal } from './components/ApplyModal';
 import { VirtualTourModal } from './components/VirtualTourModal';
 import { SearchModal } from './components/SearchModal';
@@ -78,7 +82,7 @@ export function App() {
         onOpenApply={() => setIsApplyOpen(true)}
         onOpenTour={() => setIsTourOpen(true)}
         onOpenSearch={() => setIsSearchOpen(true)}
-        onOpenAlumni={() => setIsAlumniOpen(true)}
+        onOpenAlumni={() => navigateTo('alumni')}
       />
 
       {/* Main Page Content Body */}
@@ -139,6 +143,40 @@ export function App() {
         {currentPage === 'facilities' && (
           <FacilitiesPage
             selectedFacilityId={subParam}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'autonomous' && (
+          <AutonomousPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'alumni' && (
+          <AlumniPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'login' && (
+          <LoginPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'iqac' && (
+          <IQACPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
             onOpenTour={() => setIsTourOpen(true)}
           />
         )}

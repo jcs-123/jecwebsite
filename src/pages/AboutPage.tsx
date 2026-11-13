@@ -9,6 +9,7 @@ import {
 import { COLLEGE_INFO } from '../data/collegeData';
 import { VerificationBadge } from '../components/VerificationBadge';
 import { AnimatedCounter } from '../components/AnimatedCounter';
+import { RevealBlock } from '../components/RevealBlock';
 
 // Reusable Scroll Reveal Observer Hook
 function useScrollReveal(threshold = 0.1) {
@@ -289,7 +290,7 @@ const LEADERSHIP = [
     role: "Archbishop of Trichur",
     title: "Patron & Spiritual Guide",
     desc: "Provides moral guidance, community vision, and archdiocesan patronage, ensuring Jyothi remains steadfast in empowering students from all socioeconomic strata through ethical, value-based education.",
-    image: "https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=800&auto=format&fit=crop",
     quote: "Our mission is to form technocrats whose intellectual prowess is anchored firmly in integrity, social responsibility, and selfless service."
   },
   {
@@ -297,7 +298,7 @@ const LEADERSHIP = [
     role: "Executive Director",
     title: "Institutional Steward",
     desc: "Oversees strategic capital development, autonomous academic policies, faculty excellence, and campus infrastructure expansion across the 30+ acre Cheruthuruthy sanctuary.",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=800&auto=format&fit=crop",
     quote: "Autonomy has granted us the wings to innovate fearlessly. We are shaping a culture where every classroom idea has a direct path to our FabLab and global markets."
   },
   {
@@ -305,7 +306,7 @@ const LEADERSHIP = [
     role: "Principal",
     title: "Academic & Research Head",
     desc: "Renowned academician and researcher guiding curriculum modernization, NBA/NAAC compliance, doctoral research programs, and global corporate talent partnerships.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
     quote: "With autonomous KTU governance, our students do not wait for obsolete textbook updates. They write modern code, design real hardware, and lead Industry 4.0."
   }
 ];
@@ -374,30 +375,35 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Breadcrumb & Navigation Anchor Bar */}
-          <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-amber-200/60 mb-8 sm:mb-10 text-xs text-slate-600">
+          <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-amber-200/70 mb-8 sm:mb-10 text-xs text-slate-600">
             <div className="flex items-center gap-2">
               <span className="font-semibold text-jyothi-purple-900 cursor-pointer hover:underline" onClick={() => onNavigate('home')}>Home</span>
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-              <span className="text-amber-800 font-bold">About Jyothi</span>
+              <span className="text-[#250836] font-bold">About Jyothi</span>
             </div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs">
-              <a href="#vision" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                🌟 Vision & Values
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] sm:text-xs text-[#250836]">
+              <a href="#vision" className="font-medium hover:text-[#A87627] transition-colors">
+                Vision &amp; Values
               </a>
-              <a href="#roadmap" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                📜 25-Year Roadmap
+              <span className="text-amber-300/90 select-none">|</span>
+              <a href="#roadmap" className="font-medium hover:text-[#A87627] transition-colors">
+                25-Year Roadmap
               </a>
-              <a href="#autonomy" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                ⚡ Autonomous KTU
+              <span className="text-amber-300/90 select-none">|</span>
+              <a href="#autonomy" className="font-medium hover:text-[#A87627] transition-colors">
+                Autonomous KTU
               </a>
-              <a href="#leadership" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                👥 Leadership
+              <span className="text-amber-300/90 select-none">|</span>
+              <a href="#leadership" className="font-medium hover:text-[#A87627] transition-colors">
+                Leadership
               </a>
-              <a href="#campus" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                🌲 30-Acre Campus
+              <span className="text-amber-300/90 select-none">|</span>
+              <a href="#campus" className="font-medium hover:text-[#A87627] transition-colors">
+                30-Acre Campus
               </a>
-              <a href="#accreditations" className="px-3 py-1 rounded-full bg-white/90 border border-amber-200 text-jyothi-purple-900 font-semibold hover:bg-jyothi-purple-50 transition-all">
-                🏆 Accreditations
+              <span className="text-amber-300/90 select-none">|</span>
+              <a href="#accreditations" className="font-medium hover:text-[#A87627] transition-colors">
+                Accreditations
               </a>
             </div>
           </div>
@@ -407,13 +413,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
             {/* Left Narrative Column */}
             <div className="lg:col-span-7 space-y-6 text-left">
               
-              {/* Silver Jubilee & Autonomy Pill Badges */}
+              {/* Silver Jubilee Pill Badge */}
               <div className="flex flex-wrap items-center gap-2.5">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-500/15 via-amber-400/25 to-amber-500/15 border border-amber-300/80 text-amber-900 text-xs font-bold shadow-2xs">
-                  <Star className="w-3.5 h-3.5 text-amber-700 fill-amber-500" />
+                <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-[#FBF2DC] border border-[#DFC06A] text-[#5C3A14] text-xs font-semibold shadow-2xs">
                   <span>Celebrating 25 Years of Excellence (2002–2027)</span>
                 </div>
-                <VerificationBadge status="Confirmed by College" />
               </div>
 
               {/* Majestic Headline with Playfair Serif */}
@@ -422,13 +426,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                   <span className="font-['Playfair_Display',serif] block">
                     Engineering Human Values,
                   </span>
-                  <span className="font-['Playfair_Display',serif] italic font-normal text-[#B5802B] block">
+                  <span className="font-['Playfair_Display',serif] italic font-bold text-[#A87627] block">
                     Shaping Global Technocrats.
                   </span>
                 </h1>
                 <div className="flex items-center gap-3 pt-1">
                   <span className="w-8 h-[2.5px] bg-[#C9902C] rounded-full shrink-0" />
-                  <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.25em] text-[#250836] uppercase">
+                  <span className="text-[11px] sm:text-xs font-extrabold tracking-[0.22em] text-[#250836] uppercase">
                     CATHOLIC ARCHDIOCESE OF TRICHUR • ESTD 2002
                   </span>
                 </div>
@@ -440,24 +444,23 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               </p>
 
               <p className="text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
-                In 2023, Jyothi achieved historic <strong>UGC & APJ KTU Autonomous Status</strong>. Autonomy grants Jyothi's engineering students an unbeatable edge: agile annual curricula co-designed with Fortune 500 tech leaders, interdisciplinary minors in Generative AI, Cloud Dev, and EV Mobility, rapid evaluation timelines, and an on-campus MIT-modeled FabLab ecosystem.
+                In 2023, Jyothi achieved historic <strong>UGC &amp; APJ KTU Autonomous Status</strong>. Autonomy grants Jyothi&apos;s engineering students an unbeatable edge: agile annual curricula, industry-aligned learning, and an on-campus FabLab ecosystem.
               </p>
 
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={onOpenApply}
-                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#29073D] via-[#3B1159] to-[#250638] text-white font-semibold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] flex items-center gap-2 hover:brightness-115 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#29073D] via-[#3B1159] to-[#250638] text-white font-semibold text-xs sm:text-sm shadow-md border border-[#D4A346] flex items-center gap-2 hover:brightness-115 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
                 >
-                  <span>Apply for Admissions 2025</span>
+                  <span>Apply for Admissions</span>
                   <ArrowRight className="w-4 h-4 text-white" />
                 </button>
 
                 <button
                   onClick={onOpenTour}
-                  className="px-5 py-3 rounded-full bg-white hover:bg-slate-50 text-[#250836] font-semibold text-xs sm:text-sm border border-[#C5B498] shadow-xs flex items-center gap-2 transition-all duration-300"
+                  className="px-6 py-3 rounded-full bg-[#FFFDFA] hover:bg-white text-[#250836] font-semibold text-xs sm:text-sm border border-[#D8C5A0] shadow-xs flex items-center gap-2 transition-all duration-300"
                 >
-                  <Play className="w-3.5 h-3.5 text-[#250836] fill-[#250836]" />
                   <span>360° Virtual Campus Tour</span>
                 </button>
               </div>
@@ -466,7 +469,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
 
             {/* Right Architectural Showcase Card */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-white group">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-[#240637] group">
                 <div className="aspect-[4/3] w-full overflow-hidden">
                   <img
                     src="/assets/jyothi_campus_hero.jpg"
@@ -476,30 +479,26 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                 </div>
 
                 {/* Overlaid Institutional Accreditations Floating Bar */}
-                <div className="p-5 bg-gradient-to-br from-[#240637] via-[#2F0A47] to-[#180222] text-white space-y-3">
-                  <div className="flex items-center justify-between text-xs border-b border-white/10 pb-2">
+                <div className="p-5 bg-gradient-to-br from-[#2C0844] via-[#250639] to-[#1A032A] text-white space-y-3.5">
+                  <div className="flex items-center justify-between text-xs pb-1">
                     <span className="font-bold text-[#FDE68A] uppercase tracking-wider text-[11px]">Autonomous Accord</span>
-                    <span className="text-white/80 font-medium">UGC & APJ KTU</span>
+                    <span className="text-white/90 font-medium">UGC &amp; APJ KTU</span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                    <div className="p-2 rounded-xl bg-white/5 border border-white/10">
-                      <div className="font-extrabold text-[#FDE68A] text-sm">NAAC 'A'</div>
-                      <div className="text-[10px] text-white/70">Grade Quality</div>
+                  <div className="grid grid-cols-3 gap-2.5 text-center text-xs">
+                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
+                      <div className="font-bold text-[#FDE68A] text-sm">NAAC A</div>
                     </div>
-                    <div className="p-2 rounded-xl bg-white/5 border border-white/10">
-                      <div className="font-extrabold text-[#FDE68A] text-sm">NBA</div>
-                      <div className="text-[10px] text-white/70">Accredited Depts</div>
+                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
+                      <div className="font-bold text-[#FDE68A] text-sm">NBA</div>
                     </div>
-                    <div className="p-2 rounded-xl bg-white/5 border border-white/10">
-                      <div className="font-extrabold text-[#FDE68A] text-sm">AICTE</div>
-                      <div className="text-[10px] text-white/70">New Delhi Approved</div>
+                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
+                      <div className="font-bold text-[#FDE68A] text-sm">AICTE</div>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 pt-1 text-[11px] text-amber-200/90 font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                    <span className="truncate">Jyothi Hills, Cheruthuruthy, Thrissur, Kerala</span>
+                  <div className="pt-0.5 text-[11px] text-[#DFC06A] font-medium">
+                    <span className="truncate block">Jyothi Hills, Cheruthuruthy, Thrissur, Kerala</span>
                   </div>
                 </div>
 
@@ -515,6 +514,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       {/* 2. SIX ANIMATED INSTITUTIONAL STATS (COUNTER REVEAL) */}
       {/* ============================================================== */}
       <section ref={statsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealBlock direction="up">
         <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#210532] via-[#2D0944] to-[#180222] text-white border border-[#D4A346]/40 shadow-xl">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-white/10 text-center">
             
@@ -568,6 +568,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
 
           </div>
         </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
@@ -590,7 +591,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         </div>
 
         {/* Era Filter Navigation Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 p-1.5 bg-[#FAF7F0] rounded-2xl border border-amber-200/80 max-w-3xl mx-auto shadow-2xs">
+        <div className="flex flex-nowrap overflow-x-auto no-scrollbar lg:overflow-visible items-center justify-start lg:justify-center gap-1.5 sm:gap-2 p-1.5 bg-[#FAF7F0] rounded-2xl border border-amber-200/80 w-full lg:w-fit max-w-full mx-auto shadow-2xs">
           {[
             { id: 'all', label: 'All 25 Years' },
             { id: 'foundation', label: '2002–08: Genesis' },
@@ -601,9 +602,9 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
             <button
               key={tab.id}
               onClick={() => setSelectedEra(tab.id as any)}
-              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] font-semibold transition-all duration-200 cursor-pointer ${
+              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer ${
                 selectedEra === tab.id
-                  ? 'bg-[#250836] text-[#FDE68A] shadow-md scale-102'
+                  ? 'bg-[#250836] text-[#FDE68A] shadow-md'
                   : 'text-slate-700 hover:text-[#250836] hover:bg-white/80'
               }`}
             >
@@ -652,6 +653,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
 
                   {/* Milestone Card */}
                   <div className="w-full lg:w-[calc(50%-44px)] pl-16 lg:pl-0">
+                    <RevealBlock direction={isEven ? 'right' : 'left'} delay={0}>
                     <div 
                       onClick={() => setExpandedYear(isExpanded ? null : m.year)}
                       className={`p-5 sm:p-7 rounded-3xl border transition-all duration-300 cursor-pointer text-left ${
@@ -719,6 +721,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                       </div>
 
                     </div>
+                    </RevealBlock>
                   </div>
 
                   {/* Empty Spacer Column for Desktop alternating layout */}
@@ -755,7 +758,8 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           
           {/* Vision Card */}
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-white via-[#FFFDF8] to-[#FAF5EB] border-2 border-amber-300/80 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
+          <RevealBlock direction="left" delay={0} className="h-full">
+          <div className="h-full p-8 rounded-3xl bg-gradient-to-br from-white via-[#FFFDF8] to-[#FAF5EB] border-2 border-amber-300/80 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#250836] to-[#3C1361] text-[#FDE68A] flex items-center justify-center font-bold shadow-md">
               <Compass className="w-6 h-6" />
             </div>
@@ -773,9 +777,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span>Technology Grounded in Human Values</span>
             </div>
           </div>
+          </RevealBlock>
 
           {/* Mission Card */}
-          <div className="p-8 rounded-3xl bg-gradient-to-br from-white via-[#FBF8FF] to-[#F5EEFB] border-2 border-purple-200 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
+          <RevealBlock direction="right" delay={150} className="h-full">
+          <div className="h-full p-8 rounded-3xl bg-gradient-to-br from-white via-[#FBF8FF] to-[#F5EEFB] border-2 border-purple-200 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center font-bold shadow-md">
               <GraduationCap className="w-6 h-6" />
             </div>
@@ -804,6 +810,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               </li>
             </ul>
           </div>
+          </RevealBlock>
 
         </div>
 
@@ -851,13 +858,20 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
             ].map((val, idx) => {
               const VIcon = val.icon;
               return (
-                <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all space-y-2">
+                <RevealBlock
+                  key={idx}
+                  direction={idx % 2 === 0 ? 'left' : 'right'}
+                  delay={(idx % 5) * 150}
+                  className="h-full"
+                >
+                <div className="h-full p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all space-y-2">
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold border ${val.color}`}>
                     <VIcon className="w-4 h-4" />
                   </div>
                   <h4 className="font-bold text-sm text-[#250836] font-brand">{val.title}</h4>
                   <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">{val.desc}</p>
                 </div>
+                </RevealBlock>
               );
             })}
           </div>
@@ -886,7 +900,8 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         {/* 4 Feature Comparison Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
           
-          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
+          <RevealBlock direction="left" delay={0} className="h-full">
+          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
             <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
               <BookOpen className="w-5 h-5 text-amber-700" />
             </div>
@@ -901,8 +916,10 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span>Zero outdated textbooks</span>
             </div>
           </div>
+          </RevealBlock>
 
-          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
+          <RevealBlock direction="right" delay={150} className="h-full">
+          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
             <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
               <Award className="w-5 h-5 text-jyothi-purple-900" />
             </div>
@@ -917,8 +934,10 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span>Multidisciplinary mastery</span>
             </div>
           </div>
+          </RevealBlock>
 
-          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
+          <RevealBlock direction="left" delay={300} className="h-full">
+          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
             <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
               <ShieldCheck className="w-5 h-5 text-blue-800" />
             </div>
@@ -933,8 +952,10 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span>Punctual degree conferral</span>
             </div>
           </div>
+          </RevealBlock>
 
-          <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
+          <RevealBlock direction="right" delay={450} className="h-full">
+          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
             <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
               <Microscope className="w-5 h-5 text-emerald-800" />
             </div>
@@ -949,6 +970,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span>Hands-on prototype grades</span>
             </div>
           </div>
+          </RevealBlock>
 
         </div>
 
@@ -974,16 +996,21 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {LEADERSHIP.map((leader, idx) => (
-              <div 
+              <RevealBlock
                 key={idx}
-                className="rounded-3xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between text-left group"
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={idx * 150}
+                className="h-full"
+              >
+              <div 
+                className="h-full rounded-3xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between text-left group"
               >
                 <div>
-                  <div className="aspect-[4/3] w-full overflow-hidden bg-slate-100 relative">
+                  <div className="h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative">
                     <img 
                       src={leader.image} 
                       alt={leader.name} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#250836]/90 via-transparent to-transparent flex items-end p-5">
                       <div className="text-white">
@@ -1008,6 +1035,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                 </div>
 
               </div>
+              </RevealBlock>
             ))}
           </div>
 
@@ -1036,7 +1064,8 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
           
           {/* Card 1: Central Automated RFID Library */}
-          <div className="md:col-span-2 p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="left" delay={0} className="md:col-span-2 h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
               <BookOpen className="w-5 h-5 text-amber-700" />
             </div>
@@ -1054,9 +1083,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">RFID Self-Issue</span>
             </div>
           </div>
+          </RevealBlock>
 
           {/* Card 2: MIT FabLab Hardware Incubator */}
-          <div className="p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="right" delay={150} className="h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-900 flex items-center justify-center font-bold">
               <Microscope className="w-5 h-5 text-jyothi-purple-900" />
             </div>
@@ -1072,9 +1103,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               ₹1.2 Cr+ Seed Funding Access
             </div>
           </div>
+          </RevealBlock>
 
           {/* Card 3: 25+ Fleet Bus Routes */}
-          <div className="p-7 rounded-3xl bg-gradient-to-br from-white to-blue-50/50 border border-blue-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="left" delay={300} className="h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-blue-50/50 border border-blue-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-blue-100 text-blue-900 flex items-center justify-center font-bold">
               <Bus className="w-5 h-5 text-blue-800" />
             </div>
@@ -1090,9 +1123,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               Safe & Punctual Daily Commute
             </div>
           </div>
+          </RevealBlock>
 
           {/* Card 4: 100 kW Solar Power Array */}
-          <div className="p-7 rounded-3xl bg-gradient-to-br from-white to-emerald-50/50 border border-emerald-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="right" delay={0} className="h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-emerald-50/50 border border-emerald-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold">
               <Sun className="w-5 h-5 text-emerald-800" />
             </div>
@@ -1108,9 +1143,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               120+ Tonnes CO2 Offset Annually
             </div>
           </div>
+          </RevealBlock>
 
           {/* Card 5: Separate Modern Hostels & Dining */}
-          <div className="md:col-span-2 p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="left" delay={150} className="md:col-span-2 h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
               <Building2 className="w-5 h-5 text-amber-700" />
             </div>
@@ -1128,9 +1165,11 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">Gymnasium & Sports</span>
             </div>
           </div>
+          </RevealBlock>
 
           {/* Card 6: Sports Pavilion & Amphitheater */}
-          <div className="p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
+          <RevealBlock direction="right" delay={300} className="h-full">
+          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
             <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-900 flex items-center justify-center font-bold">
               <Trophy className="w-5 h-5 text-jyothi-purple-900" />
             </div>
@@ -1146,6 +1185,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               State Inter-Collegiate Champions
             </div>
           </div>
+          </RevealBlock>
 
         </div>
 
@@ -1179,7 +1219,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           ].map((acc, idx) => {
             const AIcon = acc.icon;
             return (
-              <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all text-center space-y-2 group">
+              <RevealBlock
+                key={idx}
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={(idx % 6) * 150}
+                className="h-full"
+              >
+              <div className="h-full p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all text-center space-y-2 group">
                 <div className={`w-10 h-10 mx-auto rounded-xl flex items-center justify-center font-bold border ${acc.color} group-hover:scale-110 transition-transform`}>
                   <AIcon className="w-5 h-5" />
                 </div>
@@ -1189,6 +1235,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                   {acc.badge}
                 </span>
               </div>
+              </RevealBlock>
             );
           })}
         </div>
@@ -1198,6 +1245,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       {/* 9. ADMISSIONS & 360° TOUR CTA BANNER */}
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealBlock direction="up">
         <div className="p-8 sm:p-12 md:p-14 rounded-3xl bg-gradient-to-r from-[#210532] via-[#2E0946] to-[#170221] text-white border-2 border-[#D4A346] shadow-2xl relative overflow-hidden flex flex-col lg:flex-row items-center justify-between gap-8 text-left">
           
           {/* Subtle Background Emblem Watermark */}
@@ -1235,6 +1283,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           </div>
 
         </div>
+        </RevealBlock>
       </section>
 
     </div>

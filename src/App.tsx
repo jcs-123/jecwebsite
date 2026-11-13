@@ -6,6 +6,11 @@ import { AboutPage } from './pages/AboutPage';
 import { DepartmentsPage } from './pages/DepartmentsPage';
 import { FacultyPage } from './pages/FacultyPage';
 import { StudentLifePage } from './pages/StudentLifePage';
+import { ClubsSocietiesPage } from './pages/ClubsSocietiesPage';
+import { TharangFestPage } from './pages/TharangFestPage';
+import { CelebrationsPage } from './pages/CelebrationsPage';
+import { SportsArenaPage } from './pages/SportsArenaPage';
+import { NssOutreachPage } from './pages/NssOutreachPage';
 import { ResearchPage } from './pages/ResearchPage';
 import { AdmissionsPage } from './pages/AdmissionsPage';
 import { PlacementsPage } from './pages/PlacementsPage';
@@ -89,6 +94,7 @@ export function App() {
       <main className="flex-1">
         {currentPage === 'home' && (
           <HomePage
+            subSection={subParam}
             onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
             onOpenTour={() => setIsTourOpen(true)}
@@ -117,6 +123,48 @@ export function App() {
 
         {currentPage === 'student-life' && (
           <StudentLifePage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'clubs-societies' && (
+          <ClubsSocietiesPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'tharang-fest' && (
+          <TharangFestPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'celebrations' && (
+          <CelebrationsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'sports-arena' && (
+          <SportsArenaPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'nss-outreach' && (
+          <NssOutreachPage
+            onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
             onOpenTour={() => setIsTourOpen(true)}
           />

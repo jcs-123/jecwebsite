@@ -826,12 +826,12 @@ export const RESEARCH_CENTRES = [
 ];
 
 export const STUDENT_CLUBS = [
-  { name: "IEEE Student Branch", tag: "Professional Society", members: "250+", desc: "One of the most vibrant IEEE branches in Kerala Section, organizing national conferences, hackathons, and IEEE WiE initiatives." },
-  { name: "Tharang Tech & Cultural Fest", tag: "Annual Festival", members: "Entire Campus", desc: "The signature annual inter-collegiate tech and cultural fest of Jyothi Engineering College hosting over 3,000+ delegates across 40+ events." },
-  { name: "NSS Unit No. 140 & 591", tag: "Social Impact", members: "100+", desc: "Community adoption, village electrification projects, blood donation camps, and flood mitigation volunteering." },
-  { name: "Developer Student Club / ACM", tag: "Coding & Cloud", members: "180+", desc: "Competitive programming workshops, Open Source contributions, Git bootcamps, and monthly 24-hour hackathons." },
-  { name: "Team Jyothi Racing (SAE)", tag: "Motorsports & Design", members: "45+", desc: "Design and fabrication of all-terrain vehicles (ATVs) competing in national SAE BAJA and e-BAJA competitions." },
-  { name: "Natya & Swara Cultural Club", tag: "Arts & Music", members: "120+", desc: "Nurturing campus musical bands, classical choreography, theatre, fine arts, and photography enthusiasts." }
+  { name: "IEEE Student Branch", tag: "Technical Society", members: "250+", image: "/assets/club_ieee.jpg", desc: "A vibrant student branch of IEEE fostering technical excellence, research interest, and professional growth." },
+  { name: "Tharang Tech & Cultural Fest", tag: "Tech & Cultural Fest", members: "Entire Campus", image: "/assets/club_tharang.jpg", desc: "Jyothi's annual national fest that brings together technology, creativity, and cultural talent." },
+  { name: "NSS Unit No. 140 & 591", tag: "Social Outreach", members: "100+", image: "/assets/club_nss.jpg", desc: "The college's NSS units that drive meaningful community service and social responsibility initiatives." },
+  { name: "Developer Student Club / ACM", tag: "Coding Collective", members: "180+", image: "/assets/club_coding.jpg", desc: "A student-led community for aspiring developers to build, learn, and collaborate on real-world tech projects." },
+  { name: "Team Jyothi Racing (SAE)", tag: "Student Racing", members: "45+", image: "/assets/club_racing.jpg", desc: "The college's student racing team that designs, builds, and competes with a formula-style vehicle under SAE." },
+  { name: "Natya & Swara Cultural Club", tag: "Cultural Club", members: "120+", image: "/assets/club_natya.jpg", desc: "A space for students to explore and showcase their talent in dance, music, and the performing arts." }
 ];
 
 export interface AlumniProfile {

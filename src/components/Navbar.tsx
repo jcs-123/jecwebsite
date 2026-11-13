@@ -97,9 +97,13 @@ export const Navbar: React.FC<Props> = ({
         { label: 'Vision, Mission & Values', page: 'about', section: 'vision', desc: 'Creating technology leaders', badge: 'Core' },
         { label: '25-Year Roadmap', page: 'about', section: 'roadmap', desc: '2002 to 2027+ Silver Jubilee milestones', badge: 'Milestones' },
         { label: 'Autonomous Governance & Syllabi', page: 'autonomous', desc: 'Governing Body, BoS, Regulations, CBCS & Calendar', badge: 'UGC' },
+        { label: 'Administration', page: 'autonomous', desc: 'Academic & administrative governance' },
+        { label: 'Management', page: 'about', section: 'leadership', desc: 'Catholic Archdiocese of Trichur & JCS' },
         { label: 'Leadership & Trust', page: 'about', section: 'leadership', desc: 'Governing board and trustees' },
         { label: '30-Acre Campus & Labs', page: 'about', section: 'campus', desc: 'Eco-sanctuary & MIT FabLab' },
-        { label: 'Accreditations (NAAC & NBA - IQAC)', page: 'iqac', desc: 'NAAC A Grade, NBA & NIRF' },
+        { label: 'Accreditation NAAC and NBA', page: 'iqac', desc: 'NAAC A Grade, NBA & NIRF', badge: 'IQAC' },
+        { label: 'Policy Documents', page: 'iqac', section: 'policies', desc: 'Institutional charters & quality policies' },
+        { label: 'JEC News', page: 'home', section: 'jec-news', desc: 'Latest campus news, events & circulars' },
       ]
     },
     {
@@ -119,10 +123,11 @@ export const Navbar: React.FC<Props> = ({
       id: 'student-life',
       label: 'Student Life',
       dropdown: [
-        { label: 'Clubs & Societies', page: 'student-life', section: 'clubs', desc: 'IEEE, CSI, IEDC, and FOSS' },
-        { label: 'Tharang National Fest', page: 'student-life', section: 'tharang', desc: 'South India tech-cultural fiesta' },
-        { label: 'Sports Complex & Arena', page: 'student-life', section: 'sports', desc: 'Football turf, floodlit courts' },
-        { label: 'NSS & Social Outreach', page: 'student-life', section: 'nss', desc: 'Community welfare initiatives' },
+        { label: 'Clubs and Societies', page: 'clubs-societies', desc: 'IEEE, CSI, IEDC, FOSS & creative clubs' },
+        { label: 'Tharang National Fest', page: 'tharang-fest', desc: 'South India tech-cultural fiesta', badge: 'Fest' },
+        { label: 'Celebrations', page: 'celebrations', desc: 'Onam, Christmas, Arts Day & Graduation' },
+        { label: 'Sports Complex and Arena', page: 'sports-arena', desc: 'Football turf, floodlit courts & gym' },
+        { label: 'NSS and Social Outreach', page: 'nss-outreach', desc: 'NSS Units 140 & 591 community welfare' },
       ]
     },
     {
@@ -216,7 +221,7 @@ export const Navbar: React.FC<Props> = ({
             </button>
             <span className="text-slate-600 select-none font-light hidden lg:inline">|</span>
             <span className="hidden lg:inline text-slate-300">
-              Affiliated to KTU • JCS (Jyothi Consultancy Service)
+              Affiliated to KTU • Managed by Thrissur Archdiocese
             </span>
           </div>
 

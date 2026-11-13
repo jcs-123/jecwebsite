@@ -28,14 +28,26 @@ export const Navbar: React.FC<Props> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [headerHeight, setHeaderHeight] = useState<number>(0);
   const navRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const updateHeight = () => {
+      if (navRef.current && !mobileMenuOpen) {
+        setHeaderHeight(navRef.current.offsetHeight);
+      }
+    };
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [mobileMenuOpen, isScrolled]);
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 25);
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -170,10 +182,11 @@ export const Navbar: React.FC<Props> = ({
   };
 
   return (
-    <header ref={navRef} className="sticky top-0 z-50 w-full transition-all duration-300">
+    <>
+    <header ref={navRef} className="fixed top-0 left-0 right-0 md:relative md:top-auto md:left-auto md:right-auto z-50 w-full transition-all duration-300">
 
-      {/* 1. Top Utility Info Bar */}
-      <div className="bg-[#170524] text-slate-200 text-[11px] md:text-xs py-2 px-2.5 sm:px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
+      {/* 1. Top Utility Info Bar (Desktop & Tablet only; mobile uses Quick Links in drawer) */}
+      <div className="hidden md:block bg-[#170524] text-slate-200 text-xs py-2 px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1 gap-x-3">
 
           {/* Credentials / Affiliations (Left) */}
@@ -269,9 +282,9 @@ export const Navbar: React.FC<Props> = ({
 
       {/* 2. Main Pristine White Navigation Bar */}
       <nav
-        className={`w-full transition-all duration-300 ${isScrolled
-            ? 'bg-white/98 backdrop-blur-md shadow-md py-2 border-b border-slate-200'
-            : 'bg-white py-2.5 sm:py-3 border-b border-slate-200/80 shadow-xs'
+        className={`w-full transition-all duration-300 bg-white ${isScrolled
+            ? 'shadow-md md:shadow-xs py-2 md:py-3 border-b border-slate-200'
+            : 'py-2.5 sm:py-3 border-b border-slate-200/80 shadow-xs'
           }`}
       >
         <div className="max-w-[1440px] mx-auto px-3 sm:px-5 lg:px-6 xl:px-8 flex items-center justify-between gap-2">
@@ -394,30 +407,30 @@ export const Navbar: React.FC<Props> = ({
             {/* Search Trigger */}
             <button
               onClick={onOpenSearch}
-              className="p-2 xl:px-2.5 xl:py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-700 hover:text-jyothi-purple-950 text-xs font-semibold transition-all flex items-center gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
+              className="w-9 h-9 xl:w-auto xl:h-auto xl:px-3 xl:py-1.5 rounded-full xl:rounded-xl bg-[#F3F1F7] hover:bg-[#EAE5F2] border border-slate-200/70 text-[#250836] text-xs font-semibold transition-all flex items-center justify-center gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
               title="Search Courses, Faculty & Facilities"
+              aria-label="Search"
             >
-              <Search className="w-4 h-4 text-jyothi-purple-800 shrink-0" />
+              <Search className="w-4 h-4 text-[#250836] shrink-0" />
               <span className="hidden 2xl:inline">Search</span>
             </button>
 
             {/* Fast Apply Now Button */}
             <button
               onClick={onOpenApply}
-              className="px-3 xs:px-3.5 sm:px-4 xl:px-4 py-1.5 sm:py-2 rounded-xl bg-gradient-to-r from-jyothi-gold-400 via-jyothi-gold-500 to-jyothi-gold-400 text-jyothi-purple-950 font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-1.5 transform hover:-translate-y-0.5 whitespace-nowrap shrink-0"
+              className="px-3.5 sm:px-4 py-2 rounded-full bg-gradient-to-r from-[#F6CE5E] via-[#F2BE42] to-[#E8AE2F] text-[#250836] font-extrabold text-xs sm:text-sm shadow-sm hover:shadow-md transition-all duration-300 flex items-center gap-1.5 active:scale-[0.97] whitespace-nowrap shrink-0"
             >
-              <Sparkles className="w-3.5 h-3.5 text-jyothi-purple-950 animate-pulse shrink-0" />
+              <Sparkles className="w-3.5 h-3.5 text-[#250836] shrink-0" />
               <span>Apply Now</span>
-              <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-jyothi-purple-950 animate-ping shrink-0" />
             </button>
 
             {/* Responsive Hamburger Toggle for Tablet & Mobile (visible on < xl) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="xl:hidden p-2 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 hover:text-jyothi-purple-950 transition-colors shrink-0"
+              className="xl:hidden w-9 h-9 rounded-xl bg-white hover:bg-slate-50 border border-[#250836]/75 text-[#250836] flex items-center justify-center transition-colors shrink-0"
               aria-label="Toggle navigation menu"
             >
-              {mobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
+              {mobileMenuOpen ? <X className="w-4 h-4 sm:w-5 sm:h-5" /> : <Menu className="w-4 h-4 sm:w-5 sm:h-5" />}
             </button>
 
           </div>
@@ -426,80 +439,82 @@ export const Navbar: React.FC<Props> = ({
 
         {/* 3. Fully Responsive Mobile & Tablet Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="xl:hidden bg-white border-t border-slate-200 px-4 pt-3 pb-6 space-y-2 max-h-[82vh] overflow-y-auto animate-fade-in shadow-2xl">
+          <div className="xl:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-7 space-y-5 max-h-[85vh] overflow-y-auto animate-fade-in shadow-2xl">
 
-            {/* Admissions Banner inside Mobile Menu */}
-            <div className="p-3.5 mb-2 rounded-2xl bg-jyothi-purple-50 border border-jyothi-purple-200 flex items-center justify-between">
-              <div>
-                <p className="text-xs font-bold text-jyothi-purple-950">Admissions 2025-26 Open</p>
-                <p className="text-[11px] text-slate-600">Autonomous B.Tech & M.Tech</p>
-              </div>
+            {/* Mobile Navigation List with Clean Bordered Cards */}
+            <div className="space-y-1.5">
+              {/* Home Row */}
               <button
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  onOpenApply();
-                }}
-                className="px-3 py-1.5 bg-jyothi-gold-400 text-jyothi-purple-950 font-bold text-xs rounded-xl shadow-xs"
+                onClick={() => handleNavClick('home')}
+                className={`w-full text-left py-2.5 px-4 text-[13.5px] rounded-xl border transition-colors flex items-center justify-between ${
+                  currentPage === 'home'
+                    ? 'bg-[#EFE8F6] border-[#E4D7F0] text-[#250836] font-bold'
+                    : 'bg-white border-slate-200/80 text-[#250836] font-semibold hover:bg-slate-50'
+                }`}
               >
-                Apply Online
+                <span>Home</span>
               </button>
-            </div>
 
-            {/* Mobile Navigation List with Smooth Accordion Expand */}
-            <div className="space-y-1">
               {navItems.map((item) => {
                 const hasDropdown = Boolean(item.dropdown);
                 const isExpanded = mobileExpanded === item.id;
                 const isCurrent = currentPage === item.id;
 
                 return (
-                  <div key={item.id} className="rounded-2xl border border-slate-150 overflow-hidden bg-slate-50/50">
+                  <div
+                    key={item.id}
+                    className={`rounded-xl border overflow-hidden transition-colors ${
+                      isCurrent
+                        ? 'bg-[#EFE8F6] border-[#E4D7F0]'
+                        : 'bg-white border-slate-200/80'
+                    }`}
+                  >
 
                     {/* Header Row */}
-                    <div className="flex items-center justify-between">
-                      <button
-                        onClick={() => {
-                          if (hasDropdown) {
-                            toggleMobileDropdown(item.id);
-                          } else {
-                            handleNavClick(item.id);
-                          }
-                        }}
-                        className={`w-full text-left py-3 px-4 text-sm font-bold transition-colors flex items-center justify-between ${isCurrent
-                            ? 'text-jyothi-purple-900 bg-jyothi-purple-100/70'
-                            : 'text-slate-800 hover:text-jyothi-purple-900'
+                    <button
+                      onClick={() => {
+                        if (hasDropdown) {
+                          toggleMobileDropdown(item.id);
+                        } else {
+                          handleNavClick(item.id);
+                        }
+                      }}
+                      className={`w-full text-left py-2.5 px-4 text-[13.5px] transition-colors flex items-center justify-between ${
+                        isCurrent
+                          ? 'text-[#250836] font-bold'
+                          : 'text-[#250836] font-semibold hover:bg-slate-50/80'
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                      {hasDropdown && (
+                        <ChevronDown
+                          className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
+                            isExpanded ? 'rotate-180 text-[#250836]' : ''
                           }`}
-                      >
-                        <span>{item.label}</span>
-                        {hasDropdown && (
-                          <ChevronDown className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-jyothi-purple-900' : ''
-                            }`} />
-                        )}
-                      </button>
-                    </div>
+                        />
+                      )}
+                    </button>
 
                     {/* Accordion Sub-Menu */}
                     {hasDropdown && isExpanded && (
-                      <div className="px-3 py-2 space-y-1 bg-white border-t border-slate-150">
-                        {/* Jump to parent overview page */}
+                      <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
                         <button
                           onClick={() => handleNavClick(item.id)}
-                          className="w-full text-left py-2 px-3 rounded-xl text-xs font-bold text-jyothi-purple-900 bg-jyothi-purple-50 flex items-center justify-between"
+                          className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
                         >
                           <span>{item.label} Overview Page</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </button>
 
-                        {/* Sub-items */}
                         {item.dropdown?.map((sub, i) => (
                           <button
                             key={i}
                             onClick={() => handleNavClick(sub.page, sub.section)}
-                            className="w-full text-left py-2.5 px-3 text-xs text-slate-700 hover:text-jyothi-purple-950 flex items-center justify-between rounded-xl hover:bg-slate-100 transition-colors"
+                            className="w-full text-left py-2 px-3 text-xs text-slate-700 hover:text-[#250836] flex items-center justify-between rounded-lg hover:bg-white transition-colors"
                           >
                             <span className="font-medium truncate">{sub.label}</span>
                             {'badge' in sub && (
-                              <span className="text-[10px] px-2 py-0.5 bg-jyothi-purple-100 text-jyothi-purple-900 rounded-md font-mono font-bold">
+                              <span className="text-[10px] px-2 py-0.5 bg-[#EFE8F6] text-[#250836] rounded-md font-mono font-bold">
                                 {sub.badge}
                               </span>
                             )}
@@ -513,69 +528,79 @@ export const Navbar: React.FC<Props> = ({
               })}
             </div>
 
-            {/* Mobile Helpline & 360 Tour Quick Launch */}
-            <div className="pt-4 pb-2 space-y-2.5 text-xs text-slate-600 border-t border-slate-200 mt-3">
-              <button
-                onClick={() => { setMobileMenuOpen(false); handleNavClick('autonomous'); }}
-                className="w-full text-left flex items-center justify-between gap-2 text-[11px] text-[#DFC06A] bg-[#170524] p-2.5 rounded-xl cursor-pointer hover:bg-[#250836] transition-colors"
-              >
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] shrink-0" />
-                  <span className="font-bold">Autonomous Institution • UGC & KTU</span>
-                </div>
-                <ChevronRight className="w-3.5 h-3.5 text-[#DFC06A]" />
-              </button>
-              <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                <span>Admissions Helpline: <a href="tel:+919526924455" className="text-slate-900 font-bold hover:underline">+91 95269 24455</a></span>
-              </div>
-              <div className="flex items-start gap-2">
-                <Award className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
+            {/* Quick Links Section */}
+            <div className="space-y-2 pt-1">
+              <h3 className="text-[15px] font-extrabold text-[#250836] px-0.5">
+                Quick Links
+              </h3>
+
+              <div className="space-y-1.5">
                 <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    handleNavClick('iqac');
-                  }}
-                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
+                  onClick={() => { setMobileMenuOpen(false); handleNavClick('autonomous'); }}
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
                 >
-                  <span>NAAC &apos;A&apos; Grade &amp; NBA Accreditations (IQAC)</span>
-                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+                  <span className="flex items-center gap-2.5">
+                    <ShieldCheck className="w-4 h-4 text-[#250836] shrink-0" />
+                    <span>Autonomous Institution</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
                 </button>
-              </div>
-              <div className="flex items-start gap-2">
-                <Compass className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
+
+                <button
+                  onClick={() => { setMobileMenuOpen(false); handleNavClick('iqac'); }}
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Award className="w-4 h-4 text-[#250836] shrink-0" />
+                    <span>NAAC A Grade • NBA</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                </button>
+
+                <a
+                  href="tel:+919526924455"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <span>
+                      Admissions Helpline: <strong className="font-bold">+91 95269 24455</strong>
+                    </span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                </a>
+
+                <button
+                  onClick={() => { setMobileMenuOpen(false); handleNavClick('alumni'); }}
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <GraduationCap className="w-4 h-4 text-[#250836] shrink-0" />
+                    <span>Alumni</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                </button>
+
+                <button
+                  onClick={() => { setMobileMenuOpen(false); handleNavClick('login'); }}
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                >
+                  <span className="flex items-center gap-2.5">
+                    <LogIn className="w-4 h-4 text-[#250836] shrink-0" />
+                    <span>Login</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                </button>
+
                 <button
                   onClick={() => { setMobileMenuOpen(false); onOpenTour(); }}
-                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
+                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
                 >
-                  <span>Launch 360° Virtual Campus Tour</span>
-                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
-                </button>
-              </div>
-              <div className="flex items-start gap-2">
-                <GraduationCap className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    handleNavClick('alumni');
-                  }}
-                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
-                >
-                  <span>Jyothi Alumni Association &amp; Directory</span>
-                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
-                </button>
-              </div>
-              <div className="flex items-start gap-2">
-                <LogIn className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
-                <button
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    handleNavClick('login');
-                  }}
-                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
-                >
-                  <span>Campus Portals Login (Student, Faculty, Parent, Hostel)</span>
-                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
+                  <span className="flex items-center gap-2.5">
+                    <Compass className="w-4 h-4 text-[#250836] shrink-0" />
+                    <span>360° Virtual Campus Tour</span>
+                  </span>
+                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
                 </button>
               </div>
             </div>
@@ -586,6 +611,12 @@ export const Navbar: React.FC<Props> = ({
       </nav>
 
     </header>
+    <div
+      aria-hidden="true"
+      className={`md:hidden ${headerHeight ? '' : 'h-[58px] sm:h-[64px]'}`}
+      style={headerHeight ? { height: `${headerHeight}px` } : undefined}
+    />
+    </>
   );
 };
 export default Navbar;

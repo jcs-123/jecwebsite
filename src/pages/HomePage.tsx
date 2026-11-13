@@ -16,6 +16,20 @@ import {
 import { VerificationBadge } from '../components/VerificationBadge';
 import { AnimatedCounter } from '../components/AnimatedCounter';
 
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReduced(mq.matches);
+    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
+  return reduced;
+}
+
 // Reusable Scroll Reveal Observer Hook
 function useScrollReveal(threshold = 0.12) {
   const [isInView, setIsInView] = useState(false);
@@ -26,9 +40,10 @@ function useScrollReveal(threshold = 0.12) {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
+          observer.disconnect();
         }
       },
-      { threshold }
+      { threshold, rootMargin: '0px 0px -24px 0px' }
     );
 
     if (elementRef.current) {
@@ -41,6 +56,44 @@ function useScrollReveal(threshold = 0.12) {
   }, [threshold]);
 
   return [elementRef, isInView] as const;
+}
+
+function RevealBlock({
+  children,
+  className = '',
+  direction = 'up',
+  delay = 0,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  direction?: 'up' | 'left' | 'right';
+  delay?: number;
+}) {
+  const [ref, inView] = useScrollReveal(0.08);
+  const reducedMotion = usePrefersReducedMotion();
+
+  const hiddenTransform =
+    direction === 'left'
+      ? '-translate-x-5'
+      : direction === 'right'
+        ? 'translate-x-5'
+        : 'translate-y-4';
+
+  return (
+    <div
+      ref={ref}
+      style={reducedMotion ? undefined : { transitionDelay: `${delay}ms` }}
+      className={`${
+        reducedMotion
+          ? ''
+          : `transition-all duration-500 ease-out will-change-transform ${
+              inView ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${hiddenTransform}`
+            }`
+      } ${className}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 interface Props {
@@ -82,8 +135,20 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
   const [selectedStreamId, setSelectedStreamId] = useState<string>('cse');
   const [activeLifeTab, setActiveLifeTab] = useState<'tharang' | 'clubs' | 'sports' | 'hostel'>('tharang');
   const [heroSlide, setHeroSlide] = useState(0);
+  const [heroReady, setHeroReady] = useState(false);
+  const reducedMotion = usePrefersReducedMotion();
 
-  // Auto-advance desktop hero 3-image carousel
+  // Trigger smooth hero entrance animation on mount
+  useEffect(() => {
+    if (reducedMotion) {
+      setHeroReady(true);
+      return;
+    }
+    const raf = window.requestAnimationFrame(() => setHeroReady(true));
+    return () => window.cancelAnimationFrame(raf);
+  }, [reducedMotion]);
+
+  // Auto-advance hero 3-image carousel (mobile & desktop)
   useEffect(() => {
     const timer = window.setInterval(() => {
       setHeroSlide((prev) => (prev + 1) % HERO_CAROUSEL_IMAGES.length);
@@ -192,24 +257,53 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
   });
 
   return (
-    <div className="space-y-12 sm:space-y-16 md:space-y-24 overflow-x-hidden bg-white text-jyothi-charcoal-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
+    <div className="overflow-x-clip bg-white text-jyothi-charcoal-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
 
       {/* ============================================================== */}
       {/* 1. LUXURY EDITORIAL ARCHITECTURAL HERO (1:1 TARGET MATCH) */}
       {/* ============================================================== */}
-      <section className="relative w-full md:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-hidden bg-[#FFFDFA] border-b border-slate-200/80">
+      <section className="relative w-full md:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-x-clip md:overflow-hidden bg-transparent md:bg-[#FFFDFA] border-b border-slate-200/80">
 
-        {/* MOBILE TOP CAMPUS PHOTO (< 768px): Clear Unobstructed College Building */}
-        <div className="md:hidden relative w-full h-52 sm:h-64 overflow-hidden shrink-0">
-          <img
-            src="/assets/jyothi_campus_hero.jpg"
-            alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
-            className="w-full h-full object-cover object-[50%_28%]"
-            loading="eager"
-          />
-          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#FFFDFA] to-transparent" />
-          <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
+        {/* MOBILE TOP CAMPUS CAROUSEL (< 768px): Physically Fixed Under Mobile Header */}
+        <div className="md:hidden fixed top-[56px] sm:top-[64px] left-0 right-0 z-0 w-full h-60 sm:h-72 overflow-hidden bg-[#1B0428]">
+          {HERO_CAROUSEL_IMAGES.map((slide, idx) => {
+            const isActive = idx === heroSlide;
+            return (
+              <img
+                key={`mobile-${slide.src}`}
+                src={slide.src}
+                alt={slide.alt}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                className={`absolute inset-0 w-full h-full object-cover ${slide.objectPos} transition-all duration-1000 ease-out will-change-transform ${
+                  isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.03]'
+                }`}
+              />
+            );
+          })}
+
+          {/* Subtle bottom depth gradient */}
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-[#1B0428]/40" />
+
+          {/* Mobile Carousel Indicator Dots */}
+          <div className="absolute bottom-8 right-3.5 z-20 flex items-center gap-1.5 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full border border-white/20">
+            {HERO_CAROUSEL_IMAGES.map((slide, idx) => (
+              <button
+                key={`mobile-dot-${slide.src}`}
+                type="button"
+                onClick={() => setHeroSlide(idx)}
+                aria-label={`View campus slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === heroSlide
+                    ? 'w-4 bg-[#DFC06A]'
+                    : 'w-1.5 bg-white/60 hover:bg-white'
+                }`}
+              />
+            ))}
+          </div>
         </div>
+
+        {/* Spacer reserving mobile fixed campus image height so content starts below it */}
+        <div aria-hidden="true" className="md:hidden w-full h-60 sm:h-72 shrink-0 pointer-events-none" />
 
         {/* DESKTOP & TABLET RIGHT SIDE (>= 768px): 3-Image Auto-Moving Campus Carousel */}
         <div className="hidden md:block absolute top-0 right-0 w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden bg-[#1B0428]">
@@ -326,7 +420,15 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* HERO EDITORIAL CONTENT CONTAINER */}
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-5 pb-6 sm:pt-7 md:pt-10 lg:pt-12 md:pb-2 relative z-10 w-full">
+        <div
+          className={`max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-6 pb-6 sm:pt-7 md:pt-10 lg:pt-12 md:pb-2 relative z-10 w-full bg-[#FFFDFA] md:bg-transparent rounded-t-[24px] md:rounded-none -mt-5 md:mt-0 border-t-2 border-[#DFC06A]/75 md:border-t-0 shadow-[0_-12px_32px_rgba(37,8,54,0.14)] md:shadow-none ${
+            reducedMotion
+              ? ''
+              : `transition-all duration-[600ms] ease-out ${
+                  heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+                }`
+          }`}
+        >
           <div className="w-full md:max-w-[44%] lg:max-w-[41%] xl:max-w-[480px] space-y-3.5 sm:space-y-4 text-left">
 
             {/* Elegant Capsule Badge: Admissions Open 2025–26 */}
@@ -340,10 +442,26 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             {/* Majestic Editorial Typography: "Where Passion Meets Creative Engineering" */}
             <div className="space-y-1 sm:space-y-1.5">
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[36px] lg:text-[44px] xl:text-[50px] font-bold tracking-tight text-[#250836] leading-[1.08]">
-                <span className="font-['Playfair_Display',serif] block font-bold">
+                <span
+                  className={`font-['Playfair_Display',serif] block font-bold ${
+                    reducedMotion
+                      ? ''
+                      : `transition-all duration-500 ease-out delay-[100ms] ${
+                          heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                        }`
+                  }`}
+                >
                   Where Passion Meets
                 </span>
-                <span className="font-['Playfair_Display',serif] italic font-normal text-[#B5802B] min-h-[1.2em] flex items-center pt-0.5">
+                <span
+                  className={`font-['Playfair_Display',serif] italic font-normal text-[#B5802B] min-h-[1.2em] flex items-center pt-0.5 ${
+                    reducedMotion
+                      ? ''
+                      : `transition-all duration-500 ease-out delay-[240ms] ${
+                          heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                        }`
+                  }`}
+                >
                   <span>{TYPING_PHRASES[textIndex].substring(0, charIndex)}</span>
                   <span className="inline-block w-[3px] h-[0.8em] bg-[#B5802B] ml-1.5 animate-pulse rounded-full shrink-0" />
                 </span>
@@ -366,10 +484,14 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             {/* Responsive CTA Buttons */}
             <div className="flex flex-col xs:flex-row items-stretch xs:items-center gap-2.5 sm:gap-3 pt-1">
               
-              {/* Button 1: Purple -> Golden on Hover, Border turns Purple, Text turns Purple */}
+              {/* Button 1: Purple -> Golden on Hover, Tap Press + Arrow Shift */}
               <button
                 onClick={onOpenApply}
-                className="relative px-5 sm:px-6 py-2.5 rounded-full bg-[#29073D] text-white font-bold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] hover:border-[#250836] flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.98] hover:shadow-glow-gold transition-all duration-300 cursor-pointer group overflow-hidden"
+                className={`relative px-5 sm:px-6 py-2.5 rounded-full bg-[#29073D] text-white font-bold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] hover:border-[#250836] flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.97] hover:shadow-glow-gold transition-all duration-300 cursor-pointer group overflow-hidden ${
+                  reducedMotion
+                    ? ''
+                    : `delay-[320ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
+                }`}
               >
                 {/* Smooth Golden Hover Layer */}
                 <span className="absolute inset-0 bg-gradient-to-r from-[#DFC06A] via-[#FDE68A] to-[#C9902C] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
@@ -377,18 +499,22 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 <span className="relative z-10 transition-colors duration-300 group-hover:text-[#250836]">
                   Apply for Admissions
                 </span>
-                <ArrowRight className="relative z-10 w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:text-[#250836] group-hover:translate-x-1 transition-all duration-300" />
+                <ArrowRight className="relative z-10 w-3.5 h-3.5 sm:w-4 sm:h-4 text-white group-hover:text-[#250836] group-hover:translate-x-1 group-active:translate-x-2 transition-all duration-300" />
               </button>
 
-              {/* Button 2: White/Gold -> Royal Purple on Hover, Border turns Gold, Text turns Gold */}
+              {/* Button 2: White/Gold -> Royal Purple on Hover, Tap Press + Icon Shift */}
               <button
                 onClick={onOpenTour}
-                className="relative px-4 sm:px-5 py-2.5 rounded-full bg-white text-[#250836] font-bold text-xs sm:text-sm border-2 border-[#D4A346] hover:border-[#DFC06A] shadow-xs hover:shadow-glow-purple hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer group overflow-hidden"
+                className={`relative px-4 sm:px-5 py-2.5 rounded-full bg-white text-[#250836] font-bold text-xs sm:text-sm border-2 border-[#D4A346] hover:border-[#DFC06A] shadow-xs hover:shadow-glow-purple hover:scale-[1.03] active:scale-[0.97] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer group overflow-hidden ${
+                  reducedMotion
+                    ? ''
+                    : `delay-[400ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
+                }`}
               >
                 {/* Smooth Royal Purple Hover Layer */}
                 <span className="absolute inset-0 bg-gradient-to-r from-[#29073D] via-[#3C1361] to-[#250836] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                <div className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-[#250836] group-hover:border-[#DFC06A] group-hover:bg-[#DFC06A]/20 flex items-center justify-center group-hover:scale-115 transition-all duration-300 shrink-0">
+                <div className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 rounded-full border border-[#250836] group-hover:border-[#DFC06A] group-hover:bg-[#DFC06A]/20 flex items-center justify-center group-hover:scale-115 group-active:translate-x-0.5 transition-all duration-300 shrink-0">
                   <Play className="w-2.5 h-2.5 text-[#250836] fill-[#250836] group-hover:text-[#DFC06A] group-hover:fill-[#DFC06A] ml-0.5 transition-all duration-300" />
                 </div>
                 <span className="relative z-10 whitespace-nowrap transition-colors duration-300 group-hover:text-[#FDE68A]">
@@ -595,6 +721,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
       </section>
 
+      <div className="relative z-10 bg-white space-y-12 sm:space-y-16 md:space-y-24 pt-12 sm:pt-16 md:pt-24">
       {/* ============================================================== */}
       {/* 2. SIX QUICK ACCESS DESTINATIONS (STAGGERED SCROLL REVEAL) */}
       {/* ============================================================== */}
@@ -651,17 +778,26 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             }
           ].map((portal, i) => {
             const Icon = portal.icon;
+            const fromLeft = i % 2 === 0;
+            const hiddenDirection = fromLeft ? '-translate-x-8' : 'translate-x-8';
             return (
               <button
                 key={i}
                 onClick={portal.action}
-                style={{
-                  transitionDelay: `${i * 90}ms`,
-                }}
-                className={`p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 text-left group flex flex-col justify-between transform ${portalsInView
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                  } hover:-translate-y-1.5`}
+                style={
+                  reducedMotion
+                    ? undefined
+                    : { transitionDelay: `${i * 90}ms` }
+                }
+                className={`p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 text-left group flex flex-col justify-between ${
+                  reducedMotion
+                    ? 'transition-all duration-300'
+                    : `transition-all duration-700 ease-out transform will-change-transform ${
+                        portalsInView
+                          ? 'opacity-100 translate-x-0 scale-100'
+                          : `opacity-0 ${hiddenDirection} scale-95 pointer-events-none`
+                      }`
+                } hover:-translate-y-1.5`}
               >
                 <div className="flex items-center justify-between mb-3 w-full">
                   <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${portal.color}`}>
@@ -689,6 +825,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* 3. DYNAMIC ANNOUNCEMENTS & TICKER (CLEAN WHITE CARD) */}
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <RevealBlock direction="up">
         <div className="bg-white rounded-3xl shadow-xs border border-slate-200 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3 shrink-0">
             <span className="px-3 py-1.5 rounded-xl bg-jyothi-purple-100 text-jyothi-purple-900 font-bold flex items-center gap-2 text-xs uppercase tracking-wider">
@@ -717,6 +854,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
@@ -740,17 +878,25 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           {pillars.map((p, idx) => {
             const Icon = p.icon;
             const isSelected = activePillar === idx;
+            const fromLeft = idx % 2 === 0;
             return (
               <button
                 key={idx}
                 onClick={() => setActivePillar(idx)}
-                style={{
-                  transitionDelay: `${idx * 100}ms`,
-                }}
-                className={`p-4 sm:p-5 rounded-3xl text-left transition-all duration-700 border transform ${pillarsInView
-                  ? 'opacity-100 translate-y-0 scale-100'
-                  : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                  } ${isSelected
+                style={
+                  reducedMotion
+                    ? undefined
+                    : { transitionDelay: `${idx * 100}ms` }
+                }
+                className={`p-4 sm:p-5 rounded-3xl text-left border ${
+                  reducedMotion
+                    ? 'transition-all duration-300'
+                    : `transition-all duration-700 ease-out transform will-change-transform ${
+                        pillarsInView
+                          ? 'opacity-100 translate-x-0 scale-100'
+                          : `opacity-0 ${fromLeft ? '-translate-x-8' : 'translate-x-8'} scale-95 pointer-events-none`
+                      }`
+                } ${isSelected
                     ? 'bg-jyothi-purple-900 text-white border-jyothi-purple-900 shadow-xl'
                     : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200 shadow-xs'
                   }`}
@@ -777,6 +923,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* Active Pillar Detailed Showcase Card */}
+        <RevealBlock direction="up">
         <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
           <div className="lg:col-span-8 space-y-4">
             <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 px-3 py-1 rounded-full border border-jyothi-purple-200">
@@ -831,6 +978,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             </div>
           </div>
         </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
@@ -872,18 +1020,19 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
         </div>
 
-        {/* Bento Grid Layout */}
+        {/* Bento Grid Layout (each card reveals individually as you scroll) */}
         <div ref={bentoRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {filteredDepts.map((dept, i) => (
-            <div
+            <RevealBlock
               key={dept.id}
-              style={{
-                transitionDelay: `${i * 90}ms`,
-              }}
-              className={`p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-700 flex flex-col justify-between group space-y-4 transform ${bentoInView
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
-                }`}
+              direction={i % 2 === 0 ? 'left' : 'right'}
+              delay={50}
+              className="h-full"
+            >
+            <div
+              className={`h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-500 flex flex-col justify-between group space-y-4 ${
+                bentoInView ? '' : ''
+              }`}
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -944,6 +1093,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 </button>
               </div>
             </div>
+            </RevealBlock>
           ))}
         </div>
       </section>
@@ -952,78 +1102,132 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* 6. RESEARCH & INNOVATION: FABLAB KERALA & TBI INCUBATOR */}
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 sm:p-12 rounded-3xl bg-slate-900 text-white border border-slate-800 shadow-xl relative overflow-hidden">
+        <div className="p-6 sm:p-10 lg:p-12 rounded-3xl bg-gradient-to-br from-[#160524] via-[#220937] to-[#12041E] text-white border border-[#DFC06A]/50 shadow-2xl relative overflow-hidden">
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-            <div className="lg:col-span-7 space-y-4 text-center lg:text-left">
-              <span className="text-xs font-bold uppercase tracking-wider text-jyothi-gold-400 bg-white/10 px-3.5 py-1 rounded-full border border-jyothi-gold-400/30 inline-block">
-                Innovation Powerhouse
-              </span>
-              <h2 className="text-2xl sm:text-4xl font-black font-brand leading-tight">
-                MIT FabLab Kerala & <br />
-                <span className="text-jyothi-gold-300">Jyothi Tech Business Incubator</span>
-              </h2>
-              <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
-                Jyothi Engineering College houses one of the earliest mini-FabLabs in Kerala, established in collaboration with the APJ Abdul Kalam Technological University and Kerala Startup Mission (KSUM). Students build working hardware prototypes using laser cutters, precision CNC mills, and industrial 3D printers.
-              </p>
+          {/* Subtle Gold Architectural Curve & Drafting Accents */}
+          <div className="absolute inset-0 pointer-events-none">
+            <svg
+              className="w-full h-full opacity-45"
+              viewBox="0 0 1200 500"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M 670 0 C 610 140 605 330 660 500"
+                stroke="#DFC06A"
+                strokeWidth="1.2"
+                strokeOpacity="0.45"
+              />
+              <circle cx="1115" cy="45" r="72" stroke="#DFC06A" strokeWidth="0.8" strokeOpacity="0.22" strokeDasharray="3 4" />
+              <circle cx="1115" cy="45" r="44" stroke="#DFC06A" strokeWidth="0.7" strokeOpacity="0.22" />
+            </svg>
+          </div>
 
-              {/* 3 Prototyping Badges */}
-              <div className="flex flex-wrap gap-2.5 pt-2 justify-center lg:justify-start">
-                <span className="px-3 py-1 rounded-xl bg-white/10 text-xs font-semibold text-slate-200 border border-white/10">
-                  ⚡ 3D Printing & Laser Engraving
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center relative z-10">
+            <div className="lg:col-span-7 space-y-4 text-left">
+              <div className="flex items-center gap-3">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#DFC06A] bg-[#280C40]/85 px-3.5 py-1 rounded-full border border-[#DFC06A]/45 inline-block">
+                  Innovation Powerhouse
                 </span>
-                <span className="px-3 py-1 rounded-xl bg-white/10 text-xs font-semibold text-slate-200 border border-white/10">
-                  🔬 SMD Rework & IoT Stations
-                </span>
-                <span className="px-3 py-1 rounded-xl bg-white/10 text-xs font-semibold text-slate-200 border border-white/10">
-                  🚀 18+ Student Startups Supported
-                </span>
+                <span className="hidden sm:block h-px flex-1 max-w-[140px] bg-gradient-to-r from-[#DFC06A]/50 to-transparent" />
               </div>
 
-              <div className="pt-4 flex flex-wrap gap-3 justify-center lg:justify-start">
+              <h2 className="text-2xl sm:text-4xl lg:text-[40px] font-bold font-['Playfair_Display',serif] leading-[1.12] tracking-tight">
+                <span className="block text-white">MIT FabLab Kerala &amp;</span>
+                <span className="block text-[#DFC06A] mt-0.5">Jyothi Tech Business Incubator</span>
+              </h2>
+
+              <p className="text-xs sm:text-[13.5px] text-slate-300 max-w-xl leading-relaxed">
+                Jyothi Engineering College powers prototyping, research and entrepreneurship through one of Kerala&apos;s earliest mini-FabLabs, in collaboration with the APJ Abdul Kalam Technological University and Kerala Startup Mission (KSUM). Students build working prototypes, conduct applied research, and launch startups in a hands-on innovation ecosystem.
+              </p>
+
+              {/* 3 Gold-Outlined Prototyping Feature Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1.5">
+                <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#1E0831]/90 border border-[#DFC06A]/35">
+                  <Layers className="w-5 h-5 text-[#DFC06A] shrink-0" />
+                  <span className="text-[11px] font-semibold text-slate-100 leading-tight">
+                    3D Printing &amp; Laser Engraving
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#1E0831]/90 border border-[#DFC06A]/35">
+                  <Cpu className="w-5 h-5 text-[#DFC06A] shrink-0" />
+                  <span className="text-[11px] font-semibold text-slate-100 leading-tight">
+                    SMD Rework &amp; IoT Stations
+                  </span>
+                </div>
+                <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#1E0831]/90 border border-[#DFC06A]/35">
+                  <Zap className="w-5 h-5 text-[#DFC06A] shrink-0" />
+                  <span className="text-[11px] font-semibold text-slate-100 leading-tight">
+                    Student Startups
+                  </span>
+                </div>
+              </div>
+
+              <div className="pt-3 flex flex-wrap gap-3">
                 <button
                   onClick={() => onNavigate('research')}
-                  className="px-6 py-3.5 rounded-2xl bg-gradient-to-r from-jyothi-gold-400 to-jyothi-gold-500 text-jyothi-purple-950 font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all"
+                  className="px-6 py-3 rounded-full bg-gradient-to-r from-[#DFC06A] via-[#F4DA84] to-[#C9902C] text-[#1D052D] font-bold text-xs sm:text-sm shadow-md hover:shadow-glow-gold hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group cursor-pointer"
                 >
-                  Explore FabLab & Patents
+                  <span>Explore FabLab &amp; Patents</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button
                   onClick={onOpenApply}
-                  className="px-5 py-3.5 rounded-2xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs sm:text-sm border border-white/20 transition-all"
+                  className="px-6 py-3 rounded-full bg-[#1C072E]/85 hover:bg-[#2B0C44] text-white font-semibold text-xs sm:text-sm border border-[#DFC06A]/60 hover:border-[#DFC06A] active:scale-[0.98] transition-all flex items-center gap-2 group cursor-pointer"
                 >
-                  Join Innovation Clubs
+                  <span>Join Innovation Clubs</span>
+                  <ArrowRight className="w-4 h-4 text-[#DFC06A] group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
             </div>
 
-            {/* Right Innovation Stats with Scroll Counting Animation */}
-            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5">
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/15 text-center">
-                <div className="text-3xl font-black font-brand text-jyothi-gold-300">
+            {/* Right Innovation Stats Grid with Gold Corner Fold */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4">
+              <RevealBlock direction="left" delay={40}>
+              <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
+                <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
+                <TrendingUp className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
+                <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-white">
                   <AnimatedCounter end={18} suffix="+" duration={1600} />
                 </div>
                 <div className="text-xs font-bold text-white mt-1">Startups Incubated</div>
                 <div className="text-[10px] text-slate-400 mt-0.5">Kerala Startup Mission</div>
               </div>
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/15 text-center">
-                <div className="text-3xl font-black font-brand text-jyothi-gold-300">
+              </RevealBlock>
+
+              <RevealBlock direction="right" delay={110}>
+              <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
+                <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
+                <FileText className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
+                <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-white">
                   <AnimatedCounter end={42} suffix="+" duration={1700} />
                 </div>
-                <div className="text-xs font-bold text-white mt-1">Patents & Papers</div>
-                <div className="text-[10px] text-slate-400 mt-0.5">Student & Faculty IPR</div>
+                <div className="text-xs font-bold text-white mt-1">Patents &amp; Papers</div>
+                <div className="text-[10px] text-slate-400 mt-0.5">Student &amp; Faculty IPR</div>
               </div>
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/15 text-center">
-                <div className="text-3xl font-black font-brand text-jyothi-gold-300">
+              </RevealBlock>
+
+              <RevealBlock direction="left" delay={180}>
+              <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
+                <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
+                <Award className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
+                <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#DFC06A]">
                   <AnimatedCounter end={1.2} prefix="₹" suffix=" Cr+" decimals={1} duration={1800} />
                 </div>
                 <div className="text-xs font-bold text-white mt-1">Seed Grants Pool</div>
-                <div className="text-[10px] text-slate-400 mt-0.5">IEDC & Institutional</div>
+                <div className="text-[10px] text-slate-400 mt-0.5">IEDC &amp; Institutional</div>
               </div>
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/5 border border-white/15 text-center">
-                <div className="text-3xl font-black font-brand text-jyothi-gold-300 tracking-wider animate-pulse-subtle">MIT</div>
+              </RevealBlock>
+
+              <RevealBlock direction="right" delay={250}>
+              <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
+                <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
+                <Wrench className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
+                <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-white tracking-wider">MIT</div>
                 <div className="text-xs font-bold text-white mt-1">Modeled FabLab</div>
                 <div className="text-[10px] text-slate-400 mt-0.5">Rapid Hardware Prototyping</div>
               </div>
+              </RevealBlock>
             </div>
           </div>
 
@@ -1056,17 +1260,26 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             { end: 462, suffix: "+", label: "Total Job Offers", sub: "Season 2024-25", color: "text-jyothi-purple-900", subColor: "text-emerald-600" },
             { end: 94, suffix: "+", label: "Companies Visited", sub: "MNCs & Core Leaders", color: "text-jyothi-purple-900", subColor: "text-jyothi-purple-700" },
             { end: 87.4, suffix: "%", decimals: 1, label: "Placement Rate", sub: "Eligible Graduates", color: "text-jyothi-purple-900", subColor: "text-emerald-600" },
-          ].map((stat, i) => (
-            <div
-              key={i}
-              style={{
-                transitionDelay: `${i * 100}ms`,
-              }}
-              className={`p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-700 text-center transform ${statsInView
-                ? 'opacity-100 translate-y-0 scale-100'
-                : 'opacity-0 translate-y-8 scale-95 pointer-events-none'
+          ].map((stat, i) => {
+            const fromLeft = i % 2 === 0;
+            return (
+              <div
+                key={i}
+                style={
+                  reducedMotion
+                    ? undefined
+                    : { transitionDelay: `${i * 100}ms` }
+                }
+                className={`p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg text-center ${
+                  reducedMotion
+                    ? 'transition-all duration-300'
+                    : `transition-all duration-700 ease-out transform will-change-transform ${
+                        statsInView
+                          ? 'opacity-100 translate-x-0 scale-100'
+                          : `opacity-0 ${fromLeft ? '-translate-x-8' : 'translate-x-8'} scale-95 pointer-events-none`
+                      }`
                 }`}
-            >
+              >
               <div className={`text-3xl sm:text-4xl font-black font-brand ${stat.color}`}>
                 <AnimatedCounter
                   end={stat.end}
@@ -1079,7 +1292,8 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               <div className="text-xs font-semibold text-slate-600 mt-1">{stat.label}</div>
               <div className={`text-[11px] mt-0.5 ${stat.subColor}`}>{stat.sub}</div>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Continuous Dual-Direction Infinite Recruiter Marquee */}
@@ -1159,10 +1373,15 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
-          {ALUMNI_TESTIMONIALS.map((alumni) => (
-            <div
+          {ALUMNI_TESTIMONIALS.map((alumni, idx) => (
+            <RevealBlock
               key={alumni.id}
-              className="p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg hover:border-jyothi-purple-300 transition-all flex flex-col justify-between space-y-4"
+              direction={idx === 0 ? 'left' : idx === 2 ? 'right' : 'up'}
+              delay={idx * 90}
+              className="h-full"
+            >
+            <div
+              className="h-full p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg hover:border-jyothi-purple-300 transition-all flex flex-col justify-between space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center gap-3.5">
@@ -1191,6 +1410,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 <span className="px-2 py-0.5 rounded-full bg-slate-100 font-mono">{alumni.batch}</span>
               </div>
             </div>
+            </RevealBlock>
           ))}
         </div>
       </section>
@@ -1234,6 +1454,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* Dynamic Campus Life Spotlight */}
+        <RevealBlock direction="up">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {activeLifeTab === 'tharang' && (
             <>
@@ -1339,6 +1560,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             </>
           )}
         </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
@@ -1386,6 +1608,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
         </div>
 
+        <RevealBlock direction="up">
         <div className="p-5 sm:p-8 bg-white rounded-3xl border border-slate-200 shadow-xs max-w-4xl mx-auto">
           {activeNewsTab === 'notices' && (
             <div className="space-y-3 sm:space-y-4">
@@ -1453,12 +1676,14 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             </div>
           )}
         </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
       {/* 11. IMMERSIVE ADMISSIONS & CAMPUS VISIT CALL TO ACTION */}
       {/* ============================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+        <RevealBlock direction="up">
         <div className="rounded-3xl bg-gradient-to-r from-jyothi-purple-900 via-jyothi-purple-800 to-jyothi-purple-950 text-white p-8 sm:p-12 md:p-16 border border-jyothi-purple-700 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
 
           {/* Ambient Glow */}
@@ -1492,7 +1717,9 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
 
         </div>
+        </RevealBlock>
       </section>
+      </div>
 
     </div>
   );

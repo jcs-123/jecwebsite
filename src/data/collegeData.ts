@@ -79,7 +79,7 @@ export const COLLEGE_INFO = {
   motto: "Creating Technology Leaders Since 2002",
   approvedBy: "AICTE New Delhi & Affiliated to APJ Abdul Kalam Technological University (KTU)",
   accreditation: "NAAC 'A' Grade Accredited & NBA Accredited B.Tech Programmes",
-  managedBy: "Catholic Archdiocese of Trichur",
+  managedBy: "JCS (Jyothi Consultancy Service)",
   address: "Jyothi Hills, Panjal Road, Vettikattiri P.O., Cheruthuruthy, Thrissur, Kerala - 679531",
   phone: "+91 4884 259000 / 259001",
   admissionHelpline: "+91 95269 24455 / +91 95269 34455",

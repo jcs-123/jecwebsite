@@ -2,22 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'Caldina';
-  src: url('/fonts/Caldina-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'AcuminConcept';
-  src: url('/fonts/Acumin-Semibold.otf') format('opentype');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
 @layer base {
   *, ::before, ::after {
     box-sizing: border-box;
@@ -42,7 +26,7 @@
   }
   
   h1, h2, h3, h4, .font-brand {
-    font-family: 'Caldina', 'Outfit', system-ui, sans-serif;
+    font-family: 'Outfit', system-ui, sans-serif;
     letter-spacing: -0.015em;
   }
 }

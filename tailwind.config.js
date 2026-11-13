@@ -52,8 +52,8 @@ export default {
         }
       },
       fontFamily: {
-        brand: ['Caldina', 'Outfit', 'Montserrat', 'sans-serif'],
-        sub: ['AcuminConcept', 'Plus Jakarta Sans', 'Inter', 'sans-serif'],
+        brand: ['Outfit', 'Montserrat', 'sans-serif'],
+        sub: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],
       },
       boxShadow: {

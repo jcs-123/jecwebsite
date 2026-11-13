@@ -8,6 +8,8 @@ import {
   Database, Cpu, Layers, Globe, Shield, LifeBuoy
 } from 'lucide-react';
 
+import { RevealBlock } from '../components/RevealBlock';
+
 // Reusable ScrollReveal component for smooth parallax-feel scroll animations
 const ScrollReveal: React.FC<{
   children: React.ReactNode;
@@ -684,7 +686,11 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
           {/* 6 Minimalist Portal Cards Grid (3 Columns x 2 Rows) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
             {PORTALS_LIST.map((portal, idx) => (
-              <ScrollReveal key={portal.id} delay={idx * 70}>
+              <RevealBlock
+                key={portal.id}
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={(idx % 3) * 150}
+              >
                 <button
                   type="button"
                   onClick={() => handleOpenPortal(portal)}
@@ -718,7 +724,7 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
                     </div>
                   </div>
                 </button>
-              </ScrollReveal>
+              </RevealBlock>
             ))}
           </div>
 

@@ -15,86 +15,7 @@ import {
 } from '../data/collegeData';
 import { VerificationBadge } from '../components/VerificationBadge';
 import { AnimatedCounter } from '../components/AnimatedCounter';
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
-    setReduced(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReduced(e.matches);
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
-
-  return reduced;
-}
-
-// Reusable Scroll Reveal Observer Hook
-function useScrollReveal(threshold = 0.12) {
-  const [isInView, setIsInView] = useState(false);
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold, rootMargin: '0px 0px -24px 0px' }
-    );
-
-    if (elementRef.current) {
-      observer.observe(elementRef.current);
-    }
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [threshold]);
-
-  return [elementRef, isInView] as const;
-}
-
-function RevealBlock({
-  children,
-  className = '',
-  direction = 'up',
-  delay = 0,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  direction?: 'up' | 'left' | 'right';
-  delay?: number;
-}) {
-  const [ref, inView] = useScrollReveal(0.08);
-  const reducedMotion = usePrefersReducedMotion();
-
-  const hiddenTransform =
-    direction === 'left'
-      ? '-translate-x-5'
-      : direction === 'right'
-        ? 'translate-x-5'
-        : 'translate-y-4';
-
-  return (
-    <div
-      ref={ref}
-      style={reducedMotion ? undefined : { transitionDelay: `${delay}ms` }}
-      className={`${
-        reducedMotion
-          ? ''
-          : `transition-all duration-500 ease-out will-change-transform ${
-              inView ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${hiddenTransform}`
-            }`
-      } ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
+import { RevealBlock, usePrefersReducedMotion } from '../components/RevealBlock';
 
 interface Props {
   onNavigate: (page: string, subId?: string) => void;
@@ -127,6 +48,38 @@ const HERO_CAROUSEL_IMAGES = [
     objectPos: "object-[50%_30%]",
   },
 ];
+
+const RECRUITER_BRANDS: Record<string, { code: string; bg: string; text: string; ring?: string }> = {
+  "Tata Consultancy Services (TCS)": { code: "TCS", bg: "bg-gradient-to-br from-[#0055A2] to-[#003A70]", text: "text-white" },
+  "Infosys Technologies": { code: "INFY", bg: "bg-gradient-to-br from-[#007CC3] to-[#005A8D]", text: "text-white" },
+  "Cognizant Technology Solutions": { code: "CTS", bg: "bg-gradient-to-br from-[#0033A0] to-[#001F60]", text: "text-white" },
+  "Federal Bank Ltd.": { code: "FB", bg: "bg-gradient-to-br from-[#004B8D] to-[#00315C]", text: "text-[#FDE047]", ring: "ring-1 ring-[#FACC15]/50" },
+  "UST Global": { code: "UST", bg: "bg-gradient-to-br from-[#0F172A] to-[#1E293B]", text: "text-[#2DD4BF]" },
+  "SOTI Inc.": { code: "SOTI", bg: "bg-gradient-to-br from-[#1D4ED8] to-[#1E3A8A]", text: "text-white" },
+  "IBM India": { code: "IBM", bg: "bg-gradient-to-br from-[#054ADA] to-[#002D9C]", text: "text-white" },
+  "Bosch Global Software": { code: "BOS", bg: "bg-gradient-to-br from-[#E20015] to-[#991B1B]", text: "text-white" },
+  "Wipro Technologies": { code: "WIP", bg: "bg-gradient-to-br from-[#3B0764] to-[#581C87]", text: "text-[#FDE68A]" },
+  "Quest Global": { code: "QG", bg: "bg-gradient-to-br from-[#1E3A8A] to-[#0F172A]", text: "text-white" },
+  "Amazon AWS": { code: "AWS", bg: "bg-gradient-to-br from-[#232F3E] to-[#111827]", text: "text-[#FF9900]", ring: "ring-1 ring-[#FF9900]/40" },
+  "L&T Technology Services": { code: "L&T", bg: "bg-gradient-to-br from-[#1E293B] to-[#0F172A]", text: "text-[#FBBF24]", ring: "ring-1 ring-[#FBBF24]/40" },
+};
+
+function RecruiterLogoIcon({ name }: { name: string }) {
+  const brand = RECRUITER_BRANDS[name] || {
+    code: name.slice(0, 3).toUpperCase(),
+    bg: "bg-gradient-to-br from-[#250836] to-[#3C1361]",
+    text: "text-[#DFC06A]",
+  };
+
+  return (
+    <span
+      aria-hidden="true"
+      className={`w-7 h-7 rounded-lg ${brand.bg} ${brand.text} ${brand.ring || ''} flex items-center justify-center text-[9px] font-black tracking-tighter shadow-xs shrink-0 select-none`}
+    >
+      {brand.code}
+    </span>
+  );
+}
 
 export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'computer' | 'circuits' | 'core'>('all');
@@ -196,12 +149,6 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
     return () => clearTimeout(timer);
   }, [charIndex, isDeleting, isPaused, textIndex]);
-
-  // Scroll Reveal triggers for interactive staggered card entries
-  const [portalsRef, portalsInView] = useScrollReveal(0.08);
-  const [pillarsRef, pillarsInView] = useScrollReveal(0.08);
-  const [bentoRef, bentoInView] = useScrollReveal(0.06);
-  const [statsRef, statsInView] = useScrollReveal(0.08);
 
   // Interactive quick course lookup
   const selectedDept = DEPARTMENTS.find(d => d.id === selectedStreamId) || DEPARTMENTS[0];
@@ -478,7 +425,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
             {/* Editorial Lead Paragraph */}
             <p className="text-xs sm:text-[13px] text-slate-700 font-normal leading-relaxed max-w-md pt-0.5">
-              Managed by the <strong className="text-slate-900 font-semibold">Catholic Archdiocese of Trichur</strong> since 2002. Set on 30+ scenic green acres in Cheruthuruthy, Jyothi equips aspiring engineers with autonomous curricula, MIT-modeled FabLab prototyping, and high-impact global careers.
+              Managed by <strong className="text-slate-900 font-semibold">JCS (Jyothi Consultancy Service)</strong> since 2002. Set on 30+ scenic green acres in Cheruthuruthy, Jyothi equips aspiring engineers with autonomous curricula, MIT-modeled FabLab prototyping, and high-impact global careers.
             </p>
 
             {/* Responsive CTA Buttons */}
@@ -725,7 +672,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* ============================================================== */}
       {/* 2. SIX QUICK ACCESS DESTINATIONS (STAGGERED SCROLL REVEAL) */}
       {/* ============================================================== */}
-      <section ref={portalsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {[
             {
@@ -778,26 +725,16 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
             }
           ].map((portal, i) => {
             const Icon = portal.icon;
-            const fromLeft = i % 2 === 0;
-            const hiddenDirection = fromLeft ? '-translate-x-8' : 'translate-x-8';
             return (
-              <button
+              <RevealBlock
                 key={i}
+                direction={i % 2 === 0 ? 'left' : 'right'}
+                delay={(i % 4) * 150}
+                className="h-full"
+              >
+              <button
                 onClick={portal.action}
-                style={
-                  reducedMotion
-                    ? undefined
-                    : { transitionDelay: `${i * 90}ms` }
-                }
-                className={`p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 text-left group flex flex-col justify-between ${
-                  reducedMotion
-                    ? 'transition-all duration-300'
-                    : `transition-all duration-700 ease-out transform will-change-transform ${
-                        portalsInView
-                          ? 'opacity-100 translate-x-0 scale-100'
-                          : `opacity-0 ${hiddenDirection} scale-95 pointer-events-none`
-                      }`
-                } hover:-translate-y-1.5`}
+                className="w-full h-full p-4 sm:p-5 rounded-3xl bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 text-left group flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5"
               >
                 <div className="flex items-center justify-between mb-3 w-full">
                   <div className={`w-10 h-10 rounded-2xl flex items-center justify-center transition-all ${portal.color}`}>
@@ -816,6 +753,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   </p>
                 </div>
               </button>
+              </RevealBlock>
             );
           })}
         </div>
@@ -874,29 +812,20 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* 4 Pillar Selection Cards */}
-        <div ref={pillarsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {pillars.map((p, idx) => {
             const Icon = p.icon;
             const isSelected = activePillar === idx;
-            const fromLeft = idx % 2 === 0;
             return (
-              <button
+              <RevealBlock
                 key={idx}
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={(idx % 4) * 150}
+                className="h-full"
+              >
+              <button
                 onClick={() => setActivePillar(idx)}
-                style={
-                  reducedMotion
-                    ? undefined
-                    : { transitionDelay: `${idx * 100}ms` }
-                }
-                className={`p-4 sm:p-5 rounded-3xl text-left border ${
-                  reducedMotion
-                    ? 'transition-all duration-300'
-                    : `transition-all duration-700 ease-out transform will-change-transform ${
-                        pillarsInView
-                          ? 'opacity-100 translate-x-0 scale-100'
-                          : `opacity-0 ${fromLeft ? '-translate-x-8' : 'translate-x-8'} scale-95 pointer-events-none`
-                      }`
-                } ${isSelected
+                className={`w-full h-full p-4 sm:p-5 rounded-3xl text-left border transition-all duration-300 ${isSelected
                     ? 'bg-jyothi-purple-900 text-white border-jyothi-purple-900 shadow-xl'
                     : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200 shadow-xs'
                   }`}
@@ -918,6 +847,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                   {p.subtitle}
                 </p>
               </button>
+              </RevealBlock>
             );
           })}
         </div>
@@ -1021,18 +951,16 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* Bento Grid Layout (each card reveals individually as you scroll) */}
-        <div ref={bentoRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {filteredDepts.map((dept, i) => (
             <RevealBlock
               key={dept.id}
               direction={i % 2 === 0 ? 'left' : 'right'}
-              delay={50}
+              delay={(i % 3) * 150}
               className="h-full"
             >
             <div
-              className={`h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-500 flex flex-col justify-between group space-y-4 ${
-                bentoInView ? '' : ''
-              }`}
+              className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-500 flex flex-col justify-between group space-y-4"
             >
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -1183,7 +1111,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
 
             {/* Right Innovation Stats Grid with Gold Corner Fold */}
             <div className="lg:col-span-5 grid grid-cols-2 gap-3.5 sm:gap-4">
-              <RevealBlock direction="left" delay={40}>
+              <RevealBlock direction="left" delay={0}>
               <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
                 <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
                 <TrendingUp className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
@@ -1195,7 +1123,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               </div>
               </RevealBlock>
 
-              <RevealBlock direction="right" delay={110}>
+              <RevealBlock direction="right" delay={150}>
               <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
                 <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
                 <FileText className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
@@ -1207,7 +1135,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               </div>
               </RevealBlock>
 
-              <RevealBlock direction="left" delay={180}>
+              <RevealBlock direction="left" delay={300}>
               <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
                 <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
                 <Award className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
@@ -1219,7 +1147,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               </div>
               </RevealBlock>
 
-              <RevealBlock direction="right" delay={250}>
+              <RevealBlock direction="right" delay={450}>
               <div className="h-full p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-[#230B38]/90 to-[#160524]/95 border border-[#DFC06A]/35 hover:border-[#DFC06A]/70 text-center relative overflow-hidden transition-all">
                 <span className="absolute top-0 right-0 w-0 h-0 border-t-[18px] border-t-[#DFC06A]/85 border-l-[18px] border-l-transparent pointer-events-none" />
                 <Wrench className="w-6 h-6 text-[#DFC06A] mx-auto mb-2" />
@@ -1254,31 +1182,21 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* 4 Stats Cards with Counting Animation */}
-        <div ref={statsRef} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {[
             { end: 24, prefix: "₹", suffix: " LPA", label: "Highest CTC Offered", sub: "Premier Tech Recruiter", color: "text-jyothi-purple-900", subColor: "text-jyothi-purple-700" },
             { end: 462, suffix: "+", label: "Total Job Offers", sub: "Season 2024-25", color: "text-jyothi-purple-900", subColor: "text-emerald-600" },
             { end: 94, suffix: "+", label: "Companies Visited", sub: "MNCs & Core Leaders", color: "text-jyothi-purple-900", subColor: "text-jyothi-purple-700" },
             { end: 87.4, suffix: "%", decimals: 1, label: "Placement Rate", sub: "Eligible Graduates", color: "text-jyothi-purple-900", subColor: "text-emerald-600" },
-          ].map((stat, i) => {
-            const fromLeft = i % 2 === 0;
-            return (
-              <div
+          ].map((stat, i) => (
+              <RevealBlock
                 key={i}
-                style={
-                  reducedMotion
-                    ? undefined
-                    : { transitionDelay: `${i * 100}ms` }
-                }
-                className={`p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg text-center ${
-                  reducedMotion
-                    ? 'transition-all duration-300'
-                    : `transition-all duration-700 ease-out transform will-change-transform ${
-                        statsInView
-                          ? 'opacity-100 translate-x-0 scale-100'
-                          : `opacity-0 ${fromLeft ? '-translate-x-8' : 'translate-x-8'} scale-95 pointer-events-none`
-                      }`
-                }`}
+                direction={i % 2 === 0 ? 'left' : 'right'}
+                delay={(i % 4) * 150}
+                className="h-full"
+              >
+              <div
+                className="h-full p-5 sm:p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 text-center"
               >
               <div className={`text-3xl sm:text-4xl font-black font-brand ${stat.color}`}>
                 <AnimatedCounter
@@ -1292,8 +1210,8 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               <div className="text-xs font-semibold text-slate-600 mt-1">{stat.label}</div>
               <div className={`text-[11px] mt-0.5 ${stat.subColor}`}>{stat.sub}</div>
             </div>
-            );
-          })}
+            </RevealBlock>
+          ))}
         </div>
 
         {/* Continuous Dual-Direction Infinite Recruiter Marquee */}
@@ -1313,9 +1231,9 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               {[...RECRUITERS, ...RECRUITERS].map((r, i) => (
                 <div
                   key={`r1-${i}`}
-                  className="px-4 py-3 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-purple-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
+                  className="px-3.5 py-2.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-purple-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
                 >
-                  <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-jyothi-gold-400 to-jyothi-gold-500 shadow-xs" />
+                  <RecruiterLogoIcon name={r.name} />
                   <span className="text-xs font-bold text-jyothi-purple-950 group-hover:text-jyothi-purple-800 transition-colors whitespace-nowrap">
                     {r.name}
                   </span>
@@ -1336,9 +1254,9 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
               {[...RECRUITERS.slice().reverse(), ...RECRUITERS.slice().reverse()].map((r, i) => (
                 <div
                   key={`r2-${i}`}
-                  className="px-4 py-3 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-gold-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
+                  className="px-3.5 py-2.5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex items-center gap-2.5 shrink-0 hover:border-jyothi-gold-400 hover:shadow-md hover:scale-[1.03] transition-all cursor-pointer group"
                 >
-                  <div className="w-2.5 h-2.5 rounded-full bg-jyothi-purple-800 shadow-xs" />
+                  <RecruiterLogoIcon name={r.name} />
                   <span className="text-xs font-bold text-jyothi-purple-950 group-hover:text-jyothi-purple-800 transition-colors whitespace-nowrap">
                     {r.name}
                   </span>
@@ -1376,8 +1294,8 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           {ALUMNI_TESTIMONIALS.map((alumni, idx) => (
             <RevealBlock
               key={alumni.id}
-              direction={idx === 0 ? 'left' : idx === 2 ? 'right' : 'up'}
-              delay={idx * 90}
+              direction={idx % 2 === 0 ? 'left' : 'right'}
+              delay={idx * 150}
               className="h-full"
             >
             <div
@@ -1454,113 +1372,103 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* Dynamic Campus Life Spotlight */}
-        <RevealBlock direction="up">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {activeLifeTab === 'tharang' && (
-            <>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900">National Fest</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Tharang National Cultural Fest</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Three days of electrifying musical performances, inter-collegiate pro-shows, dance battles, and literary competitions drawing 5,000+ students across South India.
-                </p>
+          {({
+            tharang: [
+              {
+                badge: 'National Fest',
+                badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
+                title: 'Tharang National Cultural Fest',
+                desc: 'Three days of electrifying musical performances, inter-collegiate pro-shows, dance battles, and literary competitions drawing 5,000+ students across South India.',
+              },
+              {
+                badge: 'Tech Conclave',
+                badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
+                title: 'HackJyothi 24-Hour Hackathon',
+                desc: 'Overnight code marathon sponsored by IT partners. Teams tackle real-world problem statements in generative AI, IoT, and embedded robotics with cash prizes.',
+              },
+              {
+                badge: 'Social Initiative',
+                badgeClass: 'bg-emerald-100 text-emerald-900',
+                title: 'NSS & Community Outreach',
+                desc: "Blood donation camps, solar lighting drives in nearby villages, and flood relief operations exemplifying the college's moral and ethical mission.",
+              },
+            ],
+            clubs: [
+              {
+                badge: 'Global Chapter',
+                badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
+                title: 'IEEE Student Branch',
+                desc: 'Active student branch organizing international paper presentation conferences, workshops on robotics, and Women in Engineering (WIE) symposiums.',
+              },
+              {
+                badge: 'Startup Cell',
+                badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
+                title: 'IEDC Innovation & Entrepreneurship',
+                desc: 'Supported by Kerala Startup Mission, IEDC guides students through patent filings, business pitching, and bootcamps with industry founders.',
+              },
+              {
+                badge: 'Coding Circle',
+                badgeClass: 'bg-blue-100 text-blue-900',
+                title: 'CSI & FOSS Club',
+                desc: 'Weekly open-source development meetups, Linux install fests, and competitive programming practice on LeetCode and CodeChef.',
+              },
+            ],
+            sports: [
+              {
+                badge: 'Outdoor Arena',
+                badgeClass: 'bg-emerald-100 text-emerald-900',
+                title: 'Athletic Ground & Football Turf',
+                desc: 'Full-sized football ground with natural grass, 400m running track, and annual inter-collegiate KTU sports meets.',
+              },
+              {
+                badge: 'Court Games',
+                badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
+                title: 'Floodlit Basketball & Volleyball',
+                desc: 'Dedicated synthetic basketball and volleyball courts open for evening matches with tournament-grade floodlighting.',
+              },
+              {
+                badge: 'Fitness Center',
+                badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
+                title: 'Multi-Gymnasium & Badminton',
+                desc: 'Modern fitness multi-station gym and indoor badminton wooden courts for physical wellness of hostellers and day scholars.',
+              },
+            ],
+            hostel: [
+              {
+                badge: 'Residential',
+                badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
+                title: 'Separate Men & Women Hostels',
+                desc: 'Sanatana (Men) and Vimal (Women) hostels offering secure, clean accommodation with 24/7 power backup, Wi-Fi, and resident wardens.',
+              },
+              {
+                badge: 'Dining',
+                badgeClass: 'bg-emerald-100 text-emerald-900',
+                title: 'Hygienic Central Cafeteria',
+                desc: 'Multi-cuisine mess offering nutritious vegetarian and non-vegetarian Kerala meals, snack counters, and fresh juice stalls.',
+              },
+              {
+                badge: 'Fleet',
+                badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
+                title: '25+ Bus Network Routes',
+                desc: 'Extensive bus fleet connecting Cheruthuruthy to Thrissur, Palakkad, Shoranur, Ottapalam, Wadakkanchery, and Kunnamkulam.',
+              },
+            ],
+          }[activeLifeTab] || []).map((item, idx) => (
+            <RevealBlock
+              key={`${activeLifeTab}-${idx}`}
+              direction={idx % 2 === 0 ? 'left' : 'right'}
+              delay={idx * 150}
+              className="h-full"
+            >
+              <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
+                <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${item.badgeClass}`}>{item.badge}</span>
+                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">{item.title}</h3>
+                <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
               </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900">Tech Conclave</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">HackJyothi 24-Hour Hackathon</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Overnight code marathon sponsored by IT partners. Teams tackle real-world problem statements in generative AI, IoT, and embedded robotics with cash prizes.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900">Social Initiative</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">NSS & Community Outreach</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Blood donation camps, solar lighting drives in nearby villages, and flood relief operations exemplifying the college's moral and ethical mission.
-                </p>
-              </div>
-            </>
-          )}
-
-          {activeLifeTab === 'clubs' && (
-            <>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900">Global Chapter</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">IEEE Student Branch</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Active student branch organizing international paper presentation conferences, workshops on robotics, and Women in Engineering (WIE) symposiums.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900">Startup Cell</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">IEDC Innovation & Entrepreneurship</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Supported by Kerala Startup Mission, IEDC guides students through patent filings, business pitching, and bootcamps with industry founders.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-blue-100 text-blue-900">Coding Circle</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">CSI & FOSS Club</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Weekly open-source development meetups, Linux install fests, and competitive programming practice on LeetCode and CodeChef.
-                </p>
-              </div>
-            </>
-          )}
-
-          {activeLifeTab === 'sports' && (
-            <>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900">Outdoor Arena</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Athletic Ground & Football Turf</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Full-sized football ground with natural grass, 400m running track, and annual inter-collegiate KTU sports meets.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900">Court Games</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Floodlit Basketball & Volleyball</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Dedicated synthetic basketball and volleyball courts open for evening matches with tournament-grade floodlighting.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900">Fitness Center</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Multi-Gymnasium & Badminton</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Modern fitness multi-station gym and indoor badminton wooden courts for physical wellness of hostellers and day scholars.
-                </p>
-              </div>
-            </>
-          )}
-
-          {activeLifeTab === 'hostel' && (
-            <>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900">Residential</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Separate Men & Women Hostels</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Sanatana (Men) and Vimal (Women) hostels offering secure, clean accommodation with 24/7 power backup, Wi-Fi, and resident wardens.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-900">Dining</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">Hygienic Central Cafeteria</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Multi-cuisine mess offering nutritious vegetarian and non-vegetarian Kerala meals, snack counters, and fresh juice stalls.
-                </p>
-              </div>
-              <div className="p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900">Fleet</span>
-                <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">25+ Bus Network Routes</h3>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Extensive bus fleet connecting Cheruthuruthy to Thrissur, Palakkad, Shoranur, Ottapalam, Wadakkanchery, and Kunnamkulam.
-                </p>
-              </div>
-            </>
-          )}
+            </RevealBlock>
+          ))}
         </div>
-        </RevealBlock>
       </section>
 
       {/* ============================================================== */}
@@ -1612,8 +1520,13 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         <div className="p-5 sm:p-8 bg-white rounded-3xl border border-slate-200 shadow-xs max-w-4xl mx-auto">
           {activeNewsTab === 'notices' && (
             <div className="space-y-3 sm:space-y-4">
-              {ANNOUNCEMENTS.map((ann) => (
-                <div key={ann.id} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 hover:border-jyothi-purple-300 transition-all">
+              {ANNOUNCEMENTS.map((ann, idx) => (
+                <RevealBlock
+                  key={ann.id}
+                  direction={idx % 2 === 0 ? 'left' : 'right'}
+                  delay={(idx % 4) * 150}
+                >
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 hover:border-jyothi-purple-300 transition-all">
                   <div>
                     <div className="flex items-center gap-2 mb-1">
                       <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900 font-bold uppercase">
@@ -1634,6 +1547,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                     <ArrowRight className="w-4 h-4" />
                   </button>
                 </div>
+                </RevealBlock>
               ))}
             </div>
           )}
@@ -1645,7 +1559,12 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                 { title: "HackJyothi 24-Hour Autonomous Robotics Hackathon", date: "Dec 05-06, 2025", venue: "FabLab Kerala Prototyping Centre" },
                 { title: "Archdiocesan Inter-Collegiate Basketball Tournament", date: "Nov 28, 2025", venue: "Sports Stadium" },
               ].map((ev, i) => (
-                <div key={i} className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                <RevealBlock
+                  key={i}
+                  direction={i % 2 === 0 ? 'left' : 'right'}
+                  delay={(i % 3) * 150}
+                >
+                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center gap-3">
                   <div className="p-3 rounded-2xl bg-jyothi-purple-100 text-jyothi-purple-900 text-center shrink-0 w-16">
                     <Calendar className="w-5 h-5 mx-auto mb-0.5" />
                     <div className="text-[10px] font-bold uppercase">Event</div>
@@ -1655,6 +1574,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
                     <p className="text-[11px] sm:text-xs text-slate-500">{ev.date} • {ev.venue}</p>
                   </div>
                 </div>
+                </RevealBlock>
               ))}
             </div>
           )}

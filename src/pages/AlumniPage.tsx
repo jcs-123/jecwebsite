@@ -6,6 +6,7 @@ import {
   ArrowRight, ShieldCheck, X, Camera, Share2, Compass, Phone,
   Lock, UserCheck, Eye, LogIn, UserPlus, Filter, ThumbsUp, MessageSquare
 } from 'lucide-react';
+import { usePrefersReducedMotion } from '../components/RevealBlock';
 import {
   ALUMNI_METRICS,
   ALUMNI_SUCCESS_REVIEWS,
@@ -165,6 +166,7 @@ const ScrollAnimatedReviewCard: React.FC<{
 }> = ({ review, index, onSelect }) => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const el = cardRef.current;
@@ -187,19 +189,26 @@ const ScrollAnimatedReviewCard: React.FC<{
     return () => observer.disconnect();
   }, []);
 
-  // Stagger calculation: 1-by-1 entrance per row as you scroll (160ms cascade)
+  // Stagger calculation: 1-by-1 entrance per row as you scroll (150ms cascade)
   const staggerDelay = (index % 3) * 150;
+  const fromLeft = index % 2 === 0;
 
   return (
     <div
       ref={cardRef}
-      style={{
-        transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms',
-      }}
-      className={`group bg-white rounded-3xl border border-slate-200/90 hover:border-[#DFC06A] shadow-xs hover:shadow-2xl hover:shadow-[#250836]/10 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between overflow-hidden cursor-pointer hover:-translate-y-2 relative transform-gpu ${
-        isVisible
-          ? 'opacity-100 translate-y-0 scale-100'
-          : 'opacity-0 translate-y-16 scale-[0.95] pointer-events-none'
+      style={
+        reducedMotion
+          ? undefined
+          : { transitionDelay: isVisible ? `${staggerDelay}ms` : '0ms' }
+      }
+      className={`group bg-white rounded-3xl border border-slate-200/90 hover:border-[#DFC06A] shadow-xs hover:shadow-2xl hover:shadow-[#250836]/10 flex flex-col justify-between overflow-hidden cursor-pointer hover:-translate-y-2 relative ${
+        reducedMotion
+          ? 'transition-shadow duration-300'
+          : `transition-all duration-700 ease-out transform-gpu ${
+              isVisible
+                ? 'opacity-100 translate-x-0'
+                : `opacity-0 ${fromLeft ? '-translate-x-5' : 'translate-x-5'} pointer-events-none`
+            }`
       }`}
       onClick={() => onSelect(review)}
     >

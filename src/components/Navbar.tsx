@@ -216,7 +216,7 @@ export const Navbar: React.FC<Props> = ({
             </button>
             <span className="text-slate-600 select-none font-light hidden lg:inline">|</span>
             <span className="hidden lg:inline text-slate-300">
-              Affiliated to KTU • Catholic Archdiocese of Trichur
+              Affiliated to KTU • JCS (Jyothi Consultancy Service)
             </span>
           </div>
 

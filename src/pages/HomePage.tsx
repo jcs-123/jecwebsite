@@ -170,17 +170,27 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
       {/* ============================================================== */}
       {/* 1. LUXURY EDITORIAL ARCHITECTURAL HERO (1:1 TARGET MATCH) */}
       {/* ============================================================== */}
-      <section className="relative w-full min-h-[560px] sm:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-hidden bg-[#FAF7F0] border-b border-slate-200/80">
+      <section className="relative w-full md:min-h-[600px] lg:h-[620px] xl:h-[640px] flex flex-col justify-between overflow-hidden bg-[#FFFDFA] border-b border-slate-200/80">
 
-        {/* RIGHT SIDE: Authentic Sunlit Campus Building - Perfectly Fitted & Centered */}
-        <div className="absolute top-0 right-0 w-full md:w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden">
+        {/* MOBILE TOP CAMPUS PHOTO (< 768px): Clear Unobstructed College Building */}
+        <div className="md:hidden relative w-full h-52 sm:h-64 overflow-hidden shrink-0">
+          <img
+            src="/assets/jyothi_campus_hero.jpg"
+            alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
+            className="w-full h-full object-cover object-[50%_28%]"
+            loading="eager"
+          />
+          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#FFFDFA] to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
+        </div>
+
+        {/* DESKTOP & TABLET RIGHT SIDE (>= 768px): Authentic Sunlit Campus Building */}
+        <div className="hidden md:block absolute top-0 right-0 w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden">
           <img
             src="/assets/jyothi_campus_hero.jpg"
             alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
             className="w-full h-full object-cover object-[50%_32%] lg:object-[50%_34%] scale-100 brightness-[1.0] contrast-[1.02]"
           />
-          {/* Mobile & Small Tablet Adaptive Luminous Mask */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#FFFDFA] via-[#FFFDFA]/95 to-[#FFFDFA]/45 md:hidden z-[1]" />
         </div>
 
         {/* TABLET & DESKTOP: PROPORTIONAL ORGANIC IVORY CANVAS WITH 3D GOLD SWOOPING DIVIDER */}
@@ -263,7 +273,7 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
         </div>
 
         {/* HERO EDITORIAL CONTENT CONTAINER */}
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-6 sm:pt-8 md:pt-10 lg:pt-12 pb-2 relative z-10 w-full">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-5 pb-6 sm:pt-7 md:pt-10 lg:pt-12 md:pb-2 relative z-10 w-full">
           <div className="w-full md:max-w-[44%] lg:max-w-[41%] xl:max-w-[480px] space-y-3.5 sm:space-y-4 text-left">
 
             {/* Elegant Capsule Badge: Admissions Open 2025–26 */}
@@ -366,9 +376,53 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           </div>
         </div>
 
-        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD SWOOPING BANNER (1:1 TARGET MATCH) */}
+        {/* BOTTOM ARCHITECTURAL PURPLE & GOLD SWOOPING BANNER */}
         <div className="relative w-full z-20 mt-auto">
-          <div className="relative w-full h-[88px] sm:h-[100px] md:h-[114px] lg:h-[124px] overflow-hidden">
+          {/* Mobile 3-Card Pill Strip + Curved Purple/Gold Wave (< 768px) */}
+          <div className="md:hidden bg-[#FFFDFA]">
+            <div className="px-3 pb-3 pt-1">
+              <div className="grid grid-cols-3 gap-2">
+                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
+                  <Layers className="w-4 h-4 text-[#C9902C] shrink-0" />
+                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
+                    KTU Autonomous Scheme
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
+                  <GraduationCap className="w-4 h-4 text-[#C9902C] shrink-0" />
+                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
+                    ₹3 Cr+ Scholarships
+                  </span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
+                  <Bus className="w-4 h-4 text-[#C9902C] shrink-0" />
+                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
+                    25+ Fleet Bus Routes
+                  </span>
+                </div>
+              </div>
+            </div>
+            {/* Sleek Curved Purple & Gold Bottom Wave */}
+            <svg className="w-full h-7 block" viewBox="0 0 400 28" fill="none" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="mobileWavePurple" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#210532" />
+                  <stop offset="50%" stopColor="#2E0946" />
+                  <stop offset="100%" stopColor="#170221" />
+                </linearGradient>
+                <linearGradient id="mobileWaveGold" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#DFC06A" />
+                  <stop offset="50%" stopColor="#FDE68A" />
+                  <stop offset="100%" stopColor="#C9902C" />
+                </linearGradient>
+              </defs>
+              <path d="M 0 18 Q 100 10, 220 18 T 400 6 L 400 28 L 0 28 Z" fill="url(#mobileWavePurple)" />
+              <path d="M 0 18 Q 100 10, 220 18 T 400 6" stroke="url(#mobileWaveGold)" strokeWidth="2.5" fill="none" />
+            </svg>
+          </div>
+
+          {/* Desktop & Tablet Swooping Wave Banner (>= 768px) */}
+          <div className="hidden md:block relative w-full h-[114px] lg:h-[124px] overflow-hidden">
             
             {/* Full-Width SVG Swooping Banner Surface with Dual Metallic Gold Waves */}
             <svg 

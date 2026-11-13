@@ -78,6 +78,84 @@ const ScrollReveal: React.FC<{
 };
 
 // ============================================================================
+// ANIMATED COUNTING STATISTIC (SCROLL-TRIGGERED WITH PREFIX/SUFFIX SUPPORT)
+// ============================================================================
+const AnimatedCounter: React.FC<{ value: string; delay?: number }> = ({ value, delay = 0 }) => {
+  const match = value.match(/^([^\d]*)([\d,]+)(.*)$/);
+  const hasMatch = Boolean(match);
+  const prefix = match ? match[1] : '';
+  const numStr = match ? match[2] : '0';
+  const suffix = match ? match[3] : '';
+  const target = parseInt(numStr.replace(/,/g, ''), 10) || 0;
+  const hasCommas = numStr.includes(',');
+
+  const [displayValue, setDisplayValue] = useState(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const hasCompletedRef = useRef(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!hasStarted || !hasMatch || hasCompletedRef.current) return;
+
+    let rafId = 0;
+    let timeoutId = 0;
+    const duration = 1400;
+
+    timeoutId = window.setTimeout(() => {
+      const startTime = performance.now();
+      const tick = (now: number) => {
+        const progress = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const nextVal = Math.round(target * eased);
+        setDisplayValue(nextVal);
+        if (progress < 1) {
+          rafId = window.requestAnimationFrame(tick);
+        } else {
+          hasCompletedRef.current = true;
+        }
+      };
+      rafId = window.requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      window.clearTimeout(timeoutId);
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }, [hasStarted, hasMatch, target, delay]);
+
+  if (!hasMatch) {
+    return <span>{value}</span>;
+  }
+
+  const formatted = hasCommas ? displayValue.toLocaleString('en-US') : String(displayValue);
+  return (
+    <span ref={ref} className="tabular-nums">
+      {prefix}
+      {formatted}
+      {suffix}
+    </span>
+  );
+};
+
+// ============================================================================
 // SCROLL ANIMATED SUCCESS REVIEW CARD (1-BY-1 ENTRANCE)
 // ============================================================================
 const ScrollAnimatedReviewCard: React.FC<{
@@ -274,17 +352,27 @@ export const AlumniPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTou
       {/* ============================================================== */}
       {/* 1. LUXURY EDITORIAL ALUMNI HERO BANNER (1:1 REFERENCE MATCH) */}
       {/* ============================================================== */}
-      <section className="relative w-full min-h-[440px] sm:min-h-[480px] lg:h-[520px] flex overflow-hidden bg-[#1B0428] border-b border-slate-200">
+      <section className="relative w-full md:min-h-[480px] lg:h-[520px] flex flex-col md:flex-row overflow-hidden bg-[#1B0428] border-b border-slate-200">
         
-        {/* RIGHT SIDE: Authentic Alumni Reunion Gala Photo */}
-        <div className="absolute top-0 right-0 w-full md:w-[62%] lg:w-[60%] h-full z-0 overflow-hidden">
+        {/* MOBILE TOP PHOTO (< 768px): Crisp Gala Photo Above Editorial Block */}
+        <div className="md:hidden relative w-full h-52 sm:h-60 overflow-hidden shrink-0">
+          <img
+            src="/assets/alumni_reunion_gala.jpg"
+            alt="Jyothi Alumni Global Reunion Gala Celebration"
+            className="w-full h-full object-cover object-[center_28%]"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1B0428] via-[#1B0428]/30 to-transparent" />
+          <div className="absolute bottom-0 inset-x-0 h-[2px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
+        </div>
+
+        {/* DESKTOP RIGHT SIDE (>= 768px): Authentic Alumni Reunion Gala Photo */}
+        <div className="hidden md:block absolute top-0 right-0 w-[62%] lg:w-[60%] h-full z-0 overflow-hidden">
           <img
             src="/assets/alumni_reunion_gala.jpg"
             alt="Jyothi Alumni Global Reunion Gala Celebration"
             className="w-full h-full object-cover object-[center_35%] scale-100 brightness-[1.02] contrast-[1.02]"
           />
-          {/* Mobile Adaptive Dark Gradient Mask */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#1B0428] via-[#1B0428]/95 to-[#1B0428]/70 md:hidden z-[1]" />
         </div>
 
         {/* LEFT SIDE: Deep Royal Purple Curved Architectural Surface with Gold Trim */}
@@ -345,8 +433,8 @@ export const AlumniPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTou
         </div>
 
         {/* HERO EDITORIAL TEXT CONTENT */}
-        <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-16 flex items-center">
-          <div className="max-w-xl md:max-w-lg lg:max-w-xl space-y-4 text-white">
+        <div className="relative z-10 max-w-7xl mx-auto w-full px-5 sm:px-6 lg:px-8 pt-6 pb-8 md:py-16 flex items-center">
+          <div className="max-w-xl md:max-w-lg lg:max-w-xl space-y-3.5 sm:space-y-4 text-white">
             
             {/* Top Label with Underline */}
             <div className="space-y-1.5 animate-fade-in">
@@ -357,7 +445,7 @@ export const AlumniPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTou
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-[54px] font-black font-brand leading-[1.08] text-white tracking-tight animate-slide-up">
+            <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black font-brand leading-[1.08] text-white tracking-tight animate-slide-up">
               A lifelong<br />
               connection<br />
               to Jyothi
@@ -673,7 +761,7 @@ export const AlumniPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTou
               {ALUMNI_METRICS.map((stat, idx) => (
                 <div key={idx} className="pt-2 sm:pt-0 sm:px-3 text-center space-y-1">
                   <div className="text-xl sm:text-2xl lg:text-3xl font-black font-brand text-[#250836] tracking-tight">
-                    {stat.value}
+                    <AnimatedCounter value={stat.value} delay={idx * 90} />
                   </div>
                   <div className="text-xs font-bold text-[#8A5A12]">
                     {stat.label}

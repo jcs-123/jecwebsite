@@ -173,14 +173,14 @@ export const Navbar: React.FC<Props> = ({
     <header ref={navRef} className="sticky top-0 z-50 w-full transition-all duration-300">
 
       {/* 1. Top Utility Info Bar */}
-      <div className="bg-[#170524] text-slate-200 text-[11px] md:text-xs py-2 px-3 sm:px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1.5 gap-x-3">
+      <div className="bg-[#170524] text-slate-200 text-[11px] md:text-xs py-2 px-2.5 sm:px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1 gap-x-3">
 
           {/* Credentials / Affiliations (Left) */}
-          <div className="flex items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs whitespace-nowrap overflow-x-auto scrollbar-none py-0.5">
+          <div className="w-full md:w-auto flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 text-[10.5px] sm:text-xs py-0.5">
             <button
               onClick={() => handleNavClick('autonomous')}
-              className="inline-flex items-center gap-1.5 text-[#DFC06A] hover:text-white transition-colors font-bold tracking-wide cursor-pointer group"
+              className="inline-flex items-center gap-1 text-[#DFC06A] hover:text-white transition-colors font-bold tracking-wide cursor-pointer group whitespace-nowrap"
               title="Click to view UGC Autonomous Governance, Regulations & Syllabi"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-[#FDE68A] group-hover:scale-110 transition-transform shrink-0" />
@@ -189,15 +189,17 @@ export const Navbar: React.FC<Props> = ({
             <span className="text-slate-600 select-none font-light">|</span>
             <button
               onClick={() => handleNavClick('iqac')}
-              className={`inline-flex items-center gap-1.5 transition-colors font-medium cursor-pointer group ${
+              className={`inline-flex items-center gap-1 transition-colors font-medium cursor-pointer group whitespace-nowrap ${
                 currentPage === 'iqac'
                   ? 'text-[#DFC06A] font-bold'
                   : 'text-slate-200 hover:text-[#DFC06A]'
               }`}
-              title="Internal Quality Assurance Cell (IQAC) - NAAC 'A' Grade & NBA Accreditations"
+              title="Internal Quality Assurance Cell (IQAC) - NAAC A Grade & NBA Accreditations"
             >
               <Award className="w-3.5 h-3.5 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0 hidden sm:inline" />
-              <span className="group-hover:underline">NAAC 'A' Grade • NBA Accredited B.Tech</span>
+              <span className="group-hover:underline">
+                NAAC A Grade • NBA<span className="hidden sm:inline"> Accredited B.Tech</span>
+              </span>
             </button>
             <span className="text-slate-600 select-none font-light hidden lg:inline">|</span>
             <span className="hidden lg:inline text-slate-300">
@@ -206,19 +208,19 @@ export const Navbar: React.FC<Props> = ({
           </div>
 
           {/* Quick Contact, 360 Tour, Alumni & Portals (Right) */}
-          <div className="flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-xs whitespace-nowrap ml-auto overflow-x-auto scrollbar-none py-0.5">
+          <div className="w-full md:w-auto flex flex-wrap items-center justify-center md:justify-end gap-x-2.5 gap-y-1 text-[10.5px] sm:text-xs md:ml-auto py-0.5">
 
-            {/* 360° Campus Tour Button */}
+            {/* 360° Campus Tour Button (Desktop Only) */}
             <button
               onClick={onOpenTour}
-              className="inline-flex items-center gap-1.5 text-[#FDE68A] hover:text-white transition-colors font-bold cursor-pointer group"
+              className="hidden md:inline-flex items-center gap-1.5 text-[#FDE68A] hover:text-white transition-colors font-bold cursor-pointer group"
               title="Launch 360° Virtual Campus Experience"
             >
               <Compass className="w-3.5 h-3.5 text-[#DFC06A] group-hover:rotate-45 transition-transform shrink-0 animate-spin-slow" />
               <span>360° Campus Tour</span>
             </button>
 
-            <span className="text-slate-600 select-none font-light">|</span>
+            <span className="text-slate-600 select-none font-light hidden md:inline">|</span>
 
             {/* Helpline Phone */}
             <a
@@ -246,12 +248,12 @@ export const Navbar: React.FC<Props> = ({
               <span>Alumni</span>
             </button>
 
-            <span className="text-slate-600 select-none font-light hidden md:inline">|</span>
+            <span className="text-slate-600 select-none font-light">|</span>
 
             {/* Campus Portals Login */}
             <button
               onClick={() => handleNavClick('login')}
-              className={`hidden md:inline-flex items-center gap-1.5 transition-colors font-semibold cursor-pointer group ${currentPage === 'login'
+              className={`inline-flex items-center gap-1.5 transition-colors font-semibold cursor-pointer group ${currentPage === 'login'
                   ? 'text-[#DFC06A] font-bold'
                   : 'text-slate-200 hover:text-[#DFC06A]'
                 }`}
@@ -527,53 +529,53 @@ export const Navbar: React.FC<Props> = ({
                 <Phone className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                 <span>Admissions Helpline: <a href="tel:+919526924455" className="text-slate-900 font-bold hover:underline">+91 95269 24455</a></span>
               </div>
-              <div className="flex items-center gap-2">
-                <Award className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+              <div className="flex items-start gap-2">
+                <Award className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     handleNavClick('iqac');
                   }}
-                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
                 >
-                  <span>NAAC 'A' Grade & NBA Accreditations (IQAC)</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <span>NAAC &apos;A&apos; Grade &amp; NBA Accreditations (IQAC)</span>
+                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
-              <div className="flex items-center gap-2">
-                <Compass className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+              <div className="flex items-start gap-2">
+                <Compass className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
                 <button
                   onClick={() => { setMobileMenuOpen(false); onOpenTour(); }}
-                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
                 >
                   <span>Launch 360° Virtual Campus Tour</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
-              <div className="flex items-center gap-2">
-                <GraduationCap className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+              <div className="flex items-start gap-2">
+                <GraduationCap className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     handleNavClick('alumni');
                   }}
-                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
                 >
-                  <span>Jyothi Alumni Association & Directory</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <span>Jyothi Alumni Association &amp; Directory</span>
+                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
-              <div className="flex items-center gap-2">
-                <LogIn className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0" />
+              <div className="flex items-start gap-2">
+                <LogIn className="w-3.5 h-3.5 text-jyothi-purple-800 shrink-0 mt-0.5" />
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);
                     handleNavClick('login');
                   }}
-                  className="text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1"
+                  className="text-left text-jyothi-purple-900 font-bold hover:underline flex items-center gap-1 leading-snug"
                 >
                   <span>Campus Portals Login (Student, Faculty, Parent, Hostel)</span>
-                  <ChevronRight className="w-3.5 h-3.5" />
+                  <ChevronRight className="w-3.5 h-3.5 shrink-0" />
                 </button>
               </div>
             </div>

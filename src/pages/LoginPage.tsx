@@ -86,7 +86,14 @@ const PORTALS_LIST: PortalItem[] = [
     title: 'Student Login',
     subtitle: 'Access your academic details, courses, and campus services.',
     badge: 'Autonomous ERP Student Portal',
-    icon: <GraduationCap className="w-7 h-7 text-[#DFC06A]" />,
+    icon: (
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 10L6 17.5L22 25L38 17.5L22 10Z" stroke="#381053" />
+        <path d="M12 20.5V29.5C12 31.5 16.5 34 22 34C27.5 34 32 31.5 32 29.5V20.5" stroke="#381053" />
+        <path d="M35 19V28" stroke="#C9902C" strokeWidth="2" />
+        <circle cx="35" cy="29.5" r="1.5" fill="#C9902C" stroke="none" />
+      </svg>
+    ),
     fields: {
       usernameLabel: 'Admission Number / Register No.',
       usernamePlaceholder: 'e.g. JEC21CS042',
@@ -100,8 +107,13 @@ const PORTALS_LIST: PortalItem[] = [
     title: 'Faculty Login',
     subtitle: 'Manage academics, students, and institutional resources.',
     badge: 'Faculty Academic Management Suite',
-    isFeatured: true, // Matching the highlighted state in user mockup
-    icon: <BookOpen className="w-7 h-7 text-[#DFC06A]" />,
+    icon: (
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 12C8 10.9 8.9 10 10 10H18C20.2 10 22 11.8 22 14V33C22 31.5 20.5 30.5 18.5 30.5H10C8.9 30.5 8 29.6 8 28.5V12Z" stroke="#381053" />
+        <path d="M36 12C36 10.9 35.1 10 34 10H26C23.8 10 22 11.8 22 14V33C22 31.5 23.5 30.5 25.5 30.5H34C35.1 30.5 36 29.6 36 28.5V12Z" stroke="#381053" />
+        <path d="M26 10V21L28.5 19L31 21V10" stroke="#C9902C" strokeWidth="1.8" />
+      </svg>
+    ),
     fields: {
       usernameLabel: 'Faculty Employee ID',
       usernamePlaceholder: 'e.g. JEC/FAC/108',
@@ -115,7 +127,16 @@ const PORTALS_LIST: PortalItem[] = [
     title: 'Parent Login',
     subtitle: "Stay updated on your ward's academic progress.",
     badge: 'Parent Guardian Portal',
-    icon: <Users className="w-7 h-7 text-[#DFC06A]" />,
+    icon: (
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="15" cy="14" r="4" stroke="#381053" />
+        <path d="M8 31V27C8 23.7 10.7 21 14 21H16C17.2 21 18.3 21.4 19.2 22" stroke="#381053" />
+        <circle cx="29" cy="16" r="3.5" stroke="#381053" />
+        <path d="M25.5 22.5C26.5 22 27.7 21.8 29 21.8C32.3 21.8 35 24.5 35 27.8V31" stroke="#381053" />
+        <circle cx="22" cy="23.5" r="2.8" stroke="#C9902C" />
+        <path d="M17.5 34V31.5C17.5 29.2 19.5 27.5 22 27.5C24.5 27.5 26.5 29.2 26.5 31.5V34" stroke="#C9902C" />
+      </svg>
+    ),
     fields: {
       usernameLabel: 'Registered Mobile Number or Ward Admission No.',
       usernamePlaceholder: 'e.g. +91 98470 12345 or JEC21CS042',
@@ -130,9 +151,12 @@ const PORTALS_LIST: PortalItem[] = [
     subtitle: 'View and manage fee details and payment records.',
     badge: 'Online Fee Payment & Receipts',
     icon: (
-      <div className="w-7 h-7 flex items-center justify-center font-bold text-[#DFC06A] text-xl border-2 border-[#DFC06A] rounded-lg">
-        ₹
-      </div>
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 12C8 10.9 8.9 10 10 10H18C20.2 10 22 11.8 22 14V33C22 31.5 20.5 30.5 18.5 30.5H10C8.9 30.5 8 29.6 8 28.5V12Z" stroke="#381053" />
+        <path d="M36 12C36 10.9 35.1 10 34 10H26C23.8 10 22 11.8 22 14V33C22 31.5 23.5 30.5 25.5 30.5H34C35.1 30.5 36 29.6 36 28.5V12Z" stroke="#381053" />
+        <path d="M12 16H17.5M12 20H17.5M12 24H16" stroke="#381053" strokeWidth="1.5" />
+        <path d="M26.5 15.5H32M26.5 19H32M27.5 15.5C29.5 15.5 30.5 16.7 30.5 18.2C30.5 19.7 29.5 21 27.5 21H26.5L31 26" stroke="#C9902C" strokeWidth="1.8" />
+      </svg>
     ),
     fields: {
       usernameLabel: 'Admission Number & Date of Birth',
@@ -147,7 +171,20 @@ const PORTALS_LIST: PortalItem[] = [
     title: 'Girls Hostel Login',
     subtitle: 'Access hostel services, notices, and facilities for girl students.',
     badge: "Mary Matha Girls Hostel Portal",
-    icon: <Building2 className="w-7 h-7 text-[#DFC06A]" />,
+    icon: (
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 34V14L17 9L27 14V18" stroke="#381053" />
+        <path d="M5 34H23" stroke="#381053" />
+        <rect x="11" y="16" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="17" y="16" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="11" y="22" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="17" y="22" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <path d="M13 34V29H16V34" stroke="#C9902C" />
+        <circle cx="30" cy="22" r="3.5" stroke="#381053" />
+        <path d="M25.5 22C25.5 18.8 27.5 17 30 17C32.5 17 34.5 18.8 34.5 22V25.5" stroke="#C9902C" />
+        <path d="M23.5 34V31.5C23.5 28.8 26.2 27 30 27C33.8 27 36.5 28.8 36.5 31.5V34" stroke="#381053" />
+      </svg>
+    ),
     fields: {
       usernameLabel: 'Hostel Resident ID / Room Number',
       usernamePlaceholder: 'e.g. MM-H2-204',
@@ -161,7 +198,20 @@ const PORTALS_LIST: PortalItem[] = [
     title: 'Boys Hostel Login',
     subtitle: 'Access hostel services, notices, and facilities for boy students.',
     badge: "San Thome Boys Hostel Portal",
-    icon: <Building2 className="w-7 h-7 text-[#DFC06A]" />,
+    icon: (
+      <svg viewBox="0 0 44 44" className="w-10 h-10" fill="none" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 34V14L17 9L27 14V18" stroke="#381053" />
+        <path d="M5 34H23" stroke="#381053" />
+        <rect x="11" y="16" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="17" y="16" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="11" y="22" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <rect x="17" y="22" width="3" height="3" rx="0.5" fill="#381053" stroke="none" />
+        <path d="M13 34V29H16V34" stroke="#C9902C" />
+        <circle cx="30" cy="21.5" r="3.5" stroke="#381053" />
+        <path d="M26.5 20.5C27.5 19 29 18.5 31.5 18.5C32.5 18.5 33.5 19.2 33.5 20.2" stroke="#C9902C" />
+        <path d="M23.5 34V31.5C23.5 28.8 26.2 27 30 27C33.8 27 36.5 28.8 36.5 31.5V34" stroke="#381053" />
+      </svg>
+    ),
     fields: {
       usernameLabel: 'Hostel Resident ID / Room Number',
       usernamePlaceholder: 'e.g. ST-H1-312',
@@ -467,172 +517,229 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
   const currentTabInfo = PORTAL_TABS.find(t => t.id === activeTab) || PORTAL_TABS[0];
 
   return (
-    <div className="min-h-screen bg-[#FCFBF8] text-[#1E092B] selection:bg-[#250836] selection:text-[#DFC06A] pb-24 overflow-x-hidden">
-      
-      {/* ============================================================== */}
-      {/* 1. LUXURY HERO BANNER (1:1 USER MOCKUP & FULLY RESPONSIVE) */}
-      {/* ============================================================== */}
-      
-      {/* A. TABLET & DESKTOP BANNER (>= 640px): 1:1 Pixel-Perfect Match with User Mockup */}
-      <section className="hidden sm:block relative w-full overflow-hidden bg-[#1B0428] shadow-md">
-        {/* Top Gold Trim Accent Line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C] z-30" />
+    <div className="min-h-screen bg-[#FAF7F2] text-[#1E092B] selection:bg-[#250836] selection:text-[#DFC06A] pb-24 overflow-x-hidden">
 
-        <div className="w-full relative aspect-[1024/295] max-h-[560px]">
-          <img
-            src="/assets/portals_hero_banner.jpg"
-            alt="All your portals, in one place - Jyothi Engineering College Campus Portals"
-            className="w-full h-full object-cover object-center select-none"
-            loading="eager"
-          />
+      {/* ============================================================== */}
+      {/* 1. HERO BANNER (MATCHING USER MOCKUP) */}
+      {/* ============================================================== */}
+      <section className="relative w-full overflow-hidden bg-[#1B0329] shadow-lg">
+        {/* Top Metallic Gold Hairline */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C] z-30" />
 
-          {/* Accessible Screen Reader Information */}
-          <div className="sr-only">
-            <h1>All your portals, in one place</h1>
-            <p>Choose a portal to continue</p>
+        {/* DESKTOP & TABLET HERO (>= 768px): Full-Framing Campus Photo + Slanted Purple Panel */}
+        <div className="hidden md:block relative w-full h-[330px] lg:h-[380px] xl:h-[420px] overflow-hidden">
+          {/* Right-side Campus Photo */}
+          <div className="absolute inset-y-0 right-0 w-[68%] lg:w-[67%] overflow-hidden">
+            <img
+              src="/assets/portals_hero.jpg"
+              alt="Jyothi Engineering College Students Collaborating on Campus"
+              className="w-full h-full object-cover object-[center_20%] select-none"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#1B0329]/45 via-transparent to-transparent" />
+          </div>
+
+          {/* Left Slanted Deep Purple Panel */}
+          <div
+            className="absolute inset-y-0 left-0 w-[46%] lg:w-[44%] z-10 flex items-center"
+            style={{
+              background: 'linear-gradient(135deg, #2B0740 0%, #200431 55%, #160222 100%)',
+              clipPath: 'polygon(0 0, 100% 0, 78% 100%, 0 100%)',
+            }}
+          >
+            {/* Subtle Architectural Facade & Palm Trees Line-Art Watermark */}
+            <svg
+              viewBox="0 0 560 220"
+              fill="none"
+              aria-hidden="true"
+              className="absolute bottom-0 left-0 w-[88%] max-w-[500px] opacity-[0.18] pointer-events-none select-none"
+            >
+              {/* Left Palm Trees */}
+              <path d="M52 205 Q55 155 46 115" stroke="#B78EDB" strokeWidth="1.4" />
+              <path d="M46 115 Q26 105 16 122 M46 115 Q28 96 20 98 M46 115 Q48 92 64 96 M46 115 Q68 104 78 122 M46 115 Q62 120 68 134" stroke="#B78EDB" strokeWidth="1.2" strokeLinecap="round" />
+              <path d="M88 205 Q91 168 85 138" stroke="#B78EDB" strokeWidth="1.2" />
+              <path d="M85 138 Q68 130 60 144 M85 138 Q72 122 86 118 M85 138 Q102 128 110 142" stroke="#B78EDB" strokeWidth="1.1" strokeLinecap="round" />
+              {/* Right Palm Trees */}
+              <path d="M425 205 Q422 160 430 120" stroke="#B78EDB" strokeWidth="1.3" />
+              <path d="M430 120 Q410 112 402 126 M430 120 Q425 98 442 100 M430 120 Q450 110 460 126" stroke="#B78EDB" strokeWidth="1.1" strokeLinecap="round" />
+              {/* Main College Facade */}
+              <rect x="112" y="132" width="286" height="72" stroke="#B78EDB" strokeWidth="1.2" />
+              <path d="M188 132 L255 96 L322 132 Z" stroke="#B78EDB" strokeWidth="1.3" />
+              <rect x="202" y="132" width="106" height="72" stroke="#B78EDB" strokeWidth="1.2" />
+              {/* Arches & Columns */}
+              <path d="M126 204 V166 A10 10 0 0 1 146 166 V204 M156 204 V166 A10 10 0 0 1 176 166 V204" stroke="#B78EDB" strokeWidth="1.1" />
+              <path d="M214 204 V160 A12 12 0 0 1 238 160 V204 M243 204 V160 A12 12 0 0 1 267 160 V204 M272 204 V160 A12 12 0 0 1 296 160 V204" stroke="#B78EDB" strokeWidth="1.1" />
+              <path d="M334 204 V166 A10 10 0 0 1 354 166 V204 M364 204 V166 A10 10 0 0 1 384 166 V204" stroke="#B78EDB" strokeWidth="1.1" />
+              {/* Upper Windows */}
+              <rect x="128" y="140" width="14" height="14" rx="2" stroke="#B78EDB" strokeWidth="1" />
+              <rect x="158" y="140" width="14" height="14" rx="2" stroke="#B78EDB" strokeWidth="1" />
+              <rect x="336" y="140" width="14" height="14" rx="2" stroke="#B78EDB" strokeWidth="1" />
+              <rect x="366" y="140" width="14" height="14" rx="2" stroke="#B78EDB" strokeWidth="1" />
+              <circle cx="255" cy="116" r="6" stroke="#B78EDB" strokeWidth="1.1" />
+            </svg>
+
+            {/* Hero Copy */}
+            <div className="relative z-10 pl-6 md:pl-8 lg:pl-12 xl:pl-16 pr-10 max-w-md space-y-2.5">
+              {/* Gold Horizontal Dash */}
+              <div className="w-9 h-[2.5px] bg-gradient-to-r from-[#DFC06A] to-[#C9902C] rounded-full" />
+
+              <h1 className="text-2xl md:text-[28px] lg:text-[36px] xl:text-[40px] font-black font-brand text-white leading-[1.08] tracking-tight drop-shadow-sm">
+                All your portals,<br />
+                in one place
+              </h1>
+
+              <p className="text-sm lg:text-base italic font-serif text-[#F3E2B3] tracking-wide">
+                Choose a portal to continue
+              </p>
+            </div>
+          </div>
+
+          {/* Slanted Metallic Gold Diagonal Divider Line */}
+          <svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full pointer-events-none z-20"
+          >
+            <defs>
+              <linearGradient id="heroGoldDiagonal" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#FDE68A" />
+                <stop offset="50%" stopColor="#DFC06A" />
+                <stop offset="100%" stopColor="#B87E1E" />
+              </linearGradient>
+            </defs>
+            <line
+              x1="46"
+              y1="0"
+              x2="35.88"
+              y2="100"
+              stroke="url(#heroGoldDiagonal)"
+              strokeWidth="0.45"
+              className="lg:hidden"
+            />
+            <line
+              x1="44"
+              y1="0"
+              x2="34.32"
+              y2="100"
+              stroke="url(#heroGoldDiagonal)"
+              strokeWidth="0.4"
+              className="hidden lg:block"
+            />
+          </svg>
+        </div>
+
+        {/* MOBILE HERO (< 768px): High-Res Campus Photo + Angled Purple Transition */}
+        <div className="md:hidden relative w-full overflow-hidden bg-[#1B0329]">
+          <div className="relative w-full h-56 overflow-hidden">
+            <img
+              src="/assets/portals_hero.jpg"
+              alt="Jyothi Engineering College Students Collaborating on Campus"
+              className="w-full h-full object-cover object-[center_30%]"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1B0329] via-[#1B0329]/35 to-transparent" />
+          </div>
+
+          {/* Gold Diagonal Accent */}
+          <div className="h-[2px] w-full bg-gradient-to-r from-[#DFC06A] via-[#FDE68A] to-[#C9902C]" />
+
+          <div className="relative px-6 py-7 bg-gradient-to-br from-[#2B0740] via-[#200431] to-[#160222] text-white space-y-3">
+            <div className="w-9 h-[2.5px] bg-[#DFC06A] rounded-full" />
+            <h1 className="text-3xl font-black font-brand leading-tight tracking-tight text-white">
+              All your portals,<br />
+              in one place
+            </h1>
+            <p className="text-sm italic font-serif text-[#F3E2B3]">
+              Choose a portal to continue
+            </p>
           </div>
         </div>
       </section>
 
-      {/* B. MOBILE OPTIMIZED HERO BANNER (< 640px): Large Legible Typography & High-Res Campus Photo */}
-      <section className="sm:hidden relative w-full overflow-hidden bg-[#1B0428]">
-        {/* Top Gold Trim Accent Line */}
-        <div className="h-1 bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
-
-        {/* Jyothi Engineering College Students & Main Building Photo */}
-        <div className="relative w-full h-52 overflow-hidden bg-slate-900">
-          <img
-            src="/assets/portals_hero.jpg"
-            alt="Jyothi Engineering College Students Collaborating on Campus"
-            className="w-full h-full object-cover object-[center_28%]"
-            loading="eager"
-          />
-          {/* Smooth Gradient Transition to Branded Purple Surface */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1B0428] via-[#1B0428]/45 to-transparent" />
-        </div>
-
-        {/* Mobile Branded Typography Section */}
-        <div className="px-5 pb-7 pt-2 bg-[#1B0428] text-white space-y-3 relative z-10">
-          {/* Gold Bar Accent */}
-          <div className="w-12 h-1 bg-[#DFC06A] rounded-full" />
-
-          {/* Main Headline */}
-          <h1 className="text-3xl font-black font-brand leading-tight text-white tracking-tight">
-            All your portals,<br />
-            in one place
-          </h1>
-
-          {/* Subtitle in Cursive / Italic Serif */}
-          <p className="text-sm italic font-serif text-[#FDE68A] pb-1">
-            Choose a portal to continue
-          </p>
-        </div>
-      </section>
-
-      {/* C. UNDER PORTION ACCENT: Small Same Image Grass Strip with Gold Hairline Trim */}
-      <div className="relative w-full h-3 sm:h-4 overflow-hidden border-t border-b border-[#DFC06A]/40 shadow-xs z-20">
-        <img
-          src="/assets/portals_hero.jpg"
-          alt="Campus Lawn Grass"
-          className="w-full h-full object-cover object-[center_92%] brightness-[1.02]"
-        />
-        {/* Subtle Ambient Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1B0428]/35 via-transparent to-[#1B0428]/25" />
-      </div>
-
       {/* ============================================================== */}
-      {/* 2. CHOOSE YOUR LOGIN SECTION (1:1 6-CARD GRID MATCH) */}
+      {/* 2. CHOOSE YOUR LOGIN SECTION (MINIMALIST 6-CARD GRID) */}
       {/* ============================================================== */}
-      <section className="relative w-full bg-[#FAF7F2] py-14 sm:py-20 border-b border-amber-900/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          {/* Section Heading with Gold Lines and Diamond Flourish */}
-          <div className="text-center space-y-2 mb-12">
-            <div className="flex items-center justify-center gap-4">
-              <div className="h-[1px] bg-gradient-to-r from-transparent to-[#DFC06A] w-20 sm:w-36" />
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-brand text-[#250836]">
-                Choose Your Login
-              </h2>
-              <div className="h-[1px] bg-gradient-to-l from-transparent to-[#DFC06A] w-20 sm:w-36" />
+      <section className="relative w-full bg-[#FAF7F2] py-9 sm:py-12 lg:py-14 border-b border-amber-900/10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Section Heading with Gold Lines and Three Diamond Outlines */}
+          <ScrollReveal>
+            <div className="text-center space-y-1.5 mb-8 sm:mb-10">
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
+                <div className="h-[1px] bg-gradient-to-r from-transparent to-[#DFC06A] w-16 sm:w-40" />
+                <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-black font-brand text-[#250836] tracking-tight">
+                  Choose Your Login
+                </h2>
+                <div className="h-[1px] bg-gradient-to-l from-transparent to-[#DFC06A] w-16 sm:w-40" />
+              </div>
+              <div className="flex items-center justify-center gap-2 text-[#C9902C] text-xs font-semibold">
+                <span>◇</span>
+                <span>◇</span>
+                <span>◇</span>
+              </div>
             </div>
-            <div className="text-xs text-[#DFC06A] font-bold tracking-widest">
-              ✧ ◇ ✧
-            </div>
-          </div>
+          </ScrollReveal>
 
-          {/* 6 Portal Cards Grid (3 Columns x 2 Rows) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7">
-            {PORTALS_LIST.map((portal) => (
-              <div
-                key={portal.id}
-                onClick={() => handleOpenPortal(portal)}
-                className={`relative rounded-3xl p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 cursor-pointer group hover:-translate-y-1.5 ${
-                  portal.isFeatured
-                    ? 'bg-gradient-to-br from-white via-[#FAF5FE] to-[#FFFBF0] border-2 border-[#DFC06A] shadow-xl shadow-[#DFC06A]/15 ring-2 ring-[#DFC06A]/20'
-                    : 'bg-white border border-slate-200/90 shadow-xs hover:shadow-xl hover:shadow-[#250836]/8 hover:border-[#DFC06A]'
-                }`}
-              >
-                {/* Subtle Radiant Bottom Light Glow for Featured Faculty Card */}
-                {portal.isFeatured && (
-                  <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-40 h-4 bg-gradient-to-r from-transparent via-[#DFC06A]/60 to-transparent blur-md pointer-events-none" />
-                )}
+          {/* 6 Minimalist Portal Cards Grid (3 Columns x 2 Rows) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 lg:gap-6">
+            {PORTALS_LIST.map((portal, idx) => (
+              <ScrollReveal key={portal.id} delay={idx * 70}>
+                <button
+                  type="button"
+                  onClick={() => handleOpenPortal(portal)}
+                  className="w-full text-left relative overflow-hidden rounded-2xl bg-white border border-[#EDE6DC] px-5 py-5 sm:px-6 sm:py-5 shadow-[0_6px_22px_-8px_rgba(37,8,54,0.10)] hover:shadow-[0_16px_34px_-10px_rgba(37,8,54,0.18)] hover:border-[#DFC06A] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+                >
+                  {/* Soft Light-Purple Curved Corner Accent (Bottom-Right) */}
+                  <div
+                    aria-hidden="true"
+                    className="absolute -bottom-8 -right-8 w-36 h-24 rounded-[100%] bg-gradient-to-tl from-[#E9DDF4] via-[#F2EBF9]/80 to-transparent pointer-events-none transition-transform duration-300 group-hover:scale-110"
+                  />
 
-                {/* Subtle bottom-left decorative watermark contour lines (1:1 Reference Match) */}
-                <svg className="absolute bottom-0 left-0 w-28 h-20 pointer-events-none opacity-30 group-hover:opacity-45 transition-opacity" viewBox="0 0 120 80" fill="none">
-                  <path d="M 0 35 C 35 42, 70 55, 110 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 47 C 30 52, 60 62, 95 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 59 C 25 62, 50 70, 80 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 71 C 20 72, 40 76, 65 80" stroke="#DFC06A" strokeWidth="0.8" />
-                </svg>
+                  <div className="relative z-10 flex items-end justify-between gap-4">
+                    <div className="space-y-3">
+                      {/* Duo-Tone Purple & Gold Line-Art Icon */}
+                      <div className="inline-flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                        {portal.icon}
+                      </div>
 
-                <div className="space-y-4">
-                  
-                  {/* Top Row: Icon Container and Title */}
-                  <div className="flex items-center gap-3.5">
-                    
-                    {/* Golden Icon Container */}
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      {portal.icon}
+                      {/* Portal Title */}
+                      <h3 className="text-lg sm:text-[19px] font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors leading-snug">
+                        {portal.title}
+                      </h3>
+
+                      {/* Short Gold Accent Bar */}
+                      <div className="w-8 h-[2px] bg-[#C9902C] rounded-full transition-all duration-300 group-hover:w-12" />
                     </div>
 
-                    {/* Portal Title */}
-                    <h3 className="text-lg sm:text-xl font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors leading-snug">
-                      {portal.title}
-                    </h3>
+                    {/* Soft-Purple Circular Arrow Action Button */}
+                    <div className="w-9 h-9 rounded-full bg-[#EFE7F6] text-[#381053] flex items-center justify-center shrink-0 shadow-xs group-hover:bg-[#250836] group-hover:text-[#DFC06A] group-hover:scale-105 transition-all duration-300">
+                      <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
                   </div>
-
-                  {/* Subtitle Description */}
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal min-h-[36px]">
-                    {portal.subtitle}
-                  </p>
-                </div>
-
-                {/* Bottom Row: Circular Purple Arrow Action Button */}
-                <div className="pt-4 mt-2 flex items-center justify-end border-t border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all">
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </div>
-              </div>
+                </button>
+              </ScrollReveal>
             ))}
           </div>
 
           {/* Quick Help & Assistance Bar */}
-          <div className="mt-14 p-5 rounded-2xl bg-white border border-slate-200 text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 shadow-xs">
-            <div className="flex items-center gap-2">
-              <HelpCircle className="w-4 h-4 text-[#DFC06A] shrink-0" />
-              <span>Need help logging in or forgot your credentials? Contact Jyothi IT Helpdesk:</span>
+          <ScrollReveal delay={120}>
+            <div className="mt-14 p-5 rounded-2xl bg-white border border-slate-200 text-center flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600 shadow-xs">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="w-4 h-4 text-[#DFC06A] shrink-0" />
+                <span>Need help logging in or forgot your credentials? Contact Jyothi IT Helpdesk:</span>
+              </div>
+              <div className="flex items-center gap-3 font-bold text-[#250836]">
+                <a href="tel:+914884259000" className="hover:text-[#DFC06A] transition-colors">
+                  +91 4884 259000 (Ext. 242)
+                </a>
+                <span>•</span>
+                <a href="mailto:erp@jecc.ac.in" className="hover:text-[#DFC06A] transition-colors">
+                  erp@jecc.ac.in
+                </a>
+              </div>
             </div>
-            <div className="flex items-center gap-3 font-bold text-[#250836]">
-              <a href="tel:+914884259000" className="hover:text-[#DFC06A] transition-colors">
-                +91 4884 259000 (Ext. 242)
-              </a>
-              <span>•</span>
-              <a href="mailto:erp@jecc.ac.in" className="hover:text-[#DFC06A] transition-colors">
-                erp@jecc.ac.in
-              </a>
-            </div>
-          </div>
+          </ScrollReveal>
 
         </div>
       </section>
@@ -640,7 +747,8 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
       {/* ============================================================== */}
       {/* 3. INTERACTIVE PORTAL FEATURES & SERVICES MATRIX */}
       {/* ============================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
+      <ScrollReveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
         <div className="text-center space-y-2 mb-10">
           <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A5A12] bg-[#FFF8D6] px-3 py-1 rounded-full border border-[#DFC06A]/40">
             Digital Campus Architecture
@@ -653,25 +761,29 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
           </p>
         </div>
 
-        {/* Tab Selector Buttons */}
-        <div className="flex flex-wrap items-center justify-center gap-2 p-1.5 rounded-2xl bg-slate-100/80 border border-slate-200/80 max-w-3xl mx-auto mb-8">
-          {PORTAL_TABS.map((tab) => {
-            const isActive = tab.id === activeTab;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
-                  isActive
-                    ? 'bg-[#250836] text-[#DFC06A] shadow-md scale-[1.02]'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
-                }`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+        {/* Tab Selector Buttons (Single-Row Segmented Bar on Desktop, Balanced Grid on Mobile/Tablet) */}
+        <div className="flex justify-center mb-8">
+          <div className="w-full lg:w-auto grid grid-cols-2 sm:grid-cols-3 lg:inline-flex lg:flex-nowrap items-center gap-1.5 p-1.5 rounded-2xl bg-white border border-[#EDE6DC] shadow-xs">
+            {PORTAL_TABS.map((tab, idx) => {
+              const isActive = tab.id === activeTab;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 cursor-pointer ${
+                    idx === PORTAL_TABS.length - 1 ? 'col-span-2 sm:col-span-1' : ''
+                  } ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#250836] to-[#3A1053] text-[#DFC06A] shadow-md'
+                      : 'text-[#250836]/75 hover:text-[#250836] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  {tab.icon}
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Active Tab Content Card */}
@@ -716,11 +828,13 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
           </div>
         </div>
       </section>
+      </ScrollReveal>
 
       {/* ============================================================== */}
       {/* 5. STEP-BY-STEP SELF-SERVICE & FIRST-TIME SCHOLAR GUIDES */}
       {/* ============================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
+      <ScrollReveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A5A12] bg-[#FFF8D6] px-3 py-1 rounded-full border border-[#DFC06A]/40">
@@ -782,11 +896,13 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
           ))}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* ============================================================== */}
       {/* 6. INTERACTIVE FAQS ACCORDION */}
       {/* ============================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
+      <ScrollReveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16 sm:mt-20">
         <div className="text-center space-y-2 mb-10">
           <span className="text-[11px] font-bold uppercase tracking-wider text-[#8A5A12] bg-[#FFF8D6] px-3 py-1 rounded-full border border-[#DFC06A]/40">
             Frequently Asked Questions
@@ -830,28 +946,31 @@ export const LoginPage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour
           })}
         </div>
       </section>
+      </ScrollReveal>
 
       {/* ============================================================== */}
       {/* 6. SECURITY & INSTITUTIONAL COMPLIANCE NOTICE */}
       {/* ============================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 text-center">
-        <div className="inline-flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 py-3 px-6 rounded-full bg-slate-100/70 border border-slate-200">
-          <span className="flex items-center gap-1.5 font-medium">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-            <span>ISO 9001:2015 Certified IT Systems</span>
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5 font-medium">
-            <Lock className="w-3.5 h-3.5 text-amber-600" />
-            <span>Digital Personal Data Protection (DPDP) Compliant</span>
-          </span>
-          <span>•</span>
-          <span className="flex items-center gap-1.5 font-medium">
-            <Server className="w-3.5 h-3.5 text-purple-600" />
-            <span>Automated Daily Backup & Disaster Recovery</span>
-          </span>
-        </div>
-      </section>
+      <ScrollReveal>
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 text-center">
+          <div className="inline-flex flex-wrap items-center justify-center gap-4 text-xs text-slate-500 py-3 px-6 rounded-full bg-slate-100/70 border border-slate-200">
+            <span className="flex items-center gap-1.5 font-medium">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              <span>ISO 9001:2015 Certified IT Systems</span>
+            </span>
+            <span>•</span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <Lock className="w-3.5 h-3.5 text-amber-600" />
+              <span>Digital Personal Data Protection (DPDP) Compliant</span>
+            </span>
+            <span>•</span>
+            <span className="flex items-center gap-1.5 font-medium">
+              <Server className="w-3.5 h-3.5 text-purple-600" />
+              <span>Automated Daily Backup & Disaster Recovery</span>
+            </span>
+          </div>
+        </section>
+      </ScrollReveal>
 
       {/* ============================================================== */}
       {/* 9. INTERACTIVE LOGIN MODAL FOR SELECTED PORTAL */}

@@ -73,7 +73,6 @@ const ScrollReveal: React.FC<{
 export const IQACPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply, onOpenTour }) => {
   const [selectedPillar, setSelectedPillar] = useState<AccreditationPillar | null>(null);
   const [selectedReport, setSelectedReport] = useState<IQACReportItem | null>(null);
-  const [activeSubTab, setActiveSubTab] = useState<string>('all');
 
   // Handle URL sub-hash navigation (e.g. #iqac/naac)
   useEffect(() => {
@@ -116,100 +115,105 @@ export const IQACPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
     <div className="min-h-screen bg-[#FCFBF8] text-[#1E092B] selection:bg-[#250836] selection:text-[#DFC06A] pb-24 overflow-x-hidden">
 
       {/* ============================================================== */}
-      {/* 1. LUXURY HERO BANNER (1:1 USER MOCKUP & FULLY RESPONSIVE) */}
+      {/* 1. HERO BANNER (MATCHING USER MOCKUP) */}
       {/* ============================================================== */}
+      <section className="relative w-full overflow-hidden bg-[#1B0428] border-b border-amber-900/20 shadow-md">
+        {/* Top Metallic Gold Trim */}
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C] z-30" />
 
-      {/* A. TABLET & DESKTOP BANNER (>= 640px): 1:1 Pixel-Perfect Match with User Mockup */}
-      <section className="hidden sm:block relative w-full overflow-hidden bg-[#1B0428] border-b border-amber-900/20 shadow-md">
-        {/* Top Gold Trim Accent Line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C] z-30" />
+        {/* DESKTOP & TABLET HERO (>= 768px): IQAC Team Photo + Translucent Purple Panel */}
+        <div className="hidden md:block relative w-full h-[380px] lg:h-[440px] xl:h-[490px] overflow-hidden">
+          <div className="absolute inset-0">
+            <img
+              src="/assets/iqac_hero.jpg"
+              alt="Internal Quality Assurance Cell Faculty Team at Jyothi Engineering College"
+              className="w-full h-full object-cover object-[center_32%] select-none"
+              loading="eager"
+            />
+          </div>
 
-        <div className="w-full relative aspect-[1024/294] max-h-[540px]">
-          <img
-            src="/assets/iqac_hero_banner_top.jpg"
-            alt="Internal Quality Assurance Cell (IQAC) - Jyothi Engineering College"
-            className="w-full h-full object-cover object-center select-none"
-            loading="eager"
-          />
+          {/* Left Translucent Deep Purple Gradient Backdrop */}
+          <div
+            className="absolute inset-y-0 left-0 w-[64%] lg:w-[56%] z-10 flex items-center"
+            style={{
+              background: 'linear-gradient(90deg, rgba(24,4,38,0.94) 0%, rgba(37,8,54,0.86) 62%, rgba(37,8,54,0) 100%)',
+            }}
+          >
+            <div className="pl-8 lg:pl-14 xl:pl-20 pr-12 max-w-xl space-y-2.5">
+              {/* Top Gold Hairline */}
+              <div className="w-36 h-[1px] bg-gradient-to-r from-[#DFC06A] to-transparent mb-1" />
 
-          {/* Accessible Screen Reader Information */}
-          <div className="sr-only">
-            <span>QUALITY • EXCELLENCE • IMPROVEMENT</span>
-            <h1>Internal Quality Assurance Cell (IQAC)</h1>
-            <p>Building a culture of quality and continuous improvement.</p>
-            <span>NAAC 'A' Grade • NBA Washington Accord • Autonomous Cycle</span>
+              {/* Quality Motto */}
+              <div className="text-[10px] lg:text-[11px] font-bold tracking-[0.22em] text-[#DFC06A] uppercase">
+                QUALITY • EXCELLENCE • IMPROVEMENT
+              </div>
+
+              {/* Headline with Left Gold Bar */}
+              <div className="pl-3.5 border-l-2 border-[#DFC06A]">
+                <h1 className="text-2xl lg:text-[34px] xl:text-[38px] font-black font-brand leading-[1.1] text-white tracking-tight">
+                  Internal Quality<br />
+                  Assurance Cell (IQAC)
+                </h1>
+              </div>
+
+              {/* Italic Serif Subtitle */}
+              <p className="text-xs lg:text-sm italic font-serif text-[#F3E2B3]">
+                Building a culture of quality and continuous improvement.
+              </p>
+
+              {/* NAAC 'A' Grade • NBA Accredited */}
+              <div className="pt-0.5 inline-flex items-center gap-2 text-[11px] font-semibold text-[#FDE68A]/95">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 border border-[#DFC06A]/40">
+                  NAAC &apos;A&apos; Grade • NBA Accredited
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* MOBILE HERO (< 768px): Photo + Purple Branded Card */}
+        <div className="md:hidden relative w-full overflow-hidden bg-[#1B0428]">
+          <div className="relative w-full h-52 overflow-hidden">
+            <img
+              src="/assets/iqac_hero.jpg"
+              alt="Internal Quality Assurance Cell Faculty Team at Jyothi Engineering College"
+              className="w-full h-full object-cover object-[center_26%]"
+              loading="eager"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#1B0428] via-[#1B0428]/45 to-transparent" />
+          </div>
+
+          <div className="px-5 pb-6 pt-2 bg-[#1B0428] text-white space-y-2.5 relative z-10">
+            <div className="text-[10px] font-bold tracking-widest text-[#DFC06A] uppercase">
+              QUALITY • EXCELLENCE • IMPROVEMENT
+            </div>
+            <div className="pl-3 border-l-2 border-[#DFC06A]">
+              <h1 className="text-2xl font-black font-brand leading-tight text-white">
+                Internal Quality Assurance Cell (IQAC)
+              </h1>
+            </div>
+            <p className="text-xs italic font-serif text-[#FDE68A]">
+              Building a culture of quality and continuous improvement.
+            </p>
+            <div className="pt-0.5">
+              <span className="inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-white/10 text-[#FDE68A] border border-[#DFC06A]/40">
+                NAAC &apos;A&apos; Grade • NBA Accredited
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* B. MOBILE OPTIMIZED HERO BANNER (< 640px): Large Legible Typography & High-Res Faculty Team Photo */}
-      <section className="sm:hidden relative w-full overflow-hidden bg-[#1B0428] border-b border-amber-900/20">
-        {/* Top Gold Trim Accent Line */}
-        <div className="h-1 bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
-
-        {/* IQAC Faculty Team Photo */}
-        <div className="relative w-full h-52 overflow-hidden bg-slate-900">
-          <img
-            src="/assets/iqac_hero.jpg"
-            alt="Internal Quality Assurance Cell Faculty Team at Jyothi Engineering College"
-            className="w-full h-full object-cover object-[center_28%]"
-            loading="eager"
-          />
-          {/* Smooth Gradient Transition to Branded Purple Surface */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1B0428] via-[#1B0428]/45 to-transparent" />
-        </div>
-
-        {/* Mobile Branded Typography Section */}
-        <div className="px-5 pb-7 pt-2 bg-[#1B0428] text-white space-y-3 relative z-10">
-          {/* Quality Motto */}
-          <div className="flex items-center gap-1.5 text-[10px] font-bold tracking-widest text-[#DFC06A] uppercase">
-            <span>QUALITY</span>
-            <span>•</span>
-            <span>EXCELLENCE</span>
-            <span>•</span>
-            <span>IMPROVEMENT</span>
-          </div>
-
-          {/* Main Headline with Vertical Gold Line */}
-          <div className="pl-3.5 border-l-2 border-[#DFC06A]">
-            <h1 className="text-2xl font-black font-brand leading-tight text-white tracking-tight">
-              Internal Quality<br />
-              Assurance Cell<br />
-              (IQAC)
-            </h1>
-          </div>
-
-          {/* Subtitle in Cursive / Italic Serif */}
-          <p className="text-sm italic font-serif text-[#FDE68A]">
-            Building a culture of quality and continuous improvement.
-          </p>
-
-          {/* Official Accreditation Endorsement Badges */}
-          <div className="pt-1 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-300 font-medium">
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-[#FDE68A] border border-[#DFC06A]/40 font-bold">
-              NAAC 'A' Grade
-            </span>
-            <span>•</span>
-            <span className="px-2 py-0.5 rounded-full bg-white/10 text-white border border-white/20 font-bold">
-              NBA Washington Accord
-            </span>
-            <span>•</span>
-            <span className="text-slate-300">Autonomous Cycle</span>
-          </div>
-        </div>
-      </section>
-
       {/* ============================================================== */}
-      {/* 2. SUB-NAVIGATION STRIP (1:1 USER MOCKUP MATCH) */}
+      {/* 2. SUB-NAVIGATION STRIP (NAAC | NBA | NIRF | REPORTS) */}
       {/* ============================================================== */}
-      <nav className="w-full bg-[#250836] border-b border-[#DFC06A]/30 py-3 sm:py-3.5 shadow-md sticky top-[68px] z-30 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center sm:justify-around flex-wrap gap-3 sm:gap-4 text-xs sm:text-sm font-bold text-white">
-          
+      <nav className="w-full bg-[#250836] border-b border-[#DFC06A]/30 py-2.5 sm:py-3 shadow-md sticky top-[68px] z-30 backdrop-blur-md">
+        <div className="max-w-5xl mx-auto px-2 sm:px-6 flex items-center justify-around flex-nowrap gap-1 sm:gap-4 text-[11px] sm:text-sm font-bold text-white">
           <button
             onClick={() => { scrollToSection('accreditation-pillars'); setSelectedPillar(IQAC_PILLARS[0]); }}
-            className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-3 py-1.5 rounded-xl hover:bg-white/5"
+            className="flex items-center gap-1 sm:gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-1.5 sm:px-3 py-1 rounded-lg hover:bg-white/5 whitespace-nowrap"
           >
-            <Award className="w-4 h-4 text-[#DFC06A] group-hover:scale-110 transition-transform" />
+            <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
             <span>NAAC</span>
           </button>
 
@@ -217,9 +221,9 @@ export const IQACPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
 
           <button
             onClick={() => { scrollToSection('accreditation-pillars'); setSelectedPillar(IQAC_PILLARS[1]); }}
-            className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-3 py-1.5 rounded-xl hover:bg-white/5"
+            className="flex items-center gap-1 sm:gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-1.5 sm:px-3 py-1 rounded-lg hover:bg-white/5 whitespace-nowrap"
           >
-            <Layers className="w-4 h-4 text-[#DFC06A] group-hover:scale-110 transition-transform" />
+            <Layers className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
             <span>NBA</span>
           </button>
 
@@ -227,9 +231,9 @@ export const IQACPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
 
           <button
             onClick={() => { scrollToSection('accreditation-pillars'); setSelectedPillar(IQAC_PILLARS[2]); }}
-            className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-3 py-1.5 rounded-xl hover:bg-white/5"
+            className="flex items-center gap-1 sm:gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-1.5 sm:px-3 py-1 rounded-lg hover:bg-white/5 whitespace-nowrap"
           >
-            <BarChart3 className="w-4 h-4 text-[#DFC06A] group-hover:scale-110 transition-transform" />
+            <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
             <span>NIRF</span>
           </button>
 
@@ -237,297 +241,264 @@ export const IQACPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
 
           <button
             onClick={() => scrollToSection('reports-section')}
-            className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-3 py-1.5 rounded-xl hover:bg-white/5"
+            className="flex items-center gap-1 sm:gap-2 hover:text-[#DFC06A] transition-colors cursor-pointer group px-1.5 sm:px-3 py-1 rounded-lg hover:bg-white/5 whitespace-nowrap"
           >
-            <FileText className="w-4 h-4 text-[#DFC06A] group-hover:scale-110 transition-transform" />
+            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#DFC06A] group-hover:scale-110 transition-transform shrink-0" />
             <span>Reports</span>
           </button>
-
         </div>
       </nav>
 
       {/* ============================================================== */}
-      {/* 3. QUALITY & ACCREDITATION (3-CARD GRID 1:1 REFERENCE MATCH) */}
+      {/* 3. OUR COMMITMENT TO QUALITY (SPLIT ARCHITECTURAL BANNER) */}
       {/* ============================================================== */}
-      <section id="accreditation-pillars" className="relative w-full bg-[#FAF7F2] py-14 sm:py-20 border-b border-amber-900/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-
-          {/* Section Heading with Gold Lines and Diamond Flourish */}
-          <ScrollReveal direction="up" delay={0}>
-            <div className="text-center space-y-2 mb-12">
-              <span className="text-[11px] font-bold uppercase tracking-widest text-[#8A5A12]">
-                QUALITY & ACCREDITATION
-              </span>
-              <div className="flex items-center justify-center gap-4">
-                <div className="h-[1px] bg-gradient-to-r from-transparent to-[#DFC06A] w-20 sm:w-36" />
-                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-brand text-[#250836]">
-                  Our commitment to quality
-                </h2>
-                <div className="h-[1px] bg-gradient-to-l from-transparent to-[#DFC06A] w-20 sm:w-36" />
-              </div>
-              <div className="text-xs text-[#DFC06A] font-bold tracking-widest">
-                ✧ ◇ ✧
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* 3 Accreditation Cards: NAAC, NBA, NIRF */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7">
-            
-            {/* CARD 1: NAAC */}
-            <ScrollReveal direction="up" delay={50}>
-              <div
-                onClick={() => setSelectedPillar(IQAC_PILLARS[0])}
-                className="relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs hover:shadow-2xl hover:shadow-[#250836]/10 hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:-translate-y-1.5 h-full overflow-hidden"
-              >
-                {/* Subtle Decorative Golden Hairlines in Bottom Left */}
-                <svg className="absolute bottom-0 left-0 w-28 h-20 pointer-events-none opacity-30 group-hover:opacity-45 transition-opacity" viewBox="0 0 120 80" fill="none">
-                  <path d="M 0 35 C 35 42, 70 55, 110 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 47 C 30 52, 60 62, 95 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 59 C 25 62, 50 70, 80 80" stroke="#DFC06A" strokeWidth="0.8" />
-                </svg>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3.5">
-                    {/* Golden Icon Container */}
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <BookOpen className="w-7 h-7 text-[#DFC06A]" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors leading-snug">
-                        NAAC
-                      </h3>
-                      <span className="text-[10px] font-bold text-[#8A5A12] uppercase tracking-wider">
-                        Grade 'A' (3.25 CGPA)
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal min-h-[38px]">
-                    Quality assessment and continuous enhancement of institutional processes.
-                  </p>
+      <section className="relative w-full bg-[#FAF7F2] overflow-hidden border-b border-amber-900/10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            {/* Left Copy Column */}
+            <ScrollReveal direction="right" className="lg:col-span-6 relative z-10">
+              <div className="space-y-4">
+                <div className="pl-4 border-l-2 border-[#C9902C]">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-brand text-[#250836] leading-tight">
+                    Our commitment<br />
+                    to quality
+                  </h2>
                 </div>
 
-                <div className="pt-4 mt-2 flex items-center justify-end border-t border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all">
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
+                <div className="flex items-center gap-1.5 text-[#C9902C] text-xs font-bold pl-4">
+                  <span>◇</span>
+                  <span>◇</span>
+                  <span>◇</span>
                 </div>
+
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl pl-4">
+                  We foster a culture of continuous improvement in higher education, strengthening academic processes, enhancing learning experiences, and ensuring excellence across all domains of the institution.
+                </p>
               </div>
             </ScrollReveal>
 
-            {/* CARD 2: NBA */}
-            <ScrollReveal direction="up" delay={150}>
-              <div
-                onClick={() => setSelectedPillar(IQAC_PILLARS[1])}
-                className="relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs hover:shadow-2xl hover:shadow-[#250836]/10 hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:-translate-y-1.5 h-full overflow-hidden"
-              >
-                {/* Subtle Decorative Golden Hairlines in Bottom Left */}
-                <svg className="absolute bottom-0 left-0 w-28 h-20 pointer-events-none opacity-30 group-hover:opacity-45 transition-opacity" viewBox="0 0 120 80" fill="none">
-                  <path d="M 0 35 C 35 42, 70 55, 110 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 47 C 30 52, 60 62, 95 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 59 C 25 62, 50 70, 80 80" stroke="#DFC06A" strokeWidth="0.8" />
-                </svg>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3.5">
-                    {/* Golden Icon Container */}
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <Layers className="w-7 h-7 text-[#DFC06A]" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors leading-snug">
-                        NBA
-                      </h3>
-                      <span className="text-[10px] font-bold text-[#8A5A12] uppercase tracking-wider">
-                        Tier-II Washington Accord
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal min-h-[38px]">
-                    Promotion of outcome-based education and programme quality.
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-2 flex items-center justify-end border-t border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all">
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </div>
+            {/* Right Soft Architectural Campus Illustration */}
+            <ScrollReveal direction="left" delay={100} className="lg:col-span-6 relative">
+              <div className="relative h-52 sm:h-64 rounded-2xl overflow-hidden border border-[#DFC06A]/30 bg-[#F5F0FA]">
+                <img
+                  src="/assets/jyothi_campus_hero.jpg"
+                  alt="Jyothi Engineering College Campus Architecture"
+                  className="w-full h-full object-cover object-center grayscale opacity-45 contrast-110 mix-blend-multiply"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/30 to-transparent" />
+                <div className="hidden sm:block absolute top-5 right-8 w-28 h-20 border-t border-l border-[#C9902C]/55 pointer-events-none" />
               </div>
             </ScrollReveal>
-
-            {/* CARD 3: NIRF */}
-            <ScrollReveal direction="up" delay={250}>
-              <div
-                onClick={() => setSelectedPillar(IQAC_PILLARS[2])}
-                className="relative bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs hover:shadow-2xl hover:shadow-[#250836]/10 hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex flex-col justify-between group hover:-translate-y-1.5 h-full overflow-hidden"
-              >
-                {/* Subtle Decorative Golden Hairlines in Bottom Left */}
-                <svg className="absolute bottom-0 left-0 w-28 h-20 pointer-events-none opacity-30 group-hover:opacity-45 transition-opacity" viewBox="0 0 120 80" fill="none">
-                  <path d="M 0 35 C 35 42, 70 55, 110 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 47 C 30 52, 60 62, 95 80" stroke="#DFC06A" strokeWidth="0.8" />
-                  <path d="M 0 59 C 25 62, 50 70, 80 80" stroke="#DFC06A" strokeWidth="0.8" />
-                </svg>
-
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3.5">
-                    {/* Golden Icon Container */}
-                    <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                      <BarChart3 className="w-7 h-7 text-[#DFC06A]" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl sm:text-2xl font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors leading-snug">
-                        NIRF
-                      </h3>
-                      <span className="text-[10px] font-bold text-[#8A5A12] uppercase tracking-wider">
-                        Ministry of Education (MoE)
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-xs text-slate-600 leading-relaxed font-normal min-h-[38px]">
-                    Institutional performance assessment and holistic improvement.
-                  </p>
-                </div>
-
-                <div className="pt-4 mt-2 flex items-center justify-end border-t border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all">
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-
           </div>
-
         </div>
       </section>
 
       {/* ============================================================== */}
-      {/* 4. REPORTS & DOCUMENTS (1:1 USER MOCKUP MATCH) */}
+      {/* 4. ACCREDITATION & RANKINGS (3-CARD GRID MATCHING MOCKUP) */}
       {/* ============================================================== */}
-      <section id="reports-section" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-        
-        {/* Dark Purple Ribbon Title Banner */}
-        <ScrollReveal direction="up" delay={0}>
-          <div className="flex items-center gap-4 mb-8">
-            <div className="inline-flex items-center gap-2.5 px-6 py-3 rounded-2xl bg-gradient-to-r from-[#250836] via-[#380D4F] to-[#250836] text-white shadow-md border-l-4 border-[#DFC06A]">
-              <FileText className="w-5 h-5 text-[#DFC06A]" />
-              <h3 className="text-lg sm:text-xl font-bold font-brand text-white">
-                Reports & Documents
-              </h3>
-            </div>
-            <div className="flex-1 h-[1px] bg-gradient-to-r from-[#DFC06A] to-transparent hidden sm:block" />
-          </div>
-        </ScrollReveal>
+      <section id="accreditation-pillars" className="relative w-full bg-[#FAF7F2] py-12 sm:py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* 4 Report Cards (2 Columns x 2 Rows) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-          
-          {/* REPORT 1: Academic Calendar */}
-          <ScrollReveal direction="up" delay={50}>
-            <div
-              onClick={() => setSelectedReport(IQAC_REPORTS[0])}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-xl hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                  <Calendar className="w-6 h-6 text-[#DFC06A]" />
+          {/* Centered Heading with Gold Hairlines and Three Diamonds */}
+          <ScrollReveal direction="up">
+            <div className="text-center space-y-1.5 mb-10">
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
+                <div className="h-[1px] bg-gradient-to-r from-transparent to-[#DFC06A] w-16 sm:w-36" />
+                <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-black font-brand text-[#250836]">
+                  Accreditation &amp; Rankings
+                </h2>
+                <div className="h-[1px] bg-gradient-to-l from-transparent to-[#DFC06A] w-16 sm:w-36" />
+              </div>
+              <div className="flex items-center justify-center gap-1.5 text-[#C9902C] text-xs font-bold">
+                <span>◇</span>
+                <span>◇</span>
+                <span>◇</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* 3 Accreditation Cards: NAAC (Lavender), NBA (Warm Cream), NIRF (Lavender) */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+            {/* CARD 1: NAAC */}
+            <ScrollReveal direction="up" delay={50}>
+              <button
+                type="button"
+                onClick={() => setSelectedPillar(IQAC_PILLARS[0])}
+                className="w-full h-full text-left relative overflow-hidden rounded-2xl bg-[#F2EBF8] border border-[#E5D8F0] p-6 shadow-xs hover:shadow-xl hover:border-[#DFC06A] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-white/80 border border-[#DFC06A]/50 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Award className="w-6 h-6 text-[#250836]" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h3 className="text-xl font-black font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+                      NAAC
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Quality enhancement through assessment and continuous improvement.
+                    </p>
+                    <div className="pt-2 inline-flex items-center gap-1 text-[#8A5A12] group-hover:translate-x-1 transition-transform">
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+              </button>
+            </ScrollReveal>
+
+            {/* CARD 2: NBA */}
+            <ScrollReveal direction="up" delay={140}>
+              <button
+                type="button"
+                onClick={() => setSelectedPillar(IQAC_PILLARS[1])}
+                className="w-full h-full text-left relative overflow-hidden rounded-2xl bg-[#FBF6EE] border border-[#EFE3D0] p-6 shadow-xs hover:shadow-xl hover:border-[#DFC06A] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-white/90 border border-[#DFC06A]/50 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Layers className="w-6 h-6 text-[#250836]" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h3 className="text-xl font-black font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+                      NBA
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Strengthening programme quality and outcome-based education.
+                    </p>
+                    <div className="pt-2 inline-flex items-center gap-1 text-[#8A5A12] group-hover:translate-x-1 transition-transform">
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </ScrollReveal>
+
+            {/* CARD 3: NIRF */}
+            <ScrollReveal direction="up" delay={230}>
+              <button
+                type="button"
+                onClick={() => setSelectedPillar(IQAC_PILLARS[2])}
+                className="w-full h-full text-left relative overflow-hidden rounded-2xl bg-[#F2EBF8] border border-[#E5D8F0] p-6 shadow-xs hover:shadow-xl hover:border-[#DFC06A] hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-white/80 border border-[#DFC06A]/50 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <BarChart3 className="w-6 h-6 text-[#250836]" />
+                  </div>
+                  <div className="space-y-1.5">
+                    <h3 className="text-xl font-black font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+                      NIRF
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">
+                      Supporting institutional benchmarking and holistic improvement.
+                    </p>
+                    <div className="pt-2 inline-flex items-center gap-1 text-[#8A5A12] group-hover:translate-x-1 transition-transform">
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================== */}
+      {/* 5. REPORTS & DOCUMENTS (SOFT LAVENDER 2x2 GRID MATCHING MOCKUP) */}
+      {/* ============================================================== */}
+      <section id="reports-section" className="w-full bg-[#F2ECF7] py-12 sm:py-16 border-t border-b border-[#E4D7EE]">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+          {/* Centered Heading with Gold Hairlines and Three Diamonds */}
+          <ScrollReveal direction="up">
+            <div className="text-center space-y-1.5 mb-9">
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
+                <div className="h-[1px] bg-gradient-to-r from-transparent to-[#DFC06A] w-16 sm:w-36" />
+                <h3 className="text-2xl sm:text-3xl font-black font-brand text-[#250836]">
+                  Reports &amp; Documents
+                </h3>
+                <div className="h-[1px] bg-gradient-to-l from-transparent to-[#DFC06A] w-16 sm:w-36" />
+              </div>
+              <div className="flex items-center justify-center gap-1.5 text-[#C9902C] text-xs font-bold">
+                <span>◇</span>
+                <span>◇</span>
+                <span>◇</span>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* 4 Report Cards (2 Columns x 2 Rows) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            {/* REPORT 1: Academic Calendar */}
+            <ScrollReveal direction="up" delay={50}>
+              <button
+                type="button"
+                onClick={() => setSelectedReport(IQAC_REPORTS[0])}
+                className="w-full text-left bg-[#FCF9F3] rounded-xl px-5 py-4 border border-[#EBDDC7] shadow-xs hover:shadow-lg hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-3.5">
+                  <Calendar className="w-6 h-6 text-[#250836] shrink-0" />
+                  <span className="h-6 w-[1px] bg-[#DFC06A]/60 shrink-0" />
+                  <h4 className="text-sm sm:text-base font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
                     Academic Calendar
                   </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Odd & Even Semesters • 2024–2025
-                  </p>
                 </div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all shrink-0">
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </ScrollReveal>
+                <ArrowRight className="w-4 h-4 text-[#8A5A12] group-hover:translate-x-1 transition-transform shrink-0" />
+              </button>
+            </ScrollReveal>
 
-          {/* REPORT 2: Meeting Minutes & ATR */}
-          <ScrollReveal direction="up" delay={150}>
-            <div
-              onClick={() => setSelectedReport(IQAC_REPORTS[1])}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-xl hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                  <FileCheck className="w-6 h-6 text-[#DFC06A]" />
-                </div>
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
-                    Meeting Minutes & ATR
+            {/* REPORT 2: Meeting Minutes & ATR */}
+            <ScrollReveal direction="up" delay={120}>
+              <button
+                type="button"
+                onClick={() => setSelectedReport(IQAC_REPORTS[1])}
+                className="w-full text-left bg-[#FCF9F3] rounded-xl px-5 py-4 border border-[#EBDDC7] shadow-xs hover:shadow-lg hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-3.5">
+                  <FileCheck className="w-6 h-6 text-[#250836] shrink-0" />
+                  <span className="h-6 w-[1px] bg-[#DFC06A]/60 shrink-0" />
+                  <h4 className="text-sm sm:text-base font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+                    Meeting Minutes &amp; ATR
                   </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Quarterly Proceedings & Resolutions
-                  </p>
                 </div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all shrink-0">
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </ScrollReveal>
+                <ArrowRight className="w-4 h-4 text-[#8A5A12] group-hover:translate-x-1 transition-transform shrink-0" />
+              </button>
+            </ScrollReveal>
 
-          {/* REPORT 3: Annual Reports */}
-          <ScrollReveal direction="up" delay={250}>
-            <div
-              onClick={() => setSelectedReport(IQAC_REPORTS[2])}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-xl hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                  <BarChart3 className="w-6 h-6 text-[#DFC06A]" />
-                </div>
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+            {/* REPORT 3: Annual Reports */}
+            <ScrollReveal direction="up" delay={190}>
+              <button
+                type="button"
+                onClick={() => setSelectedReport(IQAC_REPORTS[2])}
+                className="w-full text-left bg-[#FCF9F3] rounded-xl px-5 py-4 border border-[#EBDDC7] shadow-xs hover:shadow-lg hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-3.5">
+                  <BarChart3 className="w-6 h-6 text-[#250836] shrink-0" />
+                  <span className="h-6 w-[1px] bg-[#DFC06A]/60 shrink-0" />
+                  <h4 className="text-sm sm:text-base font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
                     Annual Reports
                   </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    AQAR Institutional Audits
-                  </p>
                 </div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all shrink-0">
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </ScrollReveal>
+                <ArrowRight className="w-4 h-4 text-[#8A5A12] group-hover:translate-x-1 transition-transform shrink-0" />
+              </button>
+            </ScrollReveal>
 
-          {/* REPORT 4: Student Satisfaction Survey */}
-          <ScrollReveal direction="up" delay={350}>
-            <div
-              onClick={() => setSelectedReport(IQAC_REPORTS[3])}
-              className="bg-white rounded-2xl p-5 sm:p-6 border border-slate-200 shadow-xs hover:shadow-xl hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-1"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#FFFDF7] via-[#FFF8E7] to-[#FBEBC6] border border-[#DFC06A]/70 shadow-sm flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-                  <CheckCircle2 className="w-6 h-6 text-[#DFC06A]" />
-                </div>
-                <div>
-                  <h4 className="text-base sm:text-lg font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
+            {/* REPORT 4: Student Satisfaction Survey */}
+            <ScrollReveal direction="up" delay={260}>
+              <button
+                type="button"
+                onClick={() => setSelectedReport(IQAC_REPORTS[3])}
+                className="w-full text-left bg-[#FCF9F3] rounded-xl px-5 py-4 border border-[#EBDDC7] shadow-xs hover:shadow-lg hover:border-[#DFC06A] transition-all duration-300 cursor-pointer flex items-center justify-between gap-4 group hover:-translate-y-0.5"
+              >
+                <div className="flex items-center gap-3.5">
+                  <CheckCircle2 className="w-6 h-6 text-[#250836] shrink-0" />
+                  <span className="h-6 w-[1px] bg-[#DFC06A]/60 shrink-0" />
+                  <h4 className="text-sm sm:text-base font-bold font-brand text-[#250836] group-hover:text-[#3C1361] transition-colors">
                     Student Satisfaction Survey
                   </h4>
-                  <p className="text-xs text-slate-500 font-medium">
-                    Teaching-Learning Quality & Campus Feedback
-                  </p>
                 </div>
-              </div>
-              <div className="w-8 h-8 rounded-full bg-[#250836] text-[#DFC06A] flex items-center justify-center shadow-md group-hover:bg-[#3C1361] group-hover:scale-110 transition-all shrink-0">
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </div>
-            </div>
-          </ScrollReveal>
-
+                <ArrowRight className="w-4 h-4 text-[#8A5A12] group-hover:translate-x-1 transition-transform shrink-0" />
+              </button>
+            </ScrollReveal>
+          </div>
         </div>
-
       </section>
 
       {/* ============================================================== */}

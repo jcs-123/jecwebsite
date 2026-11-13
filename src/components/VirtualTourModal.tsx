@@ -194,7 +194,7 @@ const CAMPUS_STOPS: TourSpot[] = [
       },
       {
         id: "lan",
-        title: "10 Gbps Campus Core Fiber Core",
+        title: "10 Gbps Campus Fiber Core",
         category: "Network Backbone",
         yaw: 270,
         pitch: -5,
@@ -304,9 +304,25 @@ const CAMPUS_STOPS: TourSpot[] = [
   }
 ];
 
+const parseGps = (gps: string): { lat: number; lon: number } => {
+  const nums = gps.match(/[\d.]+/g);
+  if (!nums || nums.length < 2) return { lat: 10.7428, lon: 76.2872 };
+  return { lat: parseFloat(nums[0]), lon: parseFloat(nums[1]) };
+};
+
+const latLonToTileFloat = (lat: number, lon: number, zoom: number) => {
+  const n = Math.pow(2, zoom);
+  const x = ((lon + 180) / 360) * n;
+  const latRad = (lat * Math.PI) / 180;
+  const y = ((1 - Math.log(Math.tan(latRad) + 1 / Math.cos(latRad)) / Math.PI) / 2) * n;
+  return { x, y };
+};
+
 export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
   const [activeSpot, setActiveSpot] = useState<TourSpot>(CAMPUS_STOPS[0]);
   const [viewMode, setViewMode] = useState<'streetview' | 'radar'>('streetview');
+  const [mapLayer, setMapLayer] = useState<'satellite' | 'osm'>('satellite');
+  const [satZoom, setSatZoom] = useState<number>(17);
   
   // 360 Camera Pan & Tilt State
   const [yaw, setYaw] = useState<number>(0); // 0 to 360 degrees
@@ -466,120 +482,164 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const activeCoords = parseGps(activeSpot.gps);
+  const centerTileFloat = latLonToTileFloat(activeCoords.lat, activeCoords.lon, satZoom);
+  const centerTileX = Math.floor(centerTileFloat.x);
+  const centerTileY = Math.floor(centerTileFloat.y);
+  const TILE_SIZE = 256;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-3 md:p-6 bg-[#08020F]/90 backdrop-blur-xl animate-fade-in select-none">
-      
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-3 md:p-6 bg-[#08020F]/92 backdrop-blur-xl animate-fade-in select-none">
+
       {/* Modal Canvas Container */}
       <div
         ref={containerRef}
-        className="relative w-full h-full max-w-[1500px] max-h-[96vh] bg-[#0E0318] sm:rounded-3xl shadow-2xl border border-[#DFC06A]/30 overflow-hidden text-white flex flex-col"
+        className="relative w-full h-[100dvh] sm:h-[92vh] sm:max-h-[900px] max-w-[1500px] bg-[#0E0318] sm:rounded-3xl shadow-2xl border-0 sm:border sm:border-[#DFC06A]/30 overflow-hidden text-white flex flex-col"
       >
 
         {/* ============================================================== */}
-        {/* 1. GOOGLE MAPS / STREET VIEW HEADER OVERLAY */}
+        {/* 1. HEADER OVERLAY (RESPONSIVE FOR MOBILE, TABLET & DESKTOP) */}
         {/* ============================================================== */}
-        <div className="absolute top-0 inset-x-0 z-30 p-3 sm:p-5 flex items-start justify-between pointer-events-none gap-3 bg-gradient-to-b from-black/85 via-black/40 to-transparent">
-          
-          {/* Top-Left: Google Street View Identity Badge */}
-          <div className="pointer-events-auto flex items-start gap-3 bg-[#13031F]/90 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-[#DFC06A]/40 shadow-xl max-w-sm sm:max-w-md">
-            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#DFC06A] to-[#B88029] p-0.5 shrink-0 shadow-md flex items-center justify-center">
-              <div className="w-full h-full bg-[#1A052A] rounded-[10px] flex items-center justify-center">
-                <MapPin className="w-5 h-5 text-[#DFC06A]" />
+        <div
+          className={`z-30 p-2.5 sm:p-4 lg:p-5 flex flex-col gap-2 pointer-events-none ${
+            viewMode === 'radar'
+              ? 'relative shrink-0 bg-[#12031E] border-b border-[#DFC06A]/20'
+              : 'absolute top-0 inset-x-0 bg-gradient-to-b from-black/85 via-black/45 to-transparent'
+          }`}
+        >
+          <div className="flex items-start justify-between gap-2 sm:gap-3">
+
+            {/* Top-Left: Campus Tour Identity Badge */}
+            <div className="pointer-events-auto flex items-center sm:items-start gap-2.5 sm:gap-3 bg-[#13031F]/90 backdrop-blur-md p-2 sm:p-3.5 rounded-2xl border border-[#DFC06A]/40 shadow-xl min-w-0 max-w-[68%] sm:max-w-md">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-[#DFC06A] to-[#B88029] p-0.5 shrink-0 shadow-md flex items-center justify-center">
+                <div className="w-full h-full bg-[#1A052A] rounded-[9px] flex items-center justify-center">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#DFC06A]" />
+                </div>
+              </div>
+
+              <div className="min-w-0 space-y-0.5">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DFC06A] text-[#190527]">
+                    360° Virtual Campus
+                  </span>
+                  <span className="text-[10px] text-[#DFC06A] font-semibold hidden md:inline">
+                    • Satellite &amp; OpenStreetMap
+                  </span>
+                </div>
+                <h2 className="text-xs sm:text-base font-black font-brand text-white truncate">
+                  {activeSpot.name}
+                </h2>
+                <p className="text-[10px] sm:text-[11px] text-slate-300 truncate">
+                  <span className="hidden sm:inline">Jyothi Hills, Cheruthuruthy, Kerala • </span>
+                  <span className="font-mono text-[#DFC06A]">{activeSpot.gps}</span>
+                </p>
               </div>
             </div>
 
-            <div className="min-w-0 space-y-0.5">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DFC06A] text-[#190527]">
-                  Google 360° Street View
-                </span>
-                <span className="text-[10px] text-[#DFC06A] font-semibold hidden sm:inline">
-                  • 8K Aerial Radar
-                </span>
+            {/* Top-Right: Action Controls */}
+            <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
+
+              {/* View Mode Toggle (Desktop & Tablet) */}
+              <div className="hidden md:flex bg-[#19052A]/90 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-lg text-xs font-semibold">
+                <button
+                  onClick={() => setViewMode('streetview')}
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                    viewMode === 'streetview'
+                      ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>360° View</span>
+                </button>
+                <button
+                  onClick={() => setViewMode('radar')}
+                  className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                    viewMode === 'radar'
+                      ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
+                      : 'text-slate-300 hover:text-white'
+                  }`}
+                >
+                  <Map className="w-3.5 h-3.5" />
+                  <span>Satellite &amp; Map</span>
+                </button>
               </div>
-              <h2 className="text-sm sm:text-base font-black font-brand text-white truncate">
-                {activeSpot.name}
-              </h2>
-              <p className="text-[11px] text-slate-300 truncate">
-                Jyothi Hills, Cheruthuruthy, Kerala 679531 • <span className="font-mono text-[#DFC06A]">{activeSpot.gps}</span>
-              </p>
+
+              {/* Audio Ambience Narration Toggle */}
+              <button
+                onClick={() => setIsAudioMuted(!isAudioMuted)}
+                className={`p-2 sm:p-2.5 rounded-xl border shadow-lg transition-all cursor-pointer ${
+                  !isAudioMuted
+                    ? 'bg-[#DFC06A] text-[#190527] border-[#DFC06A]'
+                    : 'bg-[#19052A]/90 text-slate-300 hover:text-white border-white/10 hover:bg-[#250836]'
+                }`}
+                title={isAudioMuted ? "Enable Campus Audio Guide" : "Mute Campus Audio"}
+              >
+                {!isAudioMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+              </button>
+
+              {/* Auto-Rotation Toggle */}
+              {viewMode === 'streetview' && (
+                <button
+                  onClick={() => setIsAutoRotate(!isAutoRotate)}
+                  className={`p-2 sm:p-2.5 rounded-xl border shadow-lg transition-all cursor-pointer ${
+                    isAutoRotate
+                      ? 'bg-[#DFC06A]/20 text-[#DFC06A] border-[#DFC06A]/50'
+                      : 'bg-[#19052A]/90 text-slate-300 hover:text-white border-white/10 hover:bg-[#250836]'
+                  }`}
+                  title={isAutoRotate ? "Pause 360° Auto-Pan" : "Start 360° Auto-Pan"}
+                >
+                  {isAutoRotate ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                </button>
+              )}
+
+              {/* Fullscreen Toggle */}
+              <button
+                onClick={toggleFullscreen}
+                className="p-2.5 rounded-xl bg-[#19052A]/90 text-slate-300 hover:text-white border border-white/10 shadow-lg hover:bg-[#250836] transition-all cursor-pointer hidden lg:flex"
+                title="Toggle Fullscreen"
+              >
+                {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+              </button>
+
+              {/* Close Modal Button */}
+              <button
+                onClick={onClose}
+                className="p-2 sm:p-2.5 rounded-xl bg-[#19052A]/90 text-slate-200 hover:text-white hover:bg-rose-950/80 border border-white/10 hover:border-rose-500/40 shadow-lg transition-all cursor-pointer"
+                title="Close Virtual Tour (Esc)"
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
-          {/* Top-Right: Street View Action Controls */}
-          <div className="pointer-events-auto flex items-center gap-2">
-            
-            {/* View Mode Toggle: Street View vs Satellite Radar */}
-            <div className="hidden sm:flex bg-[#19052A]/90 backdrop-blur-md p-1 rounded-xl border border-white/10 shadow-lg text-xs font-semibold">
+          {/* Mobile & Small Tablet View Switcher */}
+          <div className="md:hidden pointer-events-auto flex items-center justify-center">
+            <div className="inline-flex bg-[#13031F]/90 backdrop-blur-md p-1 rounded-xl border border-[#DFC06A]/30 shadow-lg text-[11px] font-semibold">
               <button
                 onClick={() => setViewMode('streetview')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                   viewMode === 'streetview'
                     ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
-                    : 'text-slate-300 hover:text-white'
+                    : 'text-slate-300'
                 }`}
               >
-                <Eye className="w-3.5 h-3.5" />
-                <span>360° Street View</span>
+                <Eye className="w-3 h-3" />
+                <span>360° View</span>
               </button>
               <button
                 onClick={() => setViewMode('radar')}
-                className={`px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
+                className={`px-3 py-1 rounded-lg transition-all flex items-center gap-1.5 cursor-pointer ${
                   viewMode === 'radar'
                     ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
-                    : 'text-slate-300 hover:text-white'
+                    : 'text-slate-300'
                 }`}
               >
-                <Map className="w-3.5 h-3.5" />
-                <span>Satellite Campus Map</span>
+                <Map className="w-3 h-3" />
+                <span>Satellite &amp; OpenStreetMap</span>
               </button>
             </div>
-
-            {/* Audio Ambience Narration Toggle */}
-            <button
-              onClick={() => setIsAudioMuted(!isAudioMuted)}
-              className={`p-2.5 sm:p-3 rounded-xl border shadow-lg transition-all cursor-pointer ${
-                !isAudioMuted
-                  ? 'bg-[#DFC06A] text-[#190527] border-[#DFC06A]'
-                  : 'bg-[#19052A]/90 text-slate-300 hover:text-white border-white/10 hover:bg-[#250836]'
-              }`}
-              title={isAudioMuted ? "Enable Campus Audio Guide" : "Mute Campus Audio"}
-            >
-              {!isAudioMuted ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
-            </button>
-
-            {/* Auto-Rotation Toggle */}
-            <button
-              onClick={() => setIsAutoRotate(!isAutoRotate)}
-              className={`p-2.5 sm:p-3 rounded-xl border shadow-lg transition-all cursor-pointer ${
-                isAutoRotate
-                  ? 'bg-[#DFC06A]/20 text-[#DFC06A] border-[#DFC06A]/50'
-                  : 'bg-[#19052A]/90 text-slate-300 hover:text-white border-white/10 hover:bg-[#250836]'
-              }`}
-              title={isAutoRotate ? "Pause 360° Auto-Pan" : "Start 360° Auto-Pan"}
-            >
-              {isAutoRotate ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-            </button>
-
-            {/* Fullscreen Toggle */}
-            <button
-              onClick={toggleFullscreen}
-              className="p-2.5 sm:p-3 rounded-xl bg-[#19052A]/90 text-slate-300 hover:text-white border border-white/10 shadow-lg hover:bg-[#250836] transition-all cursor-pointer hidden md:flex"
-              title="Toggle Fullscreen"
-            >
-              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-            </button>
-
-            {/* Close Modal Button */}
-            <button
-              onClick={onClose}
-              className="p-2.5 sm:p-3 rounded-xl bg-[#19052A]/90 text-slate-200 hover:text-white hover:bg-rose-950/80 border border-white/10 hover:border-rose-500/40 shadow-lg transition-all cursor-pointer"
-              title="Close Virtual Tour (Esc)"
-            >
-              <X className="w-4 h-4" />
-            </button>
           </div>
-
         </div>
 
         {/* ============================================================== */}
@@ -615,11 +675,11 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
               {/* Realistic Vignette & Google Street View Spherical Lensing Overlay */}
               <div className="absolute inset-0 pointer-events-none bg-radial from-transparent via-transparent to-black/60" />
 
-              {/* Drag Prompt Hint (Disappears after first interaction) */}
-              <div className="absolute top-24 left-1/2 -translate-x-1/2 pointer-events-none opacity-85 animate-pulse-subtle">
+              {/* Drag Prompt Hint */}
+              <div className="hidden sm:block absolute top-24 left-1/2 -translate-x-1/2 pointer-events-none opacity-85 animate-pulse-subtle">
                 <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-[#DFC06A]/40 text-[#FDE68A] text-xs font-semibold flex items-center gap-2 shadow-lg">
                   <Compass className="w-3.5 h-3.5 text-[#DFC06A] animate-spin-slow" />
-                  <span>Click & Drag to Look Around 360° • Scroll to Zoom</span>
+                  <span>Click &amp; Drag to Look Around 360° • Scroll to Zoom</span>
                 </div>
               </div>
 
@@ -733,61 +793,165 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
             </>
           ) : (
             /* ============================================================ */
-            /* RADAR / GOOGLE SATELLITE CAMPUS MAP MODE */
+            /* REAL SATELLITE VIEW & LIVE OPENSTREETMAP CAMPUS MAP */
             /* ============================================================ */
-            <div className="relative w-full h-full bg-[#11051D] flex items-center justify-center p-4 sm:p-8">
-              
-              {/* Satellite Architectural Map Canvas */}
-              <div className="relative w-full max-w-4xl aspect-[16/10] bg-[#1A082C] rounded-3xl border-2 border-[#DFC06A]/40 shadow-2xl overflow-hidden p-6">
-                
-                {/* Architectural Grid Lines */}
-                <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(#DFC06A 1px, transparent 1px), linear-gradient(90deg, #DFC06A 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
-                
-                {/* Satellite Campus Vector Outline */}
-                <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-40" viewBox="0 0 1000 600">
-                  <path d="M 100 150 Q 250 80, 500 120 T 900 200 L 850 500 Q 500 550, 150 480 Z" fill="#240D3A" stroke="#DFC06A" strokeWidth="2" strokeDasharray="6 4" />
-                  {/* Road Network */}
-                  <path d="M 0 300 Q 300 320, 500 280 T 1000 340" stroke="#DFC06A" strokeWidth="6" strokeOpacity="0.3" fill="none" />
-                  <path d="M 480 120 L 480 500" stroke="#DFC06A" strokeWidth="4" strokeOpacity="0.2" fill="none" />
-                </svg>
+            <div className="relative w-full h-full bg-[#0D0417] flex flex-col pt-2.5 sm:pt-3 pb-2 px-2.5 sm:px-5 lg:px-8">
 
-                {/* Campus Stops on Satellite Radar */}
-                {CAMPUS_STOPS.map((spot, idx) => {
-                  const isActive = spot.id === activeSpot.id;
-                  return (
-                    <button
-                      key={spot.id}
-                      onClick={() => { navigateToSpot(spot.id); setViewMode('streetview'); }}
-                      style={{ left: `${spot.coordinates.x}%`, top: `${spot.coordinates.y}%` }}
-                      className={`absolute -translate-x-1/2 -translate-y-1/2 p-2 rounded-2xl transition-all cursor-pointer z-20 flex items-center gap-2 group ${
-                        isActive
-                          ? 'bg-[#DFC06A] text-[#190527] scale-125 ring-4 ring-[#DFC06A]/40 shadow-glow-gold'
-                          : 'bg-[#19052A]/90 text-white border border-[#DFC06A]/50 hover:bg-[#DFC06A] hover:text-[#190527]'
-                      }`}
-                    >
-                      <MapPin className="w-4 h-4 shrink-0" />
-                      <div className="text-left hidden sm:block">
-                        <div className="text-[10px] font-black">{idx + 1}. {spot.name.split('&')[0]}</div>
-                        <div className="text-[9px] opacity-80">{spot.tag}</div>
-                      </div>
-
-                      {/* Radar Beam Effect for Active Spot */}
-                      {isActive && (
-                        <div className="absolute -inset-4 rounded-full border border-[#DFC06A]/60 animate-ping pointer-events-none" />
-                      )}
-                    </button>
-                  );
-                })}
-
-                {/* Satellite Radar Legend */}
-                <div className="absolute bottom-4 left-4 p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs space-y-1">
-                  <div className="font-bold text-[#DFC06A] flex items-center gap-1.5">
-                    <Map className="w-3.5 h-3.5" />
-                    <span>Jyothi Hills Satellite Radar</span>
-                  </div>
-                  <p className="text-[10px] text-slate-300">Click any landmark stop to launch 360° Street View at that coordinate.</p>
+              {/* Map Top Toolbar: Layer Switcher (Satellite vs OpenStreetMap) + Zoom + External Link */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 z-20">
+                <div className="inline-flex bg-[#19052A]/95 p-1 rounded-xl border border-[#DFC06A]/35 shadow-md text-[11px] sm:text-xs font-semibold">
+                  <button
+                    onClick={() => setMapLayer('satellite')}
+                    className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                      mapLayer === 'satellite'
+                        ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    Satellite View
+                  </button>
+                  <button
+                    onClick={() => setMapLayer('osm')}
+                    className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer ${
+                      mapLayer === 'osm'
+                        ? 'bg-[#DFC06A] text-[#190527] font-bold shadow-sm'
+                        : 'text-slate-300 hover:text-white'
+                    }`}
+                  >
+                    OpenStreetMap (Live)
+                  </button>
                 </div>
 
+                <div className="flex items-center gap-2">
+                  {mapLayer === 'satellite' && (
+                    <div className="inline-flex items-center rounded-xl bg-[#19052A]/95 border border-white/15 overflow-hidden text-xs">
+                      <button
+                        onClick={() => setSatZoom(z => Math.min(18, z + 1))}
+                        className="px-2.5 py-1.5 hover:bg-white/10 text-slate-200 cursor-pointer border-r border-white/10"
+                        title="Zoom In Satellite"
+                      >
+                        <ZoomIn className="w-3.5 h-3.5" />
+                      </button>
+                      <span className="px-2 font-mono text-[11px] text-[#DFC06A]">Z{satZoom}</span>
+                      <button
+                        onClick={() => setSatZoom(z => Math.max(16, z - 1))}
+                        className="px-2.5 py-1.5 hover:bg-white/10 text-slate-200 cursor-pointer border-l border-white/10"
+                        title="Zoom Out Satellite"
+                      >
+                        <ZoomOut className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  )}
+
+                  <a
+                    href={`https://www.openstreetmap.org/?mlat=${activeCoords.lat}&mlon=${activeCoords.lon}#map=18/${activeCoords.lat}/${activeCoords.lon}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#19052A]/95 hover:bg-[#250836] border border-[#DFC06A]/40 text-[#FDE68A] text-[11px] sm:text-xs font-semibold transition-colors"
+                  >
+                    <span>Full Map</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+
+              {/* Interactive Map Viewport */}
+              <div className="relative flex-1 w-full rounded-2xl sm:rounded-3xl border border-[#DFC06A]/40 shadow-2xl overflow-hidden bg-[#12061E]">
+                {mapLayer === 'satellite' ? (
+                  <div className="relative w-full h-full overflow-hidden">
+                    {/* Real Esri World Imagery Satellite Tile Grid */}
+                    <div
+                      className="absolute left-1/2 top-1/2 pointer-events-none"
+                      style={{
+                        width: TILE_SIZE * 5,
+                        height: TILE_SIZE * 3,
+                        transform: `translate(${-((centerTileFloat.x - centerTileX + 2) * TILE_SIZE)}px, ${-((centerTileFloat.y - centerTileY + 1) * TILE_SIZE)}px)`,
+                      }}
+                    >
+                      {[-1, 0, 1].map(dy =>
+                        [-2, -1, 0, 1, 2].map(dx => {
+                          const tx = centerTileX + dx;
+                          const ty = centerTileY + dy;
+                          return (
+                            <img
+                              key={`${satZoom}-${tx}-${ty}`}
+                              src={`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${satZoom}/${ty}/${tx}`}
+                              alt="Jyothi Engineering College Satellite Imagery"
+                              width={TILE_SIZE}
+                              height={TILE_SIZE}
+                              className="absolute select-none"
+                              style={{
+                                left: (dx + 2) * TILE_SIZE,
+                                top: (dy + 1) * TILE_SIZE,
+                                width: TILE_SIZE,
+                                height: TILE_SIZE,
+                              }}
+                              draggable={false}
+                            />
+                          );
+                        })
+                      )}
+                    </div>
+
+                    {/* Subtle Vignette for Pin Readability */}
+                    <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/50 via-transparent to-black/25" />
+
+                    {/* GPS-Projected Campus Landmark Pins */}
+                    {CAMPUS_STOPS.map((spot, idx) => {
+                      const spotCoords = parseGps(spot.gps);
+                      const spotTile = latLonToTileFloat(spotCoords.lat, spotCoords.lon, satZoom);
+                      const offsetX = (spotTile.x - centerTileFloat.x) * TILE_SIZE;
+                      const offsetY = (spotTile.y - centerTileFloat.y) * TILE_SIZE;
+                      const isActive = spot.id === activeSpot.id;
+
+                      return (
+                        <button
+                          key={spot.id}
+                          onClick={() => { navigateToSpot(spot.id); setViewMode('streetview'); }}
+                          style={{
+                            left: `calc(50% + ${offsetX}px)`,
+                            top: `calc(50% + ${offsetY}px)`,
+                          }}
+                          title={`${idx + 1}. ${spot.name}`}
+                          className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all cursor-pointer flex items-center gap-1.5 shadow-xl ${
+                            isActive
+                              ? 'z-30 px-2.5 py-1.5 rounded-xl bg-[#DFC06A] text-[#190527] scale-105 ring-4 ring-[#DFC06A]/45 font-black'
+                              : 'z-20 p-1.5 sm:px-2.5 sm:py-1.5 rounded-full sm:rounded-xl bg-[#19052A]/95 text-white border border-[#DFC06A]/70 hover:bg-[#DFC06A] hover:text-[#190527]'
+                          }`}
+                        >
+                          <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-black shrink-0 ${
+                            isActive ? 'bg-[#190527] text-[#DFC06A]' : 'bg-[#DFC06A]/20 text-[#FDE68A]'
+                          }`}>
+                            {idx + 1}
+                          </span>
+                          <span className={`text-[10px] sm:text-[11px] font-bold whitespace-nowrap ${
+                            isActive ? 'inline max-w-[160px] truncate' : 'hidden sm:inline'
+                          }`}>
+                            {spot.name.split('&')[0].trim()}
+                          </span>
+                        </button>
+                      );
+                    })}
+
+                    {/* Satellite Attribution & Legend */}
+                    <div className="absolute bottom-3 left-3 right-3 sm:right-auto sm:max-w-sm p-2.5 sm:p-3 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs space-y-0.5 z-20">
+                      <div className="font-bold text-[#DFC06A] flex items-center gap-1.5 text-[11px]">
+                        <Map className="w-3.5 h-3.5 shrink-0" />
+                        <span>Jyothi Hills Live Satellite View • {activeSpot.gps}</span>
+                      </div>
+                      <p className="text-[10px] text-slate-300">
+                        Tap any campus pin to open its 360° panoramic view. Imagery © Esri World Imagery.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <iframe
+                    title={`OpenStreetMap - ${activeSpot.name}`}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${activeCoords.lon - 0.0042}%2C${activeCoords.lat - 0.0026}%2C${activeCoords.lon + 0.0042}%2C${activeCoords.lat + 0.0026}&layer=mapnik&marker=${activeCoords.lat}%2C${activeCoords.lon}`}
+                    className="w-full h-full border-0"
+                    loading="lazy"
+                  />
+                )}
               </div>
 
             </div>
@@ -797,22 +961,22 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
           {/* 3. STREET VIEW HUD CHROME (COMPASS, ZOOM & RADAR MINIMAP) */}
           {/* ============================================================== */}
           {viewMode === 'streetview' && (
-            <div className="absolute right-4 bottom-24 sm:bottom-28 z-30 flex flex-col items-end gap-3 pointer-events-none">
+            <div className="absolute right-2.5 bottom-3 sm:right-4 sm:bottom-4 z-30 flex flex-col items-end gap-2 sm:gap-2.5 pointer-events-none">
               
               {/* Dynamic Interactive Compass Needle */}
               <button
                 onClick={() => setYaw(0)}
-                className="pointer-events-auto p-2.5 rounded-2xl bg-[#170424]/90 backdrop-blur-md border border-white/15 hover:border-[#DFC06A] shadow-xl text-slate-300 hover:text-white transition-all cursor-pointer group"
+                className="pointer-events-auto p-2 sm:p-2.5 rounded-2xl bg-[#170424]/90 backdrop-blur-md border border-white/15 hover:border-[#DFC06A] shadow-xl text-slate-300 hover:text-white transition-all cursor-pointer group"
                 title="Reset to True North (0°)"
               >
                 <div
-                  className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center relative transition-transform duration-100"
+                  className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-white/20 flex items-center justify-center relative transition-transform duration-100"
                   style={{ transform: `rotate(${-yaw}deg)` }}
                 >
                   {/* Compass Red/White Needle */}
-                  <div className="w-1.5 h-7 relative flex flex-col items-center justify-between">
-                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[12px] border-b-rose-500" />
-                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[12px] border-t-white" />
+                  <div className="w-1.5 h-6 sm:h-7 relative flex flex-col items-center justify-between">
+                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-b-[11px] border-b-rose-500" />
+                    <div className="w-0 h-0 border-l-[4px] border-l-transparent border-r-[4px] border-r-transparent border-t-[11px] border-t-white" />
                   </div>
                 </div>
                 <div className="text-[9px] font-mono font-bold text-center mt-1 text-[#DFC06A]">
@@ -824,52 +988,57 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
               <div className="pointer-events-auto flex flex-col rounded-2xl bg-[#170424]/90 backdrop-blur-md border border-white/15 shadow-xl overflow-hidden">
                 <button
                   onClick={() => setZoom(prev => Math.min(2.2, prev + 0.15))}
-                  className="p-2.5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer border-b border-white/10"
+                  className="p-2 sm:p-2.5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer border-b border-white/10"
                   title="Zoom In (+)"
                 >
                   <ZoomIn className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setZoom(prev => Math.max(1.0, prev - 0.15))}
-                  className="p-2.5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                  className="p-2 sm:p-2.5 hover:bg-white/10 text-slate-300 hover:text-white transition-colors cursor-pointer"
                   title="Zoom Out (-)"
                 >
                   <ZoomOut className="w-4 h-4" />
                 </button>
               </div>
 
-              {/* Bottom-Right Satellite Radar Minimap with Live FOV Flashlight Cone */}
-              <div
+              {/* Bottom-Right Live Satellite Minimap with FOV Cone */}
+              <button
+                type="button"
                 onClick={() => setViewMode('radar')}
-                className="pointer-events-auto w-32 h-24 sm:w-40 sm:h-28 rounded-2xl bg-[#12031E]/95 border-2 border-[#DFC06A]/50 shadow-2xl overflow-hidden relative cursor-pointer hover:border-[#DFC06A] transition-all group hidden sm:block"
-                title="Click to Expand Satellite Campus Map"
+                className="pointer-events-auto w-32 h-24 sm:w-40 sm:h-28 rounded-2xl bg-[#12031E]/95 border-2 border-[#DFC06A]/60 shadow-2xl overflow-hidden relative cursor-pointer hover:border-[#DFC06A] transition-all group hidden sm:block text-left"
+                title="Click to Expand Satellite & OpenStreetMap"
               >
-                {/* Radar Grid Graphic */}
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, #DFC06A 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
-                
+                {/* Live Esri Satellite Tile Preview */}
+                <img
+                  src={`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/17/${centerTileY}/${centerTileX}`}
+                  alt="Campus Satellite Preview"
+                  className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                  draggable={false}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+
                 {/* Live Rotating FOV Cone */}
                 <div
                   style={{
-                    left: `${activeSpot.coordinates.x}%`,
-                    top: `${activeSpot.coordinates.y}%`,
+                    left: '50%',
+                    top: '50%',
                     transform: `translate(-50%, -50%) rotate(${yaw}deg)`
                   }}
                   className="absolute pointer-events-none transition-transform duration-75"
                 >
-                  {/* Flashlight Viewing Cone */}
                   <div
-                    className="w-16 h-16 -mt-8 -ml-8 bg-gradient-to-t from-transparent via-[#DFC06A]/30 to-[#DFC06A]/50"
+                    className="w-16 h-16 -mt-8 -ml-8 bg-gradient-to-t from-transparent via-[#DFC06A]/35 to-[#DFC06A]/60"
                     style={{ clipPath: 'polygon(50% 50%, 0% 0%, 100% 0%)' }}
                   />
-                  {/* Center Dot */}
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 rounded-full bg-[#DFC06A] ring-2 ring-[#180424]" />
                 </div>
 
-                <div className="absolute bottom-1.5 left-2 text-[9px] font-bold text-[#DFC06A] uppercase tracking-wider flex items-center gap-1">
-                  <Map className="w-2.5 h-2.5" />
-                  <span>Radar Map</span>
+                <div className="absolute bottom-1.5 left-2 text-[9px] font-bold text-[#FDE68A] uppercase tracking-wider flex items-center gap-1 drop-shadow">
+                  <Map className="w-2.5 h-2.5 text-[#DFC06A]" />
+                  <span>Satellite Map</span>
                 </div>
-              </div>
+              </button>
 
             </div>
           )}
@@ -900,7 +1069,7 @@ export const VirtualTourModal: React.FC<Props> = ({ isOpen, onClose }) => {
           </div>
 
           {showCarousel && (
-            <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1 scrollbar-thin">
+            <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1 no-scrollbar">
               {CAMPUS_STOPS.map((spot, idx) => {
                 const isCurrent = spot.id === activeSpot.id;
                 return (

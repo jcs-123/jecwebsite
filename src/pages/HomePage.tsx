@@ -57,12 +57,39 @@ const TYPING_PHRASES = [
   "Future Starts Here"
 ];
 
+const HERO_CAROUSEL_IMAGES = [
+  {
+    src: "/assets/jyothi_campus_hero.jpg",
+    alt: "Jyothi Engineering College Autonomous Main Building & Lush Green Campus",
+    objectPos: "object-[50%_32%] lg:object-[50%_34%]",
+  },
+  {
+    src: "/assets/autonomous_campus_hero.jpg",
+    alt: "Jyothi Engineering College Autonomous Academic Campus",
+    objectPos: "object-center",
+  },
+  {
+    src: "/assets/portals_hero.jpg",
+    alt: "Jyothi Engineering College Students Collaborating on Campus Lawn",
+    objectPos: "object-[50%_30%]",
+  },
+];
+
 export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'computer' | 'circuits' | 'core'>('all');
   const [activeNewsTab, setActiveNewsTab] = useState<'notices' | 'events' | 'calendar'>('notices');
   const [activePillar, setActivePillar] = useState<number>(0);
   const [selectedStreamId, setSelectedStreamId] = useState<string>('cse');
   const [activeLifeTab, setActiveLifeTab] = useState<'tharang' | 'clubs' | 'sports' | 'hostel'>('tharang');
+  const [heroSlide, setHeroSlide] = useState(0);
+
+  // Auto-advance desktop hero 3-image carousel
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_CAROUSEL_IMAGES.length);
+    }, 4500);
+    return () => window.clearInterval(timer);
+  }, []);
 
   // Typewriter typing animation state for rotating hero dialog
   const [textIndex, setTextIndex] = useState(0);
@@ -184,13 +211,39 @@ export const HomePage: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour 
           <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-[#C9902C] via-[#FDE68A] to-[#C9902C]" />
         </div>
 
-        {/* DESKTOP & TABLET RIGHT SIDE (>= 768px): Authentic Sunlit Campus Building */}
-        <div className="hidden md:block absolute top-0 right-0 w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden">
-          <img
-            src="/assets/jyothi_campus_hero.jpg"
-            alt="Jyothi Engineering College Autonomous Main Building & Lush Green Campus"
-            className="w-full h-full object-cover object-[50%_32%] lg:object-[50%_34%] scale-100 brightness-[1.0] contrast-[1.02]"
-          />
+        {/* DESKTOP & TABLET RIGHT SIDE (>= 768px): 3-Image Auto-Moving Campus Carousel */}
+        <div className="hidden md:block absolute top-0 right-0 w-[72%] lg:w-[70%] xl:w-[68%] h-full z-0 overflow-hidden bg-[#1B0428]">
+          {HERO_CAROUSEL_IMAGES.map((slide, idx) => {
+            const isActive = idx === heroSlide;
+            return (
+              <img
+                key={slide.src}
+                src={slide.src}
+                alt={slide.alt}
+                loading={idx === 0 ? 'eager' : 'lazy'}
+                className={`absolute inset-0 w-full h-full object-cover ${slide.objectPos} brightness-[1.0] contrast-[1.02] transition-all duration-1000 ease-out will-change-transform ${
+                  isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.03]'
+                }`}
+              />
+            );
+          })}
+
+          {/* Subtle Carousel Indicator Dots */}
+          <div className="absolute bottom-28 right-6 z-20 flex items-center gap-2 bg-black/35 backdrop-blur-sm px-2.5 py-1.5 rounded-full border border-white/15">
+            {HERO_CAROUSEL_IMAGES.map((slide, idx) => (
+              <button
+                key={slide.src}
+                type="button"
+                onClick={() => setHeroSlide(idx)}
+                aria-label={`View campus slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  idx === heroSlide
+                    ? 'w-5 bg-[#DFC06A]'
+                    : 'w-1.5 bg-white/55 hover:bg-white'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* TABLET & DESKTOP: PROPORTIONAL ORGANIC IVORY CANVAS WITH 3D GOLD SWOOPING DIVIDER */}

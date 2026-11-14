@@ -12,6 +12,10 @@ import { CelebrationsPage } from './pages/CelebrationsPage';
 import { SportsArenaPage } from './pages/SportsArenaPage';
 import { NssOutreachPage } from './pages/NssOutreachPage';
 import { ResearchPage } from './pages/ResearchPage';
+import { TataIiicPage } from './pages/TataIiicPage';
+import { JyothiConsultancyPage } from './pages/JyothiConsultancyPage';
+import { MitFabLabPage } from './pages/MitFabLabPage';
+import { JyothiTbiPage } from './pages/JyothiTbiPage';
 import { AdmissionsPage } from './pages/AdmissionsPage';
 import { PlacementsPage } from './pages/PlacementsPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
@@ -172,6 +176,35 @@ export function App() {
 
         {currentPage === 'research' && (
           <ResearchPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'tata-iiic' && (
+          <TataIiicPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'jyothi-consultancy' && (
+          <JyothiConsultancyPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'mit-fablab' && (
+          <MitFabLabPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'jyothi-tbi' && (
+          <JyothiTbiPage
+            onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
           />
         )}

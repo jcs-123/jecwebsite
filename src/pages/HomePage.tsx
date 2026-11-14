@@ -1095,7 +1095,7 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
 
                 <div className="pt-3 flex flex-wrap gap-3">
                   <button
-                    onClick={() => onNavigate('research')}
+                    onClick={() => onNavigate('mit-fablab')}
                     className="px-6 py-3 rounded-full bg-gradient-to-r from-[#DFC06A] via-[#F4DA84] to-[#C9902C] text-[#1D052D] font-bold text-xs sm:text-sm shadow-md hover:shadow-glow-gold hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 group cursor-pointer"
                   >
                     <span>Explore FabLab &amp; Patents</span>

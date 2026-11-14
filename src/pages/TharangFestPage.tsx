@@ -107,7 +107,7 @@ export const TharangFestPage: React.FC<Props> = ({
       subtitle="Our flagship inter-collegiate festival uniting 3,500+ innovators, coders, roboticists, and artists from engineering colleges across South India."
       heroImage="/assets/club_tharang.jpg"
       heroCaption="Annual 3-Day Techno-Cultural Fiesta"
-      heroVariant="wave"
+      heroVariant="arch"
       stats={[
         { value: '3,500+', label: 'Visiting Participants', sub: 'Across South India' },
         { value: '45+', label: 'Competitions & Shows', sub: 'Tech, Robotics & Arts' },
@@ -124,8 +124,8 @@ export const TharangFestPage: React.FC<Props> = ({
           <div className="rounded-3xl overflow-hidden bg-gradient-to-r from-[#210532] via-[#2E0946] to-[#170221] text-white border border-[#D4A346]/40 shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-stretch">
             <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[320px] overflow-hidden">
               <img
-                src="/assets/club_tharang.jpg"
-                alt="Tharang National Tech and Cultural Fest"
+                src="https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?q=80&w=1000&auto=format&fit=crop"
+                alt="Tharang Pro-Show Live Concert and Festival Crowd"
                 className="w-full h-full object-cover"
               />
               <div className="hidden lg:block absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#260739] to-transparent" />

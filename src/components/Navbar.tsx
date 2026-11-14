@@ -134,10 +134,11 @@ export const Navbar: React.FC<Props> = ({
       id: 'research',
       label: 'Research',
       dropdown: [
-        { label: 'MIT FabLab Kerala', page: 'research', section: 'centres', desc: 'Rapid hardware prototyping center' },
-        { label: 'Jyothi TBI Incubator', page: 'research', section: 'tbi', desc: '18+ incubated startups' },
-        { label: 'Patents & Publications', page: 'research', section: 'patents', desc: '42+ filed patents & papers' },
-        { label: 'Funded Projects & MoUs', page: 'research', section: 'projects', desc: 'Govt & industry sponsored' },
+        { label: 'Research', page: 'research', desc: 'R&D centres, patents & funded projects' },
+        { label: 'TATA IIIC', page: 'tata-iiic', desc: 'TATA Industry-Institute Interaction Cell', badge: 'Industry' },
+        { label: 'Jyothi Consultancy Services', page: 'jyothi-consultancy', desc: 'Software, web, mobile apps & IT consulting', badge: 'JCS' },
+        { label: 'MIT FabLab Kerala', page: 'mit-fablab', desc: 'Rapid hardware prototyping center', badge: 'MIT' },
+        { label: 'Jyothi TBI Incubator', page: 'jyothi-tbi', desc: '18+ incubated startups', badge: 'TBI' },
       ]
     },
     {
@@ -330,7 +331,10 @@ export const Navbar: React.FC<Props> = ({
                         handleNavClick(item.id);
                       }
                     }}
-                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-semibold rounded-xl transition-all flex items-center gap-1 select-none whitespace-nowrap shrink-0 ${currentPage === item.id || isOpen
+                    className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-semibold rounded-xl transition-all flex items-center gap-1 select-none whitespace-nowrap shrink-0 ${
+                      currentPage === item.id ||
+                      isOpen ||
+                      item.dropdown?.some((d) => d.page === currentPage)
                         ? 'text-jyothi-purple-900 bg-jyothi-purple-50 font-bold border border-jyothi-purple-200/80 shadow-xs'
                         : 'text-slate-700 hover:text-jyothi-purple-900 hover:bg-slate-100/90'
                       }`}

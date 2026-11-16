@@ -469,39 +469,44 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
 
             {/* Right Architectural Showcase Card */}
             <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-[#240637] group">
-                <div className="aspect-[4/3] w-full overflow-hidden">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-[#DFC06A]/75 bg-[#FAF7F0] group">
+                <div className="aspect-[16/9] w-full overflow-hidden bg-[#0E4FA3]">
                   <img
-                    src="/assets/jyothi_campus_hero.jpg"
-                    alt="Jyothi Engineering College Autonomous Main Building & Colonnade"
-                    className="w-full h-full object-cover object-[50%_35%] group-hover:scale-105 transition-transform duration-700"
+                    src="/assets/about_campus_25years.jpg"
+                    alt="Jyothi Engineering College 2002-2027 25 Years of Excellence Campus"
+                    className="w-full h-full object-cover object-left scale-[1.04] translate-x-[0.5%] group-hover:scale-[1.07] transition-transform duration-700"
                   />
                 </div>
 
-                {/* Overlaid Institutional Accreditations Floating Bar */}
-                <div className="p-5 bg-gradient-to-br from-[#2C0844] via-[#250639] to-[#1A032A] text-white space-y-3.5">
-                  <div className="flex items-center justify-between text-xs pb-1">
-                    <span className="font-bold text-[#FDE68A] uppercase tracking-wider text-[11px]">Autonomous Accord</span>
-                    <span className="text-white/90 font-medium">UGC &amp; APJ KTU</span>
+                {/* Warm Cream Sweeping-Curve Accreditations Panel */}
+                <div className="relative z-10 -mt-5 rounded-tl-[2.5rem] bg-[#FAF7F0] border-t-2 border-[#DFC06A]/80 px-5 sm:px-6 py-5 text-[#250836] space-y-3.5">
+                  <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-[#DFC06A]/65">
+                    <span className="font-black uppercase tracking-wider text-xs sm:text-sm text-[#250836]">
+                      Autonomous Accord
+                    </span>
+                    <span className="h-4 w-[1px] bg-[#DFC06A]/75 shrink-0" />
+                    <span className="text-xs sm:text-sm font-semibold text-[#250836]">
+                      UGC &amp; APJ KTU
+                    </span>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-2.5 text-center text-xs">
-                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
-                      <div className="font-bold text-[#FDE68A] text-sm">NAAC A</div>
+                  <div className="grid grid-cols-3 divide-x divide-[#DFC06A]/65 text-center py-1 border-b border-[#DFC06A]/65 pb-3.5">
+                    <div className="px-2">
+                      <div className="font-black text-sm sm:text-base text-[#250836]">NAAC A</div>
                     </div>
-                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
-                      <div className="font-bold text-[#FDE68A] text-sm">NBA</div>
+                    <div className="px-2">
+                      <div className="font-black text-sm sm:text-base text-[#250836]">NBA</div>
                     </div>
-                    <div className="py-2.5 px-2 rounded-xl bg-white/5 border border-white/15">
-                      <div className="font-bold text-[#FDE68A] text-sm">AICTE</div>
+                    <div className="px-2">
+                      <div className="font-black text-sm sm:text-base text-[#250836]">AICTE</div>
                     </div>
                   </div>
 
-                  <div className="pt-0.5 text-[11px] text-[#DFC06A] font-medium">
-                    <span className="truncate block">Jyothi Hills, Cheruthuruthy, Thrissur, Kerala</span>
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#250836]">
+                    <MapPin className="w-4 h-4 text-[#A87627] shrink-0" />
+                    <span className="truncate">Jyothi Hills, Cheruthuruthy, Thrissur, Kerala</span>
                   </div>
                 </div>
-
               </div>
             </div>
 
@@ -815,65 +820,124 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
         </div>
 
         {/* 5 Core Institutional Values */}
-        <div className="pt-4 space-y-4 text-left">
-          <div className="text-center">
-            <span className="text-xs font-bold uppercase tracking-widest text-slate-500">The Five Pillars of Character</span>
-            <h3 className="text-xl sm:text-2xl font-bold font-['Playfair_Display',serif] text-[#250836] mt-1">
-              Core Institutional Values
-            </h3>
-          </div>
+        <div className="pt-6 space-y-6 text-left">
+          <RevealBlock direction="up">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-[1px] w-12 sm:w-24 bg-[#DFC06A]/80" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#250836]">
+                About Jyothi &bull; Estd 2002
+              </span>
+              <span className="h-[1px] w-12 sm:w-24 bg-[#DFC06A]/80" />
+            </div>
+          </RevealBlock>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 pt-2">
-            {[
-              {
-                title: "Faith & Moral Truth",
-                desc: "Spiritual discernment, unyielding integrity, and moral fortitude guiding every engineering decision.",
-                icon: HeartHandshake,
-                color: "text-amber-800 bg-amber-50 border-amber-200"
-              },
-              {
-                title: "Academic Rigor",
-                desc: "Continuous autonomous learning, Washington Accord standards, and deep technical competencies.",
-                icon: BookOpen,
-                color: "text-purple-900 bg-purple-50 border-purple-200"
-              },
-              {
-                title: "Creative Innovation",
-                desc: "Hands-on prototype mastery in the MIT FabLab, filing patents, and solving societal challenges.",
-                icon: Lightbulb,
-                color: "text-blue-900 bg-blue-50 border-blue-200"
-              },
-              {
-                title: "Social Justice",
-                desc: "Equitable empowerment through ₹3 Cr+ scholarships, NSS community service, and accessible education.",
-                icon: Users,
-                color: "text-emerald-900 bg-emerald-50 border-emerald-200"
-              },
-              {
-                title: "Eco Stewardship",
-                desc: "100 kW solar energy, rainwater harvesting, zero-discharge campus, and green technology commitment.",
-                icon: Sun,
-                color: "text-teal-900 bg-teal-50 border-teal-200"
-              }
-            ].map((val, idx) => {
-              const VIcon = val.icon;
-              return (
-                <RevealBlock
-                  key={idx}
-                  direction={idx % 2 === 0 ? 'left' : 'right'}
-                  delay={(idx % 5) * 150}
-                  className="h-full"
-                >
-                <div className="h-full p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all space-y-2">
-                  <div className={`w-9 h-9 rounded-xl flex items-center justify-center font-bold border ${val.color}`}>
-                    <VIcon className="w-4 h-4" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch pt-2">
+            {/* Left Deep Royal Purple Card with 5 Ascending Columns SVG */}
+            <div className="lg:col-span-5">
+              <RevealBlock direction="left" className="h-full">
+                <div className="h-full rounded-tl-2xl rounded-bl-2xl rounded-tr-[3.5rem] rounded-br-[3.5rem] bg-gradient-to-br from-[#34064E] via-[#28053D] to-[#1B022A] text-white p-7 sm:p-10 shadow-2xl border border-[#DFC06A]/45 flex flex-col justify-between space-y-8">
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-3">
+                      <span className="w-[2px] h-7 bg-[#DFC06A] shrink-0" />
+                      <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#FDE68A] leading-snug">
+                        The Five Pillars of<br />Character
+                      </span>
+                    </div>
+
+                    <h3 className="text-3xl sm:text-4xl lg:text-[42px] font-black font-['Playfair_Display',serif] leading-[1.08] text-white">
+                      Core Institutional Values
+                    </h3>
+
+                    <div className="flex items-center gap-3 pt-1">
+                      <span className="h-[1px] flex-1 bg-[#DFC06A]/70" />
+                      <span className="w-2.5 h-2.5 rotate-45 border border-[#DFC06A] shrink-0" />
+                      <span className="h-[1px] flex-1 bg-[#DFC06A]/70" />
+                    </div>
                   </div>
-                  <h4 className="font-bold text-sm text-[#250836] font-brand">{val.title}</h4>
-                  <p className="text-[11px] sm:text-xs text-slate-600 leading-relaxed">{val.desc}</p>
+
+                  {/* Ascending Classical 5-Pillar Gold Line Art */}
+                  <svg
+                    viewBox="0 0 320 140"
+                    className="w-full h-32 text-[#DFC06A]"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M10,132 Q160,72 300,108"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                    />
+                    {[
+                      { x: 42, top: 74 },
+                      { x: 92, top: 62 },
+                      { x: 142, top: 50 },
+                      { x: 192, top: 38 },
+                      { x: 242, top: 24 },
+                    ].map((col) => (
+                      <g key={col.x} stroke="currentColor" fill="none" strokeWidth="1.3">
+                        <rect x={col.x - 14} y={col.top} width="28" height="5" rx="1" />
+                        <line x1={col.x - 9} y1={col.top + 5} x2={col.x - 9} y2="112" />
+                        <line x1={col.x - 3} y1={col.top + 5} x2={col.x - 3} y2="112" />
+                        <line x1={col.x + 3} y1={col.top + 5} x2={col.x + 3} y2="112" />
+                        <line x1={col.x + 9} y1={col.top + 5} x2={col.x + 9} y2="112" />
+                      </g>
+                    ))}
+                  </svg>
                 </div>
+              </RevealBlock>
+            </div>
+
+            {/* Right 01-05 Numbered Values List */}
+            <div className="lg:col-span-7 flex flex-col justify-center divide-y divide-[#DFC06A]/55">
+              {[
+                {
+                  num: '01',
+                  title: 'Faith & Moral Truth',
+                  desc: 'Spiritual discernment, unyielding integrity, and moral fortitude guiding every engineering decision.',
+                },
+                {
+                  num: '02',
+                  title: 'Academic Rigor',
+                  desc: 'Continuous autonomous learning, Washington Accord standards, and deep technical competencies.',
+                },
+                {
+                  num: '03',
+                  title: 'Creative Innovation',
+                  desc: 'Hands-on prototype mastery in the MIT FabLab, filing patents, and solving societal challenges.',
+                },
+                {
+                  num: '04',
+                  title: 'Social Justice',
+                  desc: 'Equitable empowerment through ₹3 Cr+ scholarships, NSS community service, and accessible education.',
+                },
+                {
+                  num: '05',
+                  title: 'Eco Stewardship',
+                  desc: '100 kW solar energy, rainwater harvesting, zero-discharge campus, and green technology commitment.',
+                },
+              ].map((val, idx) => (
+                <RevealBlock
+                  key={val.num}
+                  direction="right"
+                  delay={idx * 90}
+                >
+                  <div className="py-5 first:pt-2 last:pb-2 flex items-start gap-4 sm:gap-6">
+                    <span className="font-['Playfair_Display',serif] italic font-bold text-2xl sm:text-3xl text-[#A87627] w-10 shrink-0 leading-none pt-1">
+                      {val.num}
+                    </span>
+                    <span className="h-12 w-[1px] bg-[#DFC06A]/65 shrink-0 mt-0.5" />
+                    <div className="space-y-1 text-left">
+                      <h4 className="font-extrabold text-base sm:text-lg text-[#250836] font-['Playfair_Display',serif]">
+                        {val.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        {val.desc}
+                      </p>
+                    </div>
+                  </div>
                 </RevealBlock>
-              );
-            })}
+              ))}
+            </div>
           </div>
         </div>
 
@@ -883,97 +947,123 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       {/* 5. THE AUTONOMOUS ADVANTAGE BREAKTHROUGH (EDUCATIONAL FREEDOM) */}
       {/* ============================================================== */}
       <section id="autonomy" ref={pillarsRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
-        
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-purple-50 border border-purple-200 text-jyothi-purple-900 text-xs font-bold tracking-wide">
-            <Sparkles className="w-3.5 h-3.5 text-jyothi-purple-800" />
-            <span>The UGC & KTU Autonomous Advantage</span>
+        <RevealBlock direction="up">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#250836]">
+                The UGC &amp; KTU Autonomous Advantage
+              </span>
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836] leading-[1.12]">
+              Why Autonomy Gives Jyothi Students an Unbeatable Edge
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+              A closer look at curriculum, learning, examinations and innovation.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
-            Why Autonomy gives Jyothi Students an Unbeatable Edge
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            In conventional engineering colleges, curricula take 4–6 years to update. At Jyothi Autonomous, we update our courses annually in consultation with Fortune 500 tech giants.
-          </p>
+        </RevealBlock>
+
+        {/* 4 Editorial Feature Cards (03 Featured in Royal Purple) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {[
+            {
+              num: '01',
+              icon: BookOpen,
+              title: 'Annual Industry Co-Design',
+              desc: 'Annual curriculum updates with advisory inputs from TCS, Bosch and Infosys, covering AI, cloud and electric mobility.',
+              footer: 'Industry-aligned learning',
+              featured: false,
+            },
+            {
+              num: '02',
+              icon: GraduationCap,
+              title: 'Honors & Minor Degrees',
+              desc: 'B.Tech students can pursue minors in robotics, cyber forensics or artificial intelligence without extra years.',
+              footer: 'Multidisciplinary mastery',
+              featured: false,
+            },
+            {
+              num: '03',
+              icon: ShieldCheck,
+              title: 'Autonomous Exam Controller',
+              desc: 'Examination timetables, digital revaluation and graduation records under an autonomous exam controller.',
+              footer: 'Transparent assessment',
+              featured: true,
+            },
+            {
+              num: '04',
+              icon: Microscope,
+              title: 'Mandatory FabLab Credits',
+              desc: 'Academic credits for prototypes, patents and innovations through MIT FabLab and the campus TBI.',
+              footer: 'Hands-on learning',
+              featured: false,
+            },
+          ].map((card, idx) => {
+            const Icon = card.icon;
+            return (
+              <RevealBlock
+                key={card.num}
+                direction={idx % 2 === 0 ? 'left' : 'right'}
+                delay={idx * 120}
+                className="h-full"
+              >
+                <div
+                  className={`h-full p-6 rounded-2xl border shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-5 text-left ${
+                    card.featured
+                      ? 'bg-gradient-to-br from-[#34064E] via-[#28053D] to-[#1B022A] text-white border-[#DFC06A]/65'
+                      : 'bg-[#FCF9F2] text-[#250836] border-[#DFC06A]/75 hover:bg-white'
+                  }`}
+                >
+                  <div className="space-y-4">
+                    <div className="flex items-start justify-between">
+                      <Icon
+                        className={`w-7 h-7 ${
+                          card.featured ? 'text-[#DFC06A]' : 'text-[#A87627]'
+                        }`}
+                      />
+                      <span
+                        className={`font-['Playfair_Display',serif] italic font-bold text-3xl leading-none select-none ${
+                          card.featured ? 'text-white/25' : 'text-[#DFC06A]/55'
+                        }`}
+                      >
+                        {card.num}
+                      </span>
+                    </div>
+
+                    <h3
+                      className={`font-bold text-lg font-['Playfair_Display',serif] leading-snug ${
+                        card.featured ? 'text-white' : 'text-[#250836]'
+                      }`}
+                    >
+                      {card.title}
+                    </h3>
+
+                    <p
+                      className={`text-xs leading-relaxed ${
+                        card.featured ? 'text-slate-200' : 'text-slate-600'
+                      }`}
+                    >
+                      {card.desc}
+                    </p>
+                  </div>
+
+                  <div className="space-y-2.5 pt-1">
+                    <div className="w-8 h-[1.5px] bg-[#DFC06A]" />
+                    <div
+                      className={`text-xs font-bold ${
+                        card.featured ? 'text-[#FDE68A]' : 'text-[#250836]'
+                      }`}
+                    >
+                      {card.footer}
+                    </div>
+                  </div>
+                </div>
+              </RevealBlock>
+            );
+          })}
         </div>
-
-        {/* 4 Feature Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          
-          <RevealBlock direction="left" delay={0} className="h-full">
-          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
-            <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-800 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <BookOpen className="w-5 h-5 text-amber-700" />
-            </div>
-            <h3 className="font-bold text-base font-brand text-[#250836]">
-              Annual Industry Co-Design
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Curricula are updated every single academic year directly with TCS, Bosch, and Infosys advisory boards to incorporate Generative AI, Cloud DevOps, and Electric Mobility.
-            </p>
-            <div className="pt-2 text-[11px] font-semibold text-emerald-700 flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5" />
-              <span>Zero outdated textbooks</span>
-            </div>
-          </div>
-          </RevealBlock>
-
-          <RevealBlock direction="right" delay={150} className="h-full">
-          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
-            <div className="w-11 h-11 rounded-2xl bg-purple-50 text-purple-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <Award className="w-5 h-5 text-jyothi-purple-900" />
-            </div>
-            <h3 className="font-bold text-base font-brand text-[#250836]">
-              Honors & Minor Degrees
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Every student can earn dual credentials: a core B.Tech degree plus a specialized Minor in Robotics, Cyber Forensics, or Artificial Intelligence without extra years.
-            </p>
-            <div className="pt-2 text-[11px] font-semibold text-emerald-700 flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5" />
-              <span>Multidisciplinary mastery</span>
-            </div>
-          </div>
-          </RevealBlock>
-
-          <RevealBlock direction="left" delay={300} className="h-full">
-          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
-            <div className="w-11 h-11 rounded-2xl bg-blue-50 text-blue-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <ShieldCheck className="w-5 h-5 text-blue-800" />
-            </div>
-            <h3 className="font-bold text-base font-brand text-[#250836]">
-              Autonomous Exam Controller
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Our autonomous examination control board guarantees punctual examination timetables, transparent digital revaluations, and on-time graduation records with zero strike delays.
-            </p>
-            <div className="pt-2 text-[11px] font-semibold text-emerald-700 flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5" />
-              <span>Punctual degree conferral</span>
-            </div>
-          </div>
-          </RevealBlock>
-
-          <RevealBlock direction="right" delay={450} className="h-full">
-          <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md hover:border-amber-400 transition-all space-y-3 text-left group">
-            <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-900 flex items-center justify-center font-bold group-hover:scale-110 transition-transform">
-              <Microscope className="w-5 h-5 text-emerald-800" />
-            </div>
-            <h3 className="font-bold text-base font-brand text-[#250836]">
-              Mandatory FabLab Credits
-            </h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Academic credits awarded for real hardware prototypes built in the MIT FabLab, student-filed patents, and revenue-generating startups incubated in the campus TBI.
-            </p>
-            <div className="pt-2 text-[11px] font-semibold text-emerald-700 flex items-center gap-1.5">
-              <Check className="w-3.5 h-3.5" />
-              <span>Hands-on prototype grades</span>
-            </div>
-          </div>
-          </RevealBlock>
-
-        </div>
-
       </section>
 
       {/* ============================================================== */}
@@ -1046,199 +1136,328 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       {/* 7. 30+ ACRE HILLTOP CAMPUS INFRASTRUCTURE (BENTO GRID) */}
       {/* ============================================================== */}
       <section id="campus" ref={infraRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
-        
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs font-bold tracking-wide">
-            <Building2 className="w-3.5 h-3.5 text-emerald-700" />
-            <span>Campus Infrastructure & Sanctuary</span>
+        <RevealBlock direction="up">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#250836]">
+                Campus Infrastructure
+              </span>
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836]">
+              30+ Acres of Scenic Green Hilltop Sanctuary
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+              Academic, residential and recreational spaces at Jyothi Hills.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
-            30+ Acres of Scenic Green Hilltop Sanctuary
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Located in Cheruthuruthy along the banks of the Bharathapuzha, Jyothi provides an inspiring physical environment equipped with state-of-the-art academic and residential amenities.
-          </p>
-        </div>
+        </RevealBlock>
 
-        {/* Bento Grid Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5">
-          
-          {/* Card 1: Central Automated RFID Library */}
+        {/* 6-Card Architectural Pencil-Sketch Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {/* Card 1: Computerized Central RFID Library (Span 2) */}
           <RevealBlock direction="left" delay={0} className="md:col-span-2 h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
-              <BookOpen className="w-5 h-5 text-amber-700" />
+            <div className="h-full p-6 sm:p-7 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all grid grid-cols-1 sm:grid-cols-12 gap-5 items-center text-left">
+              <div className="sm:col-span-5 space-y-2.5">
+                <span className="block w-8 h-[2px] bg-[#C79628]" />
+                <h3 className="text-xl font-black font-['Playfair_Display',serif] text-[#250836] leading-snug">
+                  Computerized Central RFID Library
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  42,000+ Volumes &bull; IEEE Digital Access &bull; RFID Self-Issue
+                </p>
+              </div>
+              {/* Pencil-Sketch SVG: Library Bookshelves & Study Desk */}
+              <div className="sm:col-span-7 flex items-center justify-center">
+                <svg viewBox="0 0 260 150" className="w-full h-36 text-[#6B5744]" aria-hidden="true">
+                  <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                    {/* Back Windows */}
+                    <rect x="165" y="16" width="76" height="58" strokeOpacity="0.5" />
+                    <line x1="190" y1="16" x2="190" y2="74" strokeOpacity="0.45" />
+                    <line x1="215" y1="16" x2="215" y2="74" strokeOpacity="0.45" />
+                    <line x1="165" y1="45" x2="241" y2="45" strokeOpacity="0.45" />
+                    {/* Perspective Bookshelf */}
+                    <polygon points="22,12 108,26 108,118 22,134" fill="#FAF7F0" />
+                    <line x1="22" y1="42" x2="108" y2="50" />
+                    <line x1="22" y1="72" x2="108" y2="74" />
+                    <line x1="22" y1="102" x2="108" y2="98" />
+                    <line x1="52" y1="17" x2="52" y2="128" strokeOpacity="0.6" />
+                    <line x1="80" y1="22" x2="80" y2="123" strokeOpacity="0.6" />
+                    {/* Books */}
+                    {[28, 33, 38, 43, 58, 63, 68, 86, 91, 96].map((bx) => (
+                      <line key={bx} x1={bx} y1="24" x2={bx} y2="43" strokeOpacity="0.7" />
+                    ))}
+                    {[28, 34, 40, 58, 64, 70, 88, 94].map((bx) => (
+                      <line key={`m-${bx}`} x1={bx} y1="53" x2={bx} y2="72" strokeOpacity="0.7" />
+                    ))}
+                    {/* Reading Table & Laptop & Desk Lamp */}
+                    <polygon points="105,98 228,88 248,104 125,118" fill="#FAF7F0" />
+                    <line x1="128" y1="118" x2="128" y2="142" />
+                    <line x1="236" y1="104" x2="236" y2="136" />
+                    <polygon points="154,99 178,96 184,104 160,107" />
+                    <polygon points="154,99 152,85 176,82 178,96" />
+                    <path d="M198,96 L198,74 L212,68" />
+                    <polygon points="208,68 220,74 204,76" fill="#FAF7F0" />
+                  </g>
+                </svg>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-xl font-bold font-['Playfair_Display',serif] text-[#250836]">
-                Computerized Central RFID Library
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                Housing over 42,000+ volumes, 120+ national and international print journals, 24/7 digital IEEE Xplore, ScienceDirect access, and automated RFID self-checkout kiosks across a 3-tier reading pavilion.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">42,000+ Volumes</span>
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">IEEE Digital Access</span>
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">RFID Self-Issue</span>
-            </div>
-          </div>
           </RevealBlock>
 
-          {/* Card 2: MIT FabLab Hardware Incubator */}
-          <RevealBlock direction="right" delay={150} className="h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-900 flex items-center justify-center font-bold">
-              <Microscope className="w-5 h-5 text-jyothi-purple-900" />
+          {/* Card 2: MIT-Model FabLab & TBI */}
+          <RevealBlock direction="up" delay={100} className="h-full">
+            <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
+              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
+                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  {/* 3D Printer Frame */}
+                  <rect x="44" y="14" width="84" height="78" rx="2" fill="#FAF7F0" />
+                  <rect x="52" y="22" width="68" height="58" strokeOpacity="0.7" />
+                  <line x1="52" y1="42" x2="120" y2="42" />
+                  <rect x="78" y="34" width="16" height="14" fill="#FAF7F0" />
+                  <line x1="86" y1="48" x2="86" y2="56" />
+                  <polygon points="74,70 98,70 92,58 80,58" fill="#FAF7F0" />
+                  {/* Filament Spool */}
+                  <ellipse cx="26" cy="54" rx="12" ry="18" fill="#FAF7F0" />
+                  <ellipse cx="26" cy="54" rx="5" ry="8" />
+                  {/* Mechanical Part */}
+                  <polygon points="145,94 176,54 204,94" fill="#FAF7F0" />
+                  <circle cx="176" cy="80" r="8" />
+                  <line x1="14" y1="98" x2="210" y2="98" strokeOpacity="0.6" />
+                </g>
+              </svg>
+              <div className="space-y-1.5">
+                <span className="block w-7 h-[2px] bg-[#C79628]" />
+                <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
+                  MIT-Model FabLab &amp; TBI
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Laser cutters &bull; 3D printers &bull; CNC
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#250836]">
-                MIT-Model FabLab & TBI
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Equipped with laser cutters, 3D printers, PCB routing machines, and CNC mills for rapid deep-tech prototyping.
-              </p>
-            </div>
-            <div className="text-[11px] font-bold text-jyothi-purple-900">
-              ₹1.2 Cr+ Seed Funding Access
-            </div>
-          </div>
           </RevealBlock>
 
-          {/* Card 3: 25+ Fleet Bus Routes */}
-          <RevealBlock direction="left" delay={300} className="h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-blue-50/50 border border-blue-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-blue-100 text-blue-900 flex items-center justify-center font-bold">
-              <Bus className="w-5 h-5 text-blue-800" />
+          {/* Card 3: 25+ Fleet Bus Network */}
+          <RevealBlock direction="right" delay={200} className="h-full">
+            <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
+              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
+                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Trees */}
+                  <path d="M22,86 C12,68 22,42 36,48 C48,40 56,64 46,86" strokeOpacity="0.55" />
+                  <path d="M180,86 C172,62 184,36 198,46 C210,50 212,74 200,86" strokeOpacity="0.55" />
+                  {/* College Bus */}
+                  <path d="M36,34 L148,22 Q164,22 166,40 L166,84 L34,84 L34,42 Q34,35 36,34 Z" fill="#FAF7F0" />
+                  <rect x="42" y="40" width="56" height="22" rx="2" strokeOpacity="0.75" />
+                  <line x1="60" y1="40" x2="60" y2="62" strokeOpacity="0.6" />
+                  <line x1="78" y1="40" x2="78" y2="62" strokeOpacity="0.6" />
+                  <polygon points="104,36 158,31 158,60 104,62" strokeOpacity="0.85" />
+                  <circle cx="58" cy="86" r="10" fill="#FAF7F0" />
+                  <circle cx="58" cy="86" r="4" />
+                  <circle cx="128" cy="86" r="10" fill="#FAF7F0" />
+                  <circle cx="128" cy="86" r="4" />
+                  <line x1="12" y1="96" x2="210" y2="96" strokeOpacity="0.6" />
+                </g>
+              </svg>
+              <div className="space-y-1.5">
+                <span className="block w-7 h-[2px] bg-[#C79628]" />
+                <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
+                  25+ Fleet Bus Network
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  GPS-enabled campus transport
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#250836]">
-                25+ Fleet Bus Network
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Smart GPS-enabled fleet connecting Cheruthuruthy across Thrissur, Palakkad, Malappuram, and Shoranur.
-              </p>
-            </div>
-            <div className="text-[11px] font-bold text-blue-800">
-              Safe & Punctual Daily Commute
-            </div>
-          </div>
           </RevealBlock>
 
-          {/* Card 4: 100 kW Solar Power Array */}
-          <RevealBlock direction="right" delay={0} className="h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-emerald-50/50 border border-emerald-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold">
-              <Sun className="w-5 h-5 text-emerald-800" />
+          {/* Card 4: 100 kW Solar Clean Power */}
+          <RevealBlock direction="left" delay={80} className="h-full">
+            <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
+              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
+                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Hills */}
+                  <path d="M12,62 Q70,22 140,42 T210,36" strokeOpacity="0.4" />
+                  {/* Solar Array */}
+                  <polygon points="22,38 196,52 178,84 18,74" fill="#FAF7F0" />
+                  {[46, 76, 106, 136, 166].map((sx) => (
+                    <line key={sx} x1={sx} y1="40" x2={sx - 10} y2="79" strokeOpacity="0.65" />
+                  ))}
+                  <line x1="20" y1="56" x2="187" y2="68" strokeOpacity="0.65" />
+                  {/* Building parapet */}
+                  <rect x="20" y="84" width="180" height="16" fill="#FAF7F0" />
+                </g>
+              </svg>
+              <div className="space-y-1.5">
+                <span className="block w-7 h-[2px] bg-[#C79628]" />
+                <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
+                  100 kW Solar Clean Power
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Rooftop solar &bull; 120+ Tonnes CO&#8322; Offset Annually
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#250836]">
-                100 kW Solar Clean Power
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Rooftop grid-tied solar panels powering laboratories, hostels, and academic halls with clean green energy.
-              </p>
-            </div>
-            <div className="text-[11px] font-bold text-emerald-800">
-              120+ Tonnes CO2 Offset Annually
-            </div>
-          </div>
           </RevealBlock>
 
-          {/* Card 5: Separate Modern Hostels & Dining */}
-          <RevealBlock direction="left" delay={150} className="md:col-span-2 h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-amber-50/50 border border-amber-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold">
-              <Building2 className="w-5 h-5 text-amber-700" />
+          {/* Card 5: Separate Men & Women Smart Hostels (Span 2) */}
+          <RevealBlock direction="up" delay={160} className="md:col-span-2 h-full">
+            <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
+              <svg viewBox="0 0 380 125" className="w-full h-28 sm:h-32 text-[#6B5744]" aria-hidden="true">
+                <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Left Hostel Block */}
+                  <polygon points="56,36 146,24 146,96 56,96" fill="#FAF7F0" />
+                  <polygon points="146,24 176,34 176,96 146,96" fill="#FAF7F0" />
+                  {[44, 58, 72].map((wy) => (
+                    <line key={wy} x1="64" y1={wy} x2="138" y2={wy - 6} strokeOpacity="0.65" />
+                  ))}
+                  {/* Right Hostel Block */}
+                  <polygon points="210,16 318,28 318,98 210,98" fill="#FAF7F0" />
+                  <polygon points="184,26 210,16 210,98 184,98" fill="#FAF7F0" />
+                  {[34, 50, 66, 82].map((wy) => (
+                    <line key={`r-${wy}`} x1="218" y1={wy} x2="310" y2={wy + 6} strokeOpacity="0.65" />
+                  ))}
+                  {/* Trees & Pathway */}
+                  <path d="M26,98 C16,74 28,44 44,50 C54,54 56,80 44,98" strokeOpacity="0.6" />
+                  <path d="M336,98 C326,74 338,44 354,50 C366,54 366,82 354,98" strokeOpacity="0.6" />
+                  <path d="M12,114 Q170,96 368,112" strokeOpacity="0.55" />
+                </g>
+              </svg>
+              <div className="space-y-1.5">
+                <span className="block w-8 h-[2px] bg-[#C79628]" />
+                <h3 className="text-xl font-black font-['Playfair_Display',serif] text-[#250836]">
+                  Separate Men &amp; Women Smart Hostels
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  24/7 Security &amp; Wardens &bull; Hygienic Mess &bull; Gymnasium &amp; Sports
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-xl font-bold font-['Playfair_Display',serif] text-[#250836]">
-                Separate Men & Women Smart Hostels
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                On-campus residential complexes featuring round-the-clock biometric security, Wi-Fi connectivity, hygienic steam-cooked multi-cuisine dining, study lounges, gym, and outdoor sports courts.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-2 pt-2">
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">24/7 Security & Wardens</span>
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">Hygienic Mess</span>
-              <span className="text-[11px] font-semibold bg-white border border-amber-200 px-3 py-1 rounded-full text-slate-700">Gymnasium & Sports</span>
-            </div>
-          </div>
           </RevealBlock>
 
-          {/* Card 6: Sports Pavilion & Amphitheater */}
-          <RevealBlock direction="right" delay={300} className="h-full">
-          <div className="h-full p-7 rounded-3xl bg-gradient-to-br from-white to-purple-50/50 border border-purple-200/80 shadow-sm hover:shadow-md transition-all text-left space-y-4">
-            <div className="w-10 h-10 rounded-2xl bg-purple-100 text-purple-900 flex items-center justify-center font-bold">
-              <Trophy className="w-5 h-5 text-jyothi-purple-900" />
+          {/* Card 6: Sports Pavilion & Amphitheatre */}
+          <RevealBlock direction="right" delay={240} className="h-full">
+            <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
+              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
+                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                  {/* Curved Stadium Roof */}
+                  <path d="M46,38 Q120,12 198,38 L194,48 Q120,24 50,48 Z" fill="#FAF7F0" />
+                  {/* Tiers & Pillars */}
+                  <polygon points="56,48 188,48 194,82 50,82" fill="#FAF7F0" />
+                  <line x1="54" y1="60" x2="190" y2="60" strokeOpacity="0.65" />
+                  <line x1="52" y1="71" x2="192" y2="71" strokeOpacity="0.65" />
+                  <line x1="88" y1="42" x2="88" y2="82" />
+                  <line x1="126" y1="36" x2="126" y2="82" />
+                  <line x1="164" y1="42" x2="164" y2="82" />
+                  {/* Football Goal & Pitch Lines */}
+                  <rect x="16" y="72" width="24" height="16" fill="#FAF7F0" />
+                  <line x1="10" y1="92" x2="210" y2="92" strokeOpacity="0.65" />
+                  <ellipse cx="122" cy="100" rx="48" ry="8" strokeOpacity="0.45" />
+                </g>
+              </svg>
+              <div className="space-y-1.5">
+                <span className="block w-7 h-[2px] bg-[#C79628]" />
+                <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
+                  Sports Pavilion &amp; Amphitheatre
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  Football, courts and outdoor cultural arena
+                </p>
+              </div>
             </div>
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#250836]">
-                Sports Pavilion & Amphitheatre
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Standard football turf, basketball, badminton courts, and open-air cultural arena for college events.
-              </p>
-            </div>
-            <div className="text-[11px] font-bold text-jyothi-purple-900">
-              State Inter-Collegiate Champions
-            </div>
-          </div>
           </RevealBlock>
-
         </div>
-
       </section>
 
       {/* ============================================================== */}
       {/* 8. NATIONAL ACCREDITATIONS & RECOGNITIONS (ID: accreditations) */}
       {/* ============================================================== */}
       <section id="accreditations" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 scroll-mt-24">
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold tracking-wide">
-            <Award className="w-3.5 h-3.5 text-amber-600" />
-            <span>National Standards of Quality</span>
+        <RevealBlock direction="up">
+          <div className="text-center max-w-3xl mx-auto space-y-2.5">
+            <div className="flex items-center justify-center gap-3">
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#250836]">
+                National Standards of Quality
+              </span>
+              <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+            </div>
+            <h2 className="text-2xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836]">
+              Recognized &amp; Accredited by Apex National Bodies
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto leading-relaxed">
+              An overview of Jyothi&rsquo;s recognitions and affiliations.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
-            Recognized & Accredited by Apex National Bodies
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Every academic degree conferred at Jyothi adheres strictly to rigorous Washington Accord benchmarks, verified by supreme regulatory and accreditation councils.
-          </p>
-        </div>
+        </RevealBlock>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[
-            { title: "UGC Autonomous", desc: "10-Year Academic Autonomy", badge: "2023 Conferred", icon: ShieldCheck, color: "text-purple-900 bg-purple-50 border-purple-200" },
-            { title: "NAAC 'A' Grade", desc: "Top Institutional Quality Rating", badge: "Grade A", icon: Award, color: "text-amber-800 bg-amber-50 border-amber-200" },
-            { title: "NBA Accredited", desc: "CSE, ECE, EEE & Mech B.Tech", badge: "Tier-II Washington", icon: GraduationCap, color: "text-blue-900 bg-blue-50 border-blue-200" },
-            { title: "APJ KTU Affiliated", desc: "State Technological University", badge: "Charter Member", icon: Compass, color: "text-emerald-900 bg-emerald-50 border-emerald-200" },
-            { title: "AICTE Approved", desc: "Ministry of Education, GoI", badge: "Since 2002", icon: Building2, color: "text-rose-900 bg-rose-50 border-rose-200" },
-            { title: "ISO 9001:2015", desc: "Certified Educational Processes", badge: "Certified", icon: CheckCircle2, color: "text-teal-900 bg-teal-50 border-teal-200" },
-          ].map((acc, idx) => {
-            const AIcon = acc.icon;
-            return (
-              <RevealBlock
-                key={idx}
-                direction={idx % 2 === 0 ? 'left' : 'right'}
-                delay={(idx % 6) * 150}
-                className="h-full"
-              >
-              <div className="h-full p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs hover:shadow-md transition-all text-center space-y-2 group">
-                <div className={`w-10 h-10 mx-auto rounded-xl flex items-center justify-center font-bold border ${acc.color} group-hover:scale-110 transition-transform`}>
-                  <AIcon className="w-5 h-5" />
+        <RevealBlock direction="up" delay={100}>
+          <div className="rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/85 shadow-sm overflow-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              {[
+                {
+                  short: 'UGC',
+                  title: 'UGC Autonomous',
+                  desc: '10-Year Academic Autonomy',
+                  badge: '2023 Conferred',
+                },
+                {
+                  short: 'NAAC',
+                  title: 'NAAC A Grade',
+                  desc: 'Top Institutional Quality Rating',
+                  badge: 'Grade A',
+                },
+                {
+                  short: 'NBA',
+                  title: 'NBA Accredited',
+                  desc: 'CSE, ECE, EEE & Mech B.Tech',
+                  badge: 'Tier-II Washington',
+                },
+                {
+                  short: 'APJ KTU',
+                  title: 'APJ KTU Affiliated',
+                  desc: 'State Technological University',
+                  badge: 'Charter Member',
+                },
+                {
+                  short: 'AICTE',
+                  title: 'AICTE Approved',
+                  desc: 'Ministry of Education, GoI',
+                  badge: 'Since 2002',
+                },
+                {
+                  short: 'ISO',
+                  title: 'ISO 9001:2015',
+                  desc: 'Certified Educational Processes',
+                  badge: 'Certified',
+                },
+              ].map((acc, idx) => (
+                <div
+                  key={acc.short}
+                  className="p-6 sm:p-8 text-center flex flex-col items-center justify-between space-y-3 border-b border-[#DFC06A]/50 sm:odd:border-r lg:odd:border-r-0 lg:border-r lg:[&:nth-child(3n)]:border-r-0 lg:[&:nth-child(n+4)]:border-b-0 sm:[&:nth-child(n+5)]:border-b-0 hover:bg-white/75 transition-colors"
+                >
+                  <RevealBlock
+                    direction="up"
+                    delay={idx * 80}
+                    className="flex flex-col items-center space-y-2.5 w-full"
+                  >
+                    <div className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#250836]">
+                      {acc.short}
+                    </div>
+                    <span className="w-8 h-[1.5px] bg-[#DFC06A]" />
+                    <div className="font-black text-lg sm:text-xl text-[#250836] font-['Playfair_Display',serif]">
+                      {acc.title}
+                    </div>
+                    <div className="text-xs text-slate-600">{acc.desc}</div>
+                    <span className="inline-block px-4 py-1 rounded-full text-[11px] font-bold bg-[#FBF2DC] text-[#5C3A14] border border-[#DFC06A]/85 shadow-2xs">
+                      {acc.badge}
+                    </span>
+                  </RevealBlock>
                 </div>
-                <div className="font-bold text-xs sm:text-sm text-[#250836] font-brand">{acc.title}</div>
-                <div className="text-[10px] text-slate-500 leading-tight">{acc.desc}</div>
-                <span className="inline-block px-2 py-0.5 rounded-full text-[9px] font-extrabold bg-[#250836] text-[#FDE68A]">
-                  {acc.badge}
-                </span>
-              </div>
-              </RevealBlock>
-            );
-          })}
-        </div>
+              ))}
+            </div>
+          </div>
+        </RevealBlock>
       </section>
 
       {/* ============================================================== */}

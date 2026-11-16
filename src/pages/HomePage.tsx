@@ -807,117 +807,157 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         {/* ============================================================== */}
         {/* 4. FOUR PILLARS OF DISTINCTION (CASUAL, FRIENDLY & ELEGANT TABS) */}
         {/* ============================================================== */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-          <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 border border-jyothi-purple-200/80 px-3.5 py-1 rounded-full">
-              Institutional Distinction
-            </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-brand text-jyothi-purple-950">
-              The Jyothi Advantage
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
-              Four foundational pillars that give every student an agile curriculum, practical maker-lab access, and verified corporate placement.
-            </p>
-          </div>
-
-          {/* 4 Pillar Selection Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {pillars.map((p, idx) => {
-              const Icon = p.icon;
-              const isSelected = activePillar === idx;
-              return (
-                <RevealBlock
-                  key={idx}
-                  direction={idx % 2 === 0 ? 'left' : 'right'}
-                  delay={(idx % 4) * 150}
-                  className="h-full"
-                >
-                  <button
-                    onClick={() => setActivePillar(idx)}
-                    className={`w-full h-full p-4 sm:p-5 rounded-3xl text-left border transition-all duration-300 ${isSelected
-                      ? 'bg-jyothi-purple-900 text-white border-jyothi-purple-900 shadow-xl'
-                      : 'bg-white hover:bg-slate-50 text-slate-800 border-slate-200 shadow-xs'
-                      }`}
-                  >
-                    <div className="flex items-center justify-between mb-3">
-                      <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${isSelected ? 'bg-jyothi-gold-400 text-jyothi-purple-950' : 'bg-slate-100 text-jyothi-purple-900'
-                        }`}>
-                        <Icon className="w-5 h-5" />
-                      </div>
-                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${isSelected ? 'bg-white/20 text-jyothi-gold-300' : 'bg-slate-100 text-slate-600'
-                        }`}>
-                        0{idx + 1}
-                      </span>
-                    </div>
-                    <h3 className={`font-bold text-sm sm:text-base font-brand ${isSelected ? 'text-white' : 'text-jyothi-purple-950'}`}>
-                      {p.title}
-                    </h3>
-                    <p className={`text-[11px] sm:text-xs mt-1 line-clamp-1 ${isSelected ? 'text-jyothi-gold-200' : 'text-slate-500'}`}>
-                      {p.subtitle}
-                    </p>
-                  </button>
-                </RevealBlock>
-              );
-            })}
-          </div>
-
-          {/* Active Pillar Detailed Showcase Card */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <RevealBlock direction="up">
-            <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-8 space-y-4">
-                <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 px-3 py-1 rounded-full border border-jyothi-purple-200">
-                  {pillars[activePillar].badge} • {pillars[activePillar].subtitle}
+            <div className="text-center max-w-2xl mx-auto space-y-2.5">
+              <div className="flex items-center justify-center gap-3">
+                <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#5C3A14]">
+                  Institutional Distinction
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-black font-brand text-jyothi-purple-950">
-                  {pillars[activePillar].title}
-                </h3>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-2xl">
-                  {pillars[activePillar].desc}
-                </p>
-
-                {/* Pillar key highlights list */}
-                <div className="grid grid-cols-2 gap-2.5 pt-2">
-                  {pillars[activePillar].highlights.map((h, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs font-semibold text-slate-700">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
-                      <span>{h}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="pt-3 flex flex-wrap gap-3">
-                  <button
-                    onClick={onOpenApply}
-                    className="px-6 py-3 rounded-2xl bg-jyothi-purple-900 hover:bg-jyothi-purple-950 text-jyothi-gold-300 font-bold text-xs sm:text-sm shadow-md transition-all flex items-center gap-2"
-                  >
-                    <span>Apply for Admissions 2025</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => onNavigate(activePillar === 0 ? 'about' : activePillar === 1 ? 'research' : activePillar === 2 ? 'placements' : 'facilities')}
-                    className="px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 text-jyothi-purple-950 font-bold text-xs sm:text-sm transition-all"
-                  >
-                    Learn More
-                  </button>
-                </div>
+                <span className="h-[1px] w-10 sm:w-16 bg-[#DFC06A]/85" />
               </div>
-
-              <div className="lg:col-span-4 p-6 sm:p-8 rounded-3xl bg-slate-50 text-jyothi-purple-950 text-center space-y-3 border border-slate-200">
-                <div className="w-12 h-12 rounded-2xl bg-jyothi-purple-100 text-jyothi-purple-900 mx-auto flex items-center justify-center font-bold">
-                  <Award className="w-6 h-6" />
-                </div>
-                <div className="text-3xl sm:text-4xl font-black font-brand text-jyothi-purple-900">
-                  {pillars[activePillar].stat}
-                </div>
-                <div className="text-xs font-semibold text-slate-600">
-                  {pillars[activePillar].statLabel}
-                </div>
-                <div className="pt-2 text-[11px] text-slate-400 border-t border-slate-200">
-                  Authentic Institutional Record
-                </div>
-              </div>
+              <h2 className="text-3xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836]">
+                The Jyothi Advantage
+              </h2>
+              <p className="text-xs sm:text-sm text-slate-600">
+                Four pillars that shape learning at Jyothi.
+              </p>
             </div>
           </RevealBlock>
+
+          {/* Left Vertical Pillar Tabs + Right Curved Photo Showcase Card */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            {/* Left Vertical Tabs */}
+            <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+              {pillars.map((p, idx) => {
+                const isSelected = activePillar === idx;
+                return (
+                  <RevealBlock
+                    key={idx}
+                    direction="left"
+                    delay={idx * 80}
+                    className="h-full"
+                  >
+                    <button
+                      onClick={() => setActivePillar(idx)}
+                      className={`w-full h-full px-4 py-3.5 rounded-2xl text-left border transition-all duration-300 flex items-center gap-3.5 cursor-pointer ${
+                        isSelected
+                          ? 'bg-[#250836] text-white border-[#250836] shadow-lg'
+                          : 'bg-[#FCF9F2] hover:bg-white text-[#250836] border-[#DFC06A]/55 shadow-2xs'
+                      }`}
+                    >
+                      <span
+                        className={`text-xs font-bold shrink-0 ${
+                          isSelected ? 'text-[#DFC06A]' : 'text-[#A87627]'
+                        }`}
+                      >
+                        0{idx + 1}
+                      </span>
+                      <span
+                        className={`h-6 w-[1px] shrink-0 ${
+                          isSelected ? 'bg-white/25' : 'bg-[#DFC06A]/65'
+                        }`}
+                      />
+                      <span className="text-xs sm:text-sm font-bold leading-snug">
+                        {p.title}
+                      </span>
+                    </button>
+                  </RevealBlock>
+                );
+              })}
+            </div>
+
+            {/* Right Detailed Showcase Card */}
+            <div className="lg:col-span-9">
+              <RevealBlock direction="right" delay={120} className="h-full">
+                <div className="h-full rounded-3xl bg-white border border-[#DFC06A]/60 shadow-md overflow-hidden grid grid-cols-1 md:grid-cols-12 items-stretch">
+                  <div className="md:col-span-7 p-6 sm:p-8 flex flex-col justify-center space-y-4 text-left">
+                    <div>
+                      <span className="inline-block text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#5C3A14] bg-[#FBF2DC] px-3 py-1 rounded-full border border-[#DFC06A]/65">
+                        {pillars[activePillar].badge}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#250836]">
+                      {pillars[activePillar].title}
+                    </h3>
+
+                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl">
+                      {pillars[activePillar].desc}
+                    </p>
+
+                    <div className="w-12 h-[1.5px] bg-[#DFC06A]" />
+
+                    {/* 2x2 Highlights Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                      {pillars[activePillar].highlights.map((h, i) => (
+                        <div
+                          key={i}
+                          className="flex items-center gap-2 text-xs font-semibold text-[#250836]"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-[#A87627] shrink-0" />
+                          <span>{h}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="pt-2 flex flex-col sm:flex-row sm:flex-wrap gap-2.5 sm:gap-3">
+                      <button
+                        onClick={onOpenApply}
+                        className="w-full sm:w-auto justify-center px-6 py-2.5 rounded-full bg-[#250836] hover:bg-[#3B1159] text-white font-semibold text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2 cursor-pointer"
+                      >
+                        <span>Apply for Admissions</span>
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() =>
+                          onNavigate(
+                            activePillar === 0
+                              ? 'about'
+                              : activePillar === 1
+                              ? 'research'
+                              : activePillar === 2
+                              ? 'placements'
+                              : 'facilities'
+                          )
+                        }
+                        className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-white hover:bg-[#FAF7F0] text-[#250836] font-semibold text-xs sm:text-sm border border-[#DFC06A]/80 transition-all cursor-pointer"
+                      >
+                        Learn More
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Right Curved Photo + Bottom-Right Dark Purple Stat Overlay */}
+                  <div className="md:col-span-5 relative min-h-[240px] sm:min-h-[280px] overflow-hidden md:rounded-tl-[7rem] bg-[#210532]">
+                    <img
+                      src={
+                        activePillar === 0
+                          ? '/assets/admissions_mtech_hero.jpg'
+                          : activePillar === 1
+                          ? '/assets/club_iedc.jpg'
+                          : activePillar === 2
+                          ? '/assets/campus_students_banner.jpg'
+                          : '/assets/autonomous_campus_hero.jpg'
+                      }
+                      alt={pillars[activePillar].title}
+                      className="w-full h-full object-cover object-center"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#210532]/55 via-transparent to-transparent pointer-events-none" />
+                    <div className="absolute bottom-0 right-0 px-5 py-3.5 rounded-tl-3xl bg-[#250836]/95 border-t border-l border-[#DFC06A]/65 text-right">
+                      <div className="text-xl sm:text-2xl font-black font-['Playfair_Display',serif] text-white leading-tight">
+                        {pillars[activePillar].stat}
+                      </div>
+                      <div className="text-[11px] font-medium text-[#FDE68A]">
+                        {pillars[activePillar].statLabel}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </RevealBlock>
+            </div>
+          </div>
         </section>
 
         {/* ============================================================== */}
@@ -1346,20 +1386,23 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         {/* 9. CAMPUS LIFE & CULTURAL VIBRANCE */}
         {/* ============================================================== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 border border-jyothi-purple-200/80 px-3.5 py-1 rounded-full">
-                Student Life
-              </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-brand text-jyothi-purple-950 mt-2">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div className="space-y-2 text-left">
+              <div className="flex items-center gap-3">
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#5C3A14]">
+                  Student Life
+                </span>
+                <span className="h-[1px] w-12 bg-[#DFC06A]/85" />
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836]">
                 Beyond the Classroom
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 mt-1">
-                From the iconic "Tharang" national fest to IEEE and sports championships on our 30-acre campus.
+              <p className="text-xs sm:text-sm text-slate-600">
+                From Tharang to tech clubs and sports, discover life at Jyothi.
               </p>
             </div>
 
-            <div className="flex overflow-x-auto no-scrollbar gap-1.5 p-1.5 rounded-2xl bg-slate-100 border border-slate-200">
+            <div className="flex overflow-x-auto no-scrollbar items-center gap-1 p-1.5 rounded-full bg-white border border-[#DFC06A]/60 shadow-2xs self-start lg:self-auto max-w-full">
               {[
                 { id: 'tharang', label: 'Tharang Fest' },
                 { id: 'clubs', label: 'IEEE & Tech Clubs' },
@@ -1369,9 +1412,9 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                 <button
                   key={tab.id}
                   onClick={() => setActiveLifeTab(tab.id as any)}
-                  className={`px-3.5 py-2 text-xs font-bold rounded-xl whitespace-nowrap transition-all ${activeLifeTab === tab.id
-                    ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                    : 'text-slate-600 hover:text-jyothi-purple-900'
+                  className={`px-4 py-2 text-xs font-semibold rounded-full whitespace-nowrap shrink-0 transition-all cursor-pointer ${activeLifeTab === tab.id
+                    ? 'bg-[#250836] text-[#FDE68A] shadow-sm'
+                    : 'text-[#250836] hover:bg-amber-50/70'
                     }`}
                 >
                   {tab.label}
@@ -1380,144 +1423,235 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
             </div>
           </div>
 
-          {/* Dynamic Campus Life Spotlight */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {({
-              tharang: [
-                {
-                  badge: 'National Fest',
-                  badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
-                  title: 'Tharang National Cultural Fest',
-                  desc: 'Three days of electrifying musical performances, inter-collegiate pro-shows, dance battles, and literary competitions drawing 5,000+ students across South India.',
-                },
-                {
-                  badge: 'Tech Conclave',
-                  badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
-                  title: 'HackJyothi 24-Hour Hackathon',
-                  desc: 'Overnight code marathon sponsored by IT partners. Teams tackle real-world problem statements in generative AI, IoT, and embedded robotics with cash prizes.',
-                },
-                {
-                  badge: 'Social Initiative',
-                  badgeClass: 'bg-emerald-100 text-emerald-900',
-                  title: 'NSS & Community Outreach',
-                  desc: "Blood donation camps, solar lighting drives in nearby villages, and flood relief operations exemplifying the college's moral and ethical mission.",
-                },
-              ],
-              clubs: [
-                {
-                  badge: 'Global Chapter',
-                  badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
-                  title: 'IEEE Student Branch',
-                  desc: 'Active student branch organizing international paper presentation conferences, workshops on robotics, and Women in Engineering (WIE) symposiums.',
-                },
-                {
-                  badge: 'Startup Cell',
-                  badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
-                  title: 'IEDC Innovation & Entrepreneurship',
-                  desc: 'Supported by Kerala Startup Mission, IEDC guides students through patent filings, business pitching, and bootcamps with industry founders.',
-                },
-                {
-                  badge: 'Coding Circle',
-                  badgeClass: 'bg-blue-100 text-blue-900',
-                  title: 'CSI & FOSS Club',
-                  desc: 'Weekly open-source development meetups, Linux install fests, and competitive programming practice on LeetCode and CodeChef.',
-                },
-              ],
-              sports: [
-                {
-                  badge: 'Outdoor Arena',
-                  badgeClass: 'bg-emerald-100 text-emerald-900',
-                  title: 'Athletic Ground & Football Turf',
-                  desc: 'Full-sized football ground with natural grass, 400m running track, and annual inter-collegiate KTU sports meets.',
-                },
-                {
-                  badge: 'Court Games',
-                  badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
-                  title: 'Floodlit Basketball & Volleyball',
-                  desc: 'Dedicated synthetic basketball and volleyball courts open for evening matches with tournament-grade floodlighting.',
-                },
-                {
-                  badge: 'Fitness Center',
-                  badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
-                  title: 'Multi-Gymnasium & Badminton',
-                  desc: 'Modern fitness multi-station gym and indoor badminton wooden courts for physical wellness of hostellers and day scholars.',
-                },
-              ],
-              hostel: [
-                {
-                  badge: 'Residential',
-                  badgeClass: 'bg-jyothi-purple-100 text-jyothi-purple-900',
-                  title: 'Separate Men & Women Hostels',
-                  desc: 'Sanatana (Men) and Vimal (Women) hostels offering secure, clean accommodation with 24/7 power backup, Wi-Fi, and resident wardens.',
-                },
-                {
-                  badge: 'Dining',
-                  badgeClass: 'bg-emerald-100 text-emerald-900',
-                  title: 'Hygienic Central Cafeteria',
-                  desc: 'Multi-cuisine mess offering nutritious vegetarian and non-vegetarian Kerala meals, snack counters, and fresh juice stalls.',
-                },
-                {
-                  badge: 'Fleet',
-                  badgeClass: 'bg-jyothi-gold-100 text-jyothi-gold-900',
-                  title: '25+ Bus Network Routes',
-                  desc: 'Extensive bus fleet connecting Cheruthuruthy to Thrissur, Palakkad, Shoranur, Ottapalam, Wadakkanchery, and Kunnamkulam.',
-                },
-              ],
-            }[activeLifeTab] || []).map((item, idx) => (
-              <RevealBlock
-                key={`${activeLifeTab}-${idx}`}
-                direction={idx % 2 === 0 ? 'left' : 'right'}
-                delay={idx * 150}
-                className="h-full"
-              >
-                <div className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs space-y-3">
-                  <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full ${item.badgeClass}`}>{item.badge}</span>
-                  <h3 className="font-bold text-lg font-brand text-jyothi-purple-950">{item.title}</h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+          {/* Asymmetric 1+2 Bento Spotlight */}
+          {(() => {
+            const lifeData = {
+              tharang: {
+                route: 'tharang-fest',
+                items: [
+                  {
+                    badge: 'National Fest',
+                    badgeClass: 'bg-[#FDE68A]/75 text-[#5C3A14]',
+                    title: 'Tharang National Cultural Fest',
+                    desc: 'Music, dance and literary competitions bring students together.',
+                    image: '/assets/club_tharang.jpg',
+                  },
+                  {
+                    badge: 'Tech Conclave',
+                    badgeClass: 'bg-purple-100 text-[#250836]',
+                    title: 'HackJyothi 24-Hour Hackathon',
+                    desc: 'Teams explore AI, IoT and robotics.',
+                    image: '/assets/club_coding.jpg',
+                  },
+                  {
+                    badge: 'Social Initiative',
+                    badgeClass: 'bg-emerald-100 text-emerald-900',
+                    title: 'NSS & Community Outreach',
+                    desc: 'Students support communities through outreach and relief initiatives.',
+                    image: '/assets/club_nss.jpg',
+                  },
+                ],
+              },
+              clubs: {
+                route: 'clubs-societies',
+                items: [
+                  {
+                    badge: 'Global Chapter',
+                    badgeClass: 'bg-purple-100 text-[#250836]',
+                    title: 'IEEE Student Branch',
+                    desc: 'International conferences, robotics workshops and WIE symposiums.',
+                    image: '/assets/club_ieee.jpg',
+                  },
+                  {
+                    badge: 'Startup Cell',
+                    badgeClass: 'bg-[#FDE68A]/75 text-[#5C3A14]',
+                    title: 'IEDC Innovation & Entrepreneurship',
+                    desc: 'Patent filings, pitching and founder bootcamps.',
+                    image: '/assets/club_iedc.jpg',
+                  },
+                  {
+                    badge: 'Coding Circle',
+                    badgeClass: 'bg-blue-100 text-blue-900',
+                    title: 'CSI & FOSS Club',
+                    desc: 'Open-source meetups and competitive coding.',
+                    image: '/assets/club_coding.jpg',
+                  },
+                ],
+              },
+              sports: {
+                route: 'sports-arena',
+                items: [
+                  {
+                    badge: 'Outdoor Arena',
+                    badgeClass: 'bg-emerald-100 text-emerald-900',
+                    title: 'Athletic Ground & Football Turf',
+                    desc: 'Full-sized football ground, 400m track and KTU sports meets.',
+                    image: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=900&auto=format&fit=crop',
+                  },
+                  {
+                    badge: 'Court Games',
+                    badgeClass: 'bg-purple-100 text-[#250836]',
+                    title: 'Floodlit Basketball & Volleyball',
+                    desc: 'Tournament-grade evening synthetic courts.',
+                    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=900&auto=format&fit=crop',
+                  },
+                  {
+                    badge: 'Fitness Center',
+                    badgeClass: 'bg-[#FDE68A]/75 text-[#5C3A14]',
+                    title: 'Multi-Gymnasium & Badminton',
+                    desc: 'Multi-station gym and indoor wooden courts.',
+                    image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=900&auto=format&fit=crop',
+                  },
+                ],
+              },
+              hostel: {
+                route: 'facilities',
+                items: [
+                  {
+                    badge: 'Residential',
+                    badgeClass: 'bg-purple-100 text-[#250836]',
+                    title: 'Separate Men & Women Hostels',
+                    desc: 'Sanatana and Vimal hostels with 24/7 power backup, Wi-Fi and wardens.',
+                    image: '/assets/autonomous_campus_hero.jpg',
+                  },
+                  {
+                    badge: 'Dining',
+                    badgeClass: 'bg-emerald-100 text-emerald-900',
+                    title: 'Hygienic Central Cafeteria',
+                    desc: 'Nutritious Kerala meals and fresh juice stalls.',
+                    image: '/assets/campus_students_banner.jpg',
+                  },
+                  {
+                    badge: 'Fleet',
+                    badgeClass: 'bg-[#FDE68A]/75 text-[#5C3A14]',
+                    title: '25+ Bus Network Routes',
+                    desc: 'Connecting Thrissur, Palakkad and nearby towns.',
+                    image: '/assets/jyothi_campus_hero.jpg',
+                  },
+                ],
+              },
+            }[activeLifeTab] || { route: 'tharang-fest', items: [] };
+
+            const [featured, ...secondary] = lifeData.items;
+            if (!featured) return null;
+
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+                {/* Left Featured Tall Card */}
+                <div className="lg:col-span-6">
+                  <RevealBlock key={`${activeLifeTab}-0`} direction="left" className="h-full">
+                    <div
+                      onClick={() => onNavigate(lifeData.route)}
+                      className="h-full rounded-3xl overflow-hidden bg-[#FCF9F2] border border-[#DFC06A]/65 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group cursor-pointer"
+                    >
+                      <div className="aspect-[16/10] lg:aspect-auto lg:h-[300px] w-full overflow-hidden bg-[#210532]">
+                        <img
+                          src={featured.image}
+                          alt={featured.title}
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </div>
+                      <div className="p-5 sm:p-6 flex items-end justify-between gap-4">
+                        <div className="space-y-2 text-left">
+                          <span className={`inline-block text-[11px] font-bold px-3 py-1 rounded-full ${featured.badgeClass}`}>
+                            {featured.badge}
+                          </span>
+                          <h3 className="font-bold text-lg sm:text-xl font-['Playfair_Display',serif] text-[#250836]">
+                            {featured.title}
+                          </h3>
+                          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            {featured.desc}
+                          </p>
+                        </div>
+                        <ArrowRight className="w-5 h-5 text-[#A87627] group-hover:translate-x-1 transition-transform shrink-0 mb-1" />
+                      </div>
+                    </div>
+                  </RevealBlock>
                 </div>
-              </RevealBlock>
-            ))}
-          </div>
+
+                {/* Right Stacked 2 Horizontal Cards */}
+                <div className="lg:col-span-6 flex flex-col gap-5">
+                  {secondary.map((item, idx) => (
+                    <RevealBlock
+                      key={`${activeLifeTab}-${idx + 1}`}
+                      direction="right"
+                      delay={(idx + 1) * 120}
+                      className="flex-1"
+                    >
+                      <div
+                        onClick={() => onNavigate(lifeData.route)}
+                        className="h-full rounded-3xl overflow-hidden bg-[#FCF9F2] border border-[#DFC06A]/65 shadow-sm hover:shadow-xl transition-all grid grid-cols-1 sm:grid-cols-12 group cursor-pointer"
+                      >
+                        <div className="sm:col-span-5 h-44 sm:h-full overflow-hidden bg-[#210532]">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          />
+                        </div>
+                        <div className="sm:col-span-7 p-5 flex items-center justify-between gap-3 text-left">
+                          <div className="space-y-2">
+                            <span className={`inline-block text-[11px] font-bold px-3 py-1 rounded-full ${item.badgeClass}`}>
+                              {item.badge}
+                            </span>
+                            <h3 className="font-bold text-base sm:text-lg font-['Playfair_Display',serif] text-[#250836] leading-snug">
+                              {item.title}
+                            </h3>
+                            <p className="text-xs text-slate-600 leading-relaxed">
+                              {item.desc}
+                            </p>
+                          </div>
+                          <ArrowRight className="w-4 h-4 text-[#A87627] group-hover:translate-x-1 transition-transform shrink-0" />
+                        </div>
+                      </div>
+                    </RevealBlock>
+                  ))}
+                </div>
+              </div>
+            );
+          })()}
         </section>
 
         {/* ============================================================== */}
         {/* 10. NOTICES & ACADEMIC CALENDAR BULLETIN (CLEAN WHITE FEED) */}
         {/* ============================================================== */}
         <section id="jec-news" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 scroll-mt-28">
-          <div className="text-center max-w-2xl mx-auto space-y-1.5 sm:space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 border border-jyothi-purple-200/80 px-3.5 py-1 rounded-full">
-              Bulletin Board
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-brand text-jyothi-purple-950">
-              News, Events & Examination Schedule
-            </h2>
-          </div>
+          <RevealBlock direction="up">
+            <div className="border-l-2 border-[#DFC06A] pl-4 space-y-1 text-left">
+              <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#5C3A14]">
+                Bulletin Board
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836]">
+                News, Events &amp; Examination Schedule
+              </h2>
+            </div>
+          </RevealBlock>
 
-          <div className="flex justify-center">
-            <div className="inline-flex p-1.5 rounded-2xl bg-slate-100 border border-slate-200 max-w-full overflow-x-auto no-scrollbar">
+          <div className="flex justify-start">
+            <div className="inline-flex p-1 rounded-2xl bg-white border border-amber-200/80 shadow-2xs max-w-full overflow-x-auto no-scrollbar gap-1">
               <button
                 onClick={() => setActiveNewsTab('notices')}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'notices'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer ${activeNewsTab === 'notices'
+                  ? 'bg-[#250836] text-white shadow-sm'
+                  : 'text-[#250836] hover:bg-amber-50/70'
                   }`}
               >
-                Circulars & Notices
+                Circulars &amp; Notices
               </button>
               <button
                 onClick={() => setActiveNewsTab('events')}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'events'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer ${activeNewsTab === 'events'
+                  ? 'bg-[#250836] text-white shadow-sm'
+                  : 'text-[#250836] hover:bg-amber-50/70'
                   }`}
               >
                 Campus Events
               </button>
               <button
                 onClick={() => setActiveNewsTab('calendar')}
-                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap ${activeNewsTab === 'calendar'
-                  ? 'bg-jyothi-purple-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-jyothi-purple-900'
+                className={`px-4 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap cursor-pointer ${activeNewsTab === 'calendar'
+                  ? 'bg-[#250836] text-white shadow-sm'
+                  : 'text-[#250836] hover:bg-amber-50/70'
                   }`}
               >
                 Academic Calendar
@@ -1526,38 +1660,59 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
           </div>
 
           <RevealBlock direction="up">
-            <div className="p-5 sm:p-8 bg-white rounded-3xl border border-slate-200 shadow-xs max-w-4xl mx-auto">
+            <div className="p-4 sm:p-6 bg-white rounded-3xl border border-amber-200/80 shadow-sm">
               {activeNewsTab === 'notices' && (
-                <div className="space-y-3 sm:space-y-4">
-                  {ANNOUNCEMENTS.map((ann, idx) => (
-                    <RevealBlock
-                      key={ann.id}
-                      direction={idx % 2 === 0 ? 'left' : 'right'}
-                      delay={(idx % 4) * 150}
-                    >
-                      <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start justify-between gap-3 hover:border-jyothi-purple-300 transition-all">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-jyothi-purple-100 text-jyothi-purple-900 font-bold uppercase">
-                              {ann.tag}
-                            </span>
-                            <span className="text-xs text-slate-400">{ann.date}</span>
-                            {ann.isNew && (
-                              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">NEW</span>
-                            )}
-                          </div>
-                          <div className="font-bold text-xs sm:text-sm text-jyothi-purple-950">{ann.title}</div>
-                        </div>
-                        <button
+                <div className="divide-y divide-amber-100/90">
+                  {ANNOUNCEMENTS.map((ann, idx) => {
+                    const [monthPart, yearPart] = ann.date.split(' ');
+                    return (
+                      <RevealBlock
+                        key={ann.id}
+                        direction={idx % 2 === 0 ? 'left' : 'right'}
+                        delay={(idx % 4) * 120}
+                      >
+                        <div
                           onClick={() => onNavigate('admissions')}
-                          className="p-2 text-jyothi-purple-800 hover:bg-jyothi-purple-100 rounded-xl shrink-0"
-                          aria-label="View Notice"
+                          className={`px-4 sm:px-5 py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer group ${
+                            idx === 0
+                              ? 'bg-[#FBF3E4]/85 rounded-2xl mb-1'
+                              : 'hover:bg-[#FAF7F0]/70 rounded-xl'
+                          }`}
                         >
-                          <ArrowRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </RevealBlock>
-                  ))}
+                          <div className="flex items-center gap-4 sm:gap-5 min-w-0">
+                            <div className="w-11 shrink-0 text-left leading-tight">
+                              <div className="text-xs sm:text-sm font-black text-[#250836]">
+                                {monthPart || ann.date}
+                              </div>
+                              <div className="text-[11px] text-slate-500">
+                                {yearPart || '2026'}
+                              </div>
+                            </div>
+
+                            <span className="h-9 w-[1.5px] bg-[#DFC06A]/75 shrink-0" />
+
+                            <div className="min-w-0 space-y-1 text-left">
+                              <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-purple-100 text-[#250836] font-bold uppercase tracking-wide">
+                                  {ann.tag}
+                                </span>
+                                {ann.isNew && (
+                                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FDE68A]/85 text-[#5C3A14] font-bold uppercase">
+                                    NEW
+                                  </span>
+                                )}
+                              </div>
+                              <div className="font-bold text-xs sm:text-sm text-[#250836] leading-snug">
+                                {ann.title}
+                              </div>
+                            </div>
+                          </div>
+
+                          <ArrowRight className="w-4 h-4 text-[#250836] group-hover:translate-x-1 transition-transform shrink-0" />
+                        </div>
+                      </RevealBlock>
+                    );
+                  })}
                 </div>
               )}
 

@@ -308,6 +308,30 @@ const LEADERSHIP = [
     desc: "Renowned academician and researcher guiding curriculum modernization, NBA/NAAC compliance, doctoral research programs, and global corporate talent partnerships.",
     image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=800&auto=format&fit=crop",
     quote: "With autonomous KTU governance, our students do not wait for obsolete textbook updates. They write modern code, design real hardware, and lead Industry 4.0."
+  },
+  {
+    name: "Msgr. Jose Konikkara",
+    role: "Chairman, Educational Trust",
+    title: "Archdiocesan Trust Governance",
+    desc: "Champions long-term endowment charters, merit-cum-means scholarships, and inclusive engineering access across rural Kerala.",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop",
+    quote: "Every deserving student at Jyothi Hills receives the mentorship and financial backing needed to excel."
+  },
+  {
+    name: "Rev. Fr. Roy Vadakkan",
+    role: "Administrator & Bursar",
+    title: "Campus Operations & Welfare",
+    desc: "Directs residential hostel ecosystems, green campus sustainability, solar infrastructure, and student support services.",
+    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=800&auto=format&fit=crop",
+    quote: "A serene, well-supported residential environment empowers students to focus deeply on engineering discovery."
+  },
+  {
+    name: "Dr. Sunny Joseph Kalayathankal",
+    role: "Dean — Research & Autonomy",
+    title: "Academic Council & R&D",
+    desc: "Leads KTU doctoral supervision, autonomous examination reforms, patent filings, and industry-funded research centres.",
+    image: "https://images.unsplash.com/photo-1556157382-97eda2d62296?q=80&w=800&auto=format&fit=crop",
+    quote: "Research and autonomy work hand-in-hand to turn undergraduate curiosity into real patents and publications."
   }
 ];
 
@@ -322,6 +346,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
   const [selectedEra, setSelectedEra] = useState<'all' | 'foundation' | 'expansion' | 'innovation' | 'autonomy'>('all');
   const [expandedYear, setExpandedYear] = useState<string | null>("2023");
   const [activePillarTab, setActivePillarTab] = useState<'vision' | 'mission' | 'values' | 'autonomy'>('autonomy');
+  const [showAllLeadership, setShowAllLeadership] = useState(false);
 
   // Auto-scroll to target section on subSection navigation (e.g. #about/vision, #about/leadership)
   useEffect(() => {
@@ -354,7 +379,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
     : MILESTONES.filter(m => m.era === selectedEra);
 
   return (
-    <div className="space-y-16 sm:space-y-20 md:space-y-28 overflow-x-hidden bg-white text-slate-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
+    <div className="space-y-16 sm:space-y-20 md:space-y-28 overflow-x-clip bg-white text-slate-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
       
       {/* ============================================================== */}
       {/* 1. LUXURY EDITORIAL HERO: 25-YEAR INSTITUTIONAL PROFILE */}
@@ -381,28 +406,28 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
               <span className="text-[#250836] font-bold">About Jyothi</span>
             </div>
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[11px] sm:text-xs text-[#250836]">
-              <a href="#vision" className="font-medium hover:text-[#A87627] transition-colors">
+            <div className="flex flex-nowrap overflow-x-auto no-scrollbar items-center gap-3 text-[11px] sm:text-xs text-[#250836] max-w-full pb-1">
+              <a href="#vision" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 Vision &amp; Values
               </a>
-              <span className="text-amber-300/90 select-none">|</span>
-              <a href="#roadmap" className="font-medium hover:text-[#A87627] transition-colors">
+              <span className="text-amber-300/90 select-none shrink-0">|</span>
+              <a href="#roadmap" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 25-Year Roadmap
               </a>
-              <span className="text-amber-300/90 select-none">|</span>
-              <a href="#autonomy" className="font-medium hover:text-[#A87627] transition-colors">
+              <span className="text-amber-300/90 select-none shrink-0">|</span>
+              <a href="#autonomy" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 Autonomous KTU
               </a>
-              <span className="text-amber-300/90 select-none">|</span>
-              <a href="#leadership" className="font-medium hover:text-[#A87627] transition-colors">
+              <span className="text-amber-300/90 select-none shrink-0">|</span>
+              <a href="#leadership" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 Leadership
               </a>
-              <span className="text-amber-300/90 select-none">|</span>
-              <a href="#campus" className="font-medium hover:text-[#A87627] transition-colors">
+              <span className="text-amber-300/90 select-none shrink-0">|</span>
+              <a href="#campus" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 30-Acre Campus
               </a>
-              <span className="text-amber-300/90 select-none">|</span>
-              <a href="#accreditations" className="font-medium hover:text-[#A87627] transition-colors">
+              <span className="text-amber-300/90 select-none shrink-0">|</span>
+              <a href="#accreditations" className="font-medium hover:text-[#A87627] transition-colors whitespace-nowrap shrink-0">
                 Accreditations
               </a>
             </div>
@@ -474,18 +499,18 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                   <img
                     src="/assets/about_campus_25years.jpg"
                     alt="Jyothi Engineering College 2002-2027 25 Years of Excellence Campus"
-                    className="w-full h-full object-cover object-left scale-[1.04] translate-x-[0.5%] group-hover:scale-[1.07] transition-transform duration-700"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                   />
                 </div>
 
                 {/* Warm Cream Sweeping-Curve Accreditations Panel */}
-                <div className="relative z-10 -mt-5 rounded-tl-[2.5rem] bg-[#FAF7F0] border-t-2 border-[#DFC06A]/80 px-5 sm:px-6 py-5 text-[#250836] space-y-3.5">
-                  <div className="flex items-center justify-between gap-3 pb-2.5 border-b border-[#DFC06A]/65">
-                    <span className="font-black uppercase tracking-wider text-xs sm:text-sm text-[#250836]">
+                <div className="relative z-10 -mt-5 rounded-tl-[2rem] sm:rounded-tl-[2.5rem] bg-[#FAF7F0] border-t-2 border-[#DFC06A]/80 px-4 sm:px-6 py-4 sm:py-5 text-[#250836] space-y-3 sm:space-y-3.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-3 pb-2.5 border-b border-[#DFC06A]/65">
+                    <span className="font-black uppercase tracking-wider text-[11px] sm:text-sm text-[#250836]">
                       Autonomous Accord
                     </span>
-                    <span className="h-4 w-[1px] bg-[#DFC06A]/75 shrink-0" />
-                    <span className="text-xs sm:text-sm font-semibold text-[#250836]">
+                    <span className="hidden sm:block h-4 w-[1px] bg-[#DFC06A]/75 shrink-0" />
+                    <span className="text-[11px] sm:text-sm font-semibold text-[#250836]">
                       UGC &amp; APJ KTU
                     </span>
                   </div>
@@ -1070,65 +1095,102 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       {/* 6. PATRONAGE & INSPIRING LEADERSHIP (ARCHDIOCESAN LEGACY) */}
       {/* ============================================================== */}
       <section id="leadership" ref={leadershipRef} className="bg-[#FAF7F0] py-16 sm:py-20 border-y border-amber-200/70 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-          
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-white px-3.5 py-1.5 rounded-full border border-amber-300 shadow-2xs">
-              Visionary Governance
-            </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
-              Archdiocesan Trust & Academic Leadership
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
-              Guided by the Catholic Archdiocese of Trichur, Jyothi blends moral rectitude and social justice with world-class engineering discipline.
-            </p>
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            {/* Left Sticky Editorial Heading */}
+            <div className="lg:col-span-4 lg:sticky lg:top-28 text-left space-y-4">
+              <RevealBlock direction="left">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <span className="h-[1.5px] w-8 bg-[#DFC06A]" />
+                    <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#250836]">
+                      Our Leadership
+                    </span>
+                  </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {LEADERSHIP.map((leader, idx) => (
-              <RevealBlock
-                key={idx}
-                direction={idx % 2 === 0 ? 'left' : 'right'}
-                delay={idx * 150}
-                className="h-full"
+                  <h2 className="text-3xl sm:text-4xl font-black font-['Playfair_Display',serif] text-[#250836] leading-[1.08]">
+                    Archdiocesan Trust &amp; Academic Leadership
+                  </h2>
+
+                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    Guided by the Catholic Archdiocese of Trichur, Jyothi brings together values and academic leadership.
+                  </p>
+
+                  <div className="flex items-center pt-1">
+                    <span className="h-[3px] w-14 bg-[#250836]" />
+                    <span className="h-[1px] flex-1 max-w-[140px] bg-[#DFC06A]" />
+                  </div>
+                </div>
+              </RevealBlock>
+            </div>
+
+            {/* Right Scrollable Profile List */}
+            <div className="lg:col-span-8 lg:border-l lg:border-[#DFC06A]/65 lg:pl-10 space-y-5">
+              <div
+                className={`divide-y divide-[#DFC06A]/60 ${
+                  showAllLeadership ? 'max-h-[430px] overflow-y-auto pr-2' : ''
+                }`}
               >
-              <div 
-                className="h-full rounded-3xl bg-white border border-slate-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col justify-between text-left group"
-              >
-                <div>
-                  <div className="h-72 sm:h-80 w-full overflow-hidden bg-slate-100 relative">
-                    <img 
-                      src={leader.image} 
-                      alt={leader.name} 
-                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#250836]/90 via-transparent to-transparent flex items-end p-5">
-                      <div className="text-white">
-                        <div className="text-[11px] font-bold text-[#FDE68A] uppercase tracking-wider">{leader.title}</div>
-                        <h3 className="text-lg font-bold font-['Playfair_Display',serif]">{leader.name}</h3>
-                        <div className="text-xs text-white/80">{leader.role}</div>
+                {(showAllLeadership ? LEADERSHIP : LEADERSHIP.slice(0, 3)).map((leader, idx) => (
+                  <RevealBlock
+                    key={leader.name}
+                    direction="right"
+                    delay={(idx % 3) * 100}
+                  >
+                    <div className="py-6 first:pt-1 last:pb-1 grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-5 items-center text-left">
+                      {/* Portrait + Name Block */}
+                      <div className="sm:col-span-7 flex items-center gap-4">
+                        <div className="w-20 h-20 sm:w-22 sm:h-22 rounded-2xl overflow-hidden border border-[#DFC06A]/75 shadow-sm shrink-0 bg-white">
+                          <img
+                            src={leader.image}
+                            alt={leader.name}
+                            className="w-full h-full object-cover object-top"
+                          />
+                        </div>
+
+                        <span className="h-12 w-[1px] bg-[#DFC06A]/65 shrink-0" />
+
+                        <div className="min-w-0 space-y-0.5">
+                          <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#A87627]">
+                            {leader.title}
+                          </div>
+                          <h3 className="text-lg sm:text-xl font-black font-['Playfair_Display',serif] text-[#250836] leading-snug">
+                            {leader.name}
+                          </h3>
+                          <div className="text-xs font-medium text-slate-600">
+                            {leader.role}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Role Summary */}
+                      <div className="sm:col-span-5 sm:border-l sm:border-[#DFC06A]/55 sm:pl-5">
+                        <p className="text-xs text-slate-600 leading-relaxed">
+                          {leader.desc}
+                        </p>
                       </div>
                     </div>
-                  </div>
-
-                  <div className="p-6 space-y-3">
-                    <p className="text-xs sm:text-[13px] text-slate-600 leading-relaxed">
-                      {leader.desc}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="p-6 pt-0">
-                  <div className="p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200/60 text-xs italic text-[#704812]">
-                    "{leader.quote}"
-                  </div>
-                </div>
-
+                  </RevealBlock>
+                ))}
               </div>
-              </RevealBlock>
-            ))}
-          </div>
 
+              <div className="pt-1 flex justify-start">
+                <button
+                  onClick={() => setShowAllLeadership((prev) => !prev)}
+                  className="px-5 py-2.5 rounded-full bg-[#250836] hover:bg-[#3B1159] text-[#FDE68A] text-xs font-bold shadow-sm border border-[#DFC06A]/60 inline-flex items-center gap-2 transition-all cursor-pointer"
+                >
+                  <span>
+                    {showAllLeadership ? 'Show Fewer Leaders' : `View All ${LEADERSHIP.length} Leaders`}
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 transition-transform duration-300 ${
+                      showAllLeadership ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1168,39 +1230,12 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
                   42,000+ Volumes &bull; IEEE Digital Access &bull; RFID Self-Issue
                 </p>
               </div>
-              {/* Pencil-Sketch SVG: Library Bookshelves & Study Desk */}
-              <div className="sm:col-span-7 flex items-center justify-center">
-                <svg viewBox="0 0 260 150" className="w-full h-36 text-[#6B5744]" aria-hidden="true">
-                  <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                    {/* Back Windows */}
-                    <rect x="165" y="16" width="76" height="58" strokeOpacity="0.5" />
-                    <line x1="190" y1="16" x2="190" y2="74" strokeOpacity="0.45" />
-                    <line x1="215" y1="16" x2="215" y2="74" strokeOpacity="0.45" />
-                    <line x1="165" y1="45" x2="241" y2="45" strokeOpacity="0.45" />
-                    {/* Perspective Bookshelf */}
-                    <polygon points="22,12 108,26 108,118 22,134" fill="#FAF7F0" />
-                    <line x1="22" y1="42" x2="108" y2="50" />
-                    <line x1="22" y1="72" x2="108" y2="74" />
-                    <line x1="22" y1="102" x2="108" y2="98" />
-                    <line x1="52" y1="17" x2="52" y2="128" strokeOpacity="0.6" />
-                    <line x1="80" y1="22" x2="80" y2="123" strokeOpacity="0.6" />
-                    {/* Books */}
-                    {[28, 33, 38, 43, 58, 63, 68, 86, 91, 96].map((bx) => (
-                      <line key={bx} x1={bx} y1="24" x2={bx} y2="43" strokeOpacity="0.7" />
-                    ))}
-                    {[28, 34, 40, 58, 64, 70, 88, 94].map((bx) => (
-                      <line key={`m-${bx}`} x1={bx} y1="53" x2={bx} y2="72" strokeOpacity="0.7" />
-                    ))}
-                    {/* Reading Table & Laptop & Desk Lamp */}
-                    <polygon points="105,98 228,88 248,104 125,118" fill="#FAF7F0" />
-                    <line x1="128" y1="118" x2="128" y2="142" />
-                    <line x1="236" y1="104" x2="236" y2="136" />
-                    <polygon points="154,99 178,96 184,104 160,107" />
-                    <polygon points="154,99 152,85 176,82 178,96" />
-                    <path d="M198,96 L198,74 L212,68" />
-                    <polygon points="208,68 220,74 204,76" fill="#FAF7F0" />
-                  </g>
-                </svg>
+              <div className="sm:col-span-7 flex items-center justify-center overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_library.jpg"
+                  alt="Pencil sketch of Computerized Central RFID Library"
+                  className="w-full h-40 object-contain mix-blend-multiply"
+                />
               </div>
             </div>
           </RevealBlock>
@@ -1208,24 +1243,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           {/* Card 2: MIT-Model FabLab & TBI */}
           <RevealBlock direction="up" delay={100} className="h-full">
             <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
-              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
-                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  {/* 3D Printer Frame */}
-                  <rect x="44" y="14" width="84" height="78" rx="2" fill="#FAF7F0" />
-                  <rect x="52" y="22" width="68" height="58" strokeOpacity="0.7" />
-                  <line x1="52" y1="42" x2="120" y2="42" />
-                  <rect x="78" y="34" width="16" height="14" fill="#FAF7F0" />
-                  <line x1="86" y1="48" x2="86" y2="56" />
-                  <polygon points="74,70 98,70 92,58 80,58" fill="#FAF7F0" />
-                  {/* Filament Spool */}
-                  <ellipse cx="26" cy="54" rx="12" ry="18" fill="#FAF7F0" />
-                  <ellipse cx="26" cy="54" rx="5" ry="8" />
-                  {/* Mechanical Part */}
-                  <polygon points="145,94 176,54 204,94" fill="#FAF7F0" />
-                  <circle cx="176" cy="80" r="8" />
-                  <line x1="14" y1="98" x2="210" y2="98" strokeOpacity="0.6" />
-                </g>
-              </svg>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_fablab.jpg"
+                  alt="Pencil sketch of MIT-Model FabLab and TBI"
+                  className="w-full h-28 object-contain mix-blend-multiply"
+                />
+              </div>
               <div className="space-y-1.5">
                 <span className="block w-7 h-[2px] bg-[#C79628]" />
                 <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
@@ -1241,24 +1265,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           {/* Card 3: 25+ Fleet Bus Network */}
           <RevealBlock direction="right" delay={200} className="h-full">
             <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
-              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
-                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Trees */}
-                  <path d="M22,86 C12,68 22,42 36,48 C48,40 56,64 46,86" strokeOpacity="0.55" />
-                  <path d="M180,86 C172,62 184,36 198,46 C210,50 212,74 200,86" strokeOpacity="0.55" />
-                  {/* College Bus */}
-                  <path d="M36,34 L148,22 Q164,22 166,40 L166,84 L34,84 L34,42 Q34,35 36,34 Z" fill="#FAF7F0" />
-                  <rect x="42" y="40" width="56" height="22" rx="2" strokeOpacity="0.75" />
-                  <line x1="60" y1="40" x2="60" y2="62" strokeOpacity="0.6" />
-                  <line x1="78" y1="40" x2="78" y2="62" strokeOpacity="0.6" />
-                  <polygon points="104,36 158,31 158,60 104,62" strokeOpacity="0.85" />
-                  <circle cx="58" cy="86" r="10" fill="#FAF7F0" />
-                  <circle cx="58" cy="86" r="4" />
-                  <circle cx="128" cy="86" r="10" fill="#FAF7F0" />
-                  <circle cx="128" cy="86" r="4" />
-                  <line x1="12" y1="96" x2="210" y2="96" strokeOpacity="0.6" />
-                </g>
-              </svg>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_bus.jpg"
+                  alt="Pencil sketch of 25+ Fleet Bus Network"
+                  className="w-full h-28 object-contain mix-blend-multiply"
+                />
+              </div>
               <div className="space-y-1.5">
                 <span className="block w-7 h-[2px] bg-[#C79628]" />
                 <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
@@ -1274,20 +1287,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           {/* Card 4: 100 kW Solar Clean Power */}
           <RevealBlock direction="left" delay={80} className="h-full">
             <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
-              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
-                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Hills */}
-                  <path d="M12,62 Q70,22 140,42 T210,36" strokeOpacity="0.4" />
-                  {/* Solar Array */}
-                  <polygon points="22,38 196,52 178,84 18,74" fill="#FAF7F0" />
-                  {[46, 76, 106, 136, 166].map((sx) => (
-                    <line key={sx} x1={sx} y1="40" x2={sx - 10} y2="79" strokeOpacity="0.65" />
-                  ))}
-                  <line x1="20" y1="56" x2="187" y2="68" strokeOpacity="0.65" />
-                  {/* Building parapet */}
-                  <rect x="20" y="84" width="180" height="16" fill="#FAF7F0" />
-                </g>
-              </svg>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_solar.jpg"
+                  alt="Pencil sketch of 100 kW Solar Clean Power"
+                  className="w-full h-28 object-contain mix-blend-multiply"
+                />
+              </div>
               <div className="space-y-1.5">
                 <span className="block w-7 h-[2px] bg-[#C79628]" />
                 <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">
@@ -1303,26 +1309,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           {/* Card 5: Separate Men & Women Smart Hostels (Span 2) */}
           <RevealBlock direction="up" delay={160} className="md:col-span-2 h-full">
             <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
-              <svg viewBox="0 0 380 125" className="w-full h-28 sm:h-32 text-[#6B5744]" aria-hidden="true">
-                <g fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Left Hostel Block */}
-                  <polygon points="56,36 146,24 146,96 56,96" fill="#FAF7F0" />
-                  <polygon points="146,24 176,34 176,96 146,96" fill="#FAF7F0" />
-                  {[44, 58, 72].map((wy) => (
-                    <line key={wy} x1="64" y1={wy} x2="138" y2={wy - 6} strokeOpacity="0.65" />
-                  ))}
-                  {/* Right Hostel Block */}
-                  <polygon points="210,16 318,28 318,98 210,98" fill="#FAF7F0" />
-                  <polygon points="184,26 210,16 210,98 184,98" fill="#FAF7F0" />
-                  {[34, 50, 66, 82].map((wy) => (
-                    <line key={`r-${wy}`} x1="218" y1={wy} x2="310" y2={wy + 6} strokeOpacity="0.65" />
-                  ))}
-                  {/* Trees & Pathway */}
-                  <path d="M26,98 C16,74 28,44 44,50 C54,54 56,80 44,98" strokeOpacity="0.6" />
-                  <path d="M336,98 C326,74 338,44 354,50 C366,54 366,82 354,98" strokeOpacity="0.6" />
-                  <path d="M12,114 Q170,96 368,112" strokeOpacity="0.55" />
-                </g>
-              </svg>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_hostels.jpg"
+                  alt="Pencil sketch of Separate Men & Women Smart Hostels"
+                  className="w-full h-32 sm:h-36 object-contain mix-blend-multiply"
+                />
+              </div>
               <div className="space-y-1.5">
                 <span className="block w-8 h-[2px] bg-[#C79628]" />
                 <h3 className="text-xl font-black font-['Playfair_Display',serif] text-[#250836]">
@@ -1338,23 +1331,13 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           {/* Card 6: Sports Pavilion & Amphitheatre */}
           <RevealBlock direction="right" delay={240} className="h-full">
             <div className="h-full p-5 sm:p-6 rounded-3xl bg-[#FCF9F2] border border-[#DFC06A]/75 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between space-y-4 text-left">
-              <svg viewBox="0 0 220 120" className="w-full h-28 text-[#6B5744]" aria-hidden="true">
-                <g fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  {/* Curved Stadium Roof */}
-                  <path d="M46,38 Q120,12 198,38 L194,48 Q120,24 50,48 Z" fill="#FAF7F0" />
-                  {/* Tiers & Pillars */}
-                  <polygon points="56,48 188,48 194,82 50,82" fill="#FAF7F0" />
-                  <line x1="54" y1="60" x2="190" y2="60" strokeOpacity="0.65" />
-                  <line x1="52" y1="71" x2="192" y2="71" strokeOpacity="0.65" />
-                  <line x1="88" y1="42" x2="88" y2="82" />
-                  <line x1="126" y1="36" x2="126" y2="82" />
-                  <line x1="164" y1="42" x2="164" y2="82" />
-                  {/* Football Goal & Pitch Lines */}
-                  <rect x="16" y="72" width="24" height="16" fill="#FAF7F0" />
-                  <line x1="10" y1="92" x2="210" y2="92" strokeOpacity="0.65" />
-                  <ellipse cx="122" cy="100" rx="48" ry="8" strokeOpacity="0.45" />
-                </g>
-              </svg>
+              <div className="overflow-hidden rounded-2xl">
+                <img
+                  src="/assets/sketch_sports.jpg"
+                  alt="Pencil sketch of Sports Pavilion & Amphitheatre"
+                  className="w-full h-28 object-contain mix-blend-multiply"
+                />
+              </div>
               <div className="space-y-1.5">
                 <span className="block w-7 h-[2px] bg-[#C79628]" />
                 <h3 className="text-lg font-black font-['Playfair_Display',serif] text-[#250836]">

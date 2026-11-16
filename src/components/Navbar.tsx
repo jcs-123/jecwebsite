@@ -166,10 +166,10 @@ export const Navbar: React.FC<Props> = ({
       id: 'facilities',
       label: 'Facilities',
       dropdown: [
-        { label: 'Central Digital Library', page: 'facilities', section: 'fac-library', desc: '42,000+ volumes and e-journals' },
-        { label: 'Campus Hostels & Dining', page: 'facilities', section: 'fac-hostel', desc: 'Separate modern residences' },
-        { label: 'College Bus Fleet Network', page: 'facilities', section: 'fac-transport', desc: '25+ routes across 3 districts' },
-        { label: 'Auditorium & Sports Ground', page: 'facilities', section: 'fac-sports', desc: '1,200 capacity hall & athletic turf' },
+        { label: 'Central Digital Library', page: 'central-library', desc: '42,000+ volumes and e-journals' },
+        { label: 'Campus Hostels & Dining', page: 'campus-hostels', desc: 'Separate modern residences' },
+        { label: 'College Bus Fleet Network', page: 'bus-fleet', desc: '25+ routes across 3 districts' },
+        { label: 'Auditorium & Sports Ground', page: 'auditorium-sports', desc: '1,200 capacity hall & athletic turf' },
       ]
     },
   ];

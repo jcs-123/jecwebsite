@@ -23,6 +23,10 @@ import { MeritScholarshipsPage } from './pages/MeritScholarshipsPage';
 import { AdmissionEnquiryPage } from './pages/AdmissionEnquiryPage';
 import { PlacementsPage } from './pages/PlacementsPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
+import { CentralLibraryPage } from './pages/CentralLibraryPage';
+import { CampusHostelsPage } from './pages/CampusHostelsPage';
+import { BusFleetPage } from './pages/BusFleetPage';
+import { AuditoriumSportsPage } from './pages/AuditoriumSportsPage';
 import { AutonomousPage } from './pages/AutonomousPage';
 import { AlumniPage } from './pages/AlumniPage';
 import { LoginPage } from './pages/LoginPage';
@@ -257,6 +261,34 @@ export function App() {
         {currentPage === 'facilities' && (
           <FacilitiesPage
             selectedFacilityId={subParam}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'central-library' && (
+          <CentralLibraryPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'campus-hostels' && (
+          <CampusHostelsPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'bus-fleet' && (
+          <BusFleetPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'auditorium-sports' && (
+          <AuditoriumSportsPage
+            onNavigate={navigateTo}
             onOpenTour={() => setIsTourOpen(true)}
           />
         )}

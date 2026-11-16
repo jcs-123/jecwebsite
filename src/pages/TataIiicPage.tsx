@@ -12,6 +12,8 @@ import {
   Wrench,
 } from 'lucide-react';
 import { RevealBlock } from '../components/RevealBlock';
+import { AnimatedCounter } from '../components/AnimatedCounter';
+import { ResearchSubNav } from '../components/ResearchSubNav';
 
 interface Props {
   onNavigate: (page: string, subId?: string) => void;
@@ -87,23 +89,7 @@ export const TataIiicPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
   return (
     <div className="bg-[#FAF7F0] min-h-screen overflow-x-clip">
       {/* Sub-Navigation Pills */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex flex-nowrap overflow-x-auto no-scrollbar items-center justify-start lg:justify-center gap-1.5 sm:gap-2 p-2 rounded-2xl bg-white border border-amber-200/70 shadow-2xs">
-          {RESEARCH_TABS.map((tab) => (
-            <button
-              key={tab.route}
-              onClick={() => onNavigate(tab.route)}
-              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
-                tab.route === 'tata-iiic'
-                  ? 'bg-[#250836] text-[#FDE68A] shadow-sm'
-                  : 'text-[#250836] hover:bg-amber-50/80'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ResearchSubNav activeRoute="tata-iiic" onNavigate={onNavigate} />
 
       {/* Diagonal Split Hero (Photo Left + Royal Purple Right) */}
       <section className="relative w-full overflow-hidden mt-4 bg-[#210532] text-white border-y border-[#DFC06A]/40">
@@ -186,13 +172,13 @@ export const TataIiicPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 text-center lg:divide-x lg:divide-[#DFC06A]/55">
               <div className="py-1 sm:py-0 lg:px-4">
                 <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#250836]">
-                  30+
+                  <AnimatedCounter end={30} suffix="+" duration={1600} />
                 </div>
                 <div className="text-xs font-semibold text-slate-700 mt-1">Industry MoUs</div>
               </div>
               <div className="py-1 sm:py-0 lg:px-4">
                 <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#250836]">
-                  2,500+
+                  <AnimatedCounter end={2500} suffix="+" duration={1800} />
                 </div>
                 <div className="text-xs font-semibold text-slate-700 mt-1">Trained Students</div>
               </div>
@@ -204,7 +190,7 @@ export const TataIiicPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
               </div>
               <div className="py-1 sm:py-0 lg:px-4">
                 <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#250836]">
-                  100%
+                  <AnimatedCounter end={100} suffix="%" duration={1600} />
                 </div>
                 <div className="text-xs font-semibold text-slate-700 mt-1">Project Mentorship</div>
               </div>

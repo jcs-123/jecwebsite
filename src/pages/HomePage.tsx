@@ -766,29 +766,36 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         {/* ============================================================== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <RevealBlock direction="up">
-            <div className="bg-white rounded-3xl shadow-xs border border-slate-200 p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-              <div className="flex items-center gap-3 shrink-0">
+            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xs border border-slate-200 p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
+              <div className="flex items-center justify-between gap-3 shrink-0">
                 <span className="px-3 py-1.5 rounded-xl bg-jyothi-purple-100 text-jyothi-purple-900 font-bold flex items-center gap-2 text-xs uppercase tracking-wider">
-                  <BellRing className="w-4 h-4 text-jyothi-purple-800 animate-bounce" />
+                  <BellRing className="w-4 h-4 text-jyothi-purple-800 animate-bell-ring" />
                   <span>Announcements</span>
                 </span>
+                <button
+                  onClick={() => onNavigate('admissions')}
+                  className="md:hidden text-xs font-bold text-jyothi-purple-800 hover:text-jyothi-purple-950 flex items-center gap-1 shrink-0 group cursor-pointer"
+                >
+                  <span>View All</span>
+                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
 
-              <div className="flex-1 overflow-hidden min-w-0 w-full md:w-auto">
-                <div className="flex items-center gap-2.5 text-xs sm:text-sm text-slate-800">
+              <div className="flex-1 min-w-0 w-full md:w-auto">
+                <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center gap-2 sm:gap-2.5 text-xs sm:text-sm text-slate-800">
                   <span className="px-2.5 py-0.5 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900 font-bold text-[11px] shrink-0">
                     {ANNOUNCEMENTS[0].tag}
                   </span>
-                  <span className="font-semibold text-jyothi-purple-950 truncate" title={ANNOUNCEMENTS[0].title}>
+                  <span className="font-semibold text-jyothi-purple-950 line-clamp-2 sm:line-clamp-none sm:truncate" title={ANNOUNCEMENTS[0].title}>
                     {ANNOUNCEMENTS[0].title}
                   </span>
-                  <span className="text-xs text-slate-400 hidden lg:inline">({ANNOUNCEMENTS[0].date})</span>
+                  <span className="text-xs text-slate-400 hidden lg:inline shrink-0">({ANNOUNCEMENTS[0].date})</span>
                 </div>
               </div>
 
               <button
                 onClick={() => onNavigate('admissions')}
-                className="text-xs font-bold text-jyothi-purple-800 hover:text-jyothi-purple-950 flex items-center gap-1 shrink-0 ml-auto md:ml-0 group"
+                className="hidden md:flex text-xs font-bold text-jyothi-purple-800 hover:text-jyothi-purple-950 items-center gap-1 shrink-0 group cursor-pointer"
               >
                 <span>View All Circulars</span>
                 <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

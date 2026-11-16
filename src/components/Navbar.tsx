@@ -145,11 +145,11 @@ export const Navbar: React.FC<Props> = ({
       id: 'admissions',
       label: 'Admissions',
       dropdown: [
-        { label: 'B.Tech Admissions 2025-26', page: 'admissions', section: 'btech', desc: '7 Engineering streams' },
-        { label: 'M.Tech & Ph.D. Research', page: 'admissions', section: 'pg', desc: 'Postgraduate specializations' },
-        { label: 'Eligibility & Seat Matrix', page: 'admissions', section: 'eligibility', desc: 'KEAM, Management & NRI' },
-        { label: 'Merit Scholarships', page: 'admissions', section: 'scholarships', desc: '₹3+ Crores yearly grant pool' },
-        { label: 'Admission Enquiry', page: 'admissions', section: 'enquiry', desc: 'Direct counselor assistance' },
+        { label: 'B.Tech Admissions 2025-26', page: 'admissions', desc: '7 Engineering streams' },
+        { label: 'M.Tech & Ph.D. Research', page: 'mtech-phd-admissions', desc: 'Postgraduate specializations' },
+        { label: 'Eligibility & Seat Matrix', page: 'eligibility-seat-matrix', desc: 'KEAM, Management & NRI' },
+        { label: 'Merit Scholarships', page: 'merit-scholarships', desc: '₹3+ Crores yearly grant pool' },
+        { label: 'Admission Enquiry', page: 'admission-enquiry', desc: 'Direct counselor assistance' },
       ]
     },
     {

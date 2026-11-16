@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { RevealBlock } from '../components/RevealBlock';
+import { ResearchSubNav } from '../components/ResearchSubNav';
 
 interface Props {
   onNavigate?: (page: string, subId?: string) => void;
@@ -45,23 +46,7 @@ export const ResearchPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
     <div className="bg-[#FAF7F0] min-h-screen overflow-x-clip">
       {/* Sub-Navigation Pills */}
       {onNavigate && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-          <div className="flex flex-nowrap overflow-x-auto no-scrollbar items-center justify-start lg:justify-center gap-1.5 sm:gap-2 p-2 rounded-2xl bg-white border border-amber-200/70 shadow-2xs">
-            {RESEARCH_TABS.map((tab) => (
-              <button
-                key={tab.route}
-                onClick={() => onNavigate(tab.route)}
-                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
-                  tab.route === 'research'
-                    ? 'bg-[#250836] text-[#FDE68A] shadow-sm'
-                    : 'text-[#250836] hover:bg-amber-50/80'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
-        </div>
+        <ResearchSubNav activeRoute="research" onNavigate={onNavigate} />
       )}
 
       {/* Unique Split Editorial Hero: Left Content + Right Architectural Image Frame */}
@@ -130,11 +115,6 @@ export const ResearchPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
                       className="w-full h-full object-cover object-center"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#210532]/70 via-transparent to-transparent pointer-events-none" />
-
-                    {/* Top-Right Dark Purple Accent Pill */}
-                    <div className="absolute top-4 right-4 px-3.5 py-1.5 rounded-full bg-[#29073D]/90 border border-[#DFC06A]/70 text-[#FDE68A] text-[11px] font-semibold tracking-wide backdrop-blur-xs shadow-md">
-                      Interdisciplinary Labs
-                    </div>
 
                     {/* Bottom-Left Editorial Tagline */}
                     <div className="absolute bottom-4 left-5 right-5 flex items-center gap-3 text-[#FDE68A] text-xs sm:text-sm font-['Playfair_Display',serif] italic">

@@ -17,6 +17,10 @@ import { JyothiConsultancyPage } from './pages/JyothiConsultancyPage';
 import { MitFabLabPage } from './pages/MitFabLabPage';
 import { JyothiTbiPage } from './pages/JyothiTbiPage';
 import { AdmissionsPage } from './pages/AdmissionsPage';
+import { MtechPhdAdmissionsPage } from './pages/MtechPhdAdmissionsPage';
+import { EligibilitySeatMatrixPage } from './pages/EligibilitySeatMatrixPage';
+import { MeritScholarshipsPage } from './pages/MeritScholarshipsPage';
+import { AdmissionEnquiryPage } from './pages/AdmissionEnquiryPage';
 import { PlacementsPage } from './pages/PlacementsPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
 import { AutonomousPage } from './pages/AutonomousPage';
@@ -211,6 +215,35 @@ export function App() {
 
         {currentPage === 'admissions' && (
           <AdmissionsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'mtech-phd-admissions' && (
+          <MtechPhdAdmissionsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'eligibility-seat-matrix' && (
+          <EligibilitySeatMatrixPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'merit-scholarships' && (
+          <MeritScholarshipsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'admission-enquiry' && (
+          <AdmissionEnquiryPage
+            onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
           />
         )}

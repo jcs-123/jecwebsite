@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 import { RevealBlock } from '../components/RevealBlock';
+import { ResearchSubNav } from '../components/ResearchSubNav';
 
 interface Props {
   onNavigate: (page: string, subId?: string) => void;
@@ -86,23 +87,7 @@ export const JyothiTbiPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
   return (
     <div className="bg-[#FAF7F0] min-h-screen overflow-x-clip">
       {/* Sub-Navigation Pills */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
-        <div className="flex flex-nowrap overflow-x-auto no-scrollbar items-center justify-start lg:justify-center gap-1.5 sm:gap-2 p-2 rounded-2xl bg-white border border-amber-200/70 shadow-2xs">
-          {RESEARCH_TABS.map((tab) => (
-            <button
-              key={tab.route}
-              onClick={() => onNavigate(tab.route)}
-              className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 transition-all cursor-pointer ${
-                tab.route === 'jyothi-tbi'
-                  ? 'bg-[#250836] text-[#FDE68A] shadow-sm'
-                  : 'text-[#250836] hover:bg-amber-50/80'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
-        </div>
-      </div>
+      <ResearchSubNav activeRoute="jyothi-tbi" onNavigate={onNavigate} />
 
       {/* Cream Editorial Hero with Startup Founders Showcase */}
       <section className="relative w-full overflow-x-clip pt-6 sm:pt-8 pb-10">

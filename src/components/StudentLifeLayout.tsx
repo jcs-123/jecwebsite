@@ -1,6 +1,25 @@
 import React, { useEffect } from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { RevealBlock } from './RevealBlock';
+import { AnimatedCounter } from './AnimatedCounter';
+
+function renderAnimatedStatValue(raw: string): React.ReactNode {
+  const match = raw.trim().match(/^([^\d]*)([\d,]+(?:\.\d+)?)(.*)$/);
+  if (!match) return raw;
+  const [, prefix, numStr, suffix] = match;
+  const numericEnd = Number(numStr.replace(/,/g, ''));
+  if (!Number.isFinite(numericEnd) || numericEnd <= 0) return raw;
+  const decimals = numStr.includes('.') ? (numStr.split('.')[1]?.length ?? 0) : 0;
+  return (
+    <AnimatedCounter
+      end={numericEnd}
+      prefix={prefix}
+      suffix={suffix}
+      decimals={decimals}
+      duration={1600}
+    />
+  );
+}
 
 export interface HeroStat {
   value: string;
@@ -208,7 +227,7 @@ export const StudentLifeLayout: React.FC<StudentLifePageShellProps> = ({
                   {stats.map((s, idx) => (
                     <div key={idx} className="py-1 sm:py-0 lg:px-3">
                       <div className="text-2xl sm:text-3xl font-black font-['Playfair_Display',serif] text-[#FDE68A]">
-                        {s.value}
+                        {renderAnimatedStatValue(s.value)}
                       </div>
                       <div className="text-xs font-semibold text-white mt-0.5">{s.label}</div>
                       {heroVariant === 'wave' ? (

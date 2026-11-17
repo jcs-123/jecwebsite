@@ -772,77 +772,98 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
       <section id="vision" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 scroll-mt-24">
         
         <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-300 text-amber-900 text-xs font-bold tracking-wide">
-            <Compass className="w-3.5 h-3.5 text-amber-600" />
-            <span>Guiding Principles & Moral Anchor</span>
+          <div className="inline-flex items-center gap-3">
+            <span className="h-[1px] w-10 sm:w-14 bg-[#DFC06A]/85" />
+            <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-[#7A5418]">
+              Guiding Principles &amp; Moral Anchor
+            </span>
+            <span className="h-[1px] w-10 sm:w-14 bg-[#DFC06A]/85" />
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
-            Vision, Mission & Institutional Values
+            Vision, Mission &amp; Institutional Values
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 max-w-2xl mx-auto leading-relaxed">
             Rooted in the Catholic Archdiocesan educational philosophy, Jyothi equips aspiring engineers to lead with intellectual mastery, profound compassion, and unwavering ethical courage.
           </p>
         </div>
 
-        {/* Vision & Mission Highlight Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          
-          {/* Vision Card */}
-          <RevealBlock direction="left" delay={0} className="h-full">
-          <div className="h-full p-8 rounded-3xl bg-gradient-to-br from-white via-[#FFFDF8] to-[#FAF5EB] border-2 border-amber-300/80 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#250836] to-[#3C1361] text-[#FDE68A] flex items-center justify-center font-bold shadow-md">
-              <Compass className="w-6 h-6" />
-            </div>
-            <div className="space-y-1.5">
-              <span className="text-[11px] font-extrabold tracking-widest text-[#B5802B] uppercase">Institutional North Star</span>
-              <h3 className="text-2xl font-bold font-['Playfair_Display',serif] text-[#250836]">
-                Our Vision
-              </h3>
-            </div>
-            <p className="text-sm sm:text-base text-slate-800 leading-relaxed italic font-serif">
-              "Creating technology leaders who foster groundbreaking innovation, maintain the highest standards of professional ethics, and dedicate their intellectual potential towards sustainable national and global progress."
-            </p>
-            <div className="pt-2 flex items-center gap-2 text-xs font-bold text-amber-900">
-              <Sparkles className="w-4 h-4 text-amber-600" />
-              <span>Technology Grounded in Human Values</span>
+        {/* Full-Width Royal Plum Vision Banner */}
+        <RevealBlock direction="up" delay={40}>
+          <div className="relative rounded-2xl bg-gradient-to-r from-[#3B083D] via-[#53134F] to-[#3B083D] text-white px-6 py-7 sm:px-10 sm:py-9 shadow-xl border border-[#DFC06A]/40 overflow-hidden">
+            {/* Subtle Decorative Gold Arcs */}
+            <div className="hidden sm:block absolute -left-16 -bottom-16 w-48 h-48 rounded-full border border-[#DFC06A]/35 bg-white/[0.03] pointer-events-none" />
+            <div className="hidden sm:block absolute -right-14 -bottom-16 w-52 h-44 rounded-full border border-[#DFC06A]/35 bg-white/[0.03] pointer-events-none" />
+
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 items-center gap-6 md:gap-8">
+              <div className="md:col-span-3 flex flex-col items-center justify-center md:border-r md:border-[#DFC06A]/40 md:pr-6">
+                <div className="w-24 h-[1px] bg-[#DFC06A]/65 mb-2.5" />
+                <span className="text-sm sm:text-base font-['Playfair_Display',serif] font-bold tracking-[0.22em] text-[#DFC06A] uppercase">
+                  Our Vision
+                </span>
+                <div className="w-24 h-[1px] bg-[#DFC06A]/65 mt-2.5" />
+              </div>
+
+              <div className="md:col-span-9 text-left space-y-2.5">
+                <p className="text-sm sm:text-base lg:text-[17px] text-white/95 leading-relaxed italic font-['Playfair_Display',serif]">
+                  “Creating technology leaders who foster groundbreaking innovation, maintain the highest standards of professional ethics, and dedicate their intellectual potential towards sustainable national and global progress.”
+                </p>
+                <div className="text-xs font-bold text-[#DFC06A] tracking-wide">
+                  Technology Grounded in Human Values
+                </div>
+              </div>
             </div>
           </div>
-          </RevealBlock>
+        </RevealBlock>
 
-          {/* Mission Card */}
-          <RevealBlock direction="right" delay={150} className="h-full">
-          <div className="h-full p-8 rounded-3xl bg-gradient-to-br from-white via-[#FBF8FF] to-[#F5EEFB] border-2 border-purple-200 shadow-md hover:shadow-xl transition-all space-y-4 text-left relative overflow-hidden group">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 to-amber-700 text-white flex items-center justify-center font-bold shadow-md">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <div className="space-y-1.5">
-              <span className="text-[11px] font-extrabold tracking-widest text-jyothi-purple-900 uppercase">Educational Mandate</span>
-              <h3 className="text-2xl font-bold font-['Playfair_Display',serif] text-[#250836]">
+        {/* Our Mission 2x2 Numbered Grid */}
+        <RevealBlock direction="up" delay={100}>
+          <div className="pt-2 space-y-7">
+            <div className="flex items-center justify-center gap-4">
+              <span className="h-[1px] w-14 sm:w-24 bg-[#DFC06A]/75" />
+              <h3 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#250836]">
                 Our Mission
               </h3>
+              <span className="h-[1px] w-14 sm:w-24 bg-[#DFC06A]/75" />
             </div>
-            <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
-                <span>Deliver rigorous technical education through agile autonomous curricula benchmarked with international industry standards.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
-                <span>Stimulate multidisciplinary research, student entrepreneurship, and intellectual property creation via the MIT FabLab & TBI.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
-                <span>Nurture high ethical standards, social sensitivity, and environmental stewardship among emerging technocrats.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <CheckCircle2 className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
-                <span>Cultivate global professional competitiveness anchored in selfless service to humanity.</span>
-              </li>
-            </ul>
-          </div>
-          </RevealBlock>
 
-        </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-6 text-left">
+              {[
+                {
+                  num: '01',
+                  text: 'Deliver rigorous technical education through agile autonomous curricula benchmarked with international industry standards.',
+                },
+                {
+                  num: '02',
+                  text: 'Stimulate multidisciplinary research, student entrepreneurship, and intellectual property creation via the MIT FabLab & TBI.',
+                },
+                {
+                  num: '03',
+                  text: 'Nurture high ethical standards, social sensitivity, and environmental stewardship among emerging technocrats.',
+                },
+                {
+                  num: '04',
+                  text: 'Cultivate global professional competitiveness anchored in selfless service to humanity.',
+                },
+              ].map((item, idx) => (
+                <div
+                  key={item.num}
+                  className={`flex items-start gap-5 pb-5 ${
+                    idx < 2 ? 'border-b border-[#DFC06A]/35' : ''
+                  }`}
+                >
+                  <span className="text-2xl sm:text-3xl font-['Playfair_Display',serif] font-bold text-[#B58334] leading-none shrink-0 pt-0.5">
+                    {item.num}
+                  </span>
+                  <div className="border-l border-[#DFC06A]/60 pl-5">
+                    <p className="text-xs sm:text-sm text-[#3B1F47] leading-relaxed">
+                      {item.text}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </RevealBlock>
 
         {/* 5 Core Institutional Values */}
         <div className="pt-6 space-y-6 text-left">

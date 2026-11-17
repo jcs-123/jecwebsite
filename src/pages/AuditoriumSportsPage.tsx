@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  Trophy, Mic2, Dumbbell, Sparkles, Calendar,
-  ArrowRight, CheckCircle2, Users, Activity
+  Trophy, Mic2, Dumbbell, Clock, Calendar,
+  ArrowRight, CheckCircle2
 } from 'lucide-react';
 import { RevealBlock } from '../components/RevealBlock';
 import { AnimatedCounter } from '../components/AnimatedCounter';
@@ -21,7 +21,7 @@ const ARENA_CARDS = [
     title: 'Father Thekkekara Auditorium',
     desc: 'A 1,200-seat air-conditioned cultural and academic theatre equipped with cinema-grade projection, line-array acoustics, green rooms, and live streaming infrastructure for national conferences, TEDx talks, and Tharang.',
     highlights: ['1,200 Tiered Seating', 'Dolby-Grade Acoustics', '4K LED Stage Backdrop'],
-    image: '/assets/club_tharang.jpg',
+    image: '/assets/auditorium_hall.jpg',
   },
   {
     icon: Trophy,
@@ -29,7 +29,7 @@ const ARENA_CARDS = [
     title: '400m Track & Football Turf',
     desc: 'Expansive hilltop sports ground housing a standard 400m athletic track, regulation football pitch, cricket practice nets, and spectator pavilion overlooking the green Cheruthuruthy valley.',
     highlights: ['Regulation Football Field', 'Cricket Practice Pitches', 'Covered Spectator Pavilion'],
-    image: '/assets/sketch_sports.jpg',
+    image: '/assets/sports_turf.jpg',
   },
   {
     icon: Dumbbell,
@@ -37,116 +37,122 @@ const ARENA_CARDS = [
     title: 'Multi-Sport Courts & Gymnasiums',
     desc: 'Dedicated floodlit basketball, volleyball, and shuttle badminton courts alongside separate strength-and-conditioning gymnasiums, table tennis arenas, and chess lounges.',
     highlights: ['Floodlit Basketball & Volleyball', 'Indoor Badminton Courts', 'Certified Fitness Trainers'],
-    image: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=900&auto=format&fit=crop',
+    image: '/assets/indoor_gym.jpg',
   },
 ];
 
 export const AuditoriumSportsPage: React.FC<{
   onNavigate: (page: string, subId?: string) => void;
   onOpenTour: () => void;
-}> = ({ onNavigate, onOpenTour }) => {
+}> = ({ onNavigate }) => {
   return (
-    <div className="min-h-screen bg-[#FAF7F0] text-[#210532] pt-24 sm:pt-32 overflow-x-clip">
+    <div className="min-h-screen bg-[#FAF7F0] text-[#210532] overflow-x-clip">
       <FacilitiesSubNav activeRoute="auditorium-sports" onNavigate={onNavigate} />
 
-      {/* Dark Royal Purple Bento Showcase */}
-      <section className="relative bg-[#1B0329] text-[#FAF7F0] py-12 sm:py-16 lg:py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(223,192,106,0.14),transparent_55%)] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
-            {/* Left Showcase: Auditorium & Turf Visual */}
-            <RevealBlock className="lg:col-span-7 bg-[#250836] rounded-3xl border border-[#DFC06A]/30 overflow-hidden flex flex-col">
-              <div className="relative h-64 sm:h-80 lg:h-96 overflow-hidden">
-                <img
-                  src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1000&auto=format&fit=crop"
-                  alt="Jyothi Auditorium and Athletic Sports Turf"
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#250836] via-[#250836]/30 to-transparent" />
-                <div className="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1B0329]/85 border border-[#DFC06A]/40 text-[11px] font-bold uppercase tracking-[0.2em] text-[#DFC06A]">
-                  <Sparkles size={12} /> Culture &amp; Athletics
-                </div>
-              </div>
+      {/* Warm Cream Editorial Header + 2-Column Asymmetric Bento Showcase */}
+      <section className="relative py-8 sm:py-10 lg:py-12 bg-[#FAF7F0]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <RevealBlock className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-3 mb-2.5">
+              <span className="h-[1px] w-10 bg-[#DFC06A]" />
+              <span className="text-[11px] font-bold uppercase tracking-[0.26em] text-[#210532]">
+                Culture &amp; Athletics
+              </span>
+              <span className="h-[1px] w-10 bg-[#DFC06A]" />
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-['Playfair_Display',serif] font-black text-[#210532] leading-[1.08] mb-2.5">
+              Auditorium &amp; <span className="italic font-bold text-[#C79628]">Sports Ground</span>
+            </h1>
+            <p className="text-xs sm:text-sm text-[#4A2559] leading-relaxed">
+              Spaces for symposia, cultural festivals and university-level sports at Jyothi.
+            </p>
+          </RevealBlock>
 
-              <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
-                <div>
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-['Playfair_Display'] font-bold text-white leading-tight mb-3">
-                    Auditorium &amp; <span className="italic font-normal text-[#DFC06A]">Sports Ground</span>
-                  </h1>
-                  <p className="text-sm sm:text-base text-white/80 leading-relaxed max-w-2xl">
-                    Home to the 1,200-Seat Father Thekkekara Auditorium and our 400m Athletic Turf — where national symposia, cultural festivals, and university-level championships come alive.
-                  </p>
+          {/* 2-Column Asymmetric Bento Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            {/* Left Large Tall Card: Father Thekkekara Auditorium */}
+            <RevealBlock direction="left" className="lg:col-span-5 flex">
+              <div className="w-full rounded-3xl overflow-hidden shadow-lg border border-[#DFC06A]/45 bg-[#3D0F3B] flex flex-col">
+                <div className="relative flex-1 min-h-[260px] sm:min-h-[320px] overflow-hidden">
+                  <img
+                    src="/assets/auditorium_hall.jpg"
+                    alt="Father Thekkekara Auditorium at Jyothi Engineering College"
+                    className="w-full h-full object-cover object-center"
+                  />
                 </div>
-
-                <div className="mt-6 pt-5 border-t border-white/10 flex flex-wrap items-center gap-4 text-xs text-white/80">
-                  <span className="inline-flex items-center gap-1.5">
-                    <Users size={14} className="text-[#DFC06A]" /> 1,200-Seat Father Thekkekara Auditorium
-                  </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <Activity size={14} className="text-[#DFC06A]" /> 400m Athletic Turf &amp; Pavilion
-                  </span>
+                <div className="bg-[#3D0F3B] text-white px-6 py-5 flex items-center justify-between gap-4">
+                  <div className="min-w-0">
+                    <h2 className="text-lg sm:text-xl font-['Playfair_Display',serif] font-bold text-white leading-snug">
+                      Father Thekkekara Auditorium
+                    </h2>
+                    <p className="text-xs text-white/80 mt-0.5">
+                      A venue for convocations and cultural events.
+                    </p>
+                  </div>
+                  <div className="pl-4 border-l border-[#DFC06A]/40 shrink-0">
+                    <span className="inline-block px-3.5 py-1.5 rounded-full border border-[#DFC06A]/70 bg-[#2A0829]/70 text-[11px] font-bold text-[#FDE68A] whitespace-nowrap">
+                      1,200 Seats
+                    </span>
+                  </div>
                 </div>
               </div>
             </RevealBlock>
 
-            {/* Right Showcase: Gold-Accented Highlights */}
-            <RevealBlock delay={100} className="lg:col-span-5 bg-[#250836] rounded-3xl border border-[#DFC06A]/35 p-6 sm:p-8 flex flex-col justify-between">
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#DFC06A]">
-                  Signature Venues
-                </span>
-                <h2 className="text-2xl sm:text-3xl font-['Playfair_Display'] font-bold text-white mt-2 mb-5">
-                  Built for Stage Excellence &amp; Sporting Spirit
-                </h2>
-
-                <div className="space-y-4">
-                  <div className="p-4 rounded-2xl bg-[#1B0329]/75 border border-[#DFC06A]/25">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-bold text-[#DFC06A]">Father Thekkekara Auditorium</span>
-                      <span className="text-[11px] font-semibold text-white/70">1,200 Seats</span>
-                    </div>
-                    <p className="text-xs text-white/75 leading-relaxed">
-                      Acoustic wall paneling, motorized stage lighting, dual green rooms, and 4K projection for convocations and tech fests.
-                    </p>
+            {/* Right Column: Stacked 400m Athletic Turf + Indoor Sports Centre */}
+            <div className="lg:col-span-7 flex flex-col gap-5">
+              {/* Top-Right Card: 400m Athletic Turf & Pavilion */}
+              <RevealBlock direction="right" delay={80}>
+                <div className="rounded-3xl overflow-hidden shadow-md border border-[#DFC06A]/45 bg-white">
+                  <div className="relative h-52 sm:h-64 overflow-hidden">
+                    <img
+                      src="/assets/sports_turf.jpg"
+                      alt="400m Athletic Turf and Spectator Pavilion"
+                      className="w-full h-full object-cover object-center"
+                    />
                   </div>
-
-                  <div className="p-4 rounded-2xl bg-[#1B0329]/75 border border-[#DFC06A]/25">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-bold text-[#DFC06A]">400m Athletic Turf &amp; Pavilion</span>
-                      <span className="text-[11px] font-semibold text-white/70">KTU Zone Host</span>
+                  <div className="px-6 py-4 sm:py-5 flex flex-wrap items-center justify-between gap-4 bg-white">
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-['Playfair_Display',serif] font-bold text-[#210532]">
+                        400m Athletic Turf &amp; Pavilion
+                      </h2>
+                      <p className="text-xs text-[#4A2559] mt-0.5">
+                        Football ground, athletic track and floodlit courts.
+                      </p>
                     </div>
-                    <p className="text-xs text-white/75 leading-relaxed">
-                      Full-size football ground, athletic track, floodlit courts, and dedicated coaching by Physical Education faculty.
-                    </p>
+                    <div className="pl-4 border-l border-[#DFC06A]/45">
+                      <span className="inline-block px-3.5 py-1.5 rounded-full bg-[#FAF7F0] border border-[#DFC06A]/65 text-[11px] font-bold text-[#4A2559] whitespace-nowrap">
+                        KTU Zone Host
+                      </span>
+                    </div>
                   </div>
+                </div>
+              </RevealBlock>
 
-                  <div className="p-4 rounded-2xl bg-[#1B0329]/75 border border-[#DFC06A]/25">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-bold text-[#DFC06A]">Indoor Sports &amp; Fitness Centre</span>
-                      <span className="text-[11px] font-semibold text-white/70">06:00 AM – 08:00 PM</span>
+              {/* Bottom-Right Horizontal Card: Indoor Sports & Fitness Centre */}
+              <RevealBlock direction="right" delay={140} className="flex-1">
+                <div className="h-full rounded-3xl overflow-hidden shadow-md border border-[#DFC06A]/45 bg-white p-2.5 sm:p-3 grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                  <div className="sm:col-span-5 h-40 sm:h-36 rounded-2xl overflow-hidden">
+                    <img
+                      src="/assets/indoor_gym.jpg"
+                      alt="Indoor Sports and Fitness Centre"
+                      className="w-full h-full object-cover object-center"
+                    />
+                  </div>
+                  <div className="sm:col-span-7 px-2 sm:pr-4 py-1 space-y-1.5">
+                    <h2 className="text-lg sm:text-xl font-['Playfair_Display',serif] font-bold text-[#210532]">
+                      Indoor Sports &amp; Fitness Centre
+                    </h2>
+                    <div className="inline-flex items-center gap-1.5 text-xs font-bold text-[#A87627]">
+                      <Clock size={13} />
+                      <span>06:00 AM – 08:00 PM</span>
                     </div>
-                    <p className="text-xs text-white/75 leading-relaxed">
-                      Separate modern gyms for men and women, wooden-floor badminton courts, and indoor recreation zones.
+                    <p className="text-xs text-[#4A2559] leading-relaxed">
+                      Gymnasiums, badminton courts and indoor recreation.
                     </p>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-3">
-                <button
-                  onClick={onOpenTour}
-                  className="flex-1 min-w-[160px] py-3 px-5 rounded-xl bg-[#DFC06A] text-[#210532] font-bold text-xs uppercase tracking-wider hover:bg-white transition-colors flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  Tour the Arenas <ArrowRight size={14} />
-                </button>
-                <button
-                  onClick={() => onNavigate('campus-life')}
-                  className="py-3 px-5 rounded-xl bg-white/10 border border-white/20 text-white font-semibold text-xs hover:bg-white/20 transition-colors cursor-pointer"
-                >
-                  Campus Life
-                </button>
-              </div>
-            </RevealBlock>
+              </RevealBlock>
+            </div>
           </div>
         </div>
       </section>
@@ -157,7 +163,7 @@ export const AuditoriumSportsPage: React.FC<{
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 text-center">
             {SPORTS_STATS.map((stat) => (
               <div key={stat.label} className="px-3">
-                <div className="text-3xl sm:text-4xl font-['Playfair_Display'] font-bold text-[#DFC06A]">
+                <div className="text-3xl sm:text-4xl font-['Playfair_Display',serif] font-bold text-[#DFC06A]">
                   <AnimatedCounter end={stat.target} suffix={stat.suffix} />
                 </div>
                 <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white mt-1">
@@ -171,16 +177,16 @@ export const AuditoriumSportsPage: React.FC<{
       </section>
 
       {/* Auditorium, Outdoor & Indoor Arena Cards */}
-      <section className="py-14 sm:py-20 bg-[#FAF7F0]">
+      <section className="py-14 sm:py-16 bg-[#FAF7F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealBlock className="text-center max-w-2xl mx-auto mb-12">
+          <RevealBlock className="text-center max-w-2xl mx-auto mb-10">
             <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#C79628]">
               Explore Every Arena
             </span>
-            <h2 className="text-3xl sm:text-4xl font-['Playfair_Display'] font-bold text-[#210532] mt-2 mb-3">
+            <h2 className="text-3xl sm:text-4xl font-['Playfair_Display',serif] font-bold text-[#210532] mt-2 mb-3">
               Where Talent Meets Opportunity
             </h2>
-            <p className="text-sm sm:text-base text-[#4A2559]">
+            <p className="text-sm text-[#4A2559]">
               Dedicated spaces supporting year-round inter-collegiate tournaments, cultural showcases, and daily student wellness.
             </p>
           </RevealBlock>
@@ -211,7 +217,7 @@ export const AuditoriumSportsPage: React.FC<{
                         <div className="w-9 h-9 rounded-xl bg-[#FAF7F0] border border-[#DFC06A]/40 text-[#210532] flex items-center justify-center">
                           <Icon size={18} />
                         </div>
-                        <h3 className="text-xl font-['Playfair_Display'] font-bold text-[#210532]">
+                        <h3 className="text-xl font-['Playfair_Display',serif] font-bold text-[#210532]">
                           {card.title}
                         </h3>
                       </div>
@@ -240,7 +246,7 @@ export const AuditoriumSportsPage: React.FC<{
               <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.22em] text-[#DFC06A] mb-2">
                 <Calendar size={14} /> Annual Calendar Highlights
               </span>
-              <h3 className="text-2xl sm:text-3xl font-['Playfair_Display'] font-bold text-white">
+              <h3 className="text-2xl sm:text-3xl font-['Playfair_Display',serif] font-bold text-white">
                 Tharang Tech-Cultural Fest &amp; Jyothi Sports Meet
               </h3>
               <p className="text-sm text-white/75 mt-1.5 max-w-2xl">

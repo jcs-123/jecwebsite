@@ -364,13 +364,15 @@ export const Navbar: React.FC<Props> = ({
                           <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
                             {item.label} Explorer
                           </span>
-                          <button
-                            onClick={() => handleNavClick(item.id)}
-                            className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline"
-                          >
-                            <span>Overview</span>
-                            <ChevronRight className="w-3 h-3" />
-                          </button>
+                          {item.id !== 'facilities' && (
+                            <button
+                              onClick={() => handleNavClick(item.id)}
+                              className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline"
+                            >
+                              <span>Overview</span>
+                              <ChevronRight className="w-3 h-3" />
+                            </button>
+                          )}
                         </div>
 
                         {/* Dropdown Items List */}
@@ -507,13 +509,15 @@ export const Navbar: React.FC<Props> = ({
                     {/* Accordion Sub-Menu */}
                     {hasDropdown && isExpanded && (
                       <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
-                        <button
-                          onClick={() => handleNavClick(item.id)}
-                          className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
-                        >
-                          <span>{item.label} Overview Page</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
+                        {item.id !== 'facilities' && (
+                          <button
+                            onClick={() => handleNavClick(item.id)}
+                            className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
+                          >
+                            <span>{item.label} Overview Page</span>
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        )}
 
                         {item.dropdown?.map((sub, i) => (
                           <button

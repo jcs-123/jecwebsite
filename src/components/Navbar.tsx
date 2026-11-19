@@ -3,7 +3,7 @@ import {
   Menu, X, ChevronDown, Search, Sparkles, Phone, Compass,
   ExternalLink, GraduationCap, Building2, Users, BookOpen,
   Briefcase, Award, ShieldCheck, Microscope, HeartHandshake,
-  ChevronRight, MapPin, Layers, LogIn
+  ChevronRight, ChevronLeft, MapPin, Layers, LogIn
 } from 'lucide-react';
 import { DEPARTMENTS, COLLEGE_INFO } from '../data/collegeData';
 
@@ -156,10 +156,20 @@ export const Navbar: React.FC<Props> = ({
       id: 'placements',
       label: 'Placements',
       dropdown: [
-        { label: 'Placement Records & Stats', page: 'placements', section: 'stats', desc: '₹24 LPA highest package' },
-        { label: 'Corporate Recruiters', page: 'placements', section: 'recruiters', desc: '94+ companies visited' },
-        { label: 'Career Guidance Cell', page: 'placements', section: 'training', desc: '4-year training curriculum' },
-        { label: 'Industry Collaborations', page: 'placements', section: 'mous', desc: 'Corporate tech partnerships' },
+        { label: 'Placement Records & Stats', page: 'placement-records', desc: '₹24 LPA highest package', badge: 'Records' },
+        { label: 'Corporate Recruiters', page: 'corporate-recruiters', desc: '94+ companies visited', badge: 'Recruiters' },
+        {
+          label: 'Career Guidance Cell',
+          page: 'career-guidance',
+          desc: '4-year training curriculum',
+          badge: 'PAT Cell',
+          subDropdown: [
+            { label: 'Career Navigator', page: 'career-navigator', desc: 'Interactive career roadmap & skill finder', badge: 'Tool' },
+          ]
+        },
+        { label: 'Industry Collaborations', page: 'industry-collaborations', desc: 'Corporate tech partnerships & MoUs', badge: 'MoUs' },
+        { label: 'Career Advancement Alumni', page: 'career-advancement-alumni', desc: 'Global leadership & alumni mentoring', badge: 'Alumni' },
+        { label: 'Upcoming Drives', page: 'upcoming-drives', desc: 'Live on-campus & pool drive schedules', badge: 'Drives' },
       ]
     },
     {
@@ -334,7 +344,10 @@ export const Navbar: React.FC<Props> = ({
                     className={`px-2 xl:px-2.5 2xl:px-3 py-1.5 text-xs xl:text-[13px] 2xl:text-sm font-semibold rounded-xl transition-all flex items-center gap-1 select-none whitespace-nowrap shrink-0 ${
                       currentPage === item.id ||
                       isOpen ||
-                      item.dropdown?.some((d) => d.page === currentPage)
+                      item.dropdown?.some((d) => 
+                        d.page === currentPage || 
+                        ('subDropdown' in d && (d as any).subDropdown?.some((sd: any) => sd.page === currentPage))
+                      )
                         ? 'text-jyothi-purple-900 bg-jyothi-purple-50 font-bold border border-jyothi-purple-200/80 shadow-xs'
                         : 'text-slate-700 hover:text-jyothi-purple-900 hover:bg-slate-100/90'
                       }`}
@@ -364,43 +377,114 @@ export const Navbar: React.FC<Props> = ({
                           <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
                             {item.label} Explorer
                           </span>
-                          {item.id !== 'facilities' && (
-                            <button
-                              onClick={() => handleNavClick(item.id)}
-                              className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline"
-                            >
-                              <span>Overview</span>
-                              <ChevronRight className="w-3 h-3" />
-                            </button>
-                          )}
+                          <button
+                            onClick={() => handleNavClick(item.id)}
+                            className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline"
+                          >
+                            <span>Overview</span>
+                            <ChevronRight className="w-3 h-3" />
+                          </button>
                         </div>
 
                         {/* Dropdown Items List */}
                         <div className="space-y-1">
-                          {item.dropdown?.map((sub, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => handleNavClick(sub.page, sub.section)}
-                              className="w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/item hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950"
-                            >
-                              <div className="min-w-0">
-                                <div className="font-bold flex items-center gap-1.5 text-slate-800 group-hover/item:text-jyothi-purple-900 whitespace-nowrap">
-                                  <span>{sub.label}</span>
-                                </div>
-                                {'desc' in sub && (
-                                  <div className="text-[11px] text-slate-400 group-hover/item:text-slate-600 truncate mt-0.5">
-                                    {sub.desc}
+                          {item.dropdown?.map((sub, idx) => {
+                            const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
+                            const subItems = hasSub ? (sub as any).subDropdown : null;
+                            const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+
+                            return (
+                              <div key={idx} className="relative group/sub">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    if (isHoverOnly) {
+                                      e.preventDefault();
+                                      e.stopPropagation();
+                                      return;
+                                    }
+                                    handleNavClick(sub.page, sub.section);
+                                  }}
+                                  className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/item ${
+                                    isHoverOnly ? 'cursor-default' : 'cursor-pointer'
+                                  } ${
+                                    sub.page === currentPage || (hasSub && subItems.some((s: any) => s.page === currentPage))
+                                      ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
+                                      : 'hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950'
+                                  }`}
+                                >
+                                  <div className="min-w-0 flex-1">
+                                    <div className="font-bold flex items-center gap-1.5 text-slate-800 group-hover/item:text-jyothi-purple-900 whitespace-nowrap">
+                                      <span>{sub.label}</span>
+                                    </div>
+                                    {'desc' in sub && (
+                                      <div className="text-[11px] text-slate-400 group-hover/item:text-slate-600 truncate mt-0.5">
+                                        {sub.desc}
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="flex items-center gap-1 shrink-0 mt-0.5">
+                                    {'badge' in sub && (
+                                      <span className="px-2 py-0.5 rounded-md text-[10px] bg-jyothi-purple-100 text-jyothi-purple-900 font-mono font-bold">
+                                        {sub.badge}
+                                      </span>
+                                    )}
+                                    {hasSub && (
+                                      <ChevronLeft className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:-translate-x-0.5 transition-transform" />
+                                    )}
+                                  </div>
+                                </button>
+
+                                {/* Desktop Sub Dropdown Flyout */}
+                                {hasSub && (
+                                  <div className="hidden group-hover/sub:block absolute right-full top-0 pr-2 z-60 animate-fade-in w-72">
+                                    <div className="rounded-2xl bg-white border border-[#DFC06A]/40 shadow-2xl p-2.5 ring-1 ring-black/5">
+                                      <div className="px-2.5 py-1.5 border-b border-slate-100 flex items-center justify-between mb-1.5">
+                                        <span className="text-[10.5px] font-bold text-jyothi-purple-950 uppercase tracking-wider flex items-center gap-1.5">
+                                          <Compass className="w-3.5 h-3.5 text-[#C79628]" />
+                                          <span>Career Guidance Sub-Menu</span>
+                                        </span>
+                                      </div>
+
+                                      <div className="space-y-1">
+                                        {subItems.map((nested: any, nIdx: number) => (
+                                          <button
+                                            key={nIdx}
+                                            onClick={(e) => {
+                                              e.stopPropagation();
+                                              handleNavClick(nested.page, nested.section);
+                                            }}
+                                            className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/nested hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950 cursor-pointer ${
+                                              nested.page === currentPage
+                                                ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
+                                                : ''
+                                            }`}
+                                          >
+                                            <div className="min-w-0">
+                                              <div className="font-bold flex items-center gap-1 text-slate-800 group-hover/nested:text-jyothi-purple-900 text-xs">
+                                                <span>{nested.label}</span>
+                                              </div>
+                                              {nested.desc && (
+                                                <div className="text-[10.5px] text-slate-400 group-hover/nested:text-slate-600 truncate mt-0.5">
+                                                  {nested.desc}
+                                                </div>
+                                              )}
+                                            </div>
+                                            {nested.badge && (
+                                              <span className="px-1.5 py-0.5 rounded text-[9.5px] bg-amber-100 text-amber-900 font-mono font-bold shrink-0 mt-0.5">
+                                                {nested.badge}
+                                              </span>
+                                            )}
+                                          </button>
+                                        ))}
+                                      </div>
+                                    </div>
                                   </div>
                                 )}
                               </div>
-
-                              {'badge' in sub && (
-                                <span className="px-2 py-0.5 rounded-md text-[10px] bg-jyothi-purple-100 text-jyothi-purple-900 font-mono font-bold shrink-0 mt-0.5">
-                                  {sub.badge}
-                                </span>
-                              )}
-                            </button>
-                          ))}
+                            );
+                          })}
                         </div>
 
                       </div>
@@ -509,30 +593,67 @@ export const Navbar: React.FC<Props> = ({
                     {/* Accordion Sub-Menu */}
                     {hasDropdown && isExpanded && (
                       <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
-                        {item.id !== 'facilities' && (
-                          <button
-                            onClick={() => handleNavClick(item.id)}
-                            className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
-                          >
-                            <span>{item.label} Overview Page</span>
-                            <ChevronRight className="w-3.5 h-3.5" />
-                          </button>
-                        )}
+                        <button
+                          onClick={() => handleNavClick(item.id)}
+                          className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
+                        >
+                          <span>{item.label} Overview Page</span>
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
 
-                        {item.dropdown?.map((sub, i) => (
-                          <button
-                            key={i}
-                            onClick={() => handleNavClick(sub.page, sub.section)}
-                            className="w-full text-left py-2 px-3 text-xs text-slate-700 hover:text-[#250836] flex items-center justify-between rounded-lg hover:bg-white transition-colors"
-                          >
-                            <span className="font-medium truncate">{sub.label}</span>
-                            {'badge' in sub && (
-                              <span className="text-[10px] px-2 py-0.5 bg-[#EFE8F6] text-[#250836] rounded-md font-mono font-bold">
-                                {sub.badge}
-                              </span>
-                            )}
-                          </button>
-                        ))}
+                        {item.dropdown?.map((sub, i) => {
+                          const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
+                          const subItems = hasSub ? (sub as any).subDropdown : null;
+                          const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+
+                          return (
+                            <div key={i} className="space-y-1">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  if (isHoverOnly) {
+                                    e.preventDefault();
+                                    return;
+                                  }
+                                  handleNavClick(sub.page, sub.section);
+                                }}
+                                className={`w-full text-left py-2 px-3 text-xs text-slate-700 hover:text-[#250836] flex items-center justify-between rounded-lg hover:bg-white transition-colors ${
+                                  isHoverOnly ? 'cursor-default' : 'cursor-pointer'
+                                }`}
+                              >
+                                <span className="font-medium truncate">{sub.label}</span>
+                                {'badge' in sub && (
+                                  <span className="text-[10px] px-2 py-0.5 bg-[#EFE8F6] text-[#250836] rounded-md font-mono font-bold">
+                                    {sub.badge}
+                                  </span>
+                                )}
+                              </button>
+
+                              {hasSub && (
+                                <div className="pl-4 pr-1 py-1.5 space-y-1 border-l-2 border-[#DFC06A]/50 ml-3 bg-white/70 rounded-r-xl">
+                                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#250836] px-2 pt-0.5 flex items-center gap-1">
+                                    <Compass className="w-3 h-3 text-[#C79628]" />
+                                    <span>Career Navigator Sub-Menu</span>
+                                  </div>
+                                  {subItems.map((nested: any, nI: number) => (
+                                    <button
+                                      key={nI}
+                                      onClick={() => handleNavClick(nested.page, nested.section)}
+                                      className="w-full text-left py-1.5 px-2 text-xs text-slate-600 hover:text-[#250836] flex items-center justify-between rounded hover:bg-white transition-colors"
+                                    >
+                                      <span className="font-medium text-[11.5px] truncate">{nested.label}</span>
+                                      {nested.badge && (
+                                        <span className="text-[9px] px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded font-mono font-bold">
+                                          {nested.badge}
+                                        </span>
+                                      )}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
 

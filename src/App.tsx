@@ -21,7 +21,13 @@ import { MtechPhdAdmissionsPage } from './pages/MtechPhdAdmissionsPage';
 import { EligibilitySeatMatrixPage } from './pages/EligibilitySeatMatrixPage';
 import { MeritScholarshipsPage } from './pages/MeritScholarshipsPage';
 import { AdmissionEnquiryPage } from './pages/AdmissionEnquiryPage';
-import { PlacementsPage } from './pages/PlacementsPage';
+import { PlacementRecordsPage } from './pages/PlacementRecordsPage';
+import { CorporateRecruitersPage } from './pages/CorporateRecruitersPage';
+import { CareerGuidancePage } from './pages/CareerGuidancePage';
+import { CareerNavigatorPage } from './pages/CareerNavigatorPage';
+import { IndustryCollaborationsPage } from './pages/IndustryCollaborationsPage';
+import { CareerAdvancementAlumniPage } from './pages/CareerAdvancementAlumniPage';
+import { UpcomingDrivesPage } from './pages/UpcomingDrivesPage';
 import { FacilitiesPage } from './pages/FacilitiesPage';
 import { CentralLibraryPage } from './pages/CentralLibraryPage';
 import { CampusHostelsPage } from './pages/CampusHostelsPage';
@@ -252,8 +258,51 @@ export function App() {
           />
         )}
 
-        {currentPage === 'placements' && (
-          <PlacementsPage
+        {(currentPage === 'placements' || currentPage === 'placement-records') && (
+          <PlacementRecordsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'corporate-recruiters' && (
+          <CorporateRecruitersPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'career-guidance' && (
+          <CareerGuidancePage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'career-navigator' && (
+          <CareerNavigatorPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'industry-collaborations' && (
+          <IndustryCollaborationsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'career-advancement-alumni' && (
+          <CareerAdvancementAlumniPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'upcoming-drives' && (
+          <UpcomingDrivesPage
+            onNavigate={navigateTo}
             onOpenApply={() => setIsApplyOpen(true)}
           />
         )}

@@ -118,7 +118,19 @@ export const Navbar: React.FC<Props> = ({
         desc: `${d.intake} Seats • ${d.degree}`
       }))
     },
-    { id: 'faculty', label: 'Faculty' },
+    {
+      id: 'examination',
+      label: 'Examination',
+      dropdown: [
+        { label: 'Office of CoE', page: 'office-of-coe', desc: 'Controller of Examinations & Evaluation Wing', badge: 'CoE' },
+        { label: 'Notification', page: 'examination-notifications', desc: 'Exam fee, registration dates & circulars', badge: 'Alerts' },
+        { label: 'Timetable', page: 'examination-timetable', desc: 'End semester & internal series schedules', badge: 'Schedule' },
+        { label: 'General guideline', page: 'examination-guidelines', desc: 'Hall admission, attendance & grading rules', badge: 'Rules' },
+        { label: 'Malpractices and punishment', page: 'examination-malpractices', desc: 'Integrity code & statutory penalties', badge: 'Policy' },
+        { label: 'Results', page: 'examination-results', desc: 'Provisional grade cards & revaluation', badge: 'Portal' },
+        { label: 'Grievance redressal committee', page: 'examination-grievances', desc: 'Dispute submission & redressal tribunal', badge: 'EGRC' },
+      ]
+    },
     {
       id: 'student-life',
       label: 'Student Life',

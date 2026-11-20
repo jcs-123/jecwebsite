@@ -37,6 +37,13 @@ import { AutonomousPage } from './pages/AutonomousPage';
 import { AlumniPage } from './pages/AlumniPage';
 import { LoginPage } from './pages/LoginPage';
 import { IQACPage } from './pages/IQACPage';
+import { OfficeOfCoePage } from './pages/OfficeOfCoePage';
+import { ExaminationNotificationsPage } from './pages/ExaminationNotificationsPage';
+import { ExaminationTimetablePage } from './pages/ExaminationTimetablePage';
+import { ExaminationGuidelinesPage } from './pages/ExaminationGuidelinesPage';
+import { ExaminationMalpracticesPage } from './pages/ExaminationMalpracticesPage';
+import { ExaminationResultsPage } from './pages/ExaminationResultsPage';
+import { ExaminationGrievancePage } from './pages/ExaminationGrievancePage';
 import { ApplyModal } from './components/ApplyModal';
 import { VirtualTourModal } from './components/VirtualTourModal';
 import { SearchModal } from './components/SearchModal';
@@ -137,6 +144,55 @@ export function App() {
 
         {currentPage === 'faculty' && (
           <FacultyPage />
+        )}
+
+        {(currentPage === 'examination' || currentPage === 'office-of-coe') && (
+          <OfficeOfCoePage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-notifications' && (
+          <ExaminationNotificationsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-timetable' && (
+          <ExaminationTimetablePage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-guidelines' && (
+          <ExaminationGuidelinesPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-malpractices' && (
+          <ExaminationMalpracticesPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-results' && (
+          <ExaminationResultsPage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'examination-grievances' && (
+          <ExaminationGrievancePage
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
         )}
 
         {currentPage === 'student-life' && (

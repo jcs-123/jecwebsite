@@ -344,7 +344,8 @@ interface Props {
 
 export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply, onOpenTour }) => {
   const [selectedEra, setSelectedEra] = useState<'all' | 'foundation' | 'expansion' | 'innovation' | 'autonomy'>('all');
-  const [expandedYear, setExpandedYear] = useState<string | null>("2023");
+  const [expandedYear, setExpandedYear] = useState<string | null>(null);
+  const [showAllMilestones, setShowAllMilestones] = useState(false);
   const [activePillarTab, setActivePillarTab] = useState<'vision' | 'mission' | 'values' | 'autonomy'>('autonomy');
   const [showAllLeadership, setShowAllLeadership] = useState(false);
 
@@ -377,6 +378,10 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
   const filteredMilestones = selectedEra === 'all' 
     ? MILESTONES 
     : MILESTONES.filter(m => m.era === selectedEra);
+
+  const visibleMilestones = (showAllMilestones || filteredMilestones.length <= 5)
+    ? filteredMilestones
+    : filteredMilestones.slice(0, 5);
 
   return (
     <div className="space-y-16 sm:space-y-20 md:space-y-28 overflow-x-clip bg-white text-slate-800 selection:bg-jyothi-purple-900 selection:text-jyothi-gold-300">
@@ -631,7 +636,10 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           ].map(tab => (
             <button
               key={tab.id}
-              onClick={() => setSelectedEra(tab.id as any)}
+              onClick={() => {
+                setSelectedEra(tab.id as any);
+                setShowAllMilestones(false);
+              }}
               className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-[13px] font-semibold whitespace-nowrap shrink-0 transition-all duration-200 cursor-pointer ${
                 selectedEra === tab.id
                   ? 'bg-[#250836] text-[#FDE68A] shadow-md'
@@ -653,7 +661,7 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
           <div className="lg:hidden absolute left-6 top-4 bottom-4 w-1 bg-gradient-to-b from-[#DFC06A] via-[#C9902C] to-[#250836] rounded-full pointer-events-none opacity-40" />
 
           <div className="space-y-8 sm:space-y-12">
-            {filteredMilestones.map((m, idx) => {
+            {visibleMilestones.map((m, idx) => {
               const isEven = idx % 2 === 0;
               const isExpanded = expandedYear === m.year;
               const Icon = m.icon;
@@ -761,6 +769,45 @@ export const AboutPage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply
               );
             })}
           </div>
+
+          {/* View All Milestones Action Button */}
+          {filteredMilestones.length > 5 && (
+            <div className="relative pt-10 sm:pt-12 flex flex-col items-center justify-center text-center z-20">
+              <button
+                onClick={() => {
+                  const nextState = !showAllMilestones;
+                  setShowAllMilestones(nextState);
+                  if (!nextState) {
+                    const el = document.getElementById('roadmap');
+                    if (el) {
+                      const yOffset = -90;
+                      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                      window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                  }
+                }}
+                className="group relative inline-flex items-center gap-3 px-8 sm:px-10 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-[#250836] via-[#3B0D54] to-[#250836] text-[#FDE68A] hover:text-white font-bold text-sm sm:text-base shadow-xl hover:shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 border border-[#DFC06A]/50 cursor-pointer"
+              >
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#DFC06A] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#DFC06A]"></span>
+                </span>
+                <span>
+                  {showAllMilestones 
+                    ? "Show Less (First 5 Milestones)" 
+                    : `View All Milestones (${filteredMilestones.length - 5} More Turning Points)`
+                  }
+                </span>
+                <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-[#DFC06A] transition-transform duration-300 ${showAllMilestones ? 'rotate-180' : 'group-hover:translate-y-0.5'}`} />
+              </button>
+              <p className="mt-3 text-xs sm:text-[13px] text-slate-500 font-medium">
+                {showAllMilestones 
+                  ? `Showing all ${filteredMilestones.length} historic milestones from 2002 to 2027+ Silver Jubilee`
+                  : `Showing 5 of ${filteredMilestones.length} foundational milestones. Click above to view MIT FabLab, AI cluster, UGC Autonomy & beyond.`
+                }
+              </p>
+            </div>
+          )}
 
         </div>
 

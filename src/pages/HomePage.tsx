@@ -7,7 +7,7 @@ import {
   Search, Cpu, Zap, Car, BookOpen, Check, Phone, Users,
   Landmark, Flame, Play, Star, ChevronDown, TrendingUp,
   ArrowUpRight, Download, Laptop, Radio, Wrench, Shield,
-  HeartHandshake, Coffee, Bus, CheckCircle
+  HeartHandshake, Coffee, Bus, CheckCircle, Maximize2, Pause, Eye
 } from 'lucide-react';
 import {
   COLLEGE_INFO, ANNOUNCEMENTS, DEPARTMENTS,
@@ -16,6 +16,69 @@ import {
 import { VerificationBadge } from '../components/VerificationBadge';
 import { AnimatedCounter } from '../components/AnimatedCounter';
 import { RevealBlock, usePrefersReducedMotion } from '../components/RevealBlock';
+
+const PANORAMA_SPOTS = [
+  {
+    id: 'admin',
+    title: 'Main Administrative Portico & Decennial Pavilion',
+    shortTitle: 'Admin Portico',
+    tag: 'Autonomous Headquarters',
+    desc: 'Neoclassical architectural entrance framed by manicured royal palm courtyards and green esplanade.',
+    image: '/assets/jyothi_campus_hero.jpg',
+    gps: '10.7428° N, 76.2872° E',
+    metric: '30+ Acres Greenery',
+  },
+  {
+    id: 'library',
+    title: 'Central Technical Library & Digital Hub',
+    shortTitle: 'Central Library',
+    tag: 'Knowledge Sanctuary',
+    desc: 'Over 42,000 volumes, automated RFID return kiosks, and unmetered IEEE Xplore digital access.',
+    image: '/assets/library_hero_students.jpg',
+    gps: '10.7422° N, 76.2865° E',
+    metric: '42,000+ Volumes',
+  },
+  {
+    id: 'sports',
+    title: 'Sports Complex & Athletic Stadium',
+    shortTitle: 'Sports Arena',
+    tag: 'Olympic-Standard Athletics',
+    desc: 'Full regulation football arena, floodlit hardcourt facilities, and modern strength pavilion.',
+    image: '/assets/sports_turf.jpg',
+    gps: '10.7412° N, 76.2895° E',
+    metric: 'FIFA-Standard Turf',
+  },
+  {
+    id: 'fablab',
+    title: 'FabLab Kerala & Advanced Robotics Cell',
+    shortTitle: 'FabLab & Robotics',
+    tag: 'MIT-Affiliated Prototyping',
+    desc: '6-Axis industrial robotics, SLA/FDM additive printing, and high-frequency IoT electronics.',
+    image: '/assets/fablab_kerala_hub.jpg',
+    gps: '10.7434° N, 76.2881° E',
+    metric: '6-Axis KUKA Arms',
+  },
+  {
+    id: 'auditorium',
+    title: 'Fr. Thekkekara Central Auditorium',
+    shortTitle: 'Central Auditorium',
+    tag: '1,500-Seat Acoustic Arena',
+    desc: 'Acoustically calibrated auditorium engineered for international symposiums and convocations.',
+    image: '/assets/auditorium_hall.jpg',
+    gps: '10.7439° N, 76.2860° E',
+    metric: '1,500 Capacity',
+  },
+  {
+    id: 'computing',
+    title: 'Decennial Supercomputing & AI Cluster',
+    shortTitle: 'AI & Supercomputing',
+    tag: 'NVIDIA Compute Labs',
+    desc: 'Enterprise GPU nodes with 10 Gbps redundant fiber backbone powering deep learning research.',
+    image: '/assets/computer_center_hero.jpg',
+    gps: '10.7420° N, 76.2878° E',
+    metric: '10 Gbps Backbone',
+  },
+];
 
 interface Props {
   subSection?: string;
@@ -250,6 +313,38 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroReady, setHeroReady] = useState(false);
   const reducedMotion = usePrefersReducedMotion();
+
+  // 360 Interactive Panorama Showcase State
+  const [panoramaSpotIdx, setPanoramaSpotIdx] = useState<number>(0);
+  const [panoramaYaw, setPanoramaYaw] = useState<number>(0);
+  const [isPanoramaAutoPan, setIsPanoramaAutoPan] = useState<boolean>(true);
+  const [isPanoramaDragging, setIsPanoramaDragging] = useState<boolean>(false);
+  const panoramaDragStartRef = useRef<{ startX: number; startYaw: number }>({ startX: 0, startYaw: 0 });
+
+  useEffect(() => {
+    if (!isPanoramaAutoPan || isPanoramaDragging) return;
+    const interval = setInterval(() => {
+      setPanoramaYaw(prev => (prev + 0.35) % 360);
+    }, 30);
+    return () => clearInterval(interval);
+  }, [isPanoramaAutoPan, isPanoramaDragging]);
+
+  const handlePanoramaPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+    setIsPanoramaDragging(true);
+    panoramaDragStartRef.current = { startX: e.clientX, startYaw: panoramaYaw };
+  };
+
+  const handlePanoramaPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isPanoramaDragging) return;
+    const deltaX = e.clientX - panoramaDragStartRef.current.startX;
+    const newYaw = (panoramaDragStartRef.current.startYaw - deltaX * 0.35 + 720) % 360;
+    setPanoramaYaw(newYaw);
+  };
+
+  const handlePanoramaPointerUp = () => {
+    setIsPanoramaDragging(false);
+  };
 
   // Scroll to target home subsection when navigated via #home/<section>
   useEffect(() => {
@@ -1897,7 +1992,198 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         </section>
 
         {/* ============================================================== */}
-        {/* 11. IMMERSIVE ADMISSIONS & CAMPUS VISIT CALL TO ACTION */}
+        {/* 11. 360° INTERACTIVE CAMPUS PANORAMA SHOWCASE (WIDE & RESPONSIVE) */}
+        {/* ============================================================== */}
+        <section id="campus-360-tour" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+          <RevealBlock direction="up">
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-2 border-b border-[#DFC06A]/30">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="w-8 h-[1.5px] bg-[#BD8E36]" />
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] text-[#BD8E36]">
+                    VIRTUAL CAMPUS EXPERIENCE • 30+ ACRE HILLTOP SANCTUARY
+                  </span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-['Playfair_Display',serif] text-[#28052B]">
+                  Explore Jyothi Hills in <span className="italic font-normal text-[#BD8E36]">360° panoramic vision.</span>
+                </h2>
+                <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
+                  Take an interactive 360° walk through our autonomous academic blocks, MIT-collaborated FabLab, central library, and Olympic-standard sports arena.
+                </p>
+              </div>
+
+              {/* Action Button Top */}
+              <div className="flex items-center gap-3 shrink-0">
+                <button
+                  onClick={onOpenTour}
+                  className="px-5 sm:px-6 py-2.5 rounded-full bg-[#28052B] hover:bg-[#3B0740] text-white border border-[#DFC06A]/70 font-bold text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2 cursor-pointer group"
+                >
+                  <Eye className="w-4 h-4 text-[#DFC06A]" />
+                  <span>Launch VR &amp; Satellite Map</span>
+                  <ArrowRight className="w-4 h-4 text-[#DFC06A] group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </div>
+          </RevealBlock>
+
+          {/* Interactive Wide 360° Viewport */}
+          <RevealBlock direction="up" delay={80}>
+            <div className="relative w-full rounded-3xl overflow-hidden border-2 border-[#DFC06A]/60 shadow-2xl bg-[#12031E] group">
+              
+              {/* Interactive Panorama Viewport with Drag */}
+              <div
+                onPointerDown={handlePanoramaPointerDown}
+                onPointerMove={handlePanoramaPointerMove}
+                onPointerUp={handlePanoramaPointerUp}
+                onPointerCancel={handlePanoramaPointerUp}
+                className="relative w-full aspect-[16/10] sm:aspect-[16/7] lg:aspect-[21/8] overflow-hidden cursor-grab active:cursor-grabbing select-none touch-none"
+              >
+                {/* 360 Panoramic Layer */}
+                <div
+                  className="absolute inset-0 w-full h-full pointer-events-none transition-transform ease-out will-change-transform"
+                  style={{
+                    transform: `scale(1.18) translate(${((panoramaYaw % 360) / 360) * -16}%, 0%)`,
+                    transformOrigin: 'center center'
+                  }}
+                >
+                  <img
+                    src={PANORAMA_SPOTS[panoramaSpotIdx].image}
+                    alt={PANORAMA_SPOTS[panoramaSpotIdx].title}
+                    className="w-[140%] h-[120%] -left-[20%] -top-[10%] relative object-cover object-center max-w-none brightness-[0.98] contrast-[1.04]"
+                    draggable={false}
+                  />
+                </div>
+
+                {/* Ambient Cinematic Vignette Overlay */}
+                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/80 via-transparent to-black/60" />
+
+                {/* Top-Left Landmark HUD Badge */}
+                <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-20 pointer-events-auto">
+                  <div className="p-2.5 sm:p-3.5 rounded-2xl bg-[#13031F]/90 backdrop-blur-md border border-[#DFC06A]/50 shadow-xl max-w-[280px] sm:max-w-md text-white space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#DFC06A] text-[#190527]">
+                        360° Live Panorama
+                      </span>
+                      <span className="text-[10px] sm:text-[11px] font-mono text-[#DFC06A] font-semibold">
+                        {PANORAMA_SPOTS[panoramaSpotIdx].gps}
+                      </span>
+                    </div>
+                    <h3 className="text-xs sm:text-base font-bold font-['Playfair_Display',serif] text-white leading-tight">
+                      {PANORAMA_SPOTS[panoramaSpotIdx].title}
+                    </h3>
+                    <p className="text-[11px] text-slate-300 hidden sm:block leading-snug">
+                      {PANORAMA_SPOTS[panoramaSpotIdx].desc}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Top-Right HUD Controls: Pan / Auto-Rotate / Fullscreen */}
+                <div className="absolute top-3 right-3 sm:top-5 sm:right-5 z-20 flex items-center gap-2 pointer-events-auto">
+                  {/* Bearing Needle */}
+                  <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#13031F]/90 backdrop-blur-md border border-white/20 text-[#DFC06A] text-xs font-mono font-bold shadow-lg">
+                    <Compass className="w-3.5 h-3.5" style={{ transform: `rotate(${-panoramaYaw}deg)` }} />
+                    <span>{Math.round(panoramaYaw)}° N</span>
+                  </div>
+
+                  {/* Auto-Pan Toggle */}
+                  <button
+                    onClick={() => setIsPanoramaAutoPan(!isPanoramaAutoPan)}
+                    className="p-2 sm:p-2.5 rounded-xl bg-[#13031F]/90 backdrop-blur-md border border-white/20 text-white hover:border-[#DFC06A] transition-all cursor-pointer shadow-lg"
+                    title={isPanoramaAutoPan ? "Pause Auto-Pan" : "Resume Auto-Pan"}
+                  >
+                    {isPanoramaAutoPan ? <Pause className="w-4 h-4 text-[#DFC06A]" /> : <Play className="w-4 h-4 text-[#DFC06A]" />}
+                  </button>
+
+                  {/* Launch Fullscreen Tour */}
+                  <button
+                    onClick={onOpenTour}
+                    className="p-2 sm:p-2.5 rounded-xl bg-[#DFC06A] text-[#1A052A] hover:bg-[#FDE68A] font-bold transition-all cursor-pointer shadow-lg flex items-center gap-1.5"
+                    title="Open Full 360° Virtual Campus Tour"
+                  >
+                    <Maximize2 className="w-4 h-4" />
+                    <span className="text-xs font-bold hidden sm:inline">Full VR Tour</span>
+                  </button>
+                </div>
+
+                {/* Center Drag Hint (fades on drag) */}
+                {!isPanoramaDragging && (
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-80 group-hover:opacity-100 transition-opacity">
+                    <div className="px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-[#DFC06A]/60 text-[#FDE68A] text-xs font-bold flex items-center gap-2 shadow-2xl">
+                      <Compass className="w-4 h-4 text-[#DFC06A] animate-spin-slow" />
+                      <span>Drag left or right to explore 360°</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* Left & Right Pan Arrows */}
+                <button
+                  onClick={() => setPanoramaYaw(prev => (prev - 25 + 360) % 360)}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#13031F]/85 hover:bg-[#28052B] border border-white/20 hover:border-[#DFC06A] text-white flex items-center justify-center transition-all cursor-pointer shadow-xl"
+                  title="Pan Left"
+                >
+                  <ChevronLeft className="w-5 h-5 text-[#DFC06A]" />
+                </button>
+                <button
+                  onClick={() => setPanoramaYaw(prev => (prev + 25) % 360)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#13031F]/85 hover:bg-[#28052B] border border-white/20 hover:border-[#DFC06A] text-white flex items-center justify-center transition-all cursor-pointer shadow-xl"
+                  title="Pan Right"
+                >
+                  <ChevronRight className="w-5 h-5 text-[#DFC06A]" />
+                </button>
+
+                {/* Bottom Verified Spec Pill */}
+                <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 z-20 pointer-events-none">
+                  <div className="px-3 py-1 rounded-full bg-black/75 backdrop-blur-md border border-white/20 text-[11px] text-[#FDE68A] font-semibold flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#DFC06A]" />
+                    <span>{PANORAMA_SPOTS[panoramaSpotIdx].metric}</span>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Landmark Selection Bar */}
+              <div className="p-3 sm:p-4 bg-[#180424] border-t border-[#DFC06A]/30">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+                  {PANORAMA_SPOTS.map((spot, idx) => {
+                    const isSelected = idx === panoramaSpotIdx;
+                    return (
+                      <button
+                        key={spot.id}
+                        onClick={() => {
+                          setPanoramaSpotIdx(idx);
+                          setPanoramaYaw(0);
+                        }}
+                        className={`p-2 rounded-2xl transition-all cursor-pointer text-left flex items-center gap-2.5 border ${
+                          isSelected
+                            ? 'bg-[#28052B] border-[#DFC06A] shadow-lg ring-2 ring-[#DFC06A]/50'
+                            : 'bg-white/5 border-white/10 hover:bg-white/10 text-slate-300 hover:text-white'
+                        }`}
+                      >
+                        <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 border border-white/15">
+                          <img src={spot.image} alt={spot.title} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className={`text-[10px] font-bold uppercase truncate ${
+                            isSelected ? 'text-[#DFC06A]' : 'text-slate-400'
+                          }`}>
+                            {spot.tag}
+                          </div>
+                          <div className="text-xs font-bold text-white truncate leading-tight">
+                            {spot.shortTitle}
+                          </div>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+            </div>
+          </RevealBlock>
+        </section>
+
+        {/* ============================================================== */}
+        {/* 12. IMMERSIVE ADMISSIONS & CAMPUS VISIT CALL TO ACTION */}
         {/* ============================================================== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
           <RevealBlock direction="up">

@@ -731,7 +731,7 @@ export const FACILITIES: Facility[] = [
     description: "Established in partnership with Kerala Startup Mission (KSUM) and MIT's Center for Bits and Atoms. Equipped with laser cutters, 3D printers, CNC vinyl cutters, and precision electronics milling equipment for prototyping innovative student ideas.",
     specs: ["Ultimaker 3D Printers", "Epilog Laser Cutter", "Roland Modela CNC Mill", "Electronics Assembly Workstations"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1581092335397-9583fe92d232?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/fablab_kerala_hub.jpg"
   },
   {
     id: "fac-library",
@@ -740,7 +740,7 @@ export const FACILITIES: Facility[] = [
     description: "Spacious 15,000+ sq.ft multi-storey library facility holding over 42,000+ technical volumes, 120+ national and international print journals, DELNET subscription, and IEEE/ScienceDirect digital access suites with high-speed browsing nodes.",
     specs: ["42,000+ Volumes", "IEEE Xplore Digital Access", "Automated Koha LMS RFID System", "Quiet Research Reading Halls"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/library_hero_students.jpg"
   },
   {
     id: "fac-computing",
@@ -749,7 +749,7 @@ export const FACILITIES: Facility[] = [
     description: "Fully air-conditioned computing center with over 900+ high-end networked workstations connected to a 1 Gbps dedicated NKN optical fibre backbone, redundant server racks, and licensed engineering software environments.",
     specs: ["1 Gbps Dedicated Leased Line", "900+ Desktop Terminals", "Redundant UPS Power Backup", "Dedicated Cloud Virtualization Host"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/computer_center_hero.jpg"
   },
   {
     id: "fac-hostel",
@@ -758,7 +758,7 @@ export const FACILITIES: Facility[] = [
     description: "Separate on-campus residential facilities for men and women managed by resident wardens and spiritual directors. Clean hygienic mess halls serving balanced vegetarian and non-vegetarian food, recreation rooms, and high-speed Wi-Fi.",
     specs: ["Twin & Triple Sharing Rooms", "24/7 Security & CCTV Coverage", "Modern Gym & Indoor Games", "Solar Hot Water System"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1555854877-bab0e564b8d5?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/hostel_santhome.jpg"
   },
   {
     id: "fac-transport",
@@ -767,7 +767,7 @@ export const FACILITIES: Facility[] = [
     description: "Extensive transport fleet of over 25+ GPS-tracked college buses connecting students and staff safely across Thrissur, Wadakkanchery, Kunnamkulam, Shornur, Ottapalam, Palakkad, and Pattambi routes with punctual schedules.",
     specs: ["25+ Dedicated Buses", "Real-Time GPS Vehicle Tracking", "Speed Governors & First Aid Equipped", "Covers Thrissur, Palakkad & Malappuram Borders"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/bus_fleet_hero.jpg"
   },
   {
     id: "fac-sports",
@@ -776,7 +776,7 @@ export const FACILITIES: Facility[] = [
     description: "Expansive campus sports grounds including a standard 400m track, football stadium, cricket pitch, basketball courts with floodlights, volleyball courts, badminton indoor arena, and physical fitness gym.",
     specs: ["Standard Football & Cricket Turf", "Floodlit Basketball Court", "Indoor Badminton Arena", "Annual Archdiocesan Inter-Collegiate Tournaments"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/sports_turf.jpg"
   },
   {
     id: "fac-auditorium",
@@ -785,7 +785,7 @@ export const FACILITIES: Facility[] = [
     description: "Air-cooled central auditorium with 1,500+ seating capacity featuring acoustic treatment, digital surround sound system, high-lumen projection system, and green rooms for international conferences and college festivals.",
     specs: ["1,500+ Seating Capacity", "Modern Acoustic Paneling", "High Definition AV Systems", "Open-air Amphitheatre for Cultural Nights"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/auditorium_hall.jpg"
   },
   {
     id: "fac-cafeteria",
@@ -794,7 +794,7 @@ export const FACILITIES: Facility[] = [
     description: "Spacious, airy cafeteria serving hygienic South Indian, North Indian, and continental dishes, snacks, fresh fruit juices, and bakery refreshments at subsidized student-friendly prices.",
     specs: ["Capacity: 400+ at a time", "Hygienic Steam-Cooking Kitchen", "FSSAI Certified Food Quality", "Dedicated Faculty & Visitor Dining Area"],
     status: "Confirmed by College",
-    image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=800&auto=format&fit=crop"
+    image: "/assets/canteen_dining.jpg"
   }
 ];
 

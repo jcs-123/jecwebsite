@@ -84,7 +84,7 @@ export const FabLabPage: React.FC<{
             <RevealBlock delay={60} className="lg:col-span-6">
               <div className="rounded-3xl bg-white border border-[#DFC06A]/55 p-1.5 shadow-xl overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1743056586194-837401d75e0a?q=80&w=1100&auto=format&fit=crop"
+                  src="/assets/fablab_kerala_hub.jpg"
                   alt="MIT-Model FabLab 3D Printing & Hardware Prototyping"
                   className="w-full h-64 sm:h-80 lg:h-[320px] object-cover rounded-[20px]"
                 />

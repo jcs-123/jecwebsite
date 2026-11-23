@@ -121,9 +121,9 @@ export const MitFabLabPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
                   />
                   <div className="relative rounded-2xl lg:rounded-none lg:rounded-l-2xl overflow-hidden aspect-[16/10] shadow-2xl border border-[#DFC06A]/65 lg:border-0 bg-[#190327] lg:[clip-path:polygon(0_0,100%_0,89%_100%,0_100%)]">
                     <img
-                      src="/assets/club_iedc.jpg"
+                      src="/assets/fablab_kerala_hub.jpg"
                       alt="MIT FabLab Kerala rapid prototyping and 3D printing laboratory"
-                      className="w-full h-full object-cover object-top"
+                      className="w-full h-full object-cover object-center"
                     />
                   </div>
                   {/* Bottom Gold Accent Bar */}

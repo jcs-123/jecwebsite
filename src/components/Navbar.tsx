@@ -7,6 +7,50 @@ import {
 } from 'lucide-react';
 import { DEPARTMENTS, COLLEGE_INFO } from '../data/collegeData';
 
+const FACILITIES_GRID_PAIRS = [
+  {
+    left: { label: 'Central Digital Library', page: 'central-library', desc: '42,000+ volumes and e-journals' },
+    right: { label: 'Language Lab', page: 'language-lab', desc: '60-console digital phonetics studio' },
+  },
+  {
+    left: { label: 'Campus Hostels & Dining', page: 'campus-hostels', desc: 'Santhome & Marian residences' },
+    right: { label: 'TATA IIIC & Seminar Halls', page: 'tata-iiic-seminar', desc: 'Industry innovation & AC halls' },
+  },
+  {
+    left: { label: 'College Bus Fleet Network', page: 'bus-fleet', desc: '25+ routes across 3 districts' },
+    right: { label: 'Board Room', page: 'board-room', desc: 'Executive 4K governance suite' },
+  },
+  {
+    left: { label: 'Auditorium & Sports Ground', page: 'auditorium-sports', desc: '1,200 capacity hall & athletic turf' },
+    right: { label: 'Chapel', page: 'chapel', desc: 'Serene hilltop spiritual sanctuary' },
+  },
+  {
+    left: { label: 'TBI', page: 'tbi', desc: 'Startup incubator & seed support' },
+    right: { label: 'Campus Canteen', page: 'canteen', desc: 'Hygienic food court & café' },
+  },
+  {
+    left: { label: 'Fab Lab', page: 'fab-lab', desc: 'MIT-model laser, 3D print & CNC' },
+    right: { label: 'Computer Center', page: 'computer-center', desc: '500+ terminals & 1 Gbps fiber' },
+  },
+];
+
+const ABOUT_LEFT_ITEMS = [
+  { label: 'Overview & History', page: 'about', section: 'overview', desc: 'Estd. 2002 by Trichur Archdiocese' },
+  { label: 'Vision, Mission & Values', page: 'about', section: 'vision', desc: 'Creating technology leaders', badge: 'Core' },
+  { label: '25-Year Roadmap', page: 'about', section: 'roadmap', desc: '2002 to 2027+ Silver Jubilee milestones', badge: 'Milestones' },
+  { label: 'Autonomous Governance & Syllabi', page: 'autonomous', desc: 'Governing Body, BoS, Regulations, CBCS & ...', badge: 'UGC' },
+  { label: 'Administration', page: 'autonomous', desc: 'Academic & administrative governance' },
+  { label: 'Management', page: 'about', section: 'leadership', desc: 'Catholic Archdiocese of Trichur & JCS' },
+];
+
+const ABOUT_RIGHT_ITEMS = [
+  { label: 'Leadership & Trust', page: 'about', section: 'leadership', desc: 'Governing board and trustees' },
+  { label: '30-Acre Campus & Labs', page: 'about', section: 'campus', desc: 'Eco-sanctuary & MIT FabLab' },
+  { label: 'Accreditation NAAC and NBA', page: 'iqac', desc: 'NAAC A Grade, NBA & NIRF', badge: 'IQAC' },
+  { label: 'Policy Documents', page: 'iqac', section: 'policies', desc: 'Institutional charters & quality policies' },
+  { label: 'JEC News', page: 'home', section: 'jec-news', desc: 'Latest campus news, events & circulars' },
+];
+
 interface Props {
   currentPage: string;
   onNavigate: (page: string, subId?: string) => void;
@@ -31,6 +75,7 @@ export const Navbar: React.FC<Props> = ({
   const [headerHeight, setHeaderHeight] = useState<number>(0);
   const navRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const facilitiesScrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateHeight = () => {
@@ -92,6 +137,7 @@ export const Navbar: React.FC<Props> = ({
     {
       id: 'about',
       label: 'About',
+      isWide: true,
       dropdown: [
         { label: 'Overview & History', page: 'about', section: 'overview', desc: 'Estd. 2002 by Trichur Archdiocese' },
         { label: 'Vision, Mission & Values', page: 'about', section: 'vision', desc: 'Creating technology leaders', badge: 'Core' },
@@ -390,127 +436,319 @@ export const Navbar: React.FC<Props> = ({
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${item.id === 'facilities' ? 'w-[540px]' : item.isWide ? 'w-96' : 'w-80'
-                        }`}>
-
-                        {/* Dropdown Header Card */}
-                        <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-1.5">
-                          <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
-                            {item.label} Explorer
-                          </span>
-                          {item.id !== 'facilities' && item.id !== 'placements' && (
+                      {item.id === 'about' ? (
+                        /* About Explorer: Dedicated 2-Column Luxury Dropdown Matching Mockup */
+                        <div className="w-[580px] sm:w-[610px] rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-3 sm:p-3.5 ring-1 ring-black/5">
+                          {/* Dropdown Header Card */}
+                          <div className="px-2 pt-1 pb-2.5 flex items-center justify-between border-b border-slate-100 mb-2">
+                            <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
+                              ABOUT EXPLORER
+                            </span>
                             <button
-                              onClick={() => handleNavClick(item.id)}
+                              onClick={() => handleNavClick('about')}
                               className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline cursor-pointer"
                             >
                               <span>Overview</span>
                               <ChevronRight className="w-3 h-3" />
                             </button>
-                          )}
-                        </div>
+                          </div>
 
-                        {/* Dropdown Items List */}
-                        <div className="space-y-1">
-                          {item.dropdown?.map((sub, idx) => {
-                            const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
-                            const subItems = hasSub ? (sub as any).subDropdown : null;
-                            const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
-
-                            return (
-                              <div key={idx} className="relative group/sub">
-                                <button
-                                  type="button"
-                                  onClick={(e) => {
-                                    if (isHoverOnly) {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      return;
-                                    }
-                                    handleNavClick(sub.page, sub.section);
-                                  }}
-                                  className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/item ${
-                                    isHoverOnly ? 'cursor-default' : 'cursor-pointer'
-                                  } ${
-                                    sub.page === currentPage || (hasSub && subItems.some((s: any) => s.page === currentPage))
-                                      ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
-                                      : 'hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950'
-                                  }`}
-                                >
-                                  <div className="min-w-0 flex-1">
-                                    <div className="font-bold flex items-center gap-1.5 text-slate-800 group-hover/item:text-jyothi-purple-900 whitespace-nowrap">
-                                      <span>{sub.label}</span>
-                                    </div>
-                                    {'desc' in sub && (
-                                      <div className="text-[11px] text-slate-400 group-hover/item:text-slate-600 truncate mt-0.5">
-                                        {sub.desc}
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  <div className="flex items-center gap-1 shrink-0 mt-0.5">
-                                    {'badge' in sub && (
-                                      <span className="px-2 py-0.5 rounded-md text-[10px] bg-jyothi-purple-100 text-jyothi-purple-900 font-mono font-bold">
-                                        {sub.badge}
+                          {/* 2-Column Grid */}
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-1">
+                            {/* Left Column (6 items) */}
+                            <div className="space-y-1">
+                              {ABOUT_LEFT_ITEMS.map((sub, idx) => {
+                                const isActive = sub.page === currentPage;
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => handleNavClick(sub.page, sub.section)}
+                                    className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex flex-col cursor-pointer group ${
+                                      isActive
+                                        ? 'bg-[#FAF5FF] text-[#28052B]'
+                                        : 'hover:bg-[#FAF5FF] text-slate-800'
+                                    }`}
+                                  >
+                                    <div className="flex items-center justify-between gap-1.5 w-full">
+                                      <span className={`font-bold text-[13px] leading-tight ${
+                                        isActive ? 'text-[#28052B]' : 'text-slate-800 group-hover:text-[#28052B]'
+                                      }`}>
+                                        {sub.label}
                                       </span>
-                                    )}
-                                    {hasSub && (
-                                      <ChevronLeft className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:-translate-x-0.5 transition-transform" />
-                                    )}
-                                  </div>
-                                </button>
-
-                                {/* Desktop Sub Dropdown Flyout */}
-                                {hasSub && (
-                                  <div className="hidden group-hover/sub:block absolute right-full top-0 pr-2 z-60 animate-fade-in w-72">
-                                    <div className="rounded-2xl bg-white border border-[#DFC06A]/40 shadow-2xl p-2.5 ring-1 ring-black/5">
-                                      <div className="px-2.5 py-1.5 border-b border-slate-100 flex items-center justify-between mb-1.5">
-                                        <span className="text-[10.5px] font-bold text-jyothi-purple-950 uppercase tracking-wider flex items-center gap-1.5">
-                                          <Compass className="w-3.5 h-3.5 text-[#C79628]" />
-                                          <span>Career Guidance Sub-Menu</span>
+                                      {sub.badge && (
+                                        <span className="px-2 py-0.5 rounded-md text-[10px] bg-purple-100 text-purple-900 font-bold shrink-0">
+                                          {sub.badge}
                                         </span>
-                                      </div>
+                                      )}
+                                    </div>
+                                    <div className={`text-[11px] mt-0.5 leading-snug truncate w-full ${
+                                      isActive ? 'text-[#6B5B75]' : 'text-slate-400 group-hover:text-slate-500'
+                                    }`}>
+                                      {sub.desc}
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
 
-                                      <div className="space-y-1">
-                                        {subItems.map((nested: any, nIdx: number) => (
-                                          <button
-                                            key={nIdx}
-                                            onClick={(e) => {
-                                              e.stopPropagation();
-                                              handleNavClick(nested.page, nested.section);
-                                            }}
-                                            className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/nested hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950 cursor-pointer ${
-                                              nested.page === currentPage
-                                                ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
-                                                : ''
-                                            }`}
-                                          >
-                                            <div className="min-w-0">
-                                              <div className="font-bold flex items-center gap-1 text-slate-800 group-hover/nested:text-jyothi-purple-900 text-xs">
-                                                <span>{nested.label}</span>
-                                              </div>
-                                              {nested.desc && (
-                                                <div className="text-[10.5px] text-slate-400 group-hover/nested:text-slate-600 truncate mt-0.5">
-                                                  {nested.desc}
+                            {/* Right Column (5 items) */}
+                            <div className="space-y-1">
+                              {ABOUT_RIGHT_ITEMS.map((sub, idx) => {
+                                const isActive = sub.page === currentPage;
+                                return (
+                                  <button
+                                    key={idx}
+                                    type="button"
+                                    onClick={() => handleNavClick(sub.page, sub.section)}
+                                    className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex flex-col cursor-pointer group ${
+                                      isActive
+                                        ? 'bg-[#FAF5FF] text-[#28052B]'
+                                        : 'hover:bg-[#FAF5FF] text-slate-800'
+                                    }`}
+                                  >
+                                    <div className="flex items-center justify-between gap-1.5 w-full">
+                                      <span className={`font-bold text-[13px] leading-tight ${
+                                        isActive ? 'text-[#28052B]' : 'text-slate-800 group-hover:text-[#28052B]'
+                                      }`}>
+                                        {sub.label}
+                                      </span>
+                                      {sub.badge && (
+                                        <span className="px-2 py-0.5 rounded-md text-[10px] bg-purple-100 text-purple-900 font-bold shrink-0">
+                                          {sub.badge}
+                                        </span>
+                                      )}
+                                    </div>
+                                    <div className={`text-[11px] mt-0.5 leading-snug truncate w-full ${
+                                      isActive ? 'text-[#6B5B75]' : 'text-slate-400 group-hover:text-slate-500'
+                                    }`}>
+                                      {sub.desc}
+                                    </div>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </div>
+                      ) : item.id === 'facilities' ? (
+                        /* Facilities Explorer: Dedicated 2-Column Luxury Dropdown Matching Mockup */
+                        <div className="w-[580px] rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 overflow-hidden">
+                          {/* Dropdown Header Card */}
+                          <div className="px-3 pt-1.5 pb-2">
+                            <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
+                              FACILITIES EXPLORER
+                            </span>
+                          </div>
+
+                          {/* 2-Column Scrollable Grid with Horizontal & Vertical Hairlines */}
+                          <div
+                            ref={facilitiesScrollRef}
+                            className="max-h-[258px] overflow-y-auto divide-y divide-slate-100 pr-1 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-slate-400"
+                          >
+                            {FACILITIES_GRID_PAIRS.map((row, rIdx) => (
+                              <div key={rIdx} className="grid grid-cols-2 divide-x divide-slate-100">
+                                {/* Left Cell */}
+                                <div className="p-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleNavClick(row.left.page)}
+                                    className={`w-full text-left px-3 py-2.5 rounded-xl transition-all cursor-pointer group ${
+                                      row.left.page === currentPage
+                                        ? 'bg-[#FAF5FF] text-[#28052B]'
+                                        : 'hover:bg-[#FAF5FF] text-slate-800'
+                                    }`}
+                                  >
+                                    <div
+                                      className={`font-bold text-[13px] leading-tight ${
+                                        row.left.page === currentPage
+                                          ? 'text-[#28052B]'
+                                          : 'text-slate-800 group-hover:text-[#28052B]'
+                                      }`}
+                                    >
+                                      {row.left.label}
+                                    </div>
+                                    <div
+                                      className={`text-[11px] mt-0.5 leading-snug truncate ${
+                                        row.left.page === currentPage
+                                          ? 'text-[#6B5B75]'
+                                          : 'text-slate-400 group-hover:text-slate-500'
+                                      }`}
+                                    >
+                                      {row.left.desc}
+                                    </div>
+                                  </button>
+                                </div>
+
+                                {/* Right Cell */}
+                                <div className="p-1">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleNavClick(row.right.page)}
+                                    className={`w-full text-left px-3 py-2.5 rounded-xl transition-all cursor-pointer group ${
+                                      row.right.page === currentPage
+                                        ? 'bg-[#FAF5FF] text-[#28052B]'
+                                        : 'hover:bg-[#FAF5FF] text-slate-800'
+                                    }`}
+                                  >
+                                    <div
+                                      className={`font-bold text-[13px] leading-tight ${
+                                        row.right.page === currentPage
+                                          ? 'text-[#28052B]'
+                                          : 'text-slate-800 group-hover:text-[#28052B]'
+                                      }`}
+                                    >
+                                      {row.right.label}
+                                    </div>
+                                    <div
+                                      className={`text-[11px] mt-0.5 leading-snug truncate ${
+                                        row.right.page === currentPage
+                                          ? 'text-[#6B5B75]'
+                                          : 'text-slate-400 group-hover:text-slate-500'
+                                      }`}
+                                    >
+                                      {row.right.desc}
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+
+                          {/* Footer: Scroll for more facilities */}
+                          <div
+                            onClick={() => {
+                              if (facilitiesScrollRef.current) {
+                                facilitiesScrollRef.current.scrollBy({ top: 130, behavior: 'smooth' });
+                              }
+                            }}
+                            className="pt-2 pb-1 border-t border-slate-100 flex items-center justify-center gap-1.5 text-xs italic text-slate-500 hover:text-[#28052B] transition-colors cursor-pointer select-none"
+                          >
+                            <span>Scroll for more facilities</span>
+                            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+                          </div>
+                        </div>
+                      ) : (
+                        <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${item.isWide ? 'w-96' : 'w-80'}`}>
+
+                          {/* Dropdown Header Card */}
+                          <div className="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-1.5">
+                            <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
+                              {item.label} Explorer
+                            </span>
+                            {item.id !== 'facilities' && item.id !== 'placements' && (
+                              <button
+                                onClick={() => handleNavClick(item.id)}
+                                className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline cursor-pointer"
+                              >
+                                <span>Overview</span>
+                                <ChevronRight className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Dropdown Items List */}
+                          <div className="space-y-1">
+                            {item.dropdown?.map((sub, idx) => {
+                              const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
+                              const subItems = hasSub ? (sub as any).subDropdown : null;
+                              const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+
+                              return (
+                                <div key={idx} className="relative group/sub">
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      if (isHoverOnly) {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        return;
+                                      }
+                                      handleNavClick(sub.page, sub.section);
+                                    }}
+                                    className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/item ${
+                                      isHoverOnly ? 'cursor-default' : 'cursor-pointer'
+                                    } ${
+                                      sub.page === currentPage || (hasSub && subItems.some((s: any) => s.page === currentPage))
+                                        ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
+                                        : 'hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950'
+                                    }`}
+                                  >
+                                    <div className="min-w-0 flex-1">
+                                      <div className="font-bold flex items-center gap-1.5 text-slate-800 group-hover/item:text-jyothi-purple-900 whitespace-nowrap">
+                                        <span>{sub.label}</span>
+                                      </div>
+                                      {'desc' in sub && (
+                                        <div className="text-[11px] text-slate-400 group-hover/item:text-slate-600 truncate mt-0.5">
+                                          {sub.desc}
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    <div className="flex items-center gap-1 shrink-0 mt-0.5">
+                                      {'badge' in sub && (
+                                        <span className="px-2 py-0.5 rounded-md text-[10px] bg-jyothi-purple-100 text-jyothi-purple-900 font-mono font-bold">
+                                          {sub.badge}
+                                        </span>
+                                      )}
+                                      {hasSub && (
+                                        <ChevronLeft className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:-translate-x-0.5 transition-transform" />
+                                      )}
+                                    </div>
+                                  </button>
+
+                                  {/* Desktop Sub Dropdown Flyout */}
+                                  {hasSub && (
+                                    <div className="hidden group-hover/sub:block absolute right-full top-0 pr-2 z-60 animate-fade-in w-72">
+                                      <div className="rounded-2xl bg-white border border-[#DFC06A]/40 shadow-2xl p-2.5 ring-1 ring-black/5">
+                                        <div className="px-2.5 py-1.5 border-b border-slate-100 flex items-center justify-between mb-1.5">
+                                          <span className="text-[10.5px] font-bold text-jyothi-purple-950 uppercase tracking-wider flex items-center gap-1.5">
+                                            <Compass className="w-3.5 h-3.5 text-[#C79628]" />
+                                            <span>Career Guidance Sub-Menu</span>
+                                          </span>
+                                        </div>
+
+                                        <div className="space-y-1">
+                                          {subItems.map((nested: any, nIdx: number) => (
+                                            <button
+                                              key={nIdx}
+                                              onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleNavClick(nested.page, nested.section);
+                                              }}
+                                              className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/nested hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950 cursor-pointer ${
+                                                nested.page === currentPage
+                                                  ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
+                                                  : ''
+                                              }`}
+                                            >
+                                              <div className="min-w-0">
+                                                <div className="font-bold flex items-center gap-1 text-slate-800 group-hover/nested:text-jyothi-purple-900 text-xs">
+                                                  <span>{nested.label}</span>
                                                 </div>
+                                                {nested.desc && (
+                                                  <div className="text-[10.5px] text-slate-400 group-hover/nested:text-slate-600 truncate mt-0.5">
+                                                    {nested.desc}
+                                                  </div>
+                                                )}
+                                              </div>
+                                              {nested.badge && (
+                                                <span className="px-1.5 py-0.5 rounded text-[9.5px] bg-amber-100 text-amber-900 font-mono font-bold shrink-0 mt-0.5">
+                                                  {nested.badge}
+                                                </span>
                                               )}
-                                            </div>
-                                            {nested.badge && (
-                                              <span className="px-1.5 py-0.5 rounded text-[9.5px] bg-amber-100 text-amber-900 font-mono font-bold shrink-0 mt-0.5">
-                                                {nested.badge}
-                                              </span>
-                                            )}
-                                          </button>
-                                        ))}
+                                            </button>
+                                          ))}
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
 
-                      </div>
+                        </div>
+                      )}
                     </div>
                   )}
 

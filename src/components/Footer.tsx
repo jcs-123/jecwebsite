@@ -95,6 +95,7 @@ export const Footer: React.FC<Props> = ({ onNavigate, onOpenApply, onOpenTour })
                 { label: 'About Us', page: 'about' },
                 { label: 'Academic Departments', page: 'departments' },
                 { label: 'Autonomous Governance', page: 'autonomous' },
+                { label: 'Autonomous Examinations & CoE', page: 'office-of-coe' },
                 { label: 'IQAC & Accreditations (NAAC/NBA)', page: 'iqac' },
                 { label: 'Campus Portals Login', page: 'login' },
                 { label: 'Faculty Directory', page: 'faculty' },

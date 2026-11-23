@@ -451,13 +451,35 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
       {/* 1. Sub Navigation Bar matching royal ivory & plum theme */}
       <PlacementsSubNav activeRoute="placement-records" onNavigate={onNavigate} />
 
-      {/* 2. Main Hero Section (High-End Royal Bento Theme) */}
       {/* 2. Main Hero Section (Pixel-perfect match to the design) */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column: Editorial Headline & Actions */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-            <RevealBlock direction="left">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Left Column: High-End Framed Photo of Students with Academic Year Badge */}
+          <div className="lg:col-span-6 relative">
+            <RevealBlock direction="left" delay={100}>
+              <div className="relative rounded-[28px] sm:rounded-[36px] overflow-hidden border-[1.5px] border-[#DFC06A] shadow-md group bg-white">
+                {/* Academic Year Corner Badge */}
+                <div className="absolute top-0 left-0 z-10 bg-[#28052B] text-[#DFC06A] px-5 sm:px-6 py-2 sm:py-2.5 rounded-br-2xl sm:rounded-br-3xl border-r border-b border-[#DFC06A] shadow-md">
+                  <span className="block text-[11px] sm:text-xs font-['Playfair_Display',serif] italic tracking-wide text-[#DFC06A]/90">
+                    Academic Year
+                  </span>
+                  <span className="block text-sm sm:text-base font-['Playfair_Display',serif] italic font-bold tracking-wider text-[#DFC06A]">
+                    2024–2025
+                  </span>
+                </div>
+
+                <img
+                  src="/assets/placement_hero_students.jpg"
+                  alt="Jyothi engineering students celebrating placement offers"
+                  className="w-full h-auto object-cover rounded-[28px] sm:rounded-[36px] transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+            </RevealBlock>
+          </div>
+
+          {/* Right Column: Editorial Headline & Actions */}
+          <div className="lg:col-span-6 space-y-4 sm:space-y-5 lg:pl-2">
+            <RevealBlock direction="right" delay={150}>
               <div className="space-y-4 sm:space-y-5">
                 {/* Flanked Eyebrow */}
                 <div className="flex items-center gap-3">
@@ -469,9 +491,12 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
                 </div>
 
                 {/* Serif Main Headline */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.14]">
-                  Campus Placement Records &amp;
-                  <span className="block italic text-[#BD8E36] font-normal mt-1 sm:mt-1.5 font-['Playfair_Display',serif]">
+                <h1 className="text-3xl sm:text-4xl lg:text-[44px] xl:text-[48px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.12]">
+                  Campus Placement
+                  <span className="block font-black font-['Playfair_Display',serif] text-[#28052B]">
+                    Records &amp;
+                  </span>
+                  <span className="block italic text-[#BD8E36] font-normal mt-0.5 sm:mt-1 font-['Playfair_Display',serif]">
                     Salary Trajectory
                   </span>
                 </h1>
@@ -482,10 +507,10 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
                 </p>
 
                 {/* Action Pill Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-2">
+                <div className="flex flex-wrap items-center gap-3.5 pt-2">
                   <button
                     onClick={() => scrollToSection('department-breakdown')}
-                    className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center gap-2 group cursor-pointer"
+                    className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center gap-2 group cursor-pointer"
                   >
                     <span>View Branch Breakdown</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -493,24 +518,11 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
 
                   <button
                     onClick={() => onNavigate('upcoming-drives')}
-                    className="px-6 py-2.5 rounded-full bg-transparent hover:bg-[#28052B]/5 text-[#28052B] font-semibold text-xs sm:text-sm border border-[#28052B] transition-all inline-flex items-center gap-2 cursor-pointer"
+                    className="px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white hover:bg-[#FAF7F2] text-[#28052B] font-semibold text-xs sm:text-sm border border-[#28052B] transition-all inline-flex items-center gap-2 cursor-pointer shadow-2xs"
                   >
                     <span>Check Upcoming Drives</span>
                   </button>
                 </div>
-              </div>
-            </RevealBlock>
-          </div>
-
-          {/* Right Column: High-End Framed Photo of Students around Laptop */}
-          <div className="lg:col-span-5 relative">
-            <RevealBlock direction="right" delay={150}>
-              <div className="relative rounded-[28px] sm:rounded-[32px] overflow-hidden border-[1.5px] border-[#DFC06A] shadow-md group bg-white">
-                <img
-                  src="/assets/placement_hero_students.jpg"
-                  alt="Jyothi engineering students celebrating placement offers"
-                  className="w-full h-auto object-cover rounded-[28px] sm:rounded-[32px] transition-transform duration-700 group-hover:scale-105"
-                />
               </div>
             </RevealBlock>
           </div>

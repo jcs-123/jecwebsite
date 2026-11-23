@@ -50,6 +50,57 @@ const HERO_CAROUSEL_IMAGES = [
   },
 ];
 
+const FLASH_NEWS_ITEMS = [
+  {
+    id: 'fn-1',
+    tag: 'Admissions 2025',
+    title: 'B.Tech & M.Tech Admissions 2025–26 Open – Apply under Merit & Management Quota',
+    date: 'Nov 2026',
+    route: 'admissions',
+    isNew: true,
+  },
+  {
+    id: 'fn-2',
+    tag: 'Placement Drive',
+    title: '462+ Campus Offers Secured – Peak CTC ₹24.0 LPA at Amazon AWS & Tier-1 Giants',
+    date: 'Nov 2026',
+    route: 'placement-records',
+    isNew: true,
+  },
+  {
+    id: 'fn-3',
+    tag: 'KTU Autonomy',
+    title: 'Autonomous Scheme Credit Structure & Continuous Evaluation Handbook Released',
+    date: 'Oct 2026',
+    route: 'admissions',
+    isNew: false,
+  },
+  {
+    id: 'fn-4',
+    tag: 'Scholarships',
+    title: '₹3 Crore Management Merit & KEAM Top-Ranker Scholarships Announced',
+    date: 'Oct 2026',
+    route: 'admissions',
+    isNew: true,
+  },
+  {
+    id: 'fn-5',
+    tag: 'TATA IIIC Labs',
+    title: 'TATA IIIC Advanced Robotics, EV & Industry 4.0 Certification Batch Commencing',
+    date: 'Sep 2026',
+    route: 'career-guidance',
+    isNew: false,
+  },
+  {
+    id: 'fn-6',
+    tag: 'Research & AI',
+    title: 'Call for Papers: 5th International Conference on Smart Green Technologies & AI (ICSGTA 2026)',
+    date: 'Sep 2026',
+    route: 'research',
+    isNew: false,
+  },
+];
+
 const RECRUITER_BRANDS: Record<string, { code: string; bg: string; text: string; ring?: string }> = {
   "Tata Consultancy Services (TCS)": { code: "TCS", bg: "bg-gradient-to-br from-[#0055A2] to-[#003A70]", text: "text-white" },
   "Infosys Technologies": { code: "INFY", bg: "bg-gradient-to-br from-[#007CC3] to-[#005A8D]", text: "text-white" },
@@ -81,6 +132,114 @@ function RecruiterLogoIcon({ name }: { name: string }) {
     </span>
   );
 }
+
+// Dedicated Bulletproof Flash News Ticker (100% Reliable, rAF-Powered, Fully Responsive)
+const FlashNewsTicker: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavigate }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    let animId: number;
+    let lastTime = performance.now();
+    // 40 pixels per second: steady, silky smooth broadcast reading speed
+    const baseSpeed = 40;
+
+    const loop = (now: number) => {
+      const delta = (now - lastTime) / 1000;
+      lastTime = now;
+
+      if (el) {
+        // Slow down slightly on hover/touch rather than freezing completely so it always feels live
+        const currentSpeed = isHovered ? 12 : baseSpeed;
+        el.scrollLeft += currentSpeed * delta;
+
+        // Triplicated items: wrap seamlessly when 1/3 of total scrollWidth has passed
+        const oneThird = el.scrollWidth / 3;
+        if (oneThird > 0 && el.scrollLeft >= oneThird) {
+          el.scrollLeft -= oneThird;
+        }
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(animId);
+  }, [isHovered]);
+
+  return (
+    <div
+      className="bg-white rounded-full shadow-2xs border border-[#E7D6C1] py-2 px-2.5 sm:py-2.5 sm:px-4 flex items-center justify-between gap-2.5 sm:gap-4 overflow-hidden"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={() => setIsHovered(true)}
+      onTouchEnd={() => setIsHovered(false)}
+      onTouchCancel={() => setIsHovered(false)}
+    >
+      {/* Left Badge: Flash News Pill (Icon-only on mobile, full NEWS on desktop per design spec) */}
+      <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+        <span className="px-2 py-1.5 sm:px-3 sm:py-1.5 rounded-full bg-[#F3EBF9] text-[#28052B] font-bold flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs uppercase tracking-wider border border-purple-200/70 shadow-2xs">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600" />
+          </span>
+          <BellRing className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#28052B] animate-bell-ring" />
+          <span className="font-extrabold tracking-wider hidden sm:inline">NEWS</span>
+        </span>
+      </div>
+
+      {/* Middle: Continuous Smooth Flash News Broadcast Scroll Track (Native rAF Driven) */}
+      <div
+        ref={scrollRef}
+        className="flex-1 min-w-0 overflow-x-hidden no-scrollbar relative flash-news-mask"
+        style={{ scrollBehavior: 'auto' }}
+      >
+        <div className="flex items-center py-0.5 whitespace-nowrap w-max">
+          {/* Triplicated for 100% infinite continuous seamless wrap without gaps */}
+          {[...FLASH_NEWS_ITEMS, ...FLASH_NEWS_ITEMS, ...FLASH_NEWS_ITEMS].map((item, idx) => (
+            <div
+              key={`${item.id}-${idx}`}
+              onClick={() => onNavigate(item.route)}
+              className="shrink-0 inline-flex items-center gap-2 sm:gap-2.5 px-3 sm:px-4 cursor-pointer group/item hover:opacity-90 transition-opacity"
+            >
+              <span className="px-2 py-0.5 sm:px-2.5 sm:py-0.5 rounded-full bg-[#FEF5E7] text-[#8C6214] border border-[#DFC06A]/50 font-bold text-[10px] sm:text-[11px] shrink-0 shadow-2xs">
+                {item.tag}
+              </span>
+              <span className="font-semibold text-xs sm:text-sm text-[#28052B] group-hover/item:text-[#BD8E36] transition-colors whitespace-nowrap">
+                {item.title}
+              </span>
+              <span className="text-[10px] sm:text-xs text-slate-400 font-normal shrink-0">
+                ({item.date})
+              </span>
+              {item.isNew && (
+                <span className="px-1.5 py-0.2 rounded-full text-[8.5px] sm:text-[9px] font-black uppercase tracking-wider bg-rose-50 text-rose-700 border border-rose-200 animate-pulse shrink-0">
+                  NEW
+                </span>
+              )}
+              <span className="text-[#DFC06A] font-bold text-xs sm:text-sm ml-2 sm:ml-4 shrink-0 select-none">
+                ✦
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Right CTA Button: View All Circulars (Responsive) */}
+      <button
+        onClick={() => onNavigate('admissions')}
+        className="text-[11px] sm:text-xs font-bold text-[#28052B] hover:text-[#BD8E36] flex items-center gap-0.5 sm:gap-1 shrink-0 group/btn transition-colors cursor-pointer pl-2.5 sm:pl-3 border-l border-slate-200/70"
+      >
+        <span className="hidden md:inline">View All Circulars</span>
+        <span className="hidden sm:inline md:hidden">Circulars</span>
+        <span className="sm:hidden text-[#BD8E36] font-bold">All &gt;</span>
+        <ChevronRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform text-[#BD8E36] hidden sm:inline" />
+      </button>
+    </div>
+  );
+};
 
 export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply, onOpenTour }) => {
   const [activeTab, setActiveTab] = useState<'all' | 'computer' | 'circuits' | 'core'>('all');
@@ -253,8 +412,8 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                 onClick={() => setHeroSlide(idx)}
                 aria-label={`View campus slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === heroSlide
-                    ? 'w-4 bg-[#DFC06A]'
-                    : 'w-1.5 bg-white/60 hover:bg-white'
+                  ? 'w-4 bg-[#DFC06A]'
+                  : 'w-1.5 bg-white/60 hover:bg-white'
                   }`}
               />
             ))}
@@ -289,8 +448,8 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                 onClick={() => setHeroSlide(idx)}
                 aria-label={`View campus slide ${idx + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${idx === heroSlide
-                    ? 'w-5 bg-[#DFC06A]'
-                    : 'w-1.5 bg-white/55 hover:bg-white'
+                  ? 'w-5 bg-[#DFC06A]'
+                  : 'w-1.5 bg-white/55 hover:bg-white'
                   }`}
               />
             ))}
@@ -379,9 +538,9 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         {/* HERO EDITORIAL CONTENT CONTAINER */}
         <div
           className={`max-w-[1440px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-14 pt-6 pb-6 sm:pt-7 md:pt-10 lg:pt-12 md:pb-2 relative z-10 w-full bg-[#FFFDFA] md:bg-transparent rounded-t-[24px] md:rounded-none -mt-5 md:mt-0 border-t-2 border-[#DFC06A]/75 md:border-t-0 shadow-[0_-12px_32px_rgba(37,8,54,0.14)] md:shadow-none ${reducedMotion
-              ? ''
-              : `transition-all duration-[600ms] ease-out ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-              }`
+            ? ''
+            : `transition-all duration-[600ms] ease-out ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+            }`
             }`}
         >
           <div className="w-full md:max-w-[44%] lg:max-w-[41%] xl:max-w-[480px] space-y-3.5 sm:space-y-4 text-left">
@@ -399,18 +558,18 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-[36px] lg:text-[44px] xl:text-[50px] font-bold tracking-tight text-[#250836] leading-[1.08]">
                 <span
                   className={`font-['Playfair_Display',serif] block font-bold ${reducedMotion
-                      ? ''
-                      : `transition-all duration-500 ease-out delay-[100ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-                      }`
+                    ? ''
+                    : `transition-all duration-500 ease-out delay-[100ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                    }`
                     }`}
                 >
                   Where Passion Meets
                 </span>
                 <span
                   className={`font-['Playfair_Display',serif] italic font-normal text-[#B5802B] min-h-[1.2em] flex items-center pt-0.5 ${reducedMotion
-                      ? ''
-                      : `transition-all duration-500 ease-out delay-[240ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
-                      }`
+                    ? ''
+                    : `transition-all duration-500 ease-out delay-[240ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+                    }`
                     }`}
                 >
                   <span>{TYPING_PHRASES[textIndex].substring(0, charIndex)}</span>
@@ -439,8 +598,8 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
               <button
                 onClick={onOpenApply}
                 className={`relative px-5 sm:px-6 py-2.5 rounded-full bg-[#29073D] text-white font-bold text-xs sm:text-sm shadow-md border-2 border-[#D4A346] hover:border-[#250836] flex items-center justify-center gap-2 hover:scale-[1.03] active:scale-[0.97] hover:shadow-glow-gold transition-all duration-300 cursor-pointer group overflow-hidden ${reducedMotion
-                    ? ''
-                    : `delay-[320ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
+                  ? ''
+                  : `delay-[320ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
                   }`}
               >
                 {/* Smooth Golden Hover Layer */}
@@ -456,8 +615,8 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
               <button
                 onClick={onOpenTour}
                 className={`relative px-4 sm:px-5 py-2.5 rounded-full bg-white text-[#250836] font-bold text-xs sm:text-sm border-2 border-[#D4A346] hover:border-[#DFC06A] shadow-xs hover:shadow-glow-purple hover:scale-[1.03] active:scale-[0.97] flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer group overflow-hidden ${reducedMotion
-                    ? ''
-                    : `delay-[400ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
+                  ? ''
+                  : `delay-[400ms] ${heroReady ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'}`
                   }`}
               >
                 {/* Smooth Royal Purple Hover Layer */}
@@ -508,26 +667,35 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         <div className="relative w-full z-20 mt-auto">
           {/* Mobile 3-Card Pill Strip + Curved Purple/Gold Wave (< 768px) */}
           <div className="md:hidden bg-[#FFFDFA]">
-            <div className="px-3 pb-3 pt-1">
+            <div className="px-3 pb-3 pt-1 overflow-x-clip">
               <div className="grid grid-cols-3 gap-2">
-                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
-                  <Layers className="w-4 h-4 text-[#C9902C] shrink-0" />
-                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
-                    KTU Autonomous Scheme
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
-                  <GraduationCap className="w-4 h-4 text-[#C9902C] shrink-0" />
-                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
-                    ₹3 Cr+ Scholarships
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5 px-2.5 py-2 rounded-2xl bg-[#FFFDFA] border border-[#E7D3B0] shadow-2xs">
-                  <Bus className="w-4 h-4 text-[#C9902C] shrink-0" />
-                  <span className="text-[10px] leading-tight font-bold text-[#250836]">
-                    25+ Fleet Bus Routes
-                  </span>
-                </div>
+                <RevealBlock direction="left" delay={0} once={false} className="h-full">
+                  <div className="h-full flex items-center gap-2 px-2.5 py-2.5 rounded-[18px] bg-white border border-[#E7D3B0] shadow-2xs">
+                    <Layers className="w-5 h-5 text-[#C9902C] shrink-0" />
+                    <div className="flex flex-col text-left min-w-0">
+                      <span className="text-[11px] font-bold text-[#250836] leading-tight truncate">KTU</span>
+                      <span className="text-[10px] font-semibold text-[#250836]/90 leading-tight truncate">Autonomous Scheme</span>
+                    </div>
+                  </div>
+                </RevealBlock>
+                <RevealBlock direction="up" delay={90} once={false} className="h-full">
+                  <div className="h-full flex items-center gap-2 px-2.5 py-2.5 rounded-[18px] bg-white border border-[#E7D3B0] shadow-2xs">
+                    <GraduationCap className="w-5 h-5 text-[#C9902C] shrink-0" />
+                    <div className="flex flex-col text-left min-w-0">
+                      <span className="text-[11px] font-bold text-[#250836] leading-tight truncate">₹3 Cr+</span>
+                      <span className="text-[10px] font-semibold text-[#250836]/90 leading-tight truncate">Scholarships</span>
+                    </div>
+                  </div>
+                </RevealBlock>
+                <RevealBlock direction="right" delay={180} once={false} className="h-full">
+                  <div className="h-full flex items-center gap-2 px-2.5 py-2.5 rounded-[18px] bg-white border border-[#E7D3B0] shadow-2xs">
+                    <Bus className="w-5 h-5 text-[#C9902C] shrink-0" />
+                    <div className="flex flex-col text-left min-w-0">
+                      <span className="text-[11px] font-bold text-[#250836] leading-tight truncate">25+ Fleet Bus</span>
+                      <span className="text-[10px] font-semibold text-[#250836]/90 leading-tight truncate">Routes</span>
+                    </div>
+                  </div>
+                </RevealBlock>
               </div>
             </div>
             {/* Sleek Curved Purple & Gold Bottom Wave */}
@@ -762,46 +930,10 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         </section>
 
         {/* ============================================================== */}
-        {/* 3. DYNAMIC ANNOUNCEMENTS & TICKER (CLEAN WHITE CARD) */}
+        {/* 3. DYNAMIC ANNOUNCEMENTS & FLASH NEWS TICKER (SMOOTH SCROLL)   */}
         {/* ============================================================== */}
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <RevealBlock direction="up">
-            <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xs border border-slate-200 p-4 sm:p-5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 sm:gap-4">
-              <div className="flex items-center justify-between gap-3 shrink-0">
-                <span className="px-3 py-1.5 rounded-xl bg-jyothi-purple-100 text-jyothi-purple-900 font-bold flex items-center gap-2 text-xs uppercase tracking-wider">
-                  <BellRing className="w-4 h-4 text-jyothi-purple-800 animate-bell-ring" />
-                  <span>Announcements</span>
-                </span>
-                <button
-                  onClick={() => onNavigate('admissions')}
-                  className="md:hidden text-xs font-bold text-jyothi-purple-800 hover:text-jyothi-purple-950 flex items-center gap-1 shrink-0 group cursor-pointer"
-                >
-                  <span>View All</span>
-                  <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
-              </div>
-
-              <div className="flex-1 min-w-0 w-full md:w-auto">
-                <div className="flex flex-wrap sm:flex-nowrap items-start sm:items-center gap-2 sm:gap-2.5 text-xs sm:text-sm text-slate-800">
-                  <span className="px-2.5 py-0.5 rounded-full bg-jyothi-gold-100 text-jyothi-gold-900 font-bold text-[11px] shrink-0">
-                    {ANNOUNCEMENTS[0].tag}
-                  </span>
-                  <span className="font-semibold text-jyothi-purple-950 line-clamp-2 sm:line-clamp-none sm:truncate" title={ANNOUNCEMENTS[0].title}>
-                    {ANNOUNCEMENTS[0].title}
-                  </span>
-                  <span className="text-xs text-slate-400 hidden lg:inline shrink-0">({ANNOUNCEMENTS[0].date})</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => onNavigate('admissions')}
-                className="hidden md:flex text-xs font-bold text-jyothi-purple-800 hover:text-jyothi-purple-950 items-center gap-1 shrink-0 group cursor-pointer"
-              >
-                <span>View All Circulars</span>
-                <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
-          </RevealBlock>
+          <FlashNewsTicker onNavigate={onNavigate} />
         </section>
 
         {/* ============================================================== */}
@@ -829,35 +961,33 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
           {/* Left Vertical Pillar Tabs + Right Curved Photo Showcase Card */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
             {/* Left Vertical Tabs */}
-            <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
+            <div className="lg:col-span-3 grid grid-cols-1 gap-3 overflow-x-clip">
               {pillars.map((p, idx) => {
                 const isSelected = activePillar === idx;
                 return (
                   <RevealBlock
                     key={idx}
-                    direction="left"
-                    delay={idx * 80}
+                    direction={idx < 2 ? 'left' : 'right'}
+                    delay={idx * 90}
+                    once={false}
                     className="h-full"
                   >
                     <button
                       onClick={() => setActivePillar(idx)}
-                      className={`w-full h-full px-4 py-3.5 rounded-2xl text-left border transition-all duration-300 flex items-center gap-3.5 cursor-pointer ${
-                        isSelected
-                          ? 'bg-[#250836] text-white border-[#250836] shadow-lg'
-                          : 'bg-[#FCF9F2] hover:bg-white text-[#250836] border-[#DFC06A]/55 shadow-2xs'
-                      }`}
+                      className={`w-full h-full px-5 py-3.5 sm:py-4 rounded-[22px] text-left border transition-all duration-300 flex items-center gap-3.5 cursor-pointer ${isSelected
+                          ? 'bg-[#250836] text-white border-[#250836] shadow-md'
+                          : 'bg-[#FAF7F2] hover:bg-white text-[#250836] border-[#E7D6C1] shadow-2xs hover:border-[#DFC06A]'
+                        }`}
                     >
                       <span
-                        className={`text-xs font-bold shrink-0 ${
-                          isSelected ? 'text-[#DFC06A]' : 'text-[#A87627]'
-                        }`}
+                        className={`text-sm font-bold shrink-0 ${isSelected ? 'text-[#DFC06A]' : 'text-[#BD8E36]'
+                          }`}
                       >
                         0{idx + 1}
                       </span>
                       <span
-                        className={`h-6 w-[1px] shrink-0 ${
-                          isSelected ? 'bg-white/25' : 'bg-[#DFC06A]/65'
-                        }`}
+                        className={`h-5 w-[1.5px] shrink-0 ${isSelected ? 'bg-white/20' : 'bg-[#E7D6C1]'
+                          }`}
                       />
                       <span className="text-xs sm:text-sm font-bold leading-snug">
                         {p.title}
@@ -916,10 +1046,10 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                             activePillar === 0
                               ? 'about'
                               : activePillar === 1
-                              ? 'research'
-                              : activePillar === 2
-                              ? 'placements'
-                              : 'facilities'
+                                ? 'research'
+                                : activePillar === 2
+                                  ? 'placements'
+                                  : 'facilities'
                           )
                         }
                         className="w-full sm:w-auto justify-center px-5 py-2.5 rounded-full bg-white hover:bg-[#FAF7F0] text-[#250836] font-semibold text-xs sm:text-sm border border-[#DFC06A]/80 transition-all cursor-pointer"
@@ -936,10 +1066,10 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                         activePillar === 0
                           ? '/assets/admissions_mtech_hero.jpg'
                           : activePillar === 1
-                          ? '/assets/club_iedc.jpg'
-                          : activePillar === 2
-                          ? '/assets/campus_students_banner.jpg'
-                          : '/assets/autonomous_campus_hero.jpg'
+                            ? '/assets/club_iedc.jpg'
+                            : activePillar === 2
+                              ? '/assets/campus_students_banner.jpg'
+                              : '/assets/autonomous_campus_hero.jpg'
                       }
                       alt={pillars[activePillar].title}
                       className="w-full h-full object-cover object-center"
@@ -999,21 +1129,22 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
             </div>
           </div>
 
-          {/* Bento Grid Layout (each card reveals individually as you scroll) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {/* Bento Grid Layout (each card reveals zig-zag as you scroll) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 overflow-x-clip py-2">
             {filteredDepts.map((dept, i) => (
               <RevealBlock
                 key={dept.id}
                 direction={i % 2 === 0 ? 'left' : 'right'}
-                delay={(i % 3) * 150}
+                delay={(i % 3) * 100}
+                once={false}
                 className="h-full"
               >
                 <div
-                  className="h-full p-6 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-xl hover:border-jyothi-purple-300 transition-all duration-500 flex flex-col justify-between group space-y-4"
+                  className="h-full p-5 sm:p-6 rounded-[28px] sm:rounded-3xl bg-white border border-[#E5E7EB] hover:border-[#DFC06A] shadow-xs hover:shadow-xl transition-all duration-500 flex flex-col justify-between group space-y-4"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <span className="px-3 py-1 rounded-xl bg-jyothi-purple-100 text-jyothi-purple-900 font-mono font-bold text-xs">
+                      <span className="px-3 py-1 rounded-xl bg-[#F4EDFA] text-[#4A154B] font-mono font-bold text-xs">
                         {dept.code}
                       </span>
                       <span className="text-xs font-semibold text-slate-500">
@@ -1021,22 +1152,22 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                       </span>
                     </div>
 
-                    <div className="relative h-44 rounded-2xl overflow-hidden bg-slate-100">
+                    <div className="relative h-44 sm:h-48 rounded-[20px] overflow-hidden bg-slate-100">
                       <img
                         src={dept.image}
                         alt={dept.name}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3.5">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent flex items-end p-3.5">
                         <span className="text-xs font-bold text-white flex items-center gap-1.5">
-                          <GraduationCap className="w-3.5 h-3.5 text-jyothi-gold-400" />
+                          <GraduationCap className="w-3.5 h-3.5 text-[#DFC06A]" />
                           {dept.degree}
                         </span>
                       </div>
                     </div>
 
                     <div>
-                      <h3 className="font-bold text-base sm:text-lg font-brand text-jyothi-purple-950 group-hover:text-jyothi-purple-800 transition-colors">
+                      <h3 className="font-bold text-base sm:text-lg font-brand text-[#28052B] group-hover:text-jyothi-purple-800 transition-colors">
                         {dept.name}
                       </h3>
                       <p className="text-xs text-slate-600 line-clamp-2 mt-1 leading-relaxed">
@@ -1046,10 +1177,12 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
 
                     <div className="space-y-1.5 text-[11px] text-slate-600 pt-1">
                       <div className="flex items-center gap-1.5 text-emerald-700 font-semibold">
-                        <CheckCircle2 className="w-3.5 h-3.5" /> NBA / NAAC 'A' Accredited
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>NBA / NAAC &apos;A&apos; Accredited</span>
                       </div>
                       <div className="flex items-center gap-1.5 text-slate-500">
-                        <Check className="w-3.5 h-3.5 text-jyothi-gold-600" /> Autonomous KTU Curriculum
+                        <Check className="w-3.5 h-3.5 text-[#BD8E36]" />
+                        <span>Autonomous KTU Curriculum</span>
                       </div>
                     </div>
                   </div>
@@ -1057,14 +1190,14 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                   <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                     <button
                       onClick={() => onNavigate('departments', dept.id)}
-                      className="font-bold text-xs text-jyothi-purple-800 hover:text-jyothi-purple-950 flex items-center gap-1 group/btn"
+                      className="font-bold text-xs text-[#28052B] hover:text-[#BD8E36] flex items-center gap-1 group/btn cursor-pointer"
                     >
-                      <span>Curriculum & Labs</span>
+                      <span>Curriculum &amp; Labs</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                     <button
                       onClick={onOpenApply}
-                      className="px-3.5 py-1.5 rounded-xl bg-jyothi-gold-400 hover:bg-jyothi-gold-300 text-jyothi-purple-950 font-bold text-xs shadow-xs"
+                      className="px-5 py-2 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs shadow-xs transition-transform active:scale-95 cursor-pointer"
                     >
                       Apply
                     </button>
@@ -1328,53 +1461,54 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
         {/* ============================================================== */}
         <section id="alumni" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 scroll-mt-28">
           <div className="text-center max-w-2xl mx-auto space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-jyothi-purple-900 bg-jyothi-purple-50 border border-jyothi-purple-200/80 px-3.5 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#5A2D82] bg-[#F4EFF8] border border-[#E8DEF0] px-4 py-1.5 rounded-full inline-block">
               Alumni Success
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-brand text-jyothi-purple-950">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold font-brand text-[#28052B] mt-2">
               Powering Global Tech
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-xl mx-auto mt-2">
               Meet graduates from Jyothi leading missions across international cloud infrastructures, autonomous mobility, and aerospace.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 overflow-x-clip py-2">
             {ALUMNI_TESTIMONIALS.map((alumni, idx) => (
               <RevealBlock
                 key={alumni.id}
                 direction={idx % 2 === 0 ? 'left' : 'right'}
-                delay={idx * 150}
+                delay={idx * 120}
+                once={false}
                 className="h-full"
               >
                 <div
-                  className="h-full p-6 sm:p-7 rounded-3xl bg-white border border-slate-200 shadow-xs hover:shadow-lg hover:border-jyothi-purple-300 transition-all flex flex-col justify-between space-y-4"
+                  className="h-full p-6 sm:p-7 rounded-[28px] sm:rounded-[32px] bg-white border border-[#EADBBD] hover:border-[#DFC06A] shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between space-y-4"
                 >
-                  <div className="space-y-3">
+                  <div className="space-y-3.5">
                     <div className="flex items-center gap-3.5">
                       <img
                         src={alumni.image}
                         alt={alumni.name}
-                        className="w-12 h-12 rounded-full object-cover border-2 border-jyothi-gold-400 shrink-0"
+                        className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-[#DFC06A] shrink-0"
                       />
                       <div>
-                        <h4 className="font-bold text-sm text-jyothi-purple-950">{alumni.name}</h4>
-                        <p className="text-xs text-jyothi-purple-800 font-semibold">{alumni.role}</p>
-                        <p className="text-[11px] text-slate-500">{alumni.company} • {alumni.location}</p>
+                        <h4 className="font-bold text-base sm:text-lg text-[#28052B] leading-tight">{alumni.name}</h4>
+                        <p className="text-xs sm:text-sm text-[#5A2D82] font-semibold mt-0.5 leading-snug">{alumni.role}</p>
+                        <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">{alumni.company} • {alumni.location}</p>
                       </div>
                     </div>
 
-                    <div className="relative pt-1">
-                      <Quote className="w-5 h-5 text-jyothi-gold-400/40 absolute -top-1 -left-1 pointer-events-none" />
-                      <p className="text-xs text-slate-600 italic leading-relaxed pl-4">
-                        "{alumni.quote}"
+                    <div className="relative pt-2 flex items-start gap-1.5">
+                      <span className="text-2xl sm:text-3xl font-serif text-[#DFC06A] leading-none shrink-0 select-none">“</span>
+                      <p className="text-xs sm:text-[13px] text-slate-600 italic leading-relaxed">
+                        &quot;{alumni.quote}&quot;
                       </p>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-                    <span className="font-semibold text-jyothi-purple-900">{alumni.programme}</span>
-                    <span className="px-2 py-0.5 rounded-full bg-slate-100 font-mono">{alumni.batch}</span>
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                    <span className="font-bold text-[#28052B]">{alumni.programme}</span>
+                    <span className="px-3 py-1 rounded-full bg-[#F0F4F8] text-[#486581] font-mono text-[11px] font-semibold border border-[#D9E2EC]">{alumni.batch}</span>
                   </div>
                 </div>
               </RevealBlock>
@@ -1673,11 +1807,10 @@ export const HomePage: React.FC<Props> = ({ subSection, onNavigate, onOpenApply,
                       >
                         <div
                           onClick={() => onNavigate('admissions')}
-                          className={`px-4 sm:px-5 py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer group ${
-                            idx === 0
+                          className={`px-4 sm:px-5 py-4 flex items-center justify-between gap-4 transition-colors cursor-pointer group ${idx === 0
                               ? 'bg-[#FBF3E4]/85 rounded-2xl mb-1'
                               : 'hover:bg-[#FAF7F0]/70 rounded-xl'
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center gap-4 sm:gap-5 min-w-0">
                             <div className="w-11 shrink-0 text-left leading-tight">

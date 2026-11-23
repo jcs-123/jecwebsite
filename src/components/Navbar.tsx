@@ -175,11 +175,20 @@ export const Navbar: React.FC<Props> = ({
     {
       id: 'facilities',
       label: 'Facilities',
+      isWide: true,
       dropdown: [
         { label: 'Central Digital Library', page: 'central-library', desc: '42,000+ volumes and e-journals' },
-        { label: 'Campus Hostels & Dining', page: 'campus-hostels', desc: 'Separate modern residences' },
+        { label: 'Campus Hostels & Dining', page: 'campus-hostels', desc: 'Santhome & Marian residences' },
         { label: 'College Bus Fleet Network', page: 'bus-fleet', desc: '25+ routes across 3 districts' },
         { label: 'Auditorium & Sports Ground', page: 'auditorium-sports', desc: '1,200 capacity hall & athletic turf' },
+        { label: 'Language Lab', page: 'language-lab', desc: '60-console digital phonetics studio' },
+        { label: 'TATA IIIC & Seminar Halls', page: 'tata-iiic-seminar', desc: 'Industry innovation & AC halls' },
+        { label: 'Board Room', page: 'board-room', desc: 'Executive 4K governance suite' },
+        { label: 'Chapel', page: 'chapel', desc: 'Serene hilltop spiritual sanctuary' },
+        { label: 'TBI', page: 'tbi', desc: 'Startup incubator & seed support' },
+        { label: 'Campus Canteen', page: 'canteen', desc: 'Hygienic food court & café' },
+        { label: 'Fab Lab', page: 'fab-lab', desc: 'MIT-model laser, 3D print & CNC' },
+        { label: 'Computer Center', page: 'computer-center', desc: '500+ terminals & 1 Gbps fiber' },
       ]
     },
   ];
@@ -369,7 +378,7 @@ export const Navbar: React.FC<Props> = ({
                       onMouseEnter={() => handleMouseEnter(item.id)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${item.isWide ? 'w-96' : 'w-80'
+                      <div className={`rounded-2xl bg-white border border-slate-200/90 shadow-2xl p-2.5 ring-1 ring-black/5 ${item.id === 'facilities' ? 'w-[540px]' : item.isWide ? 'w-96' : 'w-80'
                         }`}>
 
                         {/* Dropdown Header Card */}
@@ -377,13 +386,15 @@ export const Navbar: React.FC<Props> = ({
                           <span className="text-[11px] font-bold text-jyothi-purple-950 uppercase tracking-wider">
                             {item.label} Explorer
                           </span>
-                          <button
-                            onClick={() => handleNavClick(item.id)}
-                            className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline"
-                          >
-                            <span>Overview</span>
-                            <ChevronRight className="w-3 h-3" />
-                          </button>
+                          {item.id !== 'facilities' && item.id !== 'placements' && (
+                            <button
+                              onClick={() => handleNavClick(item.id)}
+                              className="text-[11px] text-jyothi-purple-700 hover:text-jyothi-purple-950 font-semibold flex items-center gap-0.5 hover:underline cursor-pointer"
+                            >
+                              <span>Overview</span>
+                              <ChevronRight className="w-3 h-3" />
+                            </button>
+                          )}
                         </div>
 
                         {/* Dropdown Items List */}
@@ -593,13 +604,15 @@ export const Navbar: React.FC<Props> = ({
                     {/* Accordion Sub-Menu */}
                     {hasDropdown && isExpanded && (
                       <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
-                        <button
-                          onClick={() => handleNavClick(item.id)}
-                          className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
-                        >
-                          <span>{item.label} Overview Page</span>
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
+                        {item.id !== 'facilities' && item.id !== 'placements' && (
+                          <button
+                            onClick={() => handleNavClick(item.id)}
+                            className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between cursor-pointer"
+                          >
+                            <span>{item.label} Overview Page</span>
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        )}
 
                         {item.dropdown?.map((sub, i) => {
                           const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);

@@ -5,6 +5,14 @@ export const FACILITIES_TABS = [
   { label: 'Campus Hostels & Dining', route: 'campus-hostels' },
   { label: 'College Bus Fleet Network', route: 'bus-fleet' },
   { label: 'Auditorium & Sports Ground', route: 'auditorium-sports' },
+  { label: 'Language Lab', route: 'language-lab' },
+  { label: 'TATA IIIC & Seminar Halls', route: 'tata-iiic-seminar' },
+  { label: 'Board Room', route: 'board-room' },
+  { label: 'Chapel', route: 'chapel' },
+  { label: 'TBI', route: 'tbi' },
+  { label: 'Campus Canteen', route: 'canteen' },
+  { label: 'Fab Lab', route: 'fab-lab' },
+  { label: 'Computer Center', route: 'computer-center' },
 ] as const;
 
 interface FacilitiesSubNavProps {
@@ -33,7 +41,7 @@ export const FacilitiesSubNav: React.FC<FacilitiesSubNavProps> = ({
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
       <div
         ref={containerRef}
-        className="flex flex-nowrap overflow-x-auto no-scrollbar items-center justify-start lg:justify-center gap-1.5 sm:gap-2 p-2 rounded-2xl bg-white border border-amber-200/70 shadow-2xs"
+        className="flex flex-nowrap overflow-x-auto no-scrollbar items-center justify-start gap-1.5 sm:gap-2 p-2 rounded-2xl bg-white border border-amber-200/70 shadow-2xs"
       >
         {FACILITIES_TABS.map((tab) => {
           const isActive = tab.route === activeRoute;

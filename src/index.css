@@ -198,6 +198,38 @@
   animation-play-state: paused !important;
 }
 
+/* Smooth Flash News Broadcast Ticker (Infinite Continuous Scroll) */
+@keyframes flashNewsScroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@-webkit-keyframes flashNewsScroll {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  100% {
+    -webkit-transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.flash-news-scroll-track {
+  display: flex !important;
+  width: max-content !important;
+  animation: flashNewsScroll 24s linear infinite !important;
+  -webkit-animation: flashNewsScroll 24s linear infinite !important;
+  will-change: transform;
+}
+
+.flash-news-mask {
+  mask-image: linear-gradient(to right, transparent, black 1.5%, black 98.5%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 1.5%, black 98.5%, transparent);
+}
+
 @keyframes bellRing {
   0%, 55%, 100% {
     transform: rotate(0deg);

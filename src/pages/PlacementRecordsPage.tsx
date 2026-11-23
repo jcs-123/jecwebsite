@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import {
   Briefcase,
   ArrowRight,
@@ -27,6 +27,8 @@ import {
 } from 'lucide-react';
 import { PLACEMENT_STATS } from '../data/collegeData';
 import { PlacementsSubNav } from '../components/PlacementsSubNav';
+import { RevealBlock } from '../components/RevealBlock';
+import { AnimatedCounter } from '../components/AnimatedCounter';
 
 interface Props {
   onNavigate: (page: string, subId?: string) => void;
@@ -177,12 +179,198 @@ const SALARY_TIERS = [
   },
 ];
 
-const SECTOR_DISTRIBUTION = [
-  { sector: 'IT Services & Cloud Computing', share: '42%', offers: 194, color: 'bg-[#28052B]' },
-  { sector: 'Product Engineering & Enterprise SaaS', share: '26%', offers: 120, color: 'bg-[#BD8E36]' },
-  { sector: 'Core Automotive, Embedded & Hardware', share: '18%', offers: 83, color: 'bg-teal-700' },
-  { sector: 'Banking, FinTech & Heavy Infrastructure', share: '14%', offers: 65, color: 'bg-purple-800' },
+interface SectorItem {
+  id: string;
+  sector: string;
+  share: number;
+  offers: number;
+  color: string;
+  hex: string;
+  delay: number;
+  duration: number;
+}
+
+const SECTOR_DISTRIBUTION: SectorItem[] = [
+  {
+    id: 'it-cloud',
+    sector: 'IT Services & Cloud Computing',
+    share: 42,
+    offers: 194,
+    color: 'bg-[#28052B]',
+    hex: '#28052B',
+    delay: 150,
+    duration: 750,
+  },
+  {
+    id: 'product-saas',
+    sector: 'Product Engineering & Enterprise SaaS',
+    share: 26,
+    offers: 120,
+    color: 'bg-[#BD8E36]',
+    hex: '#BD8E36',
+    delay: 750,
+    duration: 650,
+  },
+  {
+    id: 'core-hardware',
+    sector: 'Core Automotive, Embedded & Hardware',
+    share: 18,
+    offers: 83,
+    color: 'bg-teal-700',
+    hex: '#0F766E',
+    delay: 1300,
+    duration: 550,
+  },
+  {
+    id: 'fintech-infra',
+    sector: 'Banking, FinTech & Heavy Infrastructure',
+    share: 14,
+    offers: 65,
+    color: 'bg-purple-800',
+    hex: '#6B21A8',
+    delay: 1750,
+    duration: 500,
+  },
 ];
+
+const SectorDistributionCard: React.FC = () => {
+  const [isInView, setIsInView] = useState(false);
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!cardRef.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        } else {
+          setIsInView(false);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    observer.observe(cardRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={cardRef}
+      className="p-6 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] shadow-2xs space-y-4 sm:space-y-5 transition-all"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h3 className="text-base sm:text-lg font-bold font-['Playfair_Display',serif] text-[#28052B]">
+            Recruitment Industry Sector Share
+          </h3>
+          <p className="text-xs text-[#4A384F]/70 mt-0.5">
+            Diversified placement distribution across corporate domains (2024–25 batch)
+          </p>
+        </div>
+        <div className="text-xs font-bold text-[#BD8E36] bg-[#FAF7F2] px-3.5 py-1 rounded-full border border-[#E7D6C1] self-start sm:self-auto flex items-center gap-1.5 shadow-2xs">
+          <span className="w-2 h-2 rounded-full bg-[#BD8E36] animate-pulse" />
+          <span>
+            {isInView ? <AnimatedCounter end={462} suffix=" Total Placements" duration={1600} /> : '462 Total Placements'}
+          </span>
+        </div>
+      </div>
+
+      {/* Multi-segment stacked visual bar with Color-Wise Loading Animation */}
+      <div className="space-y-2">
+        <div className="relative w-full h-3.5 sm:h-4 rounded-full overflow-hidden flex bg-slate-100 p-0 border border-[#E7D6C1]/50 shadow-inner">
+          {SECTOR_DISTRIBUTION.map((sec, idx) => {
+            const isHovered = hoveredIdx === idx;
+            const isAnyHovered = hoveredIdx !== null;
+            return (
+              <div
+                key={sec.id}
+                onMouseEnter={() => setHoveredIdx(idx)}
+                onMouseLeave={() => setHoveredIdx(null)}
+                className={`h-full ${sec.color} relative cursor-pointer shrink-0 transition-all ${
+                  isHovered ? 'brightness-115 scale-y-110 z-10' : isAnyHovered ? 'opacity-60' : 'opacity-100'
+                }`}
+                style={{
+                  width: isInView ? `${sec.share}%` : '0%',
+                  transitionProperty: 'width, transform, opacity, filter',
+                  transitionDuration: `${sec.duration}ms, 200ms, 200ms, 200ms`,
+                  transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1), ease, ease, ease',
+                  transitionDelay: isInView ? `${sec.delay}ms, 0ms, 0ms, 0ms` : '0ms',
+                }}
+                title={`${sec.sector}: ${sec.share}% (${sec.offers} offers)`}
+              >
+                {/* Thin dividing border between colors */}
+                {idx > 0 && (
+                  <div className="absolute left-0 top-0 bottom-0 w-[1.5px] bg-white/30 pointer-events-none" />
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Hover Details Pip / Active Tooltip */}
+        <div className="min-h-[20px] text-[11px] font-semibold text-[#28052B] flex items-center gap-2 transition-all">
+          {hoveredIdx !== null ? (
+            <div className="flex items-center gap-1.5 animate-fadeIn">
+              <span
+                className="w-2.5 h-2.5 rounded-full shrink-0 shadow-xs"
+                style={{ backgroundColor: SECTOR_DISTRIBUTION[hoveredIdx].hex }}
+              />
+              <span className="font-bold text-[#28052B]">{SECTOR_DISTRIBUTION[hoveredIdx].sector}:</span>
+              <strong className="text-[#BD8E36]">{SECTOR_DISTRIBUTION[hoveredIdx].share}%</strong>
+              <span className="text-[#4A384F]/70">({SECTOR_DISTRIBUTION[hoveredIdx].offers} offers verified)</span>
+            </div>
+          ) : (
+            <span className="text-[10.5px] text-[#4A384F]/50 italic">
+              Hover over color segments or categories to inspect breakdown
+            </span>
+          )}
+        </div>
+      </div>
+
+      {/* Legend with matching color-wise entrance animation */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 text-xs pt-1">
+        {SECTOR_DISTRIBUTION.map((sec, idx) => {
+          const isHovered = hoveredIdx === idx;
+          return (
+            <div
+              key={sec.id}
+              onMouseEnter={() => setHoveredIdx(idx)}
+              onMouseLeave={() => setHoveredIdx(null)}
+              className={`flex items-center gap-2 p-1.5 rounded-xl transition-all cursor-pointer ${
+                isHovered ? 'bg-[#FAF7F2] -translate-y-0.5 shadow-2xs' : 'hover:bg-[#FAF7F2]/60'
+              }`}
+              style={{
+                opacity: isInView ? 1 : 0,
+                transform: isInView ? 'translateY(0)' : 'translateY(8px)',
+                transition: `all 500ms cubic-bezier(0.16, 1, 0.3, 1) ${sec.delay + 120}ms`,
+              }}
+            >
+              <span
+                className={`w-3 h-3 rounded-full shrink-0 ${sec.color} transition-transform ${
+                  isHovered ? 'scale-125 ring-2 ring-[#DFC06A]' : ''
+                }`}
+              />
+              <span className="text-[11px] text-[#4A384F] leading-tight">
+                <strong className="text-[#28052B] font-bold">
+                  {isInView ? (
+                    <AnimatedCounter end={sec.share} suffix="%" duration={sec.duration + 200} />
+                  ) : (
+                    `${sec.share}%`
+                  )}
+                </strong>{' '}
+                <span className={isHovered ? 'text-[#28052B] font-semibold' : ''}>
+                  {sec.sector}
+                </span>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
 
 const STUDENT_SPOTLIGHTS = [
   {
@@ -192,7 +380,7 @@ const STUDENT_SPOTLIGHTS = [
     package: '₹24.0 LPA',
     role: 'Cloud Support Associate',
     batch: 'Batch of 2025',
-    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=350&auto=format&fit=crop',
+    avatar: '/assets/student_anjali.jpg',
     quote:
       'The algorithmic bootcamps, continuous mock technical rounds, and AWS Academy training at Jyothi prepared me to clear rigorous interview loops effortlessly.',
     badge: 'Super Dream Offer',
@@ -204,7 +392,7 @@ const STUDENT_SPOTLIGHTS = [
     package: '₹14.2 LPA',
     role: 'Embedded Systems Trainee',
     batch: 'Batch of 2025',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=350&auto=format&fit=crop',
+    avatar: '/assets/student_rahul.jpg',
     quote:
       'Hands-on practice at Jyothi’s Texas Instruments Lab and VLSI simulation suites gave me the exact practical edge Bosch sought in their core engineering drive.',
     badge: 'Core Super Dream',
@@ -216,7 +404,7 @@ const STUDENT_SPOTLIGHTS = [
     package: '₹11.0 LPA',
     role: 'Software Developer - Mobility',
     batch: 'Batch of 2025',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=350&auto=format&fit=crop',
+    avatar: '/assets/student_gautham.jpg',
     quote:
       'The autonomous curriculum gave us freedom to build end-to-end full stack ML prototypes on the GPU cluster, which became the center of discussion during my interview.',
     badge: 'Dream Product Offer',
@@ -228,7 +416,7 @@ const STUDENT_SPOTLIGHTS = [
     package: '₹12.5 LPA',
     role: 'Probationary IT Officer',
     batch: 'Batch of 2025',
-    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=350&auto=format&fit=crop',
+    avatar: '/assets/student_meera.jpg',
     quote:
       'The finishing school personality sessions, technical GD workshops, and FinTech domain seminars conducted by PAT Cell made the selection process smooth.',
     badge: 'FinTech Super Dream',
@@ -259,267 +447,287 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A]">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A] scroll-smooth">
       {/* 1. Sub Navigation Bar matching royal ivory & plum theme */}
       <PlacementsSubNav activeRoute="placement-records" onNavigate={onNavigate} />
 
       {/* 2. Main Hero Section (High-End Royal Bento Theme) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
+      {/* 2. Main Hero Section (Pixel-perfect match to the design) */}
+      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           {/* Left Column: Editorial Headline & Actions */}
           <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-            {/* Flanked Eyebrow */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#28052B]">
-                CAMPUS PLACEMENT RECORDS &amp; STATS
-              </span>
-              <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
-            </div>
+            <RevealBlock direction="left">
+              <div className="space-y-4 sm:space-y-5">
+                {/* Flanked Eyebrow */}
+                <div className="flex items-center gap-3">
+                  <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#28052B]">
+                    CAMPUS PLACEMENT RECORDS
+                  </span>
+                  <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
+                </div>
 
-            {/* Serif Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.14]">
-              Campus Placement Records &amp;
-              <span className="block italic text-[#BD8E36] font-normal mt-1 sm:mt-1.5">
-                Salary Trajectory
-              </span>
-            </h1>
+                {/* Serif Main Headline */}
+                <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.14]">
+                  Campus Placement Records &amp;
+                  <span className="block italic text-[#BD8E36] font-normal mt-1 sm:mt-1.5 font-['Playfair_Display',serif]">
+                    Salary Trajectory
+                  </span>
+                </h1>
 
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base text-[#4A384F] font-normal leading-relaxed max-w-xl">
-              Audited campus placement statistics, branch-wise recruitment ratios, highest CTC milestones, and multi-year trajectory across 94+ global technology recruiters.
-            </p>
+                {/* Subtitle */}
+                <p className="text-sm sm:text-base text-[#4A384F] font-normal leading-relaxed max-w-xl">
+                  Explore branch-wise placement, salary milestones and outcomes across 94+ global technology recruiters.
+                </p>
 
-            {/* Action Pill Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                onClick={() => scrollToSection('department-breakdown')}
-                className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center gap-2 group cursor-pointer"
-              >
-                <span>View Branch Breakdown</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </button>
+                {/* Action Pill Buttons */}
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <button
+                    onClick={() => scrollToSection('department-breakdown')}
+                    className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center gap-2 group cursor-pointer"
+                  >
+                    <span>View Branch Breakdown</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                  </button>
 
-              <button
-                onClick={() => onNavigate('upcoming-drives')}
-                className="px-6 py-2.5 rounded-full bg-transparent hover:bg-[#28052B]/5 text-[#28052B] font-semibold text-xs sm:text-sm border border-[#28052B] transition-all inline-flex items-center gap-2 cursor-pointer"
-              >
-                <span>Check Upcoming Drives</span>
-              </button>
-            </div>
+                  <button
+                    onClick={() => onNavigate('upcoming-drives')}
+                    className="px-6 py-2.5 rounded-full bg-transparent hover:bg-[#28052B]/5 text-[#28052B] font-semibold text-xs sm:text-sm border border-[#28052B] transition-all inline-flex items-center gap-2 cursor-pointer"
+                  >
+                    <span>Check Upcoming Drives</span>
+                  </button>
+                </div>
+              </div>
+            </RevealBlock>
           </div>
 
-          {/* Right Column: Deep Plum Bento Card with Decorative Gold Corner Brackets */}
+          {/* Right Column: High-End Framed Photo of Students around Laptop */}
           <div className="lg:col-span-5 relative">
-            {/* Top-Left Decorative Curved Gold Corner Bracket */}
-            <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
-            {/* Bottom-Right Decorative Curved Gold Corner Bracket */}
-            <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
-
-            {/* Deep Plum Card */}
-            <div className="rounded-3xl bg-[#28052B] text-white p-6 sm:p-7 border border-[#3E1043] shadow-xl relative overflow-hidden">
-              {/* Header inside bento */}
-              <div className="flex items-center gap-3.5 pb-5 border-b border-[#431A45]">
-                {/* Trophy/Award icon */}
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#390F3B] border border-[#DFC06A]/30 flex items-center justify-center shrink-0">
-                  <Award className="w-5 h-5 sm:w-6 sm:h-6 text-[#DFC06A]" />
-                </div>
-
-                {/* Vertical Divider Line */}
-                <div className="w-[1px] h-8 bg-[#DFC06A]/40 shrink-0" />
-
-                {/* Placement Season Text */}
-                <div>
-                  <div className="text-xs text-white/90 font-medium tracking-wide">Audited placement season</div>
-                  <div className="text-base sm:text-lg font-['Playfair_Display',serif] italic text-[#DFC06A] font-semibold">
-                    Academic Year 2024 – 2025
-                  </div>
-                </div>
+            <RevealBlock direction="right" delay={150}>
+              <div className="relative rounded-[28px] sm:rounded-[32px] overflow-hidden border-[1.5px] border-[#DFC06A] shadow-md group bg-white">
+                <img
+                  src="/assets/placement_hero_students.jpg"
+                  alt="Jyothi engineering students celebrating placement offers"
+                  className="w-full h-auto object-cover rounded-[28px] sm:rounded-[32px] transition-transform duration-700 group-hover:scale-105"
+                />
               </div>
-
-              {/* 2x2 Divided Metric Grid */}
-              <div className="grid grid-cols-2 pt-4">
-                {/* Metric 1: Highest CTC */}
-                <div className="p-3.5 pr-4 border-r border-b border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">₹24.0 LPA</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Highest CTC • Amazon AWS
-                  </div>
-                </div>
-
-                {/* Metric 2: Total Offers */}
-                <div className="p-3.5 pl-4 border-b border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">462+</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Total Campus Offers
-                  </div>
-                </div>
-
-                {/* Metric 3: Average CTC */}
-                <div className="p-3.5 pr-4 pt-4 border-r border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">₹5.4 LPA</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Average Batch Package
-                  </div>
-                </div>
-
-                {/* Metric 4: Peak Rate */}
-                <div className="p-3.5 pl-4 pt-4">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">98.2%</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Peak Department Placement
-                  </div>
-                </div>
-              </div>
-            </div>
+            </RevealBlock>
           </div>
         </div>
+
+        {/* 3. Placement Overview Horizontal Card (Pixel-perfect match to the design strip) */}
+        <RevealBlock direction="up" delay={200}>
+          <div className="mt-8 sm:mt-10 p-5 sm:p-6 bg-[#FAF4EB]/80 backdrop-blur-xs rounded-2xl sm:rounded-3xl border border-[#E7D6C1] shadow-2xs">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 sm:gap-4 md:gap-0 md:divide-x md:divide-[#E7D6C1] items-center">
+              {/* Col 1: Placement Overview Label */}
+              <div className="col-span-2 md:col-span-1 pb-3 md:pb-0 border-b md:border-b-0 border-[#E7D6C1]/60 pr-0 md:pr-4">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#28052B]/75 block">
+                  PLACEMENT OVERVIEW
+                </span>
+                <div className="text-base sm:text-lg font-['Playfair_Display',serif] italic text-[#BD8E36] font-semibold mt-0.5">
+                  Academic Year 2024–2025
+                </div>
+              </div>
+
+              {/* Col 2: Highest CTC */}
+              <div className="px-2 sm:px-3 md:px-5 py-2 md:py-0 border-r md:border-r-0 border-[#E7D6C1]/60">
+                <div className="text-2xl sm:text-3xl font-black text-[#28052B] tracking-tight">
+                  ₹24.0 LPA
+                </div>
+                <div className="text-xs text-[#4A384F] font-normal mt-0.5">
+                  Highest CTC · Amazon AWS
+                </div>
+              </div>
+
+              {/* Col 3: Total Offers */}
+              <div className="px-2 sm:px-3 md:px-5 py-2 md:py-0">
+                <div className="text-2xl sm:text-3xl font-black text-[#28052B] tracking-tight">
+                  462+
+                </div>
+                <div className="text-xs text-[#4A384F] font-normal mt-0.5">
+                  Total Campus Offers
+                </div>
+              </div>
+
+              {/* Col 4: Average Package */}
+              <div className="px-2 sm:px-3 md:px-5 pt-3 md:pt-0 border-t md:border-t-0 border-r md:border-r-0 border-[#E7D6C1]/60">
+                <div className="text-2xl sm:text-3xl font-black text-[#28052B] tracking-tight">
+                  ₹5.4 LPA
+                </div>
+                <div className="text-xs text-[#4A384F] font-normal mt-0.5">
+                  Average Batch Package
+                </div>
+              </div>
+
+              {/* Col 5: Peak Rate */}
+              <div className="px-2 sm:px-3 md:px-5 pt-3 md:pt-0 border-t md:border-t-0 border-[#E7D6C1]/60">
+                <div className="text-2xl sm:text-3xl font-black text-[#28052B] tracking-tight">
+                  98.2%
+                </div>
+                <div className="text-xs text-[#4A384F] font-normal mt-0.5">
+                  Peak Department Placement
+                </div>
+              </div>
+            </div>
+          </div>
+        </RevealBlock>
       </section>
 
-      {/* 3. "Explore placement dimensions" Strip (Matching format cards of Upcoming Drives) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 space-y-4 sm:space-y-5">
+      {/* 4. Placement dimensions Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12 space-y-4 sm:space-y-5">
         {/* Section Heading with Hairline Gold Rule */}
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-[#28052B] whitespace-nowrap">
-            Placement dimensions
-          </h2>
-          <div className="h-[1px] bg-[#E7D6C1] flex-1" />
-        </div>
+        <RevealBlock direction="up">
+          <div className="flex items-center gap-4">
+            <h2 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-[#28052B] whitespace-nowrap">
+              Placement dimensions
+            </h2>
+            <div className="h-[1px] bg-[#E7D6C1] flex-1" />
+          </div>
+        </RevealBlock>
 
         {/* 3 Interactive Quick-Jump Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
-          {/* Card 1: Year-on-year trajectory */}
-          <button
-            onClick={() => scrollToSection('yearly-trajectory')}
-            className="p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <TrendingUp className="w-6 h-6 text-[#28052B]" />
+          {/* Card 1: Four-year trajectory */}
+          <RevealBlock direction="up" delay={50} className="h-full">
+            <button
+              onClick={() => scrollToSection('yearly-trajectory')}
+              className="w-full h-full p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-[#28052B] block">
+                    Four-year trajectory
+                  </span>
+                  <span className="text-[11px] text-[#4A384F]/70 font-medium">
+                    2021–2025
+                  </span>
+                </div>
               </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  Four-year trajectory
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  2021 – 2025 audited series
-                </span>
-              </div>
-            </div>
-            <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
-          </button>
+              <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+            </button>
+          </RevealBlock>
 
-          {/* Card 2: Branch-wise breakdown */}
-          <button
-            onClick={() => scrollToSection('department-breakdown')}
-            className="p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <GraduationCap className="w-6 h-6 text-[#28052B]" />
+          {/* Card 2: Branch performance */}
+          <RevealBlock direction="up" delay={120} className="h-full">
+            <button
+              onClick={() => scrollToSection('department-breakdown')}
+              className="w-full h-full p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-[#28052B] block">
+                    Branch performance
+                  </span>
+                  <span className="text-[11px] text-[#4A384F]/70 font-medium">
+                    7 B.Tech engineering disciplines
+                  </span>
+                </div>
               </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  Branch performance
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  7 B.Tech engineering disciplines
-                </span>
-              </div>
-            </div>
-            <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
-          </button>
+              <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+            </button>
+          </RevealBlock>
 
-          {/* Card 3: Salary tiers */}
-          <button
-            onClick={() => scrollToSection('salary-tiers')}
-            className="p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <Award className="w-6 h-6 text-[#28052B]" />
+          {/* Card 3: Compensation tiers */}
+          <RevealBlock direction="up" delay={190} className="h-full">
+            <button
+              onClick={() => scrollToSection('salary-tiers')}
+              className="w-full h-full p-4 rounded-2xl bg-white border border-[#E7D6C1] hover:border-[#C59B4E] transition-all text-left flex items-center justify-between group shadow-2xs hover:shadow-xs cursor-pointer"
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
+                  <Award className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
+                <div>
+                  <span className="font-bold text-sm sm:text-base text-[#28052B] block">
+                    Compensation tiers
+                  </span>
+                  <span className="text-[11px] text-[#4A384F]/70 font-medium">
+                    Super Dream, Dream &amp; Core
+                  </span>
+                </div>
               </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  Compensation tiers
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  Super Dream, Dream &amp; Core
-                </span>
-              </div>
-            </div>
-            <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
-          </button>
+              <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+            </button>
+          </RevealBlock>
         </div>
       </section>
 
       {/* 4. Verified Four-Year Historical Records Section */}
       <section id="yearly-trajectory" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-18 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
-                Institutional Data Archive
-              </span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-              Four-Year Campus Placement Trajectory
-            </h2>
-            <p className="text-xs sm:text-sm text-[#4A384F]/80">
-              Verified year-on-year growth showing surge in total offers, corporate visits, and average packages.
-            </p>
-          </div>
-
-          {/* Table / Trends Switcher + Year Filter */}
-          <div className="flex flex-wrap items-center gap-2.5">
-            <div className="bg-white p-1 rounded-xl border border-[#E7D6C1] flex items-center shadow-2xs text-xs">
-              <button
-                onClick={() => setActiveViewMode('table')}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeViewMode === 'table'
-                    ? 'bg-[#28052B] text-white shadow-xs'
-                    : 'text-[#28052B] hover:text-[#BD8E36]'
-                }`}
-              >
-                Table View
-              </button>
-              <button
-                onClick={() => setActiveViewMode('trends')}
-                className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeViewMode === 'trends'
-                    ? 'bg-[#28052B] text-white shadow-xs'
-                    : 'text-[#28052B] hover:text-[#BD8E36]'
-                }`}
-              >
-                Growth Matrix
-              </button>
+        <RevealBlock direction="up">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
+                  Institutional Data Archive
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+                Four-Year Campus Placement Trajectory
+              </h2>
+              <p className="text-xs sm:text-sm text-[#4A384F]/80">
+                Verified year-on-year growth showing surge in total offers, corporate visits, and average packages.
+              </p>
             </div>
 
-            <div className="flex items-center gap-1.5 text-xs bg-white px-3 py-1.5 rounded-xl border border-[#E7D6C1]">
-              <Calendar className="w-3.5 h-3.5 text-[#BD8E36]" />
-              <select
-                value={tableYearFilter}
-                onChange={(e) => setTableYearFilter(e.target.value)}
-                className="bg-transparent font-semibold text-[#28052B] focus:outline-none cursor-pointer"
-                aria-label="Filter placement records by batch year"
-              >
-                <option value="All">All Batches (2021–25)</option>
-                {PLACEMENT_STATS.map((s) => (
-                  <option key={s.year} value={s.year}>
-                    Batch {s.year}
-                  </option>
-                ))}
-              </select>
+            {/* Table / Trends Switcher + Year Filter */}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="bg-white p-1 rounded-xl border border-[#E7D6C1] flex items-center shadow-2xs text-xs">
+                <button
+                  onClick={() => setActiveViewMode('table')}
+                  className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+                    activeViewMode === 'table'
+                      ? 'bg-[#28052B] text-white shadow-xs'
+                      : 'text-[#28052B] hover:text-[#BD8E36]'
+                  }`}
+                >
+                  Table View
+                </button>
+                <button
+                  onClick={() => setActiveViewMode('trends')}
+                  className={`px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer ${
+                    activeViewMode === 'trends'
+                      ? 'bg-[#28052B] text-white shadow-xs'
+                      : 'text-[#28052B] hover:text-[#BD8E36]'
+                  }`}
+                >
+                  Growth Matrix
+                </button>
+              </div>
+
+              <div className="flex items-center gap-1.5 text-xs bg-white px-3 py-1.5 rounded-xl border border-[#E7D6C1]">
+                <Calendar className="w-3.5 h-3.5 text-[#BD8E36]" />
+                <select
+                  value={tableYearFilter}
+                  onChange={(e) => setTableYearFilter(e.target.value)}
+                  className="bg-transparent font-semibold text-[#28052B] focus:outline-none cursor-pointer"
+                  aria-label="Filter placement records by batch year"
+                >
+                  <option value="All">All Batches (2021–25)</option>
+                  {PLACEMENT_STATS.map((s) => (
+                    <option key={s.year} value={s.year}>
+                      Batch {s.year}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
-        </div>
+        </RevealBlock>
 
         {/* View Mode 1: Table */}
         {activeViewMode === 'table' ? (
-          <>
+          <RevealBlock direction="up" delay={100}>
             {/* Desktop Table */}
             <div className="hidden md:block bg-white rounded-3xl border border-[#E7D6C1] overflow-hidden shadow-xs">
               <table className="w-full text-left text-xs sm:text-sm">
@@ -600,62 +808,68 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
                 </div>
               ))}
             </div>
-          </>
+          </RevealBlock>
         ) : (
           /* View Mode 2: Four-Year Visual Growth Cards */
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {PLACEMENT_STATS.map((s, idx) => {
               const isLatest = idx === 0;
               return (
-                <div
-                  key={idx}
-                  className={`p-6 rounded-3xl border transition-all space-y-4 flex flex-col justify-between ${
-                    isLatest
-                      ? 'bg-white border-[#C59B4E] ring-2 ring-[#C59B4E]/20 shadow-md'
-                      : 'bg-white border-[#E7D6C1] shadow-2xs hover:border-[#BD8E36]'
-                  }`}
+                <RevealBlock
+                  key={s.year}
+                  direction={idx % 2 === 0 ? 'left' : 'right'}
+                  delay={(idx % 4) * 100}
+                  className="h-full"
                 >
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]">
-                        Batch {s.year}
-                      </span>
-                      {isLatest && (
-                        <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                          Current Season
+                  <div
+                    className={`h-full p-6 rounded-3xl border transition-all space-y-4 flex flex-col justify-between ${
+                      isLatest
+                        ? 'bg-white border-[#C59B4E] ring-2 ring-[#C59B4E]/20 shadow-md'
+                        : 'bg-white border-[#E7D6C1] shadow-2xs hover:border-[#BD8E36]'
+                    }`}
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono text-xs font-bold px-2.5 py-0.5 rounded-full bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]">
+                          Batch {s.year}
                         </span>
-                      )}
+                        {isLatest && (
+                          <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                            Current Season
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="text-2xl sm:text-3xl font-black text-[#28052B]">
+                          {s.offers}
+                        </div>
+                        <div className="text-xs font-semibold text-[#4A384F]">
+                          Offers Issued Across Branches
+                        </div>
+                      </div>
                     </div>
 
-                    <div className="space-y-1">
-                      <div className="text-2xl sm:text-3xl font-black text-[#28052B]">
-                        {s.offers}
+                    <div className="space-y-2 pt-2 border-t border-[#FAF7F2] text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#4A384F]/70">Highest CTC:</span>
+                        <strong className="text-emerald-800">{s.highestPackage}</strong>
                       </div>
-                      <div className="text-xs font-semibold text-[#4A384F]">
-                        Offers Issued Across Branches
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#4A384F]/70">Average CTC:</span>
+                        <strong className="text-[#28052B]">{s.averagePackage}</strong>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#4A384F]/70">Placement Rate:</span>
+                        <strong className="text-[#BD8E36]">{s.placementPercentage}</strong>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[#4A384F]/70">Visiting MNCs:</span>
+                        <strong className="text-[#28052B]">{s.participatingCompanies}</strong>
                       </div>
                     </div>
                   </div>
-
-                  <div className="space-y-2 pt-2 border-t border-[#FAF7F2] text-xs">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#4A384F]/70">Highest CTC:</span>
-                      <strong className="text-emerald-800">{s.highestPackage}</strong>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#4A384F]/70">Average CTC:</span>
-                      <strong className="text-[#28052B]">{s.averagePackage}</strong>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#4A384F]/70">Placement Rate:</span>
-                      <strong className="text-[#BD8E36]">{s.placementPercentage}</strong>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[#4A384F]/70">Visiting MNCs:</span>
-                      <strong className="text-[#28052B]">{s.participatingCompanies}</strong>
-                    </div>
-                  </div>
-                </div>
+                </RevealBlock>
               );
             })}
           </div>
@@ -664,361 +878,358 @@ export const PlacementRecordsPage: React.FC<Props> = ({ onNavigate, onOpenApply 
 
       {/* 5. Department-Wise Placement Rigor Breakdown */}
       <section id="department-breakdown" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-18 space-y-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
-                Academic Disciplines
-              </span>
+        <RevealBlock direction="up">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
+                  Academic Disciplines
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+                Branch-Wise Placement Performance (2024–25)
+              </h2>
+              <p className="text-xs sm:text-sm text-[#4A384F]/80">
+                Disciplinary placement rates, highest salary achievements, and key recruiters per engineering branch.
+              </p>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-              Branch-Wise Placement Performance (2024–25)
-            </h2>
-            <p className="text-xs sm:text-sm text-[#4A384F]/80">
-              Disciplinary placement rates, highest salary achievements, and key recruiters per engineering branch.
-            </p>
-          </div>
 
-          {/* Department Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2">
-            {['All', 'Computing & AI', 'Circuit & Electronics', 'Core Engineering'].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedDeptCategory(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                  selectedDeptCategory === cat
-                    ? 'bg-[#28052B] text-[#DFC06A] shadow-2xs font-bold'
-                    : 'bg-white text-[#28052B] border border-[#E7D6C1] hover:bg-[#FAF7F2]'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {/* Department Category Filter Pills */}
+            <div className="flex flex-wrap items-center gap-2">
+              {['All', 'Computing & AI', 'Circuit & Electronics', 'Core Engineering'].map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedDeptCategory(cat)}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                    selectedDeptCategory === cat
+                      ? 'bg-[#28052B] text-[#DFC06A] shadow-2xs font-bold'
+                      : 'bg-white text-[#28052B] border border-[#E7D6C1] hover:bg-[#FAF7F2]'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
+        </RevealBlock>
 
         {/* Detailed Department Performance Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
           {filteredDepartments.map((dept, idx) => (
-            <div
-              key={idx}
-              className="p-5 sm:p-6 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4 group"
+            <RevealBlock
+              key={`${selectedDeptCategory}-${dept.code}`}
+              direction={idx % 2 === 0 ? 'left' : 'right'}
+              delay={(idx % 3) * 120}
+              className="h-full"
             >
-              <div className="space-y-3">
-                {/* Header: Branch code badge + placement rate pill */}
-                <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]">
-                    {dept.code}
-                  </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    {dept.placed} Placed
-                  </span>
-                </div>
-
-                {/* Department Name */}
-                <div>
-                  <h3 className="text-base sm:text-lg font-bold font-['Playfair_Display',serif] text-[#28052B] group-hover:text-[#BD8E36] transition-colors">
-                    {dept.dept}
-                  </h3>
-                  <div className="text-xs text-[#4A384F]/70 font-medium mt-0.5">
-                    {dept.offers} Total Offers Issued
-                  </div>
-                </div>
-
-                {/* Progress bar visual for placement % */}
-                <div className="space-y-1">
-                  <div className="flex justify-between text-[11px] font-semibold text-[#4A384F]">
-                    <span>Placement Ratio</span>
-                    <span className="text-[#28052B]">{dept.placed}</span>
-                  </div>
-                  <div className="w-full h-2 bg-[#FAF7F2] rounded-full overflow-hidden border border-[#E7D6C1]/50">
-                    <div
-                      className="h-full bg-gradient-to-r from-[#BD8E36] to-[#E5B656] rounded-full"
-                      style={{ width: `${dept.placedNum}%` }}
-                    />
-                  </div>
-                </div>
-
-                {/* 2-Metric Bento inside card */}
-                <div className="grid grid-cols-2 gap-2 text-xs pt-1">
-                  <div className="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E7D6C1]/60">
-                    <span className="text-[10px] uppercase font-bold text-[#4A384F]/60 block">Highest CTC</span>
-                    <strong className="text-emerald-800 text-sm">{dept.highest}</strong>
-                  </div>
-                  <div className="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E7D6C1]/60">
-                    <span className="text-[10px] uppercase font-bold text-[#4A384F]/60 block">Average CTC</span>
-                    <strong className="text-[#28052B] text-sm">{dept.avg}</strong>
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom: Top Recruiters */}
-              <div className="pt-3 border-t border-[#FAF7F2] space-y-1.5">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#4A384F]/60 block">
-                  Top Recruiters:
-                </span>
-                <div className="flex flex-wrap gap-1">
-                  {dept.topRecruiters.map((r, i) => (
-                    <span
-                      key={i}
-                      className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]/70"
-                    >
-                      {r}
+              <div className="h-full p-5 sm:p-6 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] shadow-2xs hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between space-y-4 group">
+                <div className="space-y-3">
+                  {/* Header: Branch code badge + placement rate pill */}
+                  <div className="flex items-center justify-between">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]">
+                      {dept.code}
                     </span>
-                  ))}
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      {dept.placed} Placed
+                    </span>
+                  </div>
+
+                  {/* Department Name */}
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold font-['Playfair_Display',serif] text-[#28052B] group-hover:text-[#BD8E36] transition-colors">
+                      {dept.dept}
+                    </h3>
+                    <div className="text-xs text-[#4A384F]/70 font-medium mt-0.5">
+                      {dept.offers} Total Offers Issued
+                    </div>
+                  </div>
+
+                  {/* Progress bar visual for placement % */}
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-[11px] font-semibold text-[#4A384F]">
+                      <span>Placement Ratio</span>
+                      <span className="text-[#28052B]">{dept.placed}</span>
+                    </div>
+                    <div className="w-full h-2 bg-[#FAF7F2] rounded-full overflow-hidden border border-[#E7D6C1]/50">
+                      <div
+                        className="h-full bg-gradient-to-r from-[#BD8E36] to-[#E5B656] rounded-full"
+                        style={{ width: `${dept.placedNum}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* 2-Metric Bento inside card */}
+                  <div className="grid grid-cols-2 gap-2 text-xs pt-1">
+                    <div className="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E7D6C1]/60">
+                      <span className="text-[10px] uppercase font-bold text-[#4A384F]/60 block">Highest CTC</span>
+                      <strong className="text-emerald-800 text-sm">{dept.highest}</strong>
+                    </div>
+                    <div className="p-2.5 bg-[#FAF7F2] rounded-xl border border-[#E7D6C1]/60">
+                      <span className="text-[10px] uppercase font-bold text-[#4A384F]/60 block">Average CTC</span>
+                      <strong className="text-[#28052B] text-sm">{dept.avg}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bottom: Top Recruiters */}
+                <div className="pt-3 border-t border-[#FAF7F2] space-y-1.5">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#4A384F]/60 block">
+                    Top Recruiters:
+                  </span>
+                  <div className="flex flex-wrap gap-1">
+                    {dept.topRecruiters.map((r, i) => (
+                      <span
+                        key={i}
+                        className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-[#FAF7F2] text-[#28052B] border border-[#E7D6C1]/70"
+                      >
+                        {r}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </RevealBlock>
           ))}
         </div>
       </section>
 
       {/* 6. Compensation Tiers & Salary Distribution */}
       <section id="salary-tiers" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-18 space-y-6">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
-              Package Categorization
-            </span>
+        <RevealBlock direction="up">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
+                Package Categorization
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+              Compensation Tiers &amp; Role Categories
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4A384F]/80 max-w-2xl">
+              Our placement opportunities span structured salary bands catering to core researchers, digital specialists, and full-stack software engineers.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-            Compensation Tiers &amp; Role Categories
-          </h2>
-          <p className="text-xs sm:text-sm text-[#4A384F]/80 max-w-2xl">
-            Our placement opportunities span structured salary bands catering to core researchers, digital specialists, and full-stack software engineers.
-          </p>
-        </div>
+        </RevealBlock>
 
         {/* 3 Tier Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {SALARY_TIERS.map((tier, idx) => (
-            <div
-              key={idx}
-              className="p-6 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-5"
-            >
-              <div className="space-y-3.5">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${tier.badgeColor}`}>
-                    {tier.badge}
-                  </span>
-                  <span className="text-xs font-bold text-[#28052B] bg-[#FAF7F2] px-2.5 py-0.5 rounded-full border border-[#E7D6C1]">
-                    {tier.count} ({tier.percentage})
-                  </span>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#28052B]">
-                    {tier.tier}
-                  </h3>
-                  <div className="text-base font-black text-[#BD8E36] mt-0.5 font-sans">
-                    {tier.range}
-                  </div>
-                </div>
-
-                <p className="text-xs text-[#4A384F]/80 leading-relaxed">
-                  {tier.desc}
-                </p>
-
-                {/* Key Roles */}
-                <div className="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E7D6C1]/60 space-y-1.5 text-xs">
-                  <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#4A384F]/70 block">
-                    Representative Profiles:
-                  </span>
-                  <div className="text-[11px] text-[#28052B] font-medium leading-relaxed">
-                    {tier.roles.join(' • ')}
-                  </div>
-                </div>
-              </div>
-
-              {/* Featured Recruiters */}
-              <div className="pt-3 border-t border-[#FAF7F2]">
-                <div className="text-[10.5px] font-bold uppercase tracking-wider text-[#4A384F]/60 mb-2">
-                  Featured Recruiters:
-                </div>
-                <div className="flex flex-wrap gap-1.5">
-                  {tier.companies.map((c, i) => (
-                    <span
-                      key={i}
-                      className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-[#FAF7F2] border border-[#E7D6C1] text-[#28052B]"
-                    >
-                      {c}
+            <RevealBlock key={idx} direction="up" delay={idx * 120}>
+              <div className="h-full p-6 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-5">
+                <div className="space-y-3.5">
+                  {/* Header */}
+                  <div className="flex items-center justify-between">
+                    <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${tier.badgeColor}`}>
+                      {tier.badge}
                     </span>
-                  ))}
+                    <span className="text-xs font-bold text-[#28052B] bg-[#FAF7F2] px-2.5 py-0.5 rounded-full border border-[#E7D6C1]">
+                      {tier.count} ({tier.percentage})
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-bold font-['Playfair_Display',serif] text-[#28052B]">
+                      {tier.tier}
+                    </h3>
+                    <div className="text-base font-black text-[#BD8E36] mt-0.5 font-sans">
+                      {tier.range}
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-[#4A384F]/80 leading-relaxed">
+                    {tier.desc}
+                  </p>
+
+                  {/* Key Roles */}
+                  <div className="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E7D6C1]/60 space-y-1.5 text-xs">
+                    <span className="text-[10.5px] font-bold uppercase tracking-wider text-[#4A384F]/70 block">
+                      Representative Profiles:
+                    </span>
+                    <div className="text-[11px] text-[#28052B] font-medium leading-relaxed">
+                      {tier.roles.join(' • ')}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Featured Recruiters */}
+                <div className="pt-3 border-t border-[#FAF7F2]">
+                  <div className="text-[10.5px] font-bold uppercase tracking-wider text-[#4A384F]/60 mb-2">
+                    Featured Recruiters:
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {tier.companies.map((c, i) => (
+                      <span
+                        key={i}
+                        className="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-[#FAF7F2] border border-[#E7D6C1] text-[#28052B]"
+                      >
+                        {c}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </RevealBlock>
           ))}
         </div>
 
-        {/* Sector Distribution Strip */}
-        <div className="p-6 bg-white rounded-3xl border border-[#E7D6C1] shadow-2xs space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-            <div>
-              <h3 className="text-base font-bold font-['Playfair_Display',serif] text-[#28052B]">
-                Recruitment Industry Sector Share
-              </h3>
-              <p className="text-xs text-[#4A384F]/70">
-                Diversified placement distribution across corporate domains (2024–25 batch)
-              </p>
-            </div>
-            <span className="text-xs font-bold text-[#BD8E36]">462 Total Placements</span>
-          </div>
-
-          {/* Multi-segment stacked visual bar */}
-          <div className="w-full h-3 rounded-full overflow-hidden flex bg-slate-100">
-            {SECTOR_DISTRIBUTION.map((sec, idx) => (
-              <div
-                key={idx}
-                className={`${sec.color} h-full`}
-                style={{ width: sec.share }}
-                title={`${sec.sector}: ${sec.share} (${sec.offers} offers)`}
-              />
-            ))}
-          </div>
-
-          {/* Legend */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs pt-1">
-            {SECTOR_DISTRIBUTION.map((sec, idx) => (
-              <div key={idx} className="flex items-center gap-2">
-                <span className={`w-3 h-3 rounded-full shrink-0 ${sec.color}`} />
-                <span className="text-[11px] text-[#4A384F]">
-                  <strong className="text-[#28052B]">{sec.share}</strong> {sec.sector}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* Sector Distribution Strip with Color-Wise Loading Animation */}
+        <RevealBlock direction="up" delay={150}>
+          <SectorDistributionCard />
+        </RevealBlock>
       </section>
 
       {/* 7. Student Hall of Fame • Star Achievers */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 sm:pt-18 space-y-6">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
-              Student Testimonials &amp; Achievers
-            </span>
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-            Hall of Fame • Flagship Achievers
-          </h2>
-          <p className="text-xs sm:text-sm text-[#4A384F]/80">
-            Meet a few of our exceptional graduates who secured flagship placements at leading multinational conglomerates.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {STUDENT_SPOTLIGHTS.map((s, idx) => (
-            <div
-              key={idx}
-              className="p-5 sm:p-6 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] shadow-2xs hover:shadow-md transition-all flex flex-col justify-between space-y-4"
-            >
-              <div className="space-y-3">
-                {/* Avatar and basic info */}
-                <div className="flex items-center gap-3">
-                  <img
-                    src={s.avatar}
-                    alt={s.name}
-                    className="w-13 h-13 rounded-2xl object-cover border-2 border-[#DFC06A] shrink-0"
-                  />
-                  <div>
-                    <h3 className="font-bold text-sm text-[#28052B] leading-tight">{s.name}</h3>
-                    <p className="text-[11px] text-[#4A384F]/70 mt-0.5 leading-tight">{s.dept}</p>
-                    <span className="text-[10px] text-[#BD8E36] font-bold">{s.batch}</span>
-                  </div>
-                </div>
-
-                {/* Offer detail box */}
-                <div className="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E7D6C1]/70 flex items-center justify-between">
-                  <div>
-                    <div className="text-[9.5px] text-[#4A384F]/60 font-bold uppercase tracking-wider">Hired By</div>
-                    <div className="text-xs font-bold text-[#28052B]">{s.company}</div>
-                    <div className="text-[10.5px] text-[#4A384F]/80 truncate max-w-[130px]">{s.role}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[9.5px] text-[#4A384F]/60 font-bold uppercase tracking-wider">Annual CTC</div>
-                    <div className="text-sm sm:text-base font-black text-emerald-800">{s.package}</div>
-                  </div>
-                </div>
-
-                {/* Quote */}
-                <p className="text-xs text-[#4A384F] italic leading-relaxed pt-1">
-                  &ldquo;{s.quote}&rdquo;
-                </p>
-              </div>
-
-              {/* Verified badge */}
-              <div className="pt-2 border-t border-[#FAF7F2] flex items-center justify-between text-[11px]">
-                <span className="text-emerald-800 font-bold flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Verified On-Campus Offer</span>
-                </span>
-              </div>
+        <RevealBlock direction="up">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
+                Student Testimonials &amp; Achievers
+              </span>
             </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+              Hall of Fame • Flagship Achievers
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4A384F]/80">
+              Meet a few of our exceptional graduates who secured flagship placements at leading multinational conglomerates.
+            </p>
+          </div>
+        </RevealBlock>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          {STUDENT_SPOTLIGHTS.map((s, idx) => (
+            <RevealBlock key={idx} direction={idx % 2 === 0 ? 'left' : 'right'} delay={(idx % 4) * 80} className="h-full">
+              <div className="h-full p-4 sm:p-5 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#BD8E36] shadow-xs hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-between space-y-4 group relative overflow-hidden">
+                {/* Subtle top gold accent glow */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#DFC06A]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="space-y-3.5">
+                  {/* Student Portrait Banner with Optimal Proportional Fit & Zero Cutoff (Matching Reference) */}
+                  <div className="relative w-full aspect-[16/11] rounded-2xl overflow-hidden border-[1.5px] border-[#DFC06A]/80 shadow-xs bg-[#28052B]/5">
+                    <img
+                      src={s.avatar}
+                      alt={s.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
+                    {/* Floating Tier Badge with Glassmorphism */}
+                    <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#28052B]/90 text-[#DFC06A] border border-[#DFC06A]/50 backdrop-blur-md shadow-md">
+                      {s.badge}
+                    </div>
+                  </div>
+
+                  {/* Student Name & Dept */}
+                  <div className="pt-0.5">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <h3 className="font-bold text-base sm:text-lg text-[#28052B] leading-tight font-['Playfair_Display',serif] group-hover:text-[#BD8E36] transition-colors truncate">
+                          {s.name}
+                        </h3>
+                        <p className="text-xs text-[#4A384F]/85 mt-0.5 leading-snug font-medium line-clamp-1">
+                          {s.dept}
+                        </p>
+                      </div>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#FAF7F2] text-[#BD8E36] border border-[#E7D6C1] shrink-0">
+                        {s.batch}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Offer detail box */}
+                  <div className="p-3 bg-[#FAF7F2] rounded-2xl border border-[#E7D6C1]/80 group-hover:border-[#DFC06A]/50 transition-colors flex items-center justify-between gap-2">
+                    <div className="min-w-0">
+                      <div className="text-[9px] text-[#4A384F]/60 font-bold uppercase tracking-wider">Hired By</div>
+                      <div className="text-xs sm:text-sm font-bold text-[#28052B] truncate">{s.company}</div>
+                      <div className="text-[10.5px] text-[#4A384F]/80 truncate">{s.role}</div>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <div className="text-[9px] text-[#4A384F]/60 font-bold uppercase tracking-wider">Annual CTC</div>
+                      <div className="text-sm sm:text-base font-black text-emerald-800 tracking-tight">{s.package}</div>
+                    </div>
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-xs text-[#4A384F] italic leading-relaxed line-clamp-3">
+                    &ldquo;{s.quote}&rdquo;
+                  </p>
+                </div>
+
+                {/* Verified badge */}
+                <div className="pt-3 border-t border-[#FAF7F2] flex items-center justify-between text-[11px] sm:text-xs">
+                  <span className="text-emerald-800 font-bold flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>Verified On-Campus Offer</span>
+                  </span>
+                </div>
+              </div>
+            </RevealBlock>
           ))}
         </div>
       </section>
 
       {/* 8. Placement Cell Control Desk & Brochure Download (Aubergine Bento Matching Hero) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16">
-        <div className="relative">
-          {/* Subtle Decorative Curved Gold Corner Brackets */}
-          <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
-          <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
+        <RevealBlock direction="up">
+          <div className="relative">
+            {/* Subtle Decorative Curved Gold Corner Brackets */}
+            <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
+            <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
 
-          <div className="rounded-3xl bg-[#28052B] text-white p-7 sm:p-10 border border-[#3E1043] shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="space-y-3 max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#390F3B] text-[#DFC06A] border border-[#DFC06A]/30">
-                <Sparkles className="w-3.5 h-3.5 text-[#DFC06A]" />
-                <span>Placement Advisory &amp; Recruiter Desk</span>
-              </span>
+            <div className="rounded-3xl bg-[#28052B] text-white p-7 sm:p-10 border border-[#3E1043] shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+              <div className="space-y-3 max-w-2xl">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#390F3B] text-[#DFC06A] border border-[#DFC06A]/30">
+                  <Sparkles className="w-3.5 h-3.5 text-[#DFC06A]" />
+                  <span>Placement Advisory &amp; Recruiter Desk</span>
+                </span>
 
-              <h3 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-white">
-                Download Official Placement Brochure 2025–26
-              </h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-white">
+                  Download Official Placement Brochure 2025–26
+                </h3>
 
-              <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
-                Get full audited departmental stats, laboratory infrastructure specifications, curriculum blueprints, and recruiter guidelines in the official Jyothi Autonomous Campus Placement Brochure.
-              </p>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
+                  Get full audited departmental stats, laboratory infrastructure specifications, curriculum blueprints, and recruiter guidelines in the official Jyothi Autonomous Campus Placement Brochure.
+                </p>
 
-              <div className="flex flex-wrap items-center gap-5 pt-1 text-xs text-white/90">
-                <a
-                  href="tel:+914884259000"
-                  className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                <div className="flex flex-wrap items-center gap-5 pt-1 text-xs text-white/90">
+                  <a
+                    href="tel:+914884259000"
+                    className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-[#DFC06A]" />
+                    <span>+91 4884 259000 (Extn: 224 / 225)</span>
+                  </a>
+                  <a
+                    href="mailto:placements@jecc.ac.in"
+                    className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                  >
+                    <Mail className="w-4 h-4 text-[#DFC06A]" />
+                    <span>placements@jecc.ac.in / pat@jecc.ac.in</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+                <button
+                  onClick={() => setDownloadModalOpen(true)}
+                  className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Phone className="w-4 h-4 text-[#DFC06A]" />
-                  <span>+91 4884 259000 (Extn: 224 / 225)</span>
-                </a>
-                <a
-                  href="mailto:placements@jecc.ac.in"
-                  className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                  <Download className="w-4 h-4" />
+                  <span>Download Placement Brochure (PDF)</span>
+                </button>
+
+                <button
+                  onClick={() => onNavigate('corporate-recruiters')}
+                  className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Mail className="w-4 h-4 text-[#DFC06A]" />
-                  <span>placements@jecc.ac.in / pat@jecc.ac.in</span>
-                </a>
+                  <Briefcase className="w-4 h-4 text-[#DFC06A]" />
+                  <span>Explore 94+ Recruiters Directory</span>
+                </button>
               </div>
             </div>
-
-            {/* Quick Actions */}
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
-              <button
-                onClick={() => setDownloadModalOpen(true)}
-                className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Download className="w-4 h-4" />
-                <span>Download Placement Brochure (PDF)</span>
-              </button>
-
-              <button
-                onClick={() => onNavigate('corporate-recruiters')}
-                className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <Briefcase className="w-4 h-4 text-[#DFC06A]" />
-                <span>Explore 94+ Recruiters Directory</span>
-              </button>
-            </div>
           </div>
-        </div>
+        </RevealBlock>
       </section>
 
       {/* 9. Interactive Download Brochure Modal */}

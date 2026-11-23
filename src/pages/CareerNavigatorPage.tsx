@@ -371,7 +371,7 @@ export const CareerNavigatorPage: React.FC<Props> = ({ onNavigate, onOpenApply }
   };
 
   return (
-    <div className="bg-[#FAF7F0] min-h-screen pb-20 space-y-12 selection:bg-[#210532] selection:text-[#FDE68A]">
+    <div className="bg-[#FAF7F0] min-h-screen pb-20 space-y-12 selection:bg-[#210532] selection:text-[#FDE68A] scroll-smooth">
       {/* Sub Navigation Bar for Placements Section */}
       <PlacementsSubNav activeRoute="career-navigator" onNavigate={onNavigate} />
 
@@ -527,61 +527,64 @@ export const CareerNavigatorPage: React.FC<Props> = ({ onNavigate, onOpenApply }
 
       {/* Track Selection Section (Exact Match to Screenshot) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="space-y-1">
-          <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-black font-['Playfair_Display',serif] text-[#210532] tracking-tight">
-            Select an Engineering Specialization Track
-          </h2>
-        </div>
+        <RevealBlock direction="up">
+          <div className="space-y-1">
+            <h2 className="text-2xl sm:text-3xl lg:text-[34px] font-black font-['Playfair_Display',serif] text-[#210532] tracking-tight">
+              Select an Engineering Specialization Track
+            </h2>
+          </div>
+        </RevealBlock>
 
         {/* 6 Track Cards Grid (2 rows x 3 columns on desktop) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {CAREER_DOMAINS.map((domain) => {
+          {CAREER_DOMAINS.map((domain, idx) => {
             const isSelected = domain.id === selectedDomainId;
 
             return (
-              <button
-                key={domain.id}
-                onClick={() => setSelectedDomainId(domain.id)}
-                className={`p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 flex items-center justify-between gap-3.5 cursor-pointer group ${
-                  isSelected
-                    ? 'bg-[#210532] text-white shadow-lg border border-[#DFC06A]'
-                    : 'bg-white hover:bg-amber-50/40 text-[#210532] border border-[#DFC06A]/35 shadow-2xs hover:border-[#DFC06A]'
-                }`}
-              >
-                {/* Left: Icon square */}
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${
-                    isSelected ? 'bg-white/10' : 'bg-[#FAF0F6]'
+              <RevealBlock key={domain.id} direction={idx % 2 === 0 ? 'left' : 'right'} delay={(idx % 3) * 60}>
+                <button
+                  onClick={() => setSelectedDomainId(domain.id)}
+                  className={`w-full h-full p-4 sm:p-5 rounded-2xl text-left transition-all duration-200 flex items-center justify-between gap-3.5 cursor-pointer group ${
+                    isSelected
+                      ? 'bg-[#210532] text-white shadow-lg border border-[#DFC06A]'
+                      : 'bg-white hover:bg-amber-50/40 text-[#210532] border border-[#DFC06A]/35 shadow-2xs hover:border-[#DFC06A]'
                   }`}
                 >
-                  {renderTrackIcon(domain.iconType, isSelected)}
-                </div>
-
-                {/* Vertical Divider */}
-                <span
-                  className={`w-[1px] h-8 shrink-0 ${
-                    isSelected ? 'bg-[#E8BD68]/40' : 'bg-[#C79628]/40'
-                  }`}
-                />
-
-                {/* Track Title */}
-                <div className="min-w-0 flex-1">
-                  <h3
-                    className={`font-bold text-xs sm:text-[13.5px] leading-snug line-clamp-2 ${
-                      isSelected ? 'text-white' : 'text-[#210532]'
+                  {/* Left: Icon square */}
+                  <div
+                    className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 ${
+                      isSelected ? 'bg-white/10' : 'bg-[#FAF0F6]'
                     }`}
                   >
-                    {domain.name}
-                  </h3>
-                </div>
+                    {renderTrackIcon(domain.iconType, isSelected)}
+                  </div>
 
-                {/* Right Arrow */}
-                <ArrowRight
-                  className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1 ${
-                    isSelected ? 'text-[#E8BD68]' : 'text-slate-400 group-hover:text-[#210532]'
-                  }`}
-                />
-              </button>
+                  {/* Vertical Divider */}
+                  <span
+                    className={`w-[1px] h-8 shrink-0 ${
+                      isSelected ? 'bg-[#E8BD68]/40' : 'bg-[#C79628]/40'
+                    }`}
+                  />
+
+                  {/* Track Title */}
+                  <div className="min-w-0 flex-1">
+                    <h3
+                      className={`font-bold text-xs sm:text-[13.5px] leading-snug line-clamp-2 ${
+                        isSelected ? 'text-white' : 'text-[#210532]'
+                      }`}
+                    >
+                      {domain.name}
+                    </h3>
+                  </div>
+
+                  {/* Right Arrow */}
+                  <ArrowRight
+                    className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-1 ${
+                      isSelected ? 'text-[#E8BD68]' : 'text-slate-400 group-hover:text-[#210532]'
+                    }`}
+                  />
+                </button>
+              </RevealBlock>
             );
           })}
         </div>
@@ -844,101 +847,111 @@ export const CareerNavigatorPage: React.FC<Props> = ({ onNavigate, onOpenApply }
 
       {/* Higher Studies & Competitive Exam Pathways */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div className="space-y-1">
-          <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C79628] flex items-center gap-2">
-            <span className="w-6 h-[1.5px] bg-[#C79628]" />
-            ACADEMIC &amp; PUBLIC SECTOR EXCELLENCE
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#210532]">
-            Postgraduate &amp; Competitive Exam Timelines
-          </h2>
-        </div>
+        <RevealBlock direction="up">
+          <div className="space-y-1">
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#C79628] flex items-center gap-2">
+              <span className="w-6 h-[1.5px] bg-[#C79628]" />
+              ACADEMIC &amp; PUBLIC SECTOR EXCELLENCE
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#210532]">
+              Postgraduate &amp; Competitive Exam Timelines
+            </h2>
+          </div>
+        </RevealBlock>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#EFE8F6] flex items-center justify-center text-[#210532]">
-              <GraduationCap className="w-5 h-5 text-[#210532]" />
+          <RevealBlock direction="left" delay={50}>
+            <div className="h-full p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#EFE8F6] flex items-center justify-center text-[#210532]">
+                <GraduationCap className="w-5 h-5 text-[#210532]" />
+              </div>
+              <h3 className="font-bold text-base text-[#210532]">GATE (Graduate Aptitude Test)</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Gateway to M.Tech at IITs, IISc, and direct recruitment to PSUs (ISRO, IOCL, ONGC, NTPC, BARC). Structured coaching starts in Semester 4.
+              </p>
+              <div className="text-[11px] text-[#A87E2B] font-bold pt-1">
+                Target Window: February of Final Year
+              </div>
             </div>
-            <h3 className="font-bold text-base text-[#210532]">GATE (Graduate Aptitude Test)</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Gateway to M.Tech at IITs, IISc, and direct recruitment to PSUs (ISRO, IOCL, ONGC, NTPC, BARC). Structured coaching starts in Semester 4.
-            </p>
-            <div className="text-[11px] text-[#A87E2B] font-bold pt-1">
-              Target Window: February of Final Year
-            </div>
-          </div>
+          </RevealBlock>
 
-          <div className="p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#FAF0E6] flex items-center justify-center text-[#C79628]">
-              <Compass className="w-5 h-5 text-[#C79628]" />
+          <RevealBlock direction="up" delay={150}>
+            <div className="h-full p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-[#FAF0E6] flex items-center justify-center text-[#C79628]">
+                <Compass className="w-5 h-5 text-[#C79628]" />
+              </div>
+              <h3 className="font-bold text-base text-[#210532]">GRE &amp; IELTS (MS Abroad)</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Advising for Master’s admissions in USA, Germany, UK, and Singapore. Comprehensive Statement of Purpose (SOP) audits and alumni references.
+              </p>
+              <div className="text-[11px] text-[#A87E2B] font-bold pt-1">
+                Target Window: August to October of 4th Year
+              </div>
             </div>
-            <h3 className="font-bold text-base text-[#210532]">GRE &amp; IELTS (MS Abroad)</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Advising for Master’s admissions in USA, Germany, UK, and Singapore. Comprehensive Statement of Purpose (SOP) audits and alumni references.
-            </p>
-            <div className="text-[11px] text-[#A87E2B] font-bold pt-1">
-              Target Window: August to October of 4th Year
-            </div>
-          </div>
+          </RevealBlock>
 
-          <div className="p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-700">
-              <ShieldCheck className="w-5 h-5 text-emerald-700" />
+          <RevealBlock direction="right" delay={250}>
+            <div className="h-full p-6 bg-white rounded-3xl border border-[#DFC06A]/35 shadow-sm space-y-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-700">
+                <ShieldCheck className="w-5 h-5 text-emerald-700" />
+              </div>
+              <h3 className="font-bold text-base text-[#210532]">UPSC, IES &amp; Defence (SSB)</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                Indian Engineering Services (IES) orientation, combined defence services, and technical officer roles in the Indian Armed Forces.
+              </p>
+              <div className="text-[11px] text-emerald-700 font-bold pt-1">
+                Target Window: Final Year Degree Completion
+              </div>
             </div>
-            <h3 className="font-bold text-base text-[#210532]">UPSC, IES &amp; Defence (SSB)</h3>
-            <p className="text-xs text-slate-600 leading-relaxed">
-              Indian Engineering Services (IES) orientation, combined defence services, and technical officer roles in the Indian Armed Forces.
-            </p>
-            <div className="text-[11px] text-emerald-700 font-bold pt-1">
-              Target Window: Final Year Degree Completion
-            </div>
-          </div>
+          </RevealBlock>
         </div>
       </section>
 
       {/* Counseling & Mentorship Desk */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="rounded-3xl bg-white border border-[#DFC06A]/45 p-8 sm:p-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-2xl">
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C79628] flex items-center gap-1.5">
-              <span className="w-5 h-[1.5px] bg-[#C79628]" />
-              ONE-ON-ONE COUNSELING
-            </span>
-            <h3 className="text-xl sm:text-2xl font-bold font-['Playfair_Display',serif] text-[#210532]">
-              Need Help Deciding Your Pathway?
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-              Book a career navigation session with our dedicated faculty placement coordinators and industry mentors at the Career Guidance Cell.
-            </p>
-            <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-700">
-              <span className="flex items-center gap-1.5">
-                <Phone className="w-4 h-4 text-[#C79628]" />
-                <span>+91 4884 259000 / Extn 224</span>
+        <RevealBlock direction="up">
+          <div className="rounded-3xl bg-white border border-[#DFC06A]/45 p-8 sm:p-10 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-2xl">
+              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#C79628] flex items-center gap-1.5">
+                <span className="w-5 h-[1.5px] bg-[#C79628]" />
+                ONE-ON-ONE COUNSELING
               </span>
-              <span className="flex items-center gap-1.5">
-                <Mail className="w-4 h-4 text-[#C79628]" />
-                <span>careernavigator@jecc.ac.in</span>
-              </span>
+              <h3 className="text-xl sm:text-2xl font-bold font-['Playfair_Display',serif] text-[#210532]">
+                Need Help Deciding Your Pathway?
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Book a career navigation session with our dedicated faculty placement coordinators and industry mentors at the Career Guidance Cell.
+              </p>
+              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-700">
+                <span className="flex items-center gap-1.5">
+                  <Phone className="w-4 h-4 text-[#C79628]" />
+                  <span>+91 4884 259000 / Extn 224</span>
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <Mail className="w-4 h-4 text-[#C79628]" />
+                  <span>careernavigator@jecc.ac.in</span>
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => onNavigate('career-guidance')}
+                className="px-6 py-2.5 rounded-full bg-[#210532] hover:bg-[#340A4E] text-white font-bold text-xs sm:text-sm transition-colors inline-flex items-center gap-2 cursor-pointer shadow-sm"
+              >
+                <Briefcase className="w-4 h-4 text-[#DFC06A]" />
+                <span>Career Guidance Cell</span>
+              </button>
+              <button
+                onClick={() => onNavigate('corporate-recruiters')}
+                className="px-5 py-2.5 rounded-full bg-[#FAF7F0] hover:bg-amber-100/60 border border-[#DFC06A]/60 text-[#210532] font-semibold text-xs sm:text-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
+              >
+                <span>Explore Recruiters</span>
+                <ArrowRight className="w-4 h-4 text-[#C79628]" />
+              </button>
             </div>
           </div>
-
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => onNavigate('career-guidance')}
-              className="px-6 py-2.5 rounded-full bg-[#210532] hover:bg-[#340A4E] text-white font-bold text-xs sm:text-sm transition-colors inline-flex items-center gap-2 cursor-pointer shadow-sm"
-            >
-              <Briefcase className="w-4 h-4 text-[#DFC06A]" />
-              <span>Career Guidance Cell</span>
-            </button>
-            <button
-              onClick={() => onNavigate('corporate-recruiters')}
-              className="px-5 py-2.5 rounded-full bg-[#FAF7F0] hover:bg-amber-100/60 border border-[#DFC06A]/60 text-[#210532] font-semibold text-xs sm:text-sm transition-colors inline-flex items-center gap-2 cursor-pointer"
-            >
-              <span>Explore Recruiters</span>
-              <ArrowRight className="w-4 h-4 text-[#C79628]" />
-            </button>
-          </div>
-        </div>
+        </RevealBlock>
       </section>
     </div>
   );

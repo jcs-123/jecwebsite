@@ -33,6 +33,14 @@ import { CentralLibraryPage } from './pages/CentralLibraryPage';
 import { CampusHostelsPage } from './pages/CampusHostelsPage';
 import { BusFleetPage } from './pages/BusFleetPage';
 import { AuditoriumSportsPage } from './pages/AuditoriumSportsPage';
+import { LanguageLabPage } from './pages/LanguageLabPage';
+import { TataIiicSeminarPage } from './pages/TataIiicSeminarPage';
+import { BoardRoomPage } from './pages/BoardRoomPage';
+import { ChapelPage } from './pages/ChapelPage';
+import { TbiPage } from './pages/TbiPage';
+import { CanteenPage } from './pages/CanteenPage';
+import { FabLabPage } from './pages/FabLabPage';
+import { ComputerCenterPage } from './pages/ComputerCenterPage';
 import { AutonomousPage } from './pages/AutonomousPage';
 import { AlumniPage } from './pages/AlumniPage';
 import { LoginPage } from './pages/LoginPage';
@@ -337,6 +345,62 @@ export function App() {
 
         {currentPage === 'auditorium-sports' && (
           <AuditoriumSportsPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'language-lab' && (
+          <LanguageLabPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'tata-iiic-seminar' && (
+          <TataIiicSeminarPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'board-room' && (
+          <BoardRoomPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'chapel' && (
+          <ChapelPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'tbi' && (
+          <TbiPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'canteen' && (
+          <CanteenPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'fab-lab' && (
+          <FabLabPage
+            onNavigate={navigateTo}
+            onOpenTour={() => setIsTourOpen(true)}
+          />
+        )}
+
+        {currentPage === 'computer-center' && (
+          <ComputerCenterPage
             onNavigate={navigateTo}
             onOpenTour={() => setIsTourOpen(true)}
           />

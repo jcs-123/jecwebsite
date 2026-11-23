@@ -25,6 +25,7 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import { PlacementsSubNav } from '../components/PlacementsSubNav';
+import { RevealBlock } from '../components/RevealBlock';
 
 interface Props {
   onNavigate: (page: string, subId?: string) => void;
@@ -544,6 +545,13 @@ const GUIDELINES = [
 ];
 
 export const UpcomingDrivesPage: React.FC<Props> = ({ onNavigate, onOpenApply }) => {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   // Filters & State
   const [filterMode, setFilterMode] = useState<DriveFormat | 'All'>('All');
   const [activeTab, setActiveTab] = useState<string>('All');
@@ -643,410 +651,442 @@ export const UpcomingDrivesPage: React.FC<Props> = ({ onNavigate, onOpenApply })
   };
 
   return (
-    <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A]">
+    <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A] scroll-smooth">
       {/* 1. Sub Navigation Bar matching theme */}
       <PlacementsSubNav activeRoute="upcoming-drives" onNavigate={onNavigate} />
 
-      {/* 2. Main Hero Section (Pixel-perfect match to the provided design) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-          {/* Left Column: Heading, Subtitle & Action Buttons */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-            {/* Flanked Eyebrow */}
-            <div className="flex items-center gap-3">
-              <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
-              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] text-[#28052B]">
-                CAMPUS PLACEMENT CALENDAR
-              </span>
-              <div className="w-8 sm:w-12 h-[1px] bg-[#C59B4E]" />
+      {/* 2. HERO SECTION: PREMIUM EDITORIAL SPLIT SHOWCASE (EXACT PIXEL MATCH TO MOCKUP) */}
+      <section className="relative w-full pt-4 sm:pt-8 pb-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
+            
+            {/* Left Column: Eyebrow, Main Headline, Subtitle, Description, Action Buttons */}
+            <div className="lg:col-span-6 space-y-5 sm:space-y-6 relative">
+              <RevealBlock direction="up">
+                {/* Eyebrow flanked by horizontal gold rules */}
+                <div className="flex items-center gap-3">
+                  <span className="h-[1.5px] w-8 sm:w-12 bg-[#BD8E36]" />
+                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] text-[#BD8E36]">
+                    CAMPUS PLACEMENT CALENDAR
+                  </span>
+                  <span className="h-[1.5px] w-8 sm:w-12 bg-[#BD8E36]" />
+                </div>
+              </RevealBlock>
+
+              <RevealBlock direction="up" delay={80}>
+                {/* Serif Main Headline */}
+                <h1 className="text-4xl sm:text-5xl lg:text-[58px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.08] tracking-tight">
+                  Your next opportunity<br />
+                  <span className="italic font-normal text-[#BD8E36]">
+                    starts here.
+                  </span>
+                </h1>
+              </RevealBlock>
+
+              <RevealBlock direction="up" delay={140}>
+                {/* Subtitle & Description */}
+                <div className="space-y-2">
+                  <h2 className="text-lg sm:text-xl font-bold text-[#28052B] tracking-tight">
+                    Upcoming Placement Drives &amp; Recruitment Schedules
+                  </h2>
+                  <p className="text-sm sm:text-base text-[#4A384F]/85 leading-relaxed max-w-lg font-normal">
+                    Explore on-campus, virtual and pooled recruitment opportunities.
+                  </p>
+                </div>
+              </RevealBlock>
+
+              {/* Action Buttons */}
+              <RevealBlock direction="up" delay={200}>
+                <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                  <button
+                    onClick={() => scrollToSection('drives-schedule')}
+                    className="px-6 sm:px-7 py-3 rounded-full bg-[#C59B4E] hover:bg-[#B3893C] text-[#28052B] font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer group"
+                  >
+                    <span>View Drive Schedules</span>
+                    <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+                  </button>
+
+                  <button
+                    onClick={() => onNavigate('corporate-recruiters')}
+                    className="px-6 sm:px-7 py-3 rounded-full bg-transparent hover:bg-white/80 text-[#28052B] border-[1.5px] border-[#28052B] font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-2 cursor-pointer shadow-2xs"
+                  >
+                    <span>Browse Recruiters</span>
+                  </button>
+                </div>
+              </RevealBlock>
             </div>
 
-            {/* Serif Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-[46px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.14]">
-              Upcoming Placement Drives &amp;
-              <span className="block italic text-[#BD8E36] font-normal mt-1 sm:mt-1.5">
-                Recruitment Schedules
-              </span>
-            </h1>
+            {/* Right Column: Organic Curved Visual with Arched Plum Ribbon and Calendar Badge */}
+            <div className="lg:col-span-6 relative">
+              <RevealBlock direction="right" delay={150}>
+                <div className="relative pt-4 sm:pt-6">
+                  {/* Architectural Plum Ribbon hugging top-left curve */}
+                  <div className="absolute top-0 left-12 sm:left-20 right-16 sm:right-28 h-10 sm:h-12 bg-[#28052B] rounded-t-[100px] -z-0 opacity-95 pointer-events-none transform -rotate-1" />
 
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base text-[#4A384F] font-normal leading-relaxed max-w-xl">
-              Explore on-campus, virtual and pooled recruitment drives, eligibility and registration deadlines.
-            </p>
+                  {/* Organic Curved Container matching mockup shape */}
+                  <div className="relative z-10 rounded-tl-[70px] sm:rounded-tl-[120px] rounded-tr-[36px] sm:rounded-tr-[54px] rounded-br-[36px] sm:rounded-br-[54px] rounded-bl-[44px] sm:rounded-bl-[74px] overflow-hidden border-[1.5px] border-[#DFC06A] shadow-2xl bg-[#28052B]/5 group">
+                    <img
+                      src="/assets/upcoming_drives_hero.jpg"
+                      alt="Upcoming campus placement drives and student preparation at Jyothi Engineering College"
+                      className="w-full h-[320px] sm:h-[400px] lg:h-[440px] object-cover object-[center_28%] transition-transform duration-700 group-hover:scale-105"
+                    />
 
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <a
-                href="#drives-schedule"
-                className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center gap-2 group cursor-pointer"
-              >
-                <span>View Drive Schedules</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
+                    {/* Subtle warm amber/plum vignette overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#28052B]/35 via-transparent to-transparent pointer-events-none" />
 
-              <button
-                onClick={() => onNavigate('corporate-recruiters')}
-                className="px-6 py-2.5 rounded-full bg-transparent hover:bg-[#28052B]/5 text-[#28052B] font-semibold text-xs sm:text-sm border border-[#28052B] transition-all inline-flex items-center gap-2 cursor-pointer"
-              >
-                <span>Browse 94+ Recruiters</span>
-              </button>
+                    {/* Floating Glassmorphism Calendar Card at Bottom Right */}
+                    <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-white/95 backdrop-blur-md border border-[#E7D6C1] shadow-xl rounded-2xl sm:rounded-3xl px-4 sm:px-5 py-2.5 sm:py-3.5 flex items-center gap-3 sm:gap-3.5 z-20">
+                      <div className="w-10 h-10 rounded-xl bg-[#FAF0F6] border border-purple-100 flex items-center justify-center text-[#28052B] shrink-0">
+                        <Calendar className="w-5 h-5 text-[#28052B]" />
+                      </div>
+                      <span className="h-7 w-[1.5px] bg-[#E7D6C1] shrink-0 inline-block" />
+                      <div className="text-left">
+                        <div className="font-bold text-xs sm:text-sm text-[#28052B] leading-tight font-['Playfair_Display',serif]">
+                          Placement Calendar
+                        </div>
+                        <div className="text-[10px] sm:text-xs text-[#4A384F]/75 mt-0.5 font-medium">
+                          Explore upcoming opportunities
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </RevealBlock>
             </div>
-          </div>
 
-          {/* Right Column: Dark Bento Card with Decorative Gold Corner Brackets */}
-          <div className="lg:col-span-5 relative">
-            {/* Top-Left Decorative Gold Corner Bracket */}
-            <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
-            {/* Bottom-Right Decorative Gold Corner Bracket */}
-            <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
-
-            {/* Deep Plum Bento Card */}
-            <div className="rounded-3xl bg-[#28052B] text-white p-6 sm:p-7 border border-[#3E1043] shadow-xl relative overflow-hidden">
-              {/* Header inside bento */}
-              <div className="flex items-center gap-3.5 pb-5 border-b border-[#431A45]">
-                {/* Calendar Icon inside rounded badge */}
-                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#390F3B] border border-[#DFC06A]/30 flex items-center justify-center shrink-0">
-                  <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-[#DFC06A]" />
-                </div>
-
-                {/* Vertical Divider Line */}
-                <div className="w-[1px] h-8 bg-[#DFC06A]/40 shrink-0" />
-
-                {/* Placement Window Text */}
-                <div>
-                  <div className="text-xs text-white/90 font-medium tracking-wide">Placement window</div>
-                  <div className="text-base sm:text-lg font-['Playfair_Display',serif] italic text-[#DFC06A] font-semibold">
-                    Dec 2026 – Feb 2027
-                  </div>
-                </div>
-              </div>
-
-              {/* 2x2 Divided Metric Grid */}
-              <div className="grid grid-cols-2 pt-4">
-                {/* Metric 1: Drives */}
-                <div className="p-3.5 pr-4 border-r border-b border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">14+</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Drives in Current Window
-                  </div>
-                </div>
-
-                {/* Metric 2: Windows Active */}
-                <div className="p-3.5 pl-4 border-b border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">4</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Registration Windows Active
-                  </div>
-                </div>
-
-                {/* Metric 3: Top CTC */}
-                <div className="p-3.5 pr-4 pt-4 border-r border-[#431A45]">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">₹14.2 LPA</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Top CTC in Current Batch
-                  </div>
-                </div>
-
-                {/* Metric 4: Telemetry */}
-                <div className="p-3.5 pl-4 pt-4">
-                  <div className="text-2xl sm:text-3xl font-black text-white tracking-tight">100%</div>
-                  <div className="text-xs text-white/75 font-normal mt-0.5 leading-snug">
-                    Digital Drive Telemetry
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. "Explore drive formats" Section (Pixel-perfect match to the image) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 space-y-4 sm:space-y-5">
-        {/* Section Heading with Hairline Gold Rule */}
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-[#28052B] whitespace-nowrap">
-            Explore drive formats
-          </h2>
-          <div className="h-[1px] bg-[#E7D6C1] flex-1" />
-        </div>
+      {/* 3. PLACEMENT AT A GLANCE (METRICS STRIP MATCHING MOCKUP) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-2">
+        <RevealBlock direction="up">
+          <div className="bg-white rounded-3xl border border-[#E7D6C1] p-6 sm:p-7 shadow-xs relative">
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-6 sm:gap-4 divide-y md:divide-y-0 md:divide-x divide-[#E7D6C1] items-center">
+              
+              {/* Col 1: Label & Illustrative figures */}
+              <div className="col-span-2 md:col-span-1 pr-0 md:pr-4 pb-4 md:pb-0 border-b md:border-b-0 border-[#E7D6C1]">
+                <h3 className="font-['Playfair_Display',serif] font-bold text-lg sm:text-xl text-[#28052B] leading-snug">
+                  Placement at a glance
+                </h3>
+                <div className="text-[11px] text-[#4A384F]/60 italic font-medium mt-1">
+                  Illustrative figures
+                </div>
+              </div>
 
-        {/* 3 Drive Format Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 sm:gap-4">
-          {/* Card 1: On-campus drives */}
-          <button
-            onClick={() => setFilterMode(filterMode === 'On-campus drives' ? 'All' : 'On-campus drives')}
-            className={`p-4 rounded-2xl bg-white border transition-all text-left flex items-center justify-between group cursor-pointer ${
-              filterMode === 'On-campus drives'
-                ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/20'
-                : 'border-[#E7D6C1] hover:border-[#C59B4E] hover:shadow-xs'
-            }`}
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <Landmark className="w-6 h-6 text-[#28052B]" />
+              {/* Col 2: 14+ Drive opportunities */}
+              <div className="px-2 md:px-5 py-2 md:py-0 border-r md:border-r-0 border-[#E7D6C1]">
+                <div className="text-3xl sm:text-4xl font-bold font-['Playfair_Display',serif] text-[#28052B] leading-none">
+                  14+
+                </div>
+                <div className="text-xs sm:text-[13px] font-semibold text-[#4A384F] mt-1.5 leading-tight">
+                  Drive opportunities
+                </div>
               </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  On-campus drives
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  {onCampusCount} drives scheduled
-                </span>
+
+              {/* Col 3: 4 Registration windows */}
+              <div className="px-2 md:px-5 py-2 md:py-0">
+                <div className="text-3xl sm:text-4xl font-bold font-['Playfair_Display',serif] text-[#28052B] leading-none">
+                  4
+                </div>
+                <div className="text-xs sm:text-[13px] font-semibold text-[#4A384F] mt-1.5 leading-tight">
+                  Registration windows
+                </div>
               </div>
+
+              {/* Col 4: ₹14.2 LPA Top CTC */}
+              <div className="px-2 md:px-5 pt-4 md:pt-0 border-t md:border-t-0 border-r md:border-r-0 border-[#E7D6C1]">
+                <div className="text-3xl sm:text-4xl font-bold font-['Playfair_Display',serif] text-[#28052B] leading-none">
+                  ₹14.2 LPA
+                </div>
+                <div className="text-xs sm:text-[13px] font-semibold text-[#4A384F] mt-1.5 leading-tight">
+                  Top CTC
+                </div>
+              </div>
+
+              {/* Col 5: 100% Digital drive tracking */}
+              <div className="px-2 md:px-5 pt-4 md:pt-0 border-t md:border-t-0 border-[#E7D6C1]">
+                <div className="text-3xl sm:text-4xl font-bold font-['Playfair_Display',serif] text-[#28052B] leading-none">
+                  100%
+                </div>
+                <div className="text-xs sm:text-[13px] font-semibold text-[#4A384F] mt-1.5 leading-tight">
+                  Digital drive tracking
+                </div>
+              </div>
+
             </div>
-            <ArrowRight
-              className={`w-4 h-4 transition-transform ${
-                filterMode === 'On-campus drives'
-                  ? 'text-[#BD8E36] translate-x-1'
-                  : 'text-[#28052B] group-hover:translate-x-1'
-              }`}
-            />
-          </button>
+          </div>
+        </RevealBlock>
+      </section>
 
-          {/* Card 2: Virtual drives */}
-          <button
-            onClick={() => setFilterMode(filterMode === 'Virtual drives' ? 'All' : 'Virtual drives')}
-            className={`p-4 rounded-2xl bg-white border transition-all text-left flex items-center justify-between group cursor-pointer ${
-              filterMode === 'Virtual drives'
-                ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/20'
-                : 'border-[#E7D6C1] hover:border-[#C59B4E] hover:shadow-xs'
-            }`}
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <Laptop className="w-6 h-6 text-[#28052B]" />
-              </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  Virtual drives
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  {virtualCount} drives scheduled
-                </span>
-              </div>
-            </div>
-            <ArrowRight
-              className={`w-4 h-4 transition-transform ${
-                filterMode === 'Virtual drives'
-                  ? 'text-[#BD8E36] translate-x-1'
-                  : 'text-[#28052B] group-hover:translate-x-1'
-              }`}
-            />
-          </button>
-
-          {/* Card 3: Pooled drives */}
-          <button
-            onClick={() => setFilterMode(filterMode === 'Pooled drives' ? 'All' : 'Pooled drives')}
-            className={`p-4 rounded-2xl bg-white border transition-all text-left flex items-center justify-between group cursor-pointer ${
-              filterMode === 'Pooled drives'
-                ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/20'
-                : 'border-[#E7D6C1] hover:border-[#C59B4E] hover:shadow-xs'
-            }`}
-          >
-            <div className="flex items-center gap-3.5">
-              <div className="w-12 h-12 rounded-xl bg-[#F8EBEB] flex items-center justify-center shrink-0">
-                <Layers className="w-6 h-6 text-[#28052B]" />
-              </div>
-              <div className="w-[1px] h-7 bg-[#E7D6C1] shrink-0" />
-              <div>
-                <span className="font-bold text-sm sm:text-base text-[#28052B] block">
-                  Pooled drives
-                </span>
-                <span className="text-[11px] text-[#4A384F]/70 font-medium">
-                  {pooledCount} drives scheduled
-                </span>
-              </div>
-            </div>
-            <ArrowRight
-              className={`w-4 h-4 transition-transform ${
-                filterMode === 'Pooled drives'
-                  ? 'text-[#BD8E36] translate-x-1'
-                  : 'text-[#28052B] group-hover:translate-x-1'
-              }`}
-            />
-          </button>
-        </div>
-
-        {/* Active Format Badge Helper if filtered */}
-        {filterMode !== 'All' && (
-          <div className="flex items-center justify-between bg-white px-4 py-2 rounded-xl border border-[#E7D6C1] text-xs">
-            <span className="text-[#28052B] font-medium">
-              Showing format: <strong className="font-bold">{filterMode}</strong> ({filteredDrives.length} drives)
-            </span>
+      {/* 4. EXPLORE DRIVE FORMATS (CATEGORY QUICK ACTIONS MATCHING MOCKUP) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2 space-y-4">
+        {/* Header row with Title, Hairline Divider, and Right Action */}
+        <RevealBlock direction="up">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E7D6C1] pb-3">
+            <h2 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-[#28052B]">
+              Explore drive formats
+            </h2>
             <button
-              onClick={() => setFilterMode('All')}
-              className="text-[#BD8E36] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+              onClick={() => {
+                setFilterMode('All');
+                scrollToSection('drives-schedule');
+              }}
+              className="text-xs sm:text-sm font-bold text-[#28052B] hover:text-[#BD8E36] transition-colors inline-flex items-center gap-1 group cursor-pointer self-start sm:self-auto"
             >
-              <span>Show all formats</span>
-              <X className="w-3.5 h-3.5" />
+              <span>View all schedules</span>
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-[#BD8E36]" />
             </button>
           </div>
-        )}
+        </RevealBlock>
+
+        {/* 3 Format Cards Matching Mockup */}
+        <RevealBlock direction="up" delay={80}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 pt-1">
+            {/* Card 1: On-campus drives */}
+            <button
+              onClick={() => {
+                setFilterMode(filterMode === 'On-campus drives' ? 'All' : 'On-campus drives');
+                scrollToSection('drives-schedule');
+              }}
+              className={`bg-white rounded-2xl border p-4 sm:p-5 transition-all flex items-center justify-between group cursor-pointer text-left ${
+                filterMode === 'On-campus drives'
+                  ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/15'
+                  : 'border-[#E7D6C1] hover:border-[#DFC06A] shadow-xs hover:shadow-md'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[#FAF0F6] border border-purple-100 flex items-center justify-center text-[#28052B] group-hover:scale-105 transition-transform shrink-0">
+                  <Landmark className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <span className="h-5 w-[1px] bg-[#E7D6C1] shrink-0" />
+                <span className="text-sm sm:text-base font-bold text-[#28052B] group-hover:text-[#BD8E36] transition-colors">
+                  On-campus drives
+                </span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-[#BD8E36] group-hover:translate-x-1 transition-transform shrink-0" />
+            </button>
+
+            {/* Card 2: Virtual drives */}
+            <button
+              onClick={() => {
+                setFilterMode(filterMode === 'Virtual drives' ? 'All' : 'Virtual drives');
+                scrollToSection('drives-schedule');
+              }}
+              className={`bg-white rounded-2xl border p-4 sm:p-5 transition-all flex items-center justify-between group cursor-pointer text-left ${
+                filterMode === 'Virtual drives'
+                  ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/15'
+                  : 'border-[#E7D6C1] hover:border-[#DFC06A] shadow-xs hover:shadow-md'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[#FAF0F6] border border-purple-100 flex items-center justify-center text-[#28052B] group-hover:scale-105 transition-transform shrink-0">
+                  <Laptop className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <span className="h-5 w-[1px] bg-[#E7D6C1] shrink-0" />
+                <span className="text-sm sm:text-base font-bold text-[#28052B] group-hover:text-[#BD8E36] transition-colors">
+                  Virtual drives
+                </span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-[#BD8E36] group-hover:translate-x-1 transition-transform shrink-0" />
+            </button>
+
+            {/* Card 3: Pooled drives */}
+            <button
+              onClick={() => {
+                setFilterMode(filterMode === 'Pooled drives' ? 'All' : 'Pooled drives');
+                scrollToSection('drives-schedule');
+              }}
+              className={`bg-white rounded-2xl border p-4 sm:p-5 transition-all flex items-center justify-between group cursor-pointer text-left ${
+                filterMode === 'Pooled drives'
+                  ? 'border-[#28052B] ring-2 ring-[#28052B]/15 shadow-md bg-amber-50/15'
+                  : 'border-[#E7D6C1] hover:border-[#DFC06A] shadow-xs hover:shadow-md'
+              }`}
+            >
+              <div className="flex items-center gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-[#FAF0F6] border border-purple-100 flex items-center justify-center text-[#28052B] group-hover:scale-105 transition-transform shrink-0">
+                  <Layers className="w-5 h-5 text-[#28052B]" />
+                </div>
+                <span className="h-5 w-[1px] bg-[#E7D6C1] shrink-0" />
+                <span className="text-sm sm:text-base font-bold text-[#28052B] group-hover:text-[#BD8E36] transition-colors">
+                  Pooled drives
+                </span>
+              </div>
+              <ArrowRight className="w-4 h-4 text-[#BD8E36] group-hover:translate-x-1 transition-transform shrink-0" />
+            </button>
+          </div>
+        </RevealBlock>
       </section>
 
       {/* 4. Live Schedule & Comprehensive Filter Section */}
       <section id="drives-schedule" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 space-y-6">
         {/* Title & Search / View Switcher Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
-                Live Recruitment Calendar
-              </span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-              Scheduled Campus Drives
-            </h2>
-            <p className="text-xs sm:text-sm text-[#4A384F]/80">
-              Review eligibility criteria, dates, interview venues, and application deadlines.
-            </p>
-          </div>
-
-          {/* Quick Search + View Mode Switcher */}
-          <div className="flex flex-wrap items-center gap-3">
-            {/* View Mode Switcher */}
-            <div className="bg-white p-1 rounded-xl border border-[#E7D6C1] flex items-center shadow-2xs">
-              <button
-                onClick={() => setViewMode('cards')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  viewMode === 'cards'
-                    ? 'bg-[#28052B] text-white shadow-xs'
-                    : 'text-[#28052B] hover:text-[#BD8E36]'
-                }`}
-              >
-                Card View
-              </button>
-              <button
-                onClick={() => setViewMode('calendar')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
-                  viewMode === 'calendar'
-                    ? 'bg-[#28052B] text-white shadow-xs'
-                    : 'text-[#28052B] hover:text-[#BD8E36]'
-                }`}
-              >
-                Timeline View
-              </button>
+        <RevealBlock direction="up">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#BD8E36]">
+                  Live Recruitment Calendar
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+                Scheduled Campus Drives
+              </h2>
+              <p className="text-xs sm:text-sm text-[#4A384F]/80">
+                Review eligibility criteria, dates, interview venues, and application deadlines.
+              </p>
             </div>
 
-            {/* Search Input */}
-            <div className="relative w-full sm:w-64">
-              <Search className="w-4 h-4 text-[#4A384F]/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search company, branch, role..."
-                className="w-full pl-9 pr-8 py-2 bg-white rounded-xl border border-[#E7D6C1] text-xs text-[#28052B] placeholder:text-[#4A384F]/40 focus:outline-none focus:border-[#BD8E36] focus:ring-1 focus:ring-[#BD8E36] transition-all"
-              />
-              {searchQuery && (
+            {/* Quick Search + View Mode Switcher */}
+            <div className="flex flex-wrap items-center gap-3">
+              {/* View Mode Switcher */}
+              <div className="bg-white p-1 rounded-xl border border-[#E7D6C1] flex items-center shadow-2xs">
                 <button
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  onClick={() => setViewMode('cards')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    viewMode === 'cards'
+                      ? 'bg-[#28052B] text-white shadow-xs'
+                      : 'text-[#28052B] hover:text-[#BD8E36]'
+                  }`}
                 >
-                  <X className="w-3.5 h-3.5" />
+                  Card View
+                </button>
+                <button
+                  onClick={() => setViewMode('calendar')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all cursor-pointer ${
+                    viewMode === 'calendar'
+                      ? 'bg-[#28052B] text-white shadow-xs'
+                      : 'text-[#28052B] hover:text-[#BD8E36]'
+                  }`}
+                >
+                  Timeline View
+                </button>
+              </div>
+
+              {/* Search Input */}
+              <div className="relative w-full sm:w-64">
+                <Search className="w-4 h-4 text-[#4A384F]/50 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search company, branch, role..."
+                  className="w-full pl-9 pr-8 py-2 bg-white rounded-xl border border-[#E7D6C1] text-xs text-[#28052B] placeholder:text-[#4A384F]/40 focus:outline-none focus:border-[#BD8E36] focus:ring-1 focus:ring-[#BD8E36] transition-all"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </RevealBlock>
+
+        {/* Filter Controls Row: Status Tabs + Branch Selector + Sort Dropdown */}
+        <RevealBlock direction="up" delay={80}>
+          <div className="p-4 bg-white rounded-2xl border border-[#E7D6C1] space-y-3.5 shadow-2xs">
+            {/* Status Tabs */}
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                {statusTabs.map((tab) => {
+                  const count =
+                    tab === 'All'
+                      ? UPCOMING_DRIVES.length
+                      : UPCOMING_DRIVES.filter((d) => d.status === tab).length;
+                  return (
+                    <button
+                      key={tab}
+                      onClick={() => setActiveTab(tab)}
+                      className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
+                        activeTab === tab
+                          ? 'bg-[#28052B] text-white shadow-xs font-bold'
+                          : 'bg-[#FAF7F2] text-[#28052B] hover:bg-amber-50 hover:text-[#BD8E36] border border-[#E7D6C1]/60'
+                      }`}
+                    >
+                      <span>{tab}</span>
+                      <span
+                        className={`px-1.5 py-0.2 rounded-full text-[10px] ${
+                          activeTab === tab
+                            ? 'bg-white/20 text-white'
+                            : 'bg-white text-[#28052B] border border-slate-200'
+                        }`}
+                      >
+                        {count}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Sort & Month Controls */}
+              <div className="flex items-center gap-2 self-end sm:self-auto text-xs">
+                <span className="text-[#4A384F]/60 text-[11px] font-medium hidden sm:inline">Sort:</span>
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value as any)}
+                  aria-label="Sort upcoming placement drives"
+                  className="bg-[#FAF7F2] border border-[#E7D6C1] rounded-xl px-2.5 py-1.5 text-xs text-[#28052B] font-semibold focus:outline-none focus:border-[#BD8E36] cursor-pointer"
+                >
+                  <option value="date">Date (Earliest First)</option>
+                  <option value="ctc">Highest CTC (Salary)</option>
+                  <option value="deadline">Registration Deadline</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Branch Filter Pills */}
+            <div className="pt-2 border-t border-[#E7D6C1]/60 flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-bold text-[#4A384F]/70 flex items-center gap-1 mr-1">
+                <Filter className="w-3 h-3 text-[#BD8E36]" /> Filter by Branch:
+              </span>
+              {allBranches.map((branch) => (
+                <button
+                  key={branch}
+                  onClick={() => setSelectedBranch(branch)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                    selectedBranch === branch
+                      ? 'bg-[#E5B656] text-[#28052B] font-bold shadow-2xs'
+                      : 'bg-[#FAF7F2] text-[#4A384F] hover:bg-amber-50 border border-[#E7D6C1]/70'
+                  }`}
+                >
+                  {branch}
+                </button>
+              ))}
+
+              {(selectedBranch !== 'All' || activeTab !== 'All' || searchQuery || filterMode !== 'All') && (
+                <button
+                  onClick={clearAllFilters}
+                  className="ml-auto text-[11px] font-bold text-red-700 hover:text-red-900 underline flex items-center gap-1 cursor-pointer"
+                >
+                  <X className="w-3 h-3" /> Clear all
                 </button>
               )}
             </div>
           </div>
-        </div>
-
-        {/* Filter Controls Row: Status Tabs + Branch Selector + Sort Dropdown */}
-        <div className="p-4 bg-white rounded-2xl border border-[#E7D6C1] space-y-3.5 shadow-2xs">
-          {/* Status Tabs */}
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-1.5 sm:gap-2">
-              {statusTabs.map((tab) => {
-                const count =
-                  tab === 'All'
-                    ? UPCOMING_DRIVES.length
-                    : UPCOMING_DRIVES.filter((d) => d.status === tab).length;
-                return (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center gap-1.5 ${
-                      activeTab === tab
-                        ? 'bg-[#28052B] text-white shadow-xs font-bold'
-                        : 'bg-[#FAF7F2] text-[#28052B] hover:bg-amber-50 hover:text-[#BD8E36] border border-[#E7D6C1]/60'
-                    }`}
-                  >
-                    <span>{tab}</span>
-                    <span
-                      className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                        activeTab === tab
-                          ? 'bg-white/20 text-white'
-                          : 'bg-white text-[#28052B] border border-slate-200'
-                      }`}
-                    >
-                      {count}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Sort & Month Controls */}
-            <div className="flex items-center gap-2 self-end sm:self-auto text-xs">
-              <span className="text-[#4A384F]/60 text-[11px] font-medium hidden sm:inline">Sort:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
-                aria-label="Sort upcoming placement drives"
-                className="bg-[#FAF7F2] border border-[#E7D6C1] rounded-xl px-2.5 py-1.5 text-xs text-[#28052B] font-semibold focus:outline-none focus:border-[#BD8E36] cursor-pointer"
-              >
-                <option value="date">Date (Earliest First)</option>
-                <option value="ctc">Highest CTC (Salary)</option>
-                <option value="deadline">Registration Deadline</option>
-              </select>
-            </div>
-          </div>
-
-          {/* Branch Filter Pills */}
-          <div className="pt-2 border-t border-[#E7D6C1]/60 flex flex-wrap items-center gap-2">
-            <span className="text-[11px] font-bold text-[#4A384F]/70 flex items-center gap-1 mr-1">
-              <Filter className="w-3 h-3 text-[#BD8E36]" /> Filter by Branch:
-            </span>
-            {allBranches.map((branch) => (
-              <button
-                key={branch}
-                onClick={() => setSelectedBranch(branch)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
-                  selectedBranch === branch
-                    ? 'bg-[#E5B656] text-[#28052B] font-bold shadow-2xs'
-                    : 'bg-[#FAF7F2] text-[#4A384F] hover:bg-amber-50 border border-[#E7D6C1]/70'
-                }`}
-              >
-                {branch}
-              </button>
-            ))}
-
-            {(selectedBranch !== 'All' || activeTab !== 'All' || searchQuery || filterMode !== 'All') && (
-              <button
-                onClick={clearAllFilters}
-                className="ml-auto text-[11px] font-bold text-red-700 hover:text-red-900 underline flex items-center gap-1 cursor-pointer"
-              >
-                <X className="w-3 h-3" /> Clear all
-              </button>
-            )}
-          </div>
-        </div>
+        </RevealBlock>
 
         {/* 5. View Mode: Cards or Calendar Timeline */}
         {viewMode === 'cards' ? (
           /* Cards Grid / Stack */
           <div className="space-y-5">
-            {filteredDrives.map((drive) => {
+            {filteredDrives.map((drive, idx) => {
               const isOpen = drive.status === 'Registration Open';
               const isShortlisting = drive.status === 'Shortlisting in Progress';
 
               return (
-                <div
+                <RevealBlock
                   key={drive.id}
-                  className="p-5 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] transition-all shadow-xs hover:shadow-md space-y-4 relative overflow-hidden group"
+                  direction={idx % 2 === 0 ? 'left' : 'right'}
+                  delay={(idx % 3) * 60}
                 >
+                  <div
+                    className="p-5 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] hover:border-[#C59B4E] transition-all shadow-xs hover:shadow-md space-y-4 relative overflow-hidden group"
+                  >
                   {/* Subtle top edge indicator */}
                   <div
                     className={`absolute top-0 left-0 right-0 h-1 ${
@@ -1243,8 +1283,9 @@ export const UpcomingDrivesPage: React.FC<Props> = ({ onNavigate, onOpenApply })
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </RevealBlock>
+            );
+          })}
 
             {filteredDrives.length === 0 && (
               <div className="text-center py-16 bg-white rounded-3xl border border-[#E7D6C1] space-y-3">
@@ -1286,62 +1327,68 @@ export const UpcomingDrivesPage: React.FC<Props> = ({ onNavigate, onOpenApply })
 
             {/* Timeline Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {filteredDrives.map((drive) => (
-                <div
+              {filteredDrives.map((drive, idx) => (
+                <RevealBlock
                   key={drive.id}
-                  className="bg-white rounded-2xl p-5 border border-[#E7D6C1] hover:border-[#C59B4E] transition-all shadow-xs space-y-3 flex flex-col justify-between"
+                  direction={idx % 2 === 0 ? 'left' : 'right'}
+                  delay={(idx % 3) * 60}
+                  className="h-full"
                 >
-                  <div className="space-y-2">
-                    {/* Top Row: Date Badge & Status */}
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F2] border border-[#E7D6C1] text-[#28052B] font-bold text-[11px] flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-[#BD8E36]" />
-                        {drive.date}
-                      </span>
-                      <span
-                        className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                          drive.status === 'Registration Open'
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : drive.status === 'Shortlisting in Progress'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-purple-100 text-purple-900'
-                        }`}
+                  <div
+                    className="h-full bg-white rounded-2xl p-5 border border-[#E7D6C1] hover:border-[#C59B4E] transition-all shadow-xs space-y-3 flex flex-col justify-between"
+                  >
+                    <div className="space-y-2">
+                      {/* Top Row: Date Badge & Status */}
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="px-2.5 py-1 rounded-lg bg-[#FAF7F2] border border-[#E7D6C1] text-[#28052B] font-bold text-[11px] flex items-center gap-1.5">
+                          <Calendar className="w-3.5 h-3.5 text-[#BD8E36]" />
+                          {drive.date}
+                        </span>
+                        <span
+                          className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            drive.status === 'Registration Open'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : drive.status === 'Shortlisting in Progress'
+                              ? 'bg-amber-100 text-amber-800'
+                              : 'bg-purple-100 text-purple-900'
+                          }`}
+                        >
+                          {drive.status}
+                        </span>
+                      </div>
+
+                      <h4 className="text-lg font-bold font-['Playfair_Display',serif] text-[#28052B]">
+                        {drive.company}
+                      </h4>
+                      <p className="text-xs font-medium text-[#4A384F]">{drive.role}</p>
+
+                      <div className="text-sm font-black text-emerald-800">{drive.ctc}</div>
+
+                      <div className="text-[11px] text-[#4A384F]/80 space-y-1 pt-1">
+                        <div>
+                          <strong>Venue:</strong> {drive.venue}
+                        </div>
+                        <div>
+                          <strong>Cutoff:</strong> {drive.minCgpa}
+                        </div>
+                        <div className="text-rose-700 font-semibold">
+                          <strong>Deadline:</strong> {drive.registrationDeadline}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-2 border-t border-[#FAF7F2] flex items-center justify-between">
+                      <span className="text-[10px] text-slate-500">{drive.mode}</span>
+                      <button
+                        onClick={() => handleOpenModal(drive)}
+                        className="text-xs font-bold text-[#BD8E36] hover:underline flex items-center gap-1 cursor-pointer"
                       >
-                        {drive.status}
-                      </span>
-                    </div>
-
-                    <h4 className="text-lg font-bold font-['Playfair_Display',serif] text-[#28052B]">
-                      {drive.company}
-                    </h4>
-                    <p className="text-xs font-medium text-[#4A384F]">{drive.role}</p>
-
-                    <div className="text-sm font-black text-emerald-800">{drive.ctc}</div>
-
-                    <div className="text-[11px] text-[#4A384F]/80 space-y-1 pt-1">
-                      <div>
-                        <strong>Venue:</strong> {drive.venue}
-                      </div>
-                      <div>
-                        <strong>Cutoff:</strong> {drive.minCgpa}
-                      </div>
-                      <div className="text-rose-700 font-semibold">
-                        <strong>Deadline:</strong> {drive.registrationDeadline}
-                      </div>
+                        <span>Details</span>
+                        <ArrowRight className="w-3 h-3" />
+                      </button>
                     </div>
                   </div>
-
-                  <div className="pt-2 border-t border-[#FAF7F2] flex items-center justify-between">
-                    <span className="text-[10px] text-slate-500">{drive.mode}</span>
-                    <button
-                      onClick={() => handleOpenModal(drive)}
-                      className="text-xs font-bold text-[#BD8E36] hover:underline flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>Details</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </button>
-                  </div>
-                </div>
+                </RevealBlock>
               ))}
             </div>
           </div>
@@ -1350,97 +1397,107 @@ export const UpcomingDrivesPage: React.FC<Props> = ({ onNavigate, onOpenApply })
 
       {/* 6. Mandatory Student Guidelines & Official PAT Code of Conduct */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 space-y-6">
-        <div className="space-y-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#BD8E36]">
-              PAT Placement Protocol
-            </span>
+        <RevealBlock direction="up">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#BD8E36]">
+                PAT Placement Protocol
+              </span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
+              Mandatory Student Guidelines &amp; Code of Conduct
+            </h2>
+            <p className="text-xs sm:text-sm text-[#4A384F]/80 max-w-2xl">
+              To ensure institutional decorum and fair opportunity allocation, all registered candidates must adhere to the official Placement &amp; Training (PAT) regulations.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold font-['Playfair_Display',serif] text-[#28052B]">
-            Mandatory Student Guidelines &amp; Code of Conduct
-          </h2>
-          <p className="text-xs sm:text-sm text-[#4A384F]/80 max-w-2xl">
-            To ensure institutional decorum and fair opportunity allocation, all registered candidates must adhere to the official Placement &amp; Training (PAT) regulations.
-          </p>
-        </div>
+        </RevealBlock>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {GUIDELINES.map((g, idx) => (
-            <div
+            <RevealBlock
               key={idx}
-              className="p-6 bg-white rounded-3xl border border-[#E7D6C1] shadow-2xs space-y-3 hover:border-[#C59B4E] transition-all"
+              direction={idx % 2 === 0 ? 'left' : 'right'}
+              delay={idx * 70}
+              className="h-full"
             >
-              <div className="w-9 h-9 rounded-xl bg-[#28052B] text-[#DFC06A] font-black text-xs flex items-center justify-center font-mono">
-                0{idx + 1}
+              <div
+                className="h-full p-6 bg-white rounded-3xl border border-[#E7D6C1] shadow-2xs space-y-3 hover:border-[#C59B4E] transition-all"
+              >
+                <div className="w-9 h-9 rounded-xl bg-[#28052B] text-[#DFC06A] font-black text-xs flex items-center justify-center font-mono">
+                  0{idx + 1}
+                </div>
+                <h3 className="font-bold text-sm text-[#28052B]">{g.title}</h3>
+                <p className="text-xs text-[#4A384F]/80 leading-relaxed">{g.desc}</p>
               </div>
-              <h3 className="font-bold text-sm text-[#28052B]">{g.title}</h3>
-              <p className="text-xs text-[#4A384F]/80 leading-relaxed">{g.desc}</p>
-            </div>
+            </RevealBlock>
           ))}
         </div>
       </section>
 
       {/* 7. PAT Help Desk & Student Placement Helpline (Aubergine Theme Bento matching Hero) */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16">
-        <div className="relative">
-          {/* Subtle Decorative Gold Corner Brackets */}
-          <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
-          <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
+        <RevealBlock direction="up" delay={100}>
+          <div className="relative">
+            {/* Subtle Decorative Gold Corner Brackets */}
+            <div className="hidden sm:block absolute -top-2.5 -left-2.5 w-7 h-7 border-t-[1.5px] border-l-[1.5px] border-[#DFC06A] rounded-tl-lg pointer-events-none" />
+            <div className="hidden sm:block absolute -bottom-2.5 -right-2.5 w-7 h-7 border-b-[1.5px] border-r-[1.5px] border-[#DFC06A] rounded-br-lg pointer-events-none" />
 
-          <div className="rounded-3xl bg-[#28052B] text-white p-7 sm:p-10 border border-[#3E1043] shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="space-y-3 max-w-2xl">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#390F3B] text-[#DFC06A] border border-[#DFC06A]/30">
-                <Sparkles className="w-3.5 h-3.5 text-[#DFC06A]" />
-                <span>Placement Control Desk &amp; Student Help</span>
-              </span>
+            <div className="rounded-3xl bg-[#28052B] text-white p-7 sm:p-10 border border-[#3E1043] shadow-xl flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+              <div className="space-y-3 max-w-2xl">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#390F3B] text-[#DFC06A] border border-[#DFC06A]/30">
+                  <Sparkles className="w-3.5 h-3.5 text-[#DFC06A]" />
+                  <span>Placement Control Desk &amp; Student Help</span>
+                </span>
 
-              <h3 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-white">
-                Queries Regarding Drive Registration or Hall Tickets?
-              </h3>
+                <h3 className="text-2xl sm:text-3xl font-bold font-['Playfair_Display',serif] text-white">
+                  Queries Regarding Drive Registration or Hall Tickets?
+                </h3>
 
-              <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
-                The Placement &amp; Training Cell (PAT Office, Administrative Block 2nd Floor) is open for student assistance during all active drives. Report any attendance clash, eligibility queries, or online testing portal issues immediately.
-              </p>
+                <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-light">
+                  The Placement &amp; Training Cell (PAT Office, Administrative Block 2nd Floor) is open for student assistance during all active drives. Report any attendance clash, eligibility queries, or online testing portal issues immediately.
+                </p>
 
-              <div className="flex flex-wrap items-center gap-5 pt-1 text-xs text-white/90">
-                <a
-                  href="tel:+914884259000"
-                  className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-[#DFC06A]" />
-                  <span>+91 4884 259000 (Extn: 224 / 225)</span>
-                </a>
-                <a
-                  href="mailto:drives@jecc.ac.in"
-                  className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
-                >
-                  <Mail className="w-4 h-4 text-[#DFC06A]" />
-                  <span>drives@jecc.ac.in / placements@jecc.ac.in</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-5 pt-1 text-xs text-white/90">
+                  <a
+                    href="tel:+914884259000"
+                    className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                  >
+                    <Phone className="w-4 h-4 text-[#DFC06A]" />
+                    <span>+91 4884 259000 (Extn: 224 / 225)</span>
+                  </a>
+                  <a
+                    href="mailto:drives@jecc.ac.in"
+                    className="flex items-center gap-2 hover:text-[#DFC06A] transition-colors"
+                  >
+                    <Mail className="w-4 h-4 text-[#DFC06A]" />
+                    <span>drives@jecc.ac.in / placements@jecc.ac.in</span>
+                  </a>
+                </div>
               </div>
-            </div>
 
-            {/* Quick Action Navigation Buttons */}
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
-              <button
-                onClick={() => onNavigate('corporate-recruiters')}
-                className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span>Browse Corporate Recruiters</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              {/* Quick Action Navigation Buttons */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-3 shrink-0">
+                <button
+                  onClick={() => onNavigate('corporate-recruiters')}
+                  className="px-6 py-2.5 rounded-full bg-[#E5B656] hover:bg-[#DCA93F] text-[#28052B] font-bold text-xs sm:text-sm transition-all shadow-xs inline-flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Browse Corporate Recruiters</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
 
-              <button
-                onClick={() => onNavigate('career-guidance')}
-                className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
-              >
+                <button
+                  onClick={() => onNavigate('career-guidance')}
+                  className="px-6 py-2.5 rounded-full bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm border border-white/20 transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                >
                 <Briefcase className="w-4 h-4 text-[#DFC06A]" />
                 <span>Finishing School &amp; Prep</span>
               </button>
             </div>
           </div>
         </div>
-      </section>
+      </RevealBlock>
+    </section>
 
       {/* 8. Interactive Job Description & Registration Modal */}
       {modalDrive && (

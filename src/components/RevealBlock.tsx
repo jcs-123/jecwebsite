@@ -14,7 +14,7 @@ export function usePrefersReducedMotion() {
   return reduced;
 }
 
-export function useScrollReveal(threshold = 0.08) {
+export function useScrollReveal(threshold = 0.08, once = true) {
   const [isInView, setIsInView] = useState(false);
   const elementRef = useRef<HTMLDivElement>(null);
 
@@ -40,7 +40,10 @@ export function useScrollReveal(threshold = 0.08) {
       ([entry]) => {
         if (entry.isIntersecting) {
           triggerReveal();
-          observer.disconnect();
+          if (once) observer.disconnect();
+        } else if (!once) {
+          cancelAnimationFrame(rafId);
+          setIsInView(false);
         }
       },
       { threshold, rootMargin: '0px 0px -24px 0px' }
@@ -52,7 +55,7 @@ export function useScrollReveal(threshold = 0.08) {
       cancelAnimationFrame(rafId);
       observer.disconnect();
     };
-  }, [threshold]);
+  }, [threshold, once]);
 
   return [elementRef, isInView] as const;
 }
@@ -62,6 +65,7 @@ interface RevealBlockProps {
   className?: string;
   direction?: 'up' | 'left' | 'right';
   delay?: number;
+  once?: boolean;
 }
 
 export const RevealBlock: React.FC<RevealBlockProps> = ({
@@ -69,15 +73,16 @@ export const RevealBlock: React.FC<RevealBlockProps> = ({
   className = '',
   direction = 'left',
   delay = 0,
+  once = true,
 }) => {
-  const [ref, inView] = useScrollReveal(0.08);
+  const [ref, inView] = useScrollReveal(0.08, once);
   const reducedMotion = usePrefersReducedMotion();
 
   const hiddenTransform =
     direction === 'left'
-      ? '-translate-x-12'
+      ? '-translate-x-12 sm:-translate-x-16'
       : direction === 'right'
-        ? 'translate-x-12'
+        ? 'translate-x-12 sm:translate-x-16'
         : 'translate-y-8';
 
   return (
@@ -91,8 +96,10 @@ export const RevealBlock: React.FC<RevealBlockProps> = ({
       className={`${
         reducedMotion
           ? ''
-          : `transition-[opacity,transform] duration-[1100ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform ${
-              inView ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${hiddenTransform}`
+          : `transition-[opacity,transform] duration-[950ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform ${
+              inView
+                ? 'opacity-100 translate-x-0 translate-y-0 scale-100'
+                : `opacity-0 ${hiddenTransform} scale-[0.98]`
             }`
       } ${className}`}
     >

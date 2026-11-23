@@ -506,95 +506,145 @@ export const CorporateRecruitersPage: React.FC<Props> = ({ onNavigate, onOpenApp
       <PlacementsSubNav activeRoute="corporate-recruiters" onNavigate={onNavigate} />
 
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION: LUXURY SINGLE-BANNER SHOWCASE (EXACT MATCH TO MOCKUP)      */}
+      {/* 1. HERO SECTION: EDITORIAL SPLIT SHOWCASE (EXACT MATCH TO MOCKUP)         */}
       {/* ========================================================================= */}
-      <section className="relative w-full pt-4 sm:pt-6 pb-2">
+      <section className="relative w-full pt-4 sm:pt-8 pb-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
           
-          {/* Main Showcase Hero Banner */}
-          <RevealBlock direction="up">
-            <div className="relative w-full rounded-[32px] sm:rounded-[40px] overflow-hidden bg-[#28052B] shadow-2xl border border-[#DFC06A]/40 min-h-[420px] sm:min-h-[480px] lg:min-h-[500px] flex items-center">
-              
-              {/* Background Photo on Right */}
-              <div className="absolute inset-0 left-auto right-0 w-full sm:w-2/3 lg:w-3/5 h-full pointer-events-none">
-                <img
-                  src="/assets/corporate_recruiters_drive.jpg"
-                  alt="Corporate recruitment interview drive at Jyothi Engineering College"
-                  className="w-full h-full object-cover object-[center_25%]"
-                />
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center">
+            
+            {/* Left Column: Asymmetric Framed Photo with Royal Plum Architectural Accents */}
+            <div className="lg:col-span-6 relative">
+              <RevealBlock direction="left">
+                <div className="relative pt-2 sm:pt-4 pb-2 sm:pb-4 px-2 sm:px-3">
+                  
+                  {/* Top-Left Outer Royal Plum Solid Crest Chevron */}
+                  <div className="absolute top-0 left-0 w-24 sm:w-32 h-24 sm:h-32 bg-[#28052B] rounded-tl-[44px] sm:rounded-tl-[56px] rounded-br-[70px] sm:rounded-br-[90px] -z-0 pointer-events-none" />
 
-              {/* Seamless Dark Plum Gradient Overlay from Left to Right */}
-              <div className="absolute inset-0 bg-gradient-to-r from-[#28052B] via-[#28052B] sm:via-[#28052B]/95 lg:via-[#28052B]/85 to-transparent pointer-events-none" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#28052B]/70 via-transparent to-transparent pointer-events-none sm:hidden" />
+                  {/* Bottom-Right Outer Royal Plum Solid Crest Chevron */}
+                  <div className="absolute bottom-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-[#28052B] rounded-br-[44px] sm:rounded-br-[56px] rounded-tl-[70px] sm:rounded-tl-[90px] -z-0 pointer-events-none" />
 
-              {/* Left Column Content */}
-              <div className="relative z-10 p-6 sm:p-10 lg:p-14 max-w-xl space-y-4 sm:space-y-5">
-                {/* Eyebrow flanked on right by gold rule */}
-                <div className="flex items-center gap-3">
-                  <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] text-white/90">
-                    CORPORATE RELATIONS
-                  </span>
-                  <span className="h-[1.5px] w-12 sm:w-16 bg-[#BD8E36]" />
+                  {/* Outer Contour Gold Border Line hugging the shape */}
+                  <div className="absolute inset-0 rounded-tl-[48px] sm:rounded-tl-[60px] rounded-tr-[30px] sm:rounded-tr-[42px] rounded-br-[48px] sm:rounded-br-[60px] rounded-bl-[30px] sm:rounded-bl-[42px] border-[1.5px] border-[#DFC06A] pointer-events-none z-10" />
+
+                  {/* Main Image Container */}
+                  <div className="relative z-10 rounded-tl-[40px] sm:rounded-tl-[52px] rounded-tr-[24px] sm:rounded-tr-[36px] rounded-br-[40px] sm:rounded-br-[52px] rounded-bl-[24px] sm:rounded-bl-[36px] overflow-hidden shadow-2xl border border-[#DFC06A]/40 bg-[#28052B] group">
+                    <img
+                      src="/assets/corporate_recruiters_connections.jpg"
+                      alt="Connections that shape careers - Jyothi students with corporate recruitment partner"
+                      className="w-full h-full object-cover object-center aspect-[16/11] sm:aspect-[4/3] lg:aspect-[16/11] group-hover:scale-[1.02] transition-transform duration-700"
+                    />
+
+                    {/* Subtle warm lighting vignette */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#28052B]/30 via-transparent to-transparent pointer-events-none" />
+                  </div>
+
                 </div>
-
-                {/* Main Headline */}
-                <h1 className="text-3xl sm:text-5xl lg:text-[54px] font-black font-['Playfair_Display',serif] text-white leading-[1.08] tracking-tight">
-                  Where talent meets<br />
-                  <span className="italic font-normal text-[#C59B4E]">
-                    opportunity.
-                  </span>
-                </h1>
-
-                {/* Subtitle */}
-                <h2 className="text-base sm:text-xl font-bold text-white/95 mt-1 sm:mt-2">
-                  Corporate Recruiters &amp; Hiring Partners
-                </h2>
-
-                {/* Description with Vertical Gold Slash */}
-                <div className="flex items-start gap-3 pt-1">
-                  <span className="h-8 w-[2px] bg-[#BD8E36] shrink-0 mt-0.5 inline-block" />
-                  <p className="text-xs sm:text-sm text-white/85 leading-relaxed max-w-md font-normal">
-                    Connecting Jyothi students with employers across technology, engineering and beyond.
-                  </p>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex flex-wrap items-center gap-3 pt-3">
-                  <button
-                    onClick={() => scrollToSection('recruiting-community')}
-                    className="px-6 sm:px-7 py-3 rounded-full bg-[#C59B4E] hover:bg-[#B3893C] text-[#28052B] font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer group"
-                  >
-                    <span>Browse Recruiting Partners</span>
-                    <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
-                  </button>
-
-                  <button
-                    onClick={() => onNavigate('placement-records')}
-                    className="px-6 sm:px-7 py-3 rounded-full bg-[#28052B]/80 hover:bg-[#28052B] text-white border border-white/60 font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-2 cursor-pointer shadow-2xs"
-                  >
-                    <span>View Placement Records</span>
-                    <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Floating Stat Card on Bottom Right: 94+ Recruiting Partners */}
-              <div className="absolute bottom-5 right-5 sm:bottom-8 sm:right-8 bg-white/95 backdrop-blur-md border border-[#E7D6C1] shadow-xl rounded-2xl sm:rounded-3xl p-4 sm:p-5 z-20 text-left min-w-[140px]">
-                <div className="text-3xl sm:text-4xl font-bold font-['Playfair_Display',serif] text-[#28052B] leading-none">
-                  94+
-                </div>
-                <div className="text-xs sm:text-[13px] font-semibold text-[#4A384F] mt-1.5 leading-tight">
-                  Recruiting Partners
-                </div>
-                <div className="text-[10px] text-[#4A384F]/60 italic font-medium mt-1">
-                  Illustrative figure
-                </div>
-              </div>
-
+              </RevealBlock>
             </div>
-          </RevealBlock>
 
+            {/* Right Column: Eyebrow, Main Headline, Subtitle, Description, Action Buttons, Shortcuts */}
+            <div className="lg:col-span-6 space-y-5 sm:space-y-6">
+              <RevealBlock direction="right">
+                <div className="space-y-4 sm:space-y-4.5">
+                  
+                  {/* Eyebrow flanked on right by gold rule */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.24em] text-[#BD8E36]">
+                      CORPORATE RELATIONS
+                    </span>
+                    <span className="h-[1.5px] w-12 sm:w-16 bg-[#BD8E36]" />
+                  </div>
+
+                  {/* Main Headline */}
+                  <h1 className="text-3xl sm:text-4xl lg:text-[46px] xl:text-[50px] font-black font-['Playfair_Display',serif] text-[#28052B] leading-[1.12] tracking-tight">
+                    <span className="block">Connections that</span>
+                    <span className="block mt-0.5 sm:mt-1">
+                      <span className="text-[#28052B]">shape </span>
+                      <span className="italic font-normal text-[#BD8E36]">careers.</span>
+                    </span>
+                  </h1>
+
+                  {/* Subtitle */}
+                  <h2 className="text-base sm:text-lg lg:text-xl font-bold text-[#28052B] pt-0.5">
+                    Corporate Recruiters &amp; Hiring Partners
+                  </h2>
+
+                  {/* Description with Vertical Gold Slash */}
+                  <div className="flex items-start gap-3 pt-1">
+                    <span className="w-[2px] h-9 bg-[#BD8E36] shrink-0 mt-0.5 inline-block" />
+                    <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed max-w-md font-normal">
+                      Connecting Jyothi students with employers across technology, engineering and beyond.
+                    </p>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-wrap items-center gap-3 pt-2">
+                    <button
+                      onClick={() => scrollToSection('recruiting-community')}
+                      className="px-6 sm:px-7 py-3 rounded-full bg-[#C59B4E] hover:bg-[#B3893C] text-[#28052B] font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer group"
+                    >
+                      <span>Browse Recruiting Partners</span>
+                      <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+                    </button>
+
+                    <button
+                      onClick={() => onNavigate('placement-records')}
+                      className="px-6 sm:px-7 py-3 rounded-full bg-white hover:bg-[#FAF7F2] text-[#28052B] border border-[#28052B] font-bold text-xs sm:text-sm transition-all inline-flex items-center gap-2 cursor-pointer shadow-2xs"
+                    >
+                      <span>View Placement Records</span>
+                      <ArrowRight className="w-4 h-4 text-[#28052B] group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+
+                  {/* Hairline Divider */}
+                  <div className="h-[1px] bg-[#E7D6C1] w-full pt-2" />
+
+                  {/* 3 Inline Category Shortcuts with Icons and Dividers */}
+                  <div className="flex items-center flex-wrap gap-4 sm:gap-6 pt-1 text-xs sm:text-sm font-semibold text-[#28052B]">
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('Tier 1 IT & Cloud');
+                        scrollToSection('recruiters-grid');
+                      }}
+                      className="inline-flex items-center gap-2 hover:text-[#BD8E36] transition-colors cursor-pointer group"
+                    >
+                      <Laptop className="w-4 h-4 text-[#28052B] group-hover:text-[#BD8E36] transition-colors" />
+                      <span>Technology</span>
+                    </button>
+
+                    <span className="h-4 w-[1px] bg-[#E7D6C1]" />
+
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('Core Engineering & Auto');
+                        scrollToSection('recruiters-grid');
+                      }}
+                      className="inline-flex items-center gap-2 hover:text-[#BD8E36] transition-colors cursor-pointer group"
+                    >
+                      <Settings className="w-4 h-4 text-[#28052B] group-hover:text-[#BD8E36] transition-colors" />
+                      <span>Engineering</span>
+                    </button>
+
+                    <span className="h-4 w-[1px] bg-[#E7D6C1]" />
+
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('Banking & FinTech');
+                        scrollToSection('recruiters-grid');
+                      }}
+                      className="inline-flex items-center gap-2 hover:text-[#BD8E36] transition-colors cursor-pointer group"
+                    >
+                      <Coins className="w-4 h-4 text-[#28052B] group-hover:text-[#BD8E36] transition-colors" />
+                      <span>Finance</span>
+                    </button>
+                  </div>
+
+                </div>
+              </RevealBlock>
+            </div>
+
+          </div>
           {/* Explore Our Recruiting Community Section */}
           <div id="recruiting-community" className="space-y-6 pt-2">
             <RevealBlock direction="up">

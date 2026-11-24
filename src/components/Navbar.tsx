@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Menu, X, ChevronDown, Search, Sparkles, Phone, Compass,
-  ExternalLink, GraduationCap, Building2, Users, BookOpen,
-  Briefcase, Award, ShieldCheck, Microscope, HeartHandshake,
-  ChevronRight, ChevronLeft, MapPin, Layers, LogIn
+  GraduationCap, Building2, BookOpen, Award, ShieldCheck,
+  ChevronRight, ChevronLeft, LogIn
 } from 'lucide-react';
-import { DEPARTMENTS, COLLEGE_INFO } from '../data/collegeData';
 
 const FACILITIES_GRID_PAIRS = [
   {
@@ -72,8 +70,14 @@ export const Navbar: React.FC<Props> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [mobileSubExpanded, setMobileSubExpanded] = useState<Record<string, boolean>>({
+    Courses: true,
+    Auxiliaries: false,
+    'Professional Bodies': false,
+    'Career Guidance Cell': false,
+  });
   const [headerHeight, setHeaderHeight] = useState<number>(0);
-  const navRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const facilitiesScrollRef = useRef<HTMLDivElement>(null);
 
@@ -155,14 +159,53 @@ export const Navbar: React.FC<Props> = ({
     {
       id: 'departments',
       label: 'Departments',
-      isWide: true,
-      dropdown: DEPARTMENTS.map(d => ({
-        label: d.name,
-        page: 'departments',
-        section: d.id,
-        badge: d.code,
-        desc: `${d.intake} Seats • ${d.degree}`
-      }))
+      dropdown: [
+        {
+          label: 'Courses',
+          page: 'departments',
+          desc: '9 Engineering & Science streams',
+          badge: '9 Programs',
+          subDropdown: [
+            { label: 'Artificial Intelligence & Data Science', page: 'dept-aids', badge: 'AI & DS', desc: '60 Seats • B.Tech' },
+            { label: 'Basic Science & Humanities', page: 'departments', section: 'bsh', badge: 'BS&H', desc: 'Foundational Sciences & Mathematics' },
+            { label: 'Civil Engineering', page: 'departments', section: 'ce', badge: 'CE', desc: '60 Seats • B.Tech & M.Tech' },
+            { label: 'Computer Science & Engineering', page: 'departments', section: 'cse', badge: 'CSE', desc: '180 Seats • B.Tech & M.Tech' },
+            { label: 'Cyber Security', page: 'departments', section: 'cyber', badge: 'CYBER', desc: '60 Seats • B.Tech' },
+            { label: 'Electronics & Communication Engineering', page: 'departments', section: 'ece', badge: 'ECE', desc: '120 Seats • B.Tech & M.Tech' },
+            { label: 'Electrical & Electronics Engineering', page: 'departments', section: 'eee', badge: 'EEE', desc: '60 Seats • B.Tech & M.Tech' },
+            { label: 'Mechanical Engineering', page: 'departments', section: 'me', badge: 'ME', desc: '90 Seats • B.Tech' },
+            { label: 'Mechatronics Engineering', page: 'departments', section: 'mct', badge: 'MCT', desc: '60 Seats • B.Tech' },
+          ]
+        },
+        {
+          label: 'Auxiliaries',
+          page: 'facilities',
+          desc: 'Academic & campus support units',
+          badge: 'Services',
+          subDropdown: [
+            { label: 'Central Digital Library', page: 'central-library', badge: 'Library', desc: '42,000+ volumes & e-journals' },
+            { label: 'Physical Education & Sports', page: 'sports-arena', badge: 'Sports', desc: 'Turf grounds, gym & floodlit courts' },
+            { label: 'Career Guidance & Placement', page: 'career-guidance', badge: 'PAT', desc: 'Placement & aptitude training' },
+            { label: 'Campus Hostels & Dining', page: 'campus-hostels', badge: 'Hostel', desc: 'Separate modern residences' },
+            { label: 'College Bus Fleet Network', page: 'bus-fleet', badge: 'Transit', desc: '25+ routes across 3 districts' },
+            { label: 'Health Care & Counseling Cell', page: 'facilities', section: 'support', badge: 'Wellness', desc: 'Medical clinic & psychological counselor' },
+          ]
+        },
+        {
+          label: 'Professional Bodies',
+          page: 'clubs-societies',
+          desc: 'National & international student chapters',
+          badge: 'Chapters',
+          subDropdown: [
+            { label: 'IEEE Student Branch', page: 'clubs-societies', section: 'ieee', badge: 'IEEE', desc: 'Computer Society, PES & WiE Chapters' },
+            { label: 'ISTE Chapter', page: 'clubs-societies', section: 'iste', badge: 'ISTE', desc: 'Indian Society for Technical Education' },
+            { label: 'CSI Student Chapter', page: 'clubs-societies', section: 'csi', badge: 'CSI', desc: 'Computer Society of India student branch' },
+            { label: 'IEI Students\' Chapter', page: 'clubs-societies', section: 'iei', badge: 'IEI', desc: 'Institution of Engineers (India)' },
+            { label: 'SAEINDIA Collegiate Club', page: 'clubs-societies', section: 'sae', badge: 'SAE', desc: 'Team Jyothi Racing & BAJA design' },
+            { label: 'ACM Student Chapter', page: 'clubs-societies', section: 'acm', badge: 'ACM', desc: 'Association for Computing Machinery' },
+          ]
+        },
+      ]
     },
     {
       id: 'examination',
@@ -266,13 +309,13 @@ export const Navbar: React.FC<Props> = ({
 
   return (
     <>
-    <header ref={navRef} className="fixed top-0 left-0 right-0 md:relative md:top-auto md:left-auto md:right-auto z-50 w-full transition-all duration-300">
+      <header ref={navRef} className="fixed top-0 left-0 right-0 md:relative md:top-auto md:left-auto md:right-auto z-50 w-full transition-all duration-300">
 
-      {/* 1. Top Utility Info Bar (Desktop & Tablet only; mobile uses Quick Links in drawer) */}
-      <div className="hidden md:block bg-[#170524] text-slate-200 text-xs py-2 px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1 gap-x-3">
+        {/* 1. Top Utility Info Bar (Desktop & Tablet only; mobile uses Quick Links in drawer) */}
+        <div className="hidden md:block bg-[#170524] text-slate-200 text-xs py-2 px-6 md:px-8 border-b border-[#DFC06A]/25 shadow-xs">
+          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-1 gap-x-3">
 
-          {/* Credentials / Affiliations (Left) */}
+            {/* Credentials / Affiliations (Left) */}
           <div className="w-full md:w-auto flex flex-wrap items-center justify-center md:justify-start gap-x-2 gap-y-1 text-[10.5px] sm:text-xs py-0.5">
             <button
               onClick={() => handleNavClick('autonomous')}
@@ -652,6 +695,7 @@ export const Navbar: React.FC<Props> = ({
                               const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
                               const subItems = hasSub ? (sub as any).subDropdown : null;
                               const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+                              const flyoutToLeft = item.id === 'facilities' || item.id === 'placements' || item.id === 'admissions';
 
                               return (
                                 <div key={idx} className="relative group/sub">
@@ -691,20 +735,41 @@ export const Navbar: React.FC<Props> = ({
                                         </span>
                                       )}
                                       {hasSub && (
-                                        <ChevronLeft className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:-translate-x-0.5 transition-transform" />
+                                        flyoutToLeft ? (
+                                          <ChevronLeft className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:-translate-x-0.5 transition-transform" />
+                                        ) : (
+                                          <ChevronRight className="w-3.5 h-3.5 text-slate-400 group-hover/item:text-jyothi-purple-900 group-hover/sub:translate-x-0.5 transition-transform" />
+                                        )
                                       )}
                                     </div>
                                   </button>
 
                                   {/* Desktop Sub Dropdown Flyout */}
                                   {hasSub && (
-                                    <div className="hidden group-hover/sub:block absolute right-full top-0 pr-2 z-60 animate-fade-in w-72">
+                                    <div
+                                      className={`hidden group-hover/sub:block absolute top-0 z-60 animate-fade-in ${
+                                        flyoutToLeft ? 'right-full pr-2' : 'left-full pl-2'
+                                      } ${sub.label === 'Courses' ? 'w-88 sm:w-96' : 'w-72 sm:w-80'}`}
+                                    >
                                       <div className="rounded-2xl bg-white border border-[#DFC06A]/40 shadow-2xl p-2.5 ring-1 ring-black/5">
                                         <div className="px-2.5 py-1.5 border-b border-slate-100 flex items-center justify-between mb-1.5">
                                           <span className="text-[10.5px] font-bold text-jyothi-purple-950 uppercase tracking-wider flex items-center gap-1.5">
-                                            <Compass className="w-3.5 h-3.5 text-[#C79628]" />
-                                            <span>Career Guidance Sub-Menu</span>
+                                            {sub.label === 'Courses' ? (
+                                              <BookOpen className="w-3.5 h-3.5 text-[#C79628]" />
+                                            ) : sub.label === 'Auxiliaries' ? (
+                                              <Building2 className="w-3.5 h-3.5 text-[#C79628]" />
+                                            ) : sub.label === 'Professional Bodies' ? (
+                                              <Award className="w-3.5 h-3.5 text-[#C79628]" />
+                                            ) : (
+                                              <Compass className="w-3.5 h-3.5 text-[#C79628]" />
+                                            )}
+                                            <span>{sub.label}</span>
                                           </span>
+                                          {sub.label === 'Courses' && (
+                                            <span className="text-[10px] text-[#C79628] font-bold font-mono">
+                                              9 Programs
+                                            </span>
+                                          )}
                                         </div>
 
                                         <div className="space-y-1">
@@ -716,12 +781,12 @@ export const Navbar: React.FC<Props> = ({
                                                 handleNavClick(nested.page, nested.section);
                                               }}
                                               className={`w-full text-left px-2.5 py-2 rounded-xl text-xs transition-all flex items-start justify-between gap-2 group/nested hover:bg-jyothi-purple-50 text-slate-700 hover:text-jyothi-purple-950 cursor-pointer ${
-                                                nested.page === currentPage
+                                                nested.page === currentPage || (nested.page === 'dept-aids' && currentPage === 'dept-aids')
                                                   ? 'bg-jyothi-purple-50 text-jyothi-purple-950 font-bold'
                                                   : ''
                                               }`}
                                             >
-                                              <div className="min-w-0">
+                                              <div className="min-w-0 flex-1">
                                                 <div className="font-bold flex items-center gap-1 text-slate-800 group-hover/nested:text-jyothi-purple-900 text-xs">
                                                   <span>{nested.label}</span>
                                                 </div>
@@ -794,225 +859,244 @@ export const Navbar: React.FC<Props> = ({
         </div>
 
         {/* 3. Fully Responsive Mobile & Tablet Navigation Drawer */}
-        {mobileMenuOpen && (
-          <div className="xl:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-7 space-y-5 max-h-[85vh] overflow-y-auto animate-fade-in shadow-2xl">
+          {mobileMenuOpen && (
+            <div className="xl:hidden bg-white border-t border-slate-100 px-4 pt-3 pb-7 space-y-5 max-h-[85vh] overflow-y-auto animate-fade-in shadow-2xl">
 
-            {/* Mobile Navigation List with Clean Bordered Cards */}
-            <div className="space-y-1.5">
-              {/* Home Row */}
-              <button
-                onClick={() => handleNavClick('home')}
-                className={`w-full text-left py-2.5 px-4 text-[13.5px] rounded-xl border transition-colors flex items-center justify-between ${
-                  currentPage === 'home'
+              {/* Mobile Navigation List with Clean Bordered Cards */}
+              <div className="space-y-1.5">
+                {/* Home Row */}
+                <button
+                  onClick={() => handleNavClick('home')}
+                  className={`w-full text-left py-2.5 px-4 text-[13.5px] rounded-xl border transition-colors flex items-center justify-between ${currentPage === 'home'
                     ? 'bg-[#EFE8F6] border-[#E4D7F0] text-[#250836] font-bold'
                     : 'bg-white border-slate-200/80 text-[#250836] font-semibold hover:bg-slate-50'
-                }`}
-              >
-                <span>Home</span>
-              </button>
+                    }`}
+                >
+                  <span>Home</span>
+                </button>
 
-              {navItems.map((item) => {
-                const hasDropdown = Boolean(item.dropdown);
-                const isExpanded = mobileExpanded === item.id;
-                const isCurrent = currentPage === item.id;
+                {navItems.map((item) => {
+                  const hasDropdown = Boolean(item.dropdown);
+                  const isExpanded = mobileExpanded === item.id;
+                  const isCurrent = currentPage === item.id;
 
-                return (
-                  <div
-                    key={item.id}
-                    className={`rounded-xl border overflow-hidden transition-colors ${
-                      isCurrent
+                  return (
+                    <div
+                      key={item.id}
+                      className={`rounded-xl border overflow-hidden transition-colors ${isCurrent
                         ? 'bg-[#EFE8F6] border-[#E4D7F0]'
                         : 'bg-white border-slate-200/80'
-                    }`}
-                  >
+                        }`}
+                    >
 
-                    {/* Header Row */}
-                    <button
-                      onClick={() => {
-                        if (hasDropdown) {
-                          toggleMobileDropdown(item.id);
-                        } else {
-                          handleNavClick(item.id);
-                        }
-                      }}
-                      className={`w-full text-left py-2.5 px-4 text-[13.5px] transition-colors flex items-center justify-between ${
-                        isCurrent
+                      {/* Header Row */}
+                      <button
+                        onClick={() => {
+                          if (hasDropdown) {
+                            toggleMobileDropdown(item.id);
+                          } else {
+                            handleNavClick(item.id);
+                          }
+                        }}
+                        className={`w-full text-left py-2.5 px-4 text-[13.5px] transition-colors flex items-center justify-between ${isCurrent
                           ? 'text-[#250836] font-bold'
                           : 'text-[#250836] font-semibold hover:bg-slate-50/80'
-                      }`}
-                    >
-                      <span>{item.label}</span>
-                      {hasDropdown && (
-                        <ChevronDown
-                          className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${
-                            isExpanded ? 'rotate-180 text-[#250836]' : ''
                           }`}
-                        />
-                      )}
-                    </button>
+                      >
+                        <span>{item.label}</span>
+                        {hasDropdown && (
+                          <ChevronDown
+                            className={`w-4 h-4 text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180 text-[#250836]' : ''
+                              }`}
+                          />
+                        )}
+                      </button>
 
-                    {/* Accordion Sub-Menu */}
-                    {hasDropdown && isExpanded && (
-                      <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
-                        {item.id !== 'facilities' && item.id !== 'placements' && (
+                      {/* Accordion Sub-Menu */}
+                      {hasDropdown && isExpanded && (
+                        <div className="px-3 py-2 space-y-1 bg-[#FAF8FC] border-t border-slate-200/70">
                           <button
                             onClick={() => handleNavClick(item.id)}
-                            className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between cursor-pointer"
+                            className="w-full text-left py-2 px-3 rounded-lg text-xs font-bold text-[#250836] bg-[#EFE8F6]/70 flex items-center justify-between"
                           >
                             <span>{item.label} Overview Page</span>
                             <ChevronRight className="w-3.5 h-3.5" />
                           </button>
-                        )}
 
-                        {item.dropdown?.map((sub, i) => {
-                          const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
-                          const subItems = hasSub ? (sub as any).subDropdown : null;
-                          const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+                          {item.dropdown?.map((sub, i) => {
+                            const hasSub = 'subDropdown' in sub && Boolean((sub as any).subDropdown?.length);
+                            const subItems = hasSub ? (sub as any).subDropdown : null;
+                            const isHoverOnly = hasSub || sub.label === 'Career Guidance Cell';
+                            const isSubOpen = Boolean(mobileSubExpanded[sub.label]);
 
-                          return (
-                            <div key={i} className="space-y-1">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  if (isHoverOnly) {
-                                    e.preventDefault();
-                                    return;
-                                  }
-                                  handleNavClick(sub.page, sub.section);
-                                }}
-                                className={`w-full text-left py-2 px-3 text-xs text-slate-700 hover:text-[#250836] flex items-center justify-between rounded-lg hover:bg-white transition-colors ${
-                                  isHoverOnly ? 'cursor-default' : 'cursor-pointer'
-                                }`}
-                              >
-                                <span className="font-medium truncate">{sub.label}</span>
-                                {'badge' in sub && (
-                                  <span className="text-[10px] px-2 py-0.5 bg-[#EFE8F6] text-[#250836] rounded-md font-mono font-bold">
-                                    {sub.badge}
-                                  </span>
-                                )}
-                              </button>
-
-                              {hasSub && (
-                                <div className="pl-4 pr-1 py-1.5 space-y-1 border-l-2 border-[#DFC06A]/50 ml-3 bg-white/70 rounded-r-xl">
-                                  <div className="text-[10px] font-bold uppercase tracking-wider text-[#250836] px-2 pt-0.5 flex items-center gap-1">
-                                    <Compass className="w-3 h-3 text-[#C79628]" />
-                                    <span>Career Navigator Sub-Menu</span>
+                            return (
+                              <div key={i} className="space-y-1">
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    if (hasSub) {
+                                      setMobileSubExpanded(prev => ({
+                                        ...prev,
+                                        [sub.label]: !prev[sub.label]
+                                      }));
+                                      return;
+                                    }
+                                    handleNavClick(sub.page, sub.section);
+                                  }}
+                                  className={`w-full text-left py-2 px-3 text-xs text-slate-700 hover:text-[#250836] flex items-center justify-between rounded-lg hover:bg-white transition-colors cursor-pointer`}
+                                >
+                                  <span className="font-semibold truncate">{sub.label}</span>
+                                  <div className="flex items-center gap-1.5 shrink-0">
+                                    {'badge' in sub && (
+                                      <span className="text-[10px] px-2 py-0.5 bg-[#EFE8F6] text-[#250836] rounded-md font-mono font-bold">
+                                        {sub.badge}
+                                      </span>
+                                    )}
+                                    {hasSub && (
+                                      <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isSubOpen ? 'rotate-180' : ''}`} />
+                                    )}
                                   </div>
-                                  {subItems.map((nested: any, nI: number) => (
-                                    <button
-                                      key={nI}
-                                      onClick={() => handleNavClick(nested.page, nested.section)}
-                                      className="w-full text-left py-1.5 px-2 text-xs text-slate-600 hover:text-[#250836] flex items-center justify-between rounded hover:bg-white transition-colors"
-                                    >
-                                      <span className="font-medium text-[11.5px] truncate">{nested.label}</span>
-                                      {nested.badge && (
-                                        <span className="text-[9px] px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded font-mono font-bold">
-                                          {nested.badge}
+                                </button>
+
+                                {hasSub && isSubOpen && (
+                                  <div className="pl-3 pr-1 py-1.5 space-y-1 border-l-2 border-[#DFC06A]/50 ml-3 bg-white/70 rounded-r-xl">
+                                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#250836] px-2 pt-0.5 flex items-center justify-between">
+                                      <span className="flex items-center gap-1">
+                                        {sub.label === 'Courses' ? (
+                                          <BookOpen className="w-3 h-3 text-[#C79628]" />
+                                        ) : sub.label === 'Auxiliaries' ? (
+                                          <Building2 className="w-3 h-3 text-[#C79628]" />
+                                        ) : sub.label === 'Professional Bodies' ? (
+                                          <Award className="w-3 h-3 text-[#C79628]" />
+                                        ) : (
+                                          <Compass className="w-3 h-3 text-[#C79628]" />
+                                        )}
+                                        <span>{sub.label}</span>
+                                      </span>
+                                      {sub.label === 'Courses' && (
+                                        <span className="text-[9px] text-[#C79628] font-bold font-mono">
+                                          9 Programs
                                         </span>
                                       )}
-                                    </button>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
+                                    </div>
+                                    {subItems.map((nested: any, nI: number) => (
+                                      <button
+                                        key={nI}
+                                        onClick={() => {
+                                          setMobileMenuOpen(false);
+                                          handleNavClick(nested.page, nested.section);
+                                        }}
+                                        className="w-full text-left py-1.5 px-2 text-xs text-slate-600 hover:text-[#250836] flex items-center justify-between rounded hover:bg-white transition-colors cursor-pointer"
+                                      >
+                                        <span className="font-medium text-[11.5px] truncate">{nested.label}</span>
+                                        {nested.badge && (
+                                          <span className="text-[9px] px-1.5 py-0.5 bg-amber-100 text-amber-900 rounded font-mono font-bold shrink-0 ml-1">
+                                            {nested.badge}
+                                          </span>
+                                        )}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
 
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Quick Links Section */}
-            <div className="space-y-2 pt-1">
-              <h3 className="text-[15px] font-extrabold text-[#250836] px-0.5">
-                Quick Links
-              </h3>
-
-              <div className="space-y-1.5">
-                <button
-                  onClick={() => { setMobileMenuOpen(false); handleNavClick('autonomous'); }}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <ShieldCheck className="w-4 h-4 text-[#250836] shrink-0" />
-                    <span>Autonomous Institution</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </button>
-
-                <button
-                  onClick={() => { setMobileMenuOpen(false); handleNavClick('iqac'); }}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <Award className="w-4 h-4 text-[#250836] shrink-0" />
-                    <span>NAAC A Grade • NBA</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </button>
-
-                <a
-                  href="tel:+919526924455"
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>
-                      Admissions Helpline: <strong className="font-bold">+91 95269 24455</strong>
-                    </span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </a>
-
-                <button
-                  onClick={() => { setMobileMenuOpen(false); handleNavClick('alumni'); }}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <GraduationCap className="w-4 h-4 text-[#250836] shrink-0" />
-                    <span>Alumni</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </button>
-
-                <button
-                  onClick={() => { setMobileMenuOpen(false); handleNavClick('login'); }}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <LogIn className="w-4 h-4 text-[#250836] shrink-0" />
-                    <span>Login</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </button>
-
-                <button
-                  onClick={() => { setMobileMenuOpen(false); onOpenTour(); }}
-                  className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
-                >
-                  <span className="flex items-center gap-2.5">
-                    <Compass className="w-4 h-4 text-[#250836] shrink-0" />
-                    <span>360° Virtual Campus Tour</span>
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
-                </button>
+                    </div>
+                  );
+                })}
               </div>
+
+              {/* Quick Links Section */}
+              <div className="space-y-2 pt-1">
+                <h3 className="text-[15px] font-extrabold text-[#250836] px-0.5">
+                  Quick Links
+                </h3>
+
+                <div className="space-y-1.5">
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); handleNavClick('autonomous'); }}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <ShieldCheck className="w-4 h-4 text-[#250836] shrink-0" />
+                      <span>Autonomous Institution</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </button>
+
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); handleNavClick('iqac'); }}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <Award className="w-4 h-4 text-[#250836] shrink-0" />
+                      <span>NAAC A Grade • NBA</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </button>
+
+                  <a
+                    href="tel:+919526924455"
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <Phone className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>
+                        Admissions Helpline: <strong className="font-bold">+91 95269 24455</strong>
+                      </span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </a>
+
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); handleNavClick('alumni'); }}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <GraduationCap className="w-4 h-4 text-[#250836] shrink-0" />
+                      <span>Alumni</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </button>
+
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); handleNavClick('login'); }}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <LogIn className="w-4 h-4 text-[#250836] shrink-0" />
+                      <span>Login</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </button>
+
+                  <button
+                    onClick={() => { setMobileMenuOpen(false); onOpenTour(); }}
+                    className="w-full text-left px-3.5 py-2.5 rounded-xl bg-white border border-slate-200/80 hover:border-jyothi-purple-300 hover:bg-slate-50/80 flex items-center justify-between text-[13px] font-semibold text-[#250836] transition-all"
+                  >
+                    <span className="flex items-center gap-2.5">
+                      <Compass className="w-4 h-4 text-[#250836] shrink-0" />
+                      <span>360° Virtual Campus Tour</span>
+                    </span>
+                    <ChevronRight className="w-4 h-4 text-slate-500 shrink-0" />
+                  </button>
+                </div>
+              </div>
+
             </div>
+          )}
 
-          </div>
-        )}
+        </nav>
 
-      </nav>
-
-    </header>
-    <div
-      aria-hidden="true"
-      className={`md:hidden ${headerHeight ? '' : 'h-[58px] sm:h-[64px]'}`}
-      style={headerHeight ? { height: `${headerHeight}px` } : undefined}
-    />
+      </header>
+      <div
+        aria-hidden="true"
+        className={`md:hidden ${headerHeight ? '' : 'h-[58px] sm:h-[64px]'}`}
+        style={headerHeight ? { height: `${headerHeight}px` } : undefined}
+      />
     </>
   );
 };

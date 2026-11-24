@@ -45,6 +45,7 @@ import { AutonomousPage } from './pages/AutonomousPage';
 import { AlumniPage } from './pages/AlumniPage';
 import { LoginPage } from './pages/LoginPage';
 import { IQACPage } from './pages/IQACPage';
+import { AidsDepartmentPage } from './pages/AidsDepartmentPage';
 import { OfficeOfCoePage } from './pages/OfficeOfCoePage';
 import { ExaminationNotificationsPage } from './pages/ExaminationNotificationsPage';
 import { ExaminationTimetablePage } from './pages/ExaminationTimetablePage';
@@ -112,7 +113,7 @@ export function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 text-jyothi-charcoal-800 font-sans selection:bg-jyothi-purple-800 selection:text-jyothi-gold-300">
-      
+
       {/* Primary Navigation */}
       <Navbar
         currentPage={currentPage}
@@ -143,7 +144,15 @@ export function App() {
           />
         )}
 
-        {currentPage === 'departments' && (
+        {(currentPage === 'dept-aids' || (currentPage === 'departments' && subParam === 'aids')) && (
+          <AidsDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'departments' && subParam !== 'aids' && (
           <DepartmentsPage
             selectedDeptId={subParam}
             onOpenApply={() => setIsApplyOpen(true)}

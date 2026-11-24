@@ -167,14 +167,14 @@ export const Navbar: React.FC<Props> = ({
           badge: '9 Programs',
           subDropdown: [
             { label: 'Artificial Intelligence & Data Science', page: 'dept-aids', badge: 'AI & DS', desc: '60 Seats • B.Tech' },
-            { label: 'Basic Science & Humanities', page: 'departments', section: 'bsh', badge: 'BS&H', desc: 'Foundational Sciences & Mathematics' },
-            { label: 'Civil Engineering', page: 'departments', section: 'ce', badge: 'CE', desc: '60 Seats • B.Tech & M.Tech' },
-            { label: 'Computer Science & Engineering', page: 'departments', section: 'cse', badge: 'CSE', desc: '180 Seats • B.Tech & M.Tech' },
-            { label: 'Cyber Security', page: 'departments', section: 'cyber', badge: 'CYBER', desc: '60 Seats • B.Tech' },
-            { label: 'Electronics & Communication Engineering', page: 'departments', section: 'ece', badge: 'ECE', desc: '120 Seats • B.Tech & M.Tech' },
-            { label: 'Electrical & Electronics Engineering', page: 'departments', section: 'eee', badge: 'EEE', desc: '60 Seats • B.Tech & M.Tech' },
-            { label: 'Mechanical Engineering', page: 'departments', section: 'me', badge: 'ME', desc: '90 Seats • B.Tech' },
-            { label: 'Mechatronics Engineering', page: 'departments', section: 'mct', badge: 'MCT', desc: '60 Seats • B.Tech' },
+            { label: 'Basic Science & Humanities', page: 'dept-bsh', badge: 'BS&H', desc: 'Foundational Sciences & Mathematics' },
+            { label: 'Civil Engineering', page: 'dept-ce', badge: 'CE', desc: '60 Seats • B.Tech & M.Tech' },
+            { label: 'Computer Science & Engineering', page: 'dept-cse', badge: 'CSE', desc: '180 Seats • B.Tech & M.Tech' },
+            { label: 'Cyber Security', page: 'dept-cyber', badge: 'CYBER', desc: '60 Seats • B.Tech' },
+            { label: 'Electronics & Communication Engineering', page: 'dept-ece', badge: 'ECE', desc: '120 Seats • B.Tech & M.Tech' },
+            { label: 'Electrical & Electronics Engineering', page: 'dept-eee', badge: 'EEE', desc: '60 Seats • B.Tech & M.Tech' },
+            { label: 'Mechanical Engineering', page: 'dept-me', badge: 'ME', desc: '90 Seats • B.Tech' },
+            { label: 'Mechatronics Engineering', page: 'dept-mct', badge: 'MCT', desc: '60 Seats • B.Tech' },
           ]
         },
         {

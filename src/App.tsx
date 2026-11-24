@@ -46,6 +46,14 @@ import { AlumniPage } from './pages/AlumniPage';
 import { LoginPage } from './pages/LoginPage';
 import { IQACPage } from './pages/IQACPage';
 import { AidsDepartmentPage } from './pages/AidsDepartmentPage';
+import { BshDepartmentPage } from './pages/BshDepartmentPage';
+import { CeDepartmentPage } from './pages/CeDepartmentPage';
+import { CseDepartmentPage } from './pages/CseDepartmentPage';
+import { CyberDepartmentPage } from './pages/CyberDepartmentPage';
+import { EceDepartmentPage } from './pages/EceDepartmentPage';
+import { EeeDepartmentPage } from './pages/EeeDepartmentPage';
+import { MeDepartmentPage } from './pages/MeDepartmentPage';
+import { MctDepartmentPage } from './pages/MctDepartmentPage';
 import { OfficeOfCoePage } from './pages/OfficeOfCoePage';
 import { ExaminationNotificationsPage } from './pages/ExaminationNotificationsPage';
 import { ExaminationTimetablePage } from './pages/ExaminationTimetablePage';
@@ -152,7 +160,71 @@ export function App() {
           />
         )}
 
-        {currentPage === 'departments' && subParam !== 'aids' && (
+        {(currentPage === 'dept-bsh' || (currentPage === 'departments' && subParam === 'bsh')) && (
+          <BshDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-ce' || (currentPage === 'departments' && subParam === 'ce')) && (
+          <CeDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-cse' || (currentPage === 'departments' && subParam === 'cse')) && (
+          <CseDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-cyber' || (currentPage === 'departments' && subParam === 'cyber')) && (
+          <CyberDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-ece' || (currentPage === 'departments' && subParam === 'ece')) && (
+          <EceDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-eee' || (currentPage === 'departments' && subParam === 'eee')) && (
+          <EeeDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-me' || (currentPage === 'departments' && subParam === 'me')) && (
+          <MeDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {(currentPage === 'dept-mct' || currentPage === 'dept-mr' || (currentPage === 'departments' && (subParam === 'mct' || subParam === 'mr'))) && (
+          <MctDepartmentPage
+            subSection={subParam}
+            onNavigate={navigateTo}
+            onOpenApply={() => setIsApplyOpen(true)}
+          />
+        )}
+
+        {currentPage === 'departments' && subParam !== 'aids' && subParam !== 'bsh' && subParam !== 'ce' && subParam !== 'cse' && subParam !== 'cyber' && subParam !== 'ece' && subParam !== 'eee' && subParam !== 'me' && subParam !== 'mct' && subParam !== 'mr' && (
           <DepartmentsPage
             selectedDeptId={subParam}
             onOpenApply={() => setIsApplyOpen(true)}

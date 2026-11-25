@@ -3,145 +3,237 @@ import {
   ShieldCheck, Users, GraduationCap, Award, Mail, Phone,
   MapPin, CheckCircle2, Download, Search, Briefcase, Star,
   BookOpen, Compass, School, Sparkles, FileText, ShieldAlert,
-  KeyRound, Lock, Terminal
+  KeyRound, Lock, Terminal, Layers, Check
 } from 'lucide-react';
 
-/* 1. BOS (Board of Studies) Page */
+/* 1. BOS (Board of Studies) Page - Exactly Matching Screenshot */
 export const CyberBOSPage: React.FC = () => {
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Statutory Academic Body</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Board of Studies (BOS)
-              </h2>
-            </div>
+    <div className="space-y-7 animate-fade-in">
+      {/* 1. Section Title & Description Block matching screenshot */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#28052B] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <Users className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            UGC Autonomous Board
-          </span>
+          <div className="flex-1 flex items-center gap-4">
+            <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+              Board of Studies (BOS)
+            </h2>
+            <div className="flex-1 h-px bg-[#E5D7B7] hidden sm:block" />
+          </div>
         </div>
 
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
-          The Board of Studies (BOS) for Computer Science &amp; Engineering (Cyber Security) is the statutory academic authority under UGC Autonomous Regulations. The board architects a high-rigor, defense-in-depth curriculum aligned with NIST Cybersecurity Framework (CSF), ISO/IEC 27001 standards, MITRE ATT&amp;CK matrices, and national cyber defense mandates from CERT-In and AICTE.
+        <p className="text-xs sm:text-[13px] text-[#4A384F] leading-relaxed font-light pl-0 sm:pl-16">
+          The Board of Studies (BOS) for Computer Science &amp; Engineering (Cyber Security) is the statutory governance body established under the UGC autonomous regulations and approved by the Academic Council. It is responsible for framing curriculum schemes, designing semester syllabi, introducing defense-grade technologies, and validating continuous evaluation frameworks.
         </p>
       </div>
 
-      {/* BOS Committee Table */}
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm space-y-5">
-        <div className="flex items-center justify-between pb-3 border-b border-[#E7D6C1]">
-          <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
+      {/* 2. BOS Committee Members Table Card */}
+      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-5">
+        <div className="flex items-center justify-between pb-2">
+          <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-[#28052B]">
             BOS Committee Members
           </h3>
-          <span className="text-xs text-[#7A647F] font-medium">Tenure: 2024–2027</span>
+          <span className="px-4 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E5D7B7] text-xs font-semibold text-[#28052B]">
+            Tenure: 2024–2027
+          </span>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border border-[#E7D6C1] rounded-2xl overflow-hidden">
+        <div className="overflow-x-auto rounded-2xl border border-[#E7D6C1]/80">
+          <table className="w-full text-left text-xs">
             <thead className="bg-[#28052B] text-white">
               <tr>
-                <th className="py-3 px-4 font-semibold">Sl. No.</th>
-                <th className="py-3 px-4 font-semibold">Member Name</th>
+                <th className="py-3 px-4 font-semibold w-16 text-center">Sl. No.</th>
+                <th className="py-3 px-4 font-semibold">Member</th>
                 <th className="py-3 px-4 font-semibold">Designation &amp; Institution</th>
                 <th className="py-3 px-4 font-semibold">Role in BOS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E7D6C1] bg-[#FAF7F2]/40">
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">1</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Shaju K. Y.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Associate Professor &amp; Head, Dept. of Cyber Security, JEC</td>
-                <td className="py-3 px-4 font-bold text-[#C79628]">Chairman</td>
+            <tbody className="divide-y divide-[#E7D6C1] bg-white">
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">1</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SK
+                    </span>
+                    <span>Dr. Shaju K. Y.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Associate Professor &amp; Head, Dept. of Cyber Security, JEC</td>
+                <td className="py-3.5 px-4 font-semibold">
+                  <span className="px-4 py-1 rounded-full bg-[#F7EED8] text-[#8C6826] font-bold text-xs inline-block">
+                    Chairman
+                  </span>
+                </td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">2</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Jimmy Jose</td>
-                <td className="py-3 px-4 text-[#4A384F]">Associate Professor in Computer Science, NIT Calicut</td>
-                <td className="py-3 px-4 text-[#4A384F]">University Nominee (KTU)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">2</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      JJ
+                    </span>
+                    <span>Dr. Jimmy Jose</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Associate Professor in Computer Science, NIT Calicut</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">University Nominee (KTU)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">3</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Vivek Balachandran</td>
-                <td className="py-3 px-4 text-[#4A384F]">Senior Cybersecurity Research Scientist, CUSAT</td>
-                <td className="py-3 px-4 text-[#4A384F]">Subject Expert (Malware &amp; Forensics)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">3</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      VB
+                    </span>
+                    <span>Dr. Vivek Balachandran</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Senior Cybersecurity Research Scientist, CUSAT</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Subject Expert (Malware &amp; Forensics)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">4</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Satyajit Das</td>
-                <td className="py-3 px-4 text-[#4A384F]">Assistant Professor in Cyber-Physical Systems, IIT Palakkad</td>
-                <td className="py-3 px-4 text-[#4A384F]">Subject Expert (Hardware Security)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">4</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SD
+                    </span>
+                    <span>Dr. Satyajit Das</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Assistant Professor in Cyber-Physical Systems, IIT Palakkad</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Subject Expert (Hardware Security)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">5</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Mr. Manu Zacharia</td>
-                <td className="py-3 px-4 text-[#4A384F]">President, Cyber Security Association of India &amp; Advisor to Kerala Police</td>
-                <td className="py-3 px-4 text-[#4A384F]">Industry &amp; Law Enforcement Expert</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">5</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      MZ
+                    </span>
+                    <span>Mr. Manu Zacharia</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">President, Cyber Security Association of India &amp; Advisor to Kerala Police</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Industry &amp; Law Enforcement Expert</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">6</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Mr. Sujith Somarajan</td>
-                <td className="py-3 px-4 text-[#4A384F]">Lead Threat Intel Researcher, Palo Alto Networks (Alumnus)</td>
-                <td className="py-3 px-4 text-[#4A384F]">Meritorious Alumnus Representative</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">6</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SS
+                    </span>
+                    <span>Mr. Sujith Somarajan</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Lead Threat Intel Researcher, Palo Alto Networks (Alumnus)</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Meritorious Alumnus Representative</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">7</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Prof. Sreejith R.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Assistant Professor in Cyber Security, JEC</td>
-                <td className="py-3 px-4 text-[#4A384F]">Internal Member (Academics)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">7</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SR
+                    </span>
+                    <span>Prof. Sreejith R.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Assistant Professor in Cyber Security, JEC</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Internal Member (Academics)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">8</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Prof. Reshma K. R.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Assistant Professor in Cyber Security, JEC</td>
-                <td className="py-3 px-4 text-[#4A384F]">Internal Member (Member Secretary)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">8</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      RR
+                    </span>
+                    <span>Prof. Reshma K. R.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Assistant Professor in Cyber Security, JEC</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Internal Member (Member Secretary)</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      {/* Key Responsibilities & Resolutions */}
+      {/* 3. Bottom Two Cards Grid: Statutory Functions & Minutes & Key Resolutions */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-6 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm space-y-3">
-          <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#28052B] flex items-center gap-2">
-            <CheckCircle2 className="w-5 h-5 text-[#C79628]" />
-            Key Mandates of Cyber Security BOS
-          </h4>
-          <ul className="text-xs text-[#4A384F] space-y-2 leading-relaxed">
-            <li>• Formulating and ratifying the Scheme 2024 Autonomous B.Tech Cyber Security curriculum.</li>
-            <li>• Structuring hands-on Offensive Security, Malware Reverse Engineering, and Cloud Threat Hunting labs.</li>
-            <li>• Integrating Certified Ethical Hacker (CEH) and CompTIA Security+ syllabus mapping into credit courses.</li>
-            <li>• Establishing mandatory ethical conduct charters, bug bounty disclosures, and air-gapped lab safety protocols.</li>
+        {/* Left Card: Statutory Functions */}
+        <div className="p-6 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-4">
+          <div className="flex items-center gap-3 pb-2">
+            <Layers className="w-5 h-5 text-[#C79628]" />
+            <h4 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B] tracking-tight">
+              Statutory Functions
+            </h4>
+            <div className="flex-1 h-px bg-[#E5D7B7]" />
+          </div>
+
+          <ul className="text-xs text-[#4A384F] space-y-3 leading-relaxed">
+            <li className="flex items-start gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Formulating syllabi for 4-year B.Tech in CSE (Cyber Security) in alignment with NIST CSF &amp; NEP 2020.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Establishing credit structure, Choice Based Credit System (CBCS), and Minor/Honors gradation rules.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Recommending panel of question paper setters and subject experts for autonomous end-semester assessments.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Approving cutting-edge elective courses in Malware Reverse Engineering, DevSecOps, and SOC Analytics.</span>
+            </li>
           </ul>
         </div>
 
-        <div className="p-6 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm space-y-3">
-          <h4 className="font-['Playfair_Display',serif] text-base font-bold text-[#28052B] flex items-center gap-2">
+        {/* Right Card: Minutes & Key Resolutions */}
+        <div className="p-6 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-4">
+          <div className="flex items-center gap-3 pb-2">
             <FileText className="w-5 h-5 text-[#C79628]" />
-            Recent BOS Meeting Minutes
-          </h4>
-          <div className="space-y-2">
-            {[
-              { title: 'BOS Meeting IV Minutes - SOC Simulation & SIEM Syllabus Ratification', date: 'August 02, 2024' },
-              { title: 'BOS Meeting III Minutes - Cloud Security & DevSecOps Course Ratification', date: 'February 16, 2024' },
-              { title: 'BOS Meeting II Minutes - Bug Bounty & Vulnerability Disclosure Norms', date: 'July 19, 2023' },
-            ].map((min, idx) => (
-              <div key={idx} className="flex items-center justify-between p-3 rounded-2xl bg-[#FAF7F2] border border-[#E7D6C1] text-xs">
-                <div>
-                  <div className="font-bold text-[#28052B]">{min.title}</div>
-                  <div className="text-[10px] text-[#7A647F]">{min.date}</div>
+            <h4 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B] tracking-tight">
+              Minutes &amp; Key Resolutions
+            </h4>
+            <div className="flex-1 h-px bg-[#E5D7B7]" />
+          </div>
+
+          <div className="space-y-3">
+            <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E7D6C1] flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-bold text-[#28052B]">
+                  BOS 4th Meeting Resolutions (August 2024)
                 </div>
-                <button className="flex items-center gap-1 text-[#28052B] hover:text-[#C79628] font-bold text-xs cursor-pointer">
-                  <Download className="w-3.5 h-3.5" /> PDF
-                </button>
+                <div className="text-[11px] text-[#4A384F] font-light mt-0.5">
+                  SOC Simulation &amp; SIEM Splunk threat-hunting lab curriculum ratification.
+                </div>
               </div>
-            ))}
+              <span className="px-3 py-1 rounded-full bg-[#E8F5E9] text-[#2E7D32] border border-[#C8E6C9] text-[11px] font-bold flex items-center gap-1 shrink-0">
+                <Check className="w-3 h-3" /> Approved
+              </span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E7D6C1] flex items-center justify-between gap-3">
+              <div>
+                <div className="text-xs font-bold text-[#28052B]">
+                  BOS 3rd Meeting Resolutions (February 2024)
+                </div>
+                <div className="text-[11px] text-[#4A384F] font-light mt-0.5">
+                  Ratification of Cloud Security Architecture, DevSecOps pipeline, and EC-Council CEH alignment.
+                </div>
+              </div>
+              <span className="px-3 py-1 rounded-full bg-[#E8F5E9] text-[#2E7D32] border border-[#C8E6C9] text-[11px] font-bold flex items-center gap-1 shrink-0">
+                <Check className="w-3 h-3" /> Approved
+              </span>
+            </div>
           </div>
         </div>
       </div>

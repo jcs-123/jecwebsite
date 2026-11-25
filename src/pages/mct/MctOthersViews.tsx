@@ -444,8 +444,12 @@ export const MctAssociationPage: React.FC = () => {
   );
 };
 
+interface MctReachProps {
+  onOpenApply?: () => void;
+}
+
 /* 5. Reach Us Page */
-export const MctReachUsPage: React.FC = () => {
+export const MctReachUsPage: React.FC<MctReachProps> = ({ onOpenApply }) => {
   const [submitted, setSubmitted] = useState(false);
 
   return (
@@ -463,9 +467,20 @@ export const MctReachUsPage: React.FC = () => {
               </h2>
             </div>
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            Mechatronics Block Ground Floor
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
+              Mechatronics Block Ground Floor
+            </span>
+            {onOpenApply && (
+              <button
+                onClick={onOpenApply}
+                className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#C79628] to-[#DFC06A] text-[#28052B] font-bold text-xs hover:opacity-90 shadow-xs cursor-pointer flex items-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Apply Online</span>
+              </button>
+            )}
+          </div>
         </div>
 
         <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">

@@ -47,51 +47,43 @@ export const CeEventsPage: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <Calendar className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Campus Happenings</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Department Events
-              </h2>
-            </div>
+      {/* Section Title Block */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm shrink-0">
+            <Calendar className="w-5 h-5" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            Active Academic Calendar
-          </span>
+          <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+            Department Events &amp; Workshops
+          </h2>
+          <div className="flex-1 h-px bg-[#DFC06A]/40 hidden sm:block" />
         </div>
-
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
+        <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
           From the national flagship symposium "CONSTRUX" and 10-day field surveying camps to specialized NDT masterclasses and mega-project industrial visits, the department provides experiential learning outside traditional classrooms.
         </p>
       </div>
 
-      <div className="space-y-4">
+      {/* Events Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {events.map((ev, idx) => (
-          <div key={idx} className="p-6 rounded-3xl bg-white border border-[#E7D6C1] shadow-sm hover:border-[#C79628] transition-all space-y-3">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="flex items-center gap-2.5">
-                <span className="px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/40 text-xs font-mono font-bold text-[#C79628]">
-                  {ev.type}
-                </span>
-                <span className="text-xs text-[#7A647F] flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" /> {ev.date}
+          <div key={idx} className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 space-y-3.5 flex flex-col justify-between hover:border-[#C79628] transition-all">
+            <div className="space-y-2.5">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] uppercase font-bold text-[#C79628]">{ev.type}</span>
+                <span className="px-2 py-0.5 rounded-full bg-[#FAF7F2] border border-[#E7D6C1] text-[#28052B] text-[10px] font-semibold flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-[#C79628]" /> {ev.date}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-[#28052B]">{ev.attendees}</span>
+              <h4 className="font-['Playfair_Display',serif] font-bold text-base text-[#28052B] leading-snug">
+                {ev.title}
+              </h4>
+              <p className="text-xs text-[#4A384F] leading-relaxed font-light">
+                {ev.desc}
+              </p>
             </div>
-
-            <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
-              {ev.title}
-            </h3>
-
-            <p className="text-xs text-[#4A384F] font-light leading-relaxed">
-              {ev.desc}
-            </p>
+            <div className="pt-3 border-t border-[#E7D6C1] text-[11px] text-[#7A647F] font-medium">
+              <strong className="text-[#28052B]">Participation:</strong> {ev.attendees}
+            </div>
           </div>
         ))}
       </div>
@@ -138,43 +130,38 @@ export const CeBulletinPage: React.FC = () => {
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <BookOpen className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Publications & Newsletters</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Department Bulletin
-              </h2>
-            </div>
+      {/* Section Title Block */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm shrink-0">
+            <BookOpen className="w-5 h-5" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            CIVITAS &amp; The Cornerstone
-          </span>
+          <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+            Department Bulletin ("CIVITAS")
+          </h2>
+          <div className="flex-1 h-px bg-[#DFC06A]/40 hidden sm:block" />
         </div>
-
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
+        <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
           "CIVITAS" is the flagship annual technical magazine edited and curated by student editorial boards and faculty advisors, complemented by our quarterly newsletter "The Cornerstone".
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {bulletins.map((b, idx) => (
-          <div key={idx} className="p-6 sm:p-7 rounded-3xl bg-white border border-[#E7D6C1] shadow-sm hover:border-[#C79628] transition-all space-y-4 flex flex-col justify-between">
+          <div key={idx} className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 sm:p-7 space-y-4 flex flex-col justify-between hover:border-[#C79628] transition-all">
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <span className="px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/40 text-[10px] font-bold text-[#C79628]">
+              <div className="flex items-center justify-between pb-2 border-b border-[#E7D6C1]">
+                <span className="text-[10px] uppercase font-bold text-[#C79628]">
                   {b.edition}
                 </span>
-                <span className="text-xs text-[#7A647F]">{b.date}</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#FAF7F2] border border-[#E7D6C1] text-xs font-semibold text-[#28052B]">
+                  {b.date}
+                </span>
               </div>
               <h3 className="font-['Playfair_Display',serif] text-base sm:text-lg font-bold text-[#28052B]">
                 {b.title}
               </h3>
-              <div className="text-xs font-semibold text-[#28052B]">{b.theme}</div>
+              <div className="text-xs font-semibold text-[#C79628]">{b.theme}</div>
               <p className="text-xs text-[#4A384F] font-light leading-relaxed pt-1">
                 {b.highlight}
               </p>
@@ -182,7 +169,10 @@ export const CeBulletinPage: React.FC = () => {
 
             <div className="pt-3 border-t border-[#E7D6C1] flex items-center justify-between">
               <span className="text-[11px] font-mono text-[#7A647F]">PDF Size: {b.size}</span>
-              <button className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#28052B] text-white text-xs font-bold hover:bg-[#3B0840] transition-all cursor-pointer">
+              <button
+                onClick={() => alert(`Downloading ${b.title}`)}
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-[#28052B] text-white text-xs font-bold hover:bg-[#3B0840] transition-all cursor-pointer"
+              >
                 <Download className="w-3.5 h-3.5" /> Download Edition
               </button>
             </div>
@@ -196,63 +186,47 @@ export const CeBulletinPage: React.FC = () => {
 /* 3. Gallery Page */
 export const CeGalleryPage: React.FC = () => {
   const images = [
-    { title: 'Electronic Total Station Field Survey Practice', category: 'Surveying Fieldwork', date: '2024' },
-    { title: '1000 kN Computerized UTM Steel Tensile Test', category: 'Materials Testing Lab', date: '2024' },
-    { title: 'CONSTRUX Bridge Load Testing Finals', category: 'Technical Fest', date: '2024' },
-    { title: 'Triaxial Shear Testing in Geotechnical Lab', category: 'Soil Mechanics Lab', date: '2023' },
-    { title: 'Cochin Metro Viaduct Industrial Study Visit', category: 'Industrial Visit', date: '2023' },
-    { title: '10-Day Survey Camp Topographic Contouring', category: 'Survey Camp', date: '2023' },
-    { title: 'BIM 3D Model Building Design in CAD Lab', category: 'Computation & CAD', date: '2023' },
-    { title: 'UltraTech Concrete Mix Design Workshop Session', category: 'Industry Workshop', date: '2023' },
+    { title: 'Electronic Total Station Field Survey Practice', category: 'Surveying Fieldwork', src: 'https://images.unsplash.com/photo-1541888946425-d0fbb1861564?q=80&w=600&auto=format&fit=crop' },
+    { title: '1000 kN Computerized UTM Steel Tensile Test', category: 'Materials Testing Lab', src: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=600&auto=format&fit=crop' },
+    { title: 'CONSTRUX Bridge Load Testing Finals', category: 'Technical Fest', src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=600&auto=format&fit=crop' },
+    { title: 'Triaxial Shear Testing in Geotechnical Lab', category: 'Soil Mechanics Lab', src: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop' },
+    { title: 'Cochin Metro Viaduct Industrial Study Visit', category: 'Industrial Visit', src: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop' },
+    { title: 'BIM 3D Model Building Design in CAD Lab', category: 'Computation & CAD', src: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=600&auto=format&fit=crop' },
   ];
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <ImageIcon className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Visual Glimpses</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Gallery
-              </h2>
-            </div>
+      {/* Section Title Block */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm shrink-0">
+            <ImageIcon className="w-5 h-5" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            Moments &amp; Fieldwork
-          </span>
+          <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+            Department Gallery
+          </h2>
+          <div className="flex-1 h-px bg-[#DFC06A]/40 hidden sm:block" />
         </div>
-
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
+        <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
           A visual record of rigorous experimental testing, precision geodetic fieldwork, national tech symposium competitions, and industrial site explorations.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {images.map((img, idx) => (
-          <div key={idx} className="group rounded-3xl overflow-hidden bg-white border border-[#E7D6C1] shadow-sm hover:border-[#C79628] transition-all flex flex-col justify-between">
-            <div className="h-44 bg-gradient-to-br from-[#28052B]/90 via-[#350A3A]/85 to-[#1E0221] p-4 flex flex-col justify-between text-white relative overflow-hidden">
-              <div className="absolute inset-0 bg-[#DFC06A]/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="flex justify-between items-center relative z-10">
-                <span className="px-2.5 py-0.5 rounded-full bg-black/40 backdrop-blur-md text-[10px] font-mono text-[#DFC06A]">
-                  {img.category}
-                </span>
-                <span className="text-[10px] text-white/70">{img.date}</span>
-              </div>
-              <div className="relative z-10 flex items-center justify-center">
-                <Building2 className="w-10 h-10 text-[#DFC06A]/40 group-hover:scale-110 group-hover:text-[#DFC06A] transition-all" />
-              </div>
-              <div className="text-[11px] font-medium text-white/90 line-clamp-2 relative z-10">
-                {img.title}
-              </div>
+          <div key={idx} className="rounded-3xl overflow-hidden border border-[#E7D6C1] bg-white shadow-xs group">
+            <div className="h-48 overflow-hidden bg-slate-100">
+              <img
+                src={img.src}
+                alt={img.title}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            <div className="p-3 bg-white text-center">
-              <span className="text-[11px] font-bold text-[#28052B] group-hover:text-[#C79628] transition-colors">
-                View Full Frame
-              </span>
+            <div className="p-4 flex items-center justify-between">
+              <div>
+                <h4 className="text-xs font-bold text-[#28052B]">{img.title}</h4>
+                <div className="text-[10px] text-[#C79628] font-semibold mt-0.5">{img.category}</div>
+              </div>
             </div>
           </div>
         ))}
@@ -264,54 +238,56 @@ export const CeGalleryPage: React.FC = () => {
 /* 4. Association Page */
 export const CeAssociationPage: React.FC = () => {
   const bearers = [
-    { role: 'Staff Advisor', name: 'Prof. Vincy Verghese', designation: 'Assistant Professor' },
-    { role: 'Student President', name: 'Kevin Paul', designation: 'Final Year B.Tech' },
-    { role: 'Student Secretary', name: 'Devika Suresh', designation: 'Final Year B.Tech' },
-    { role: 'Joint Secretary', name: 'Aaron K. George', designation: 'Third Year B.Tech' },
-    { role: 'Treasurer', name: 'Chris Thomas', designation: 'Final Year B.Tech' },
-    { role: 'Technical Lead', name: 'Sandra Maria', designation: 'Third Year B.Tech' },
+    { role: 'Staff Advisor', name: 'Prof. Vincy Verghese', designation: 'Assistant Professor', initials: 'VV' },
+    { role: 'Student President', name: 'Kevin Paul', designation: 'Final Year B.Tech', initials: 'KP' },
+    { role: 'Student Secretary', name: 'Devika Suresh', designation: 'Final Year B.Tech', initials: 'DS' },
+    { role: 'Joint Secretary', name: 'Aaron K. George', designation: 'Third Year B.Tech', initials: 'AG' },
+    { role: 'Treasurer', name: 'Chris Thomas', designation: 'Final Year B.Tech', initials: 'CT' },
+    { role: 'Technical Lead', name: 'Sandra Maria', designation: 'Third Year B.Tech', initials: 'SM' },
   ];
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <Users className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Professional Chapters</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Civil Engineering Association (CEA) &amp; ICI Student Chapter
-              </h2>
-            </div>
+      {/* Section Title Block */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm shrink-0">
+            <Sparkles className="w-5 h-5" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            CEA &amp; ICI Chapter
-          </span>
+          <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+            Civil Engineering Association (CEA) &amp; ICI Chapter
+          </h2>
+          <div className="flex-1 h-px bg-[#DFC06A]/40 hidden sm:block" />
         </div>
-
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
+        <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
           The Civil Engineering Association (CEA) operates in tandem with the Indian Concrete Institute (ICI) Student Chapter. The association organizes student symposia, software hackathons, guest lectures by infrastructure chief engineers, and community social engineering outreach initiatives.
         </p>
       </div>
 
-      {/* Office Bearers Table / Grid */}
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm space-y-4">
-        <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
-          Executive Office Bearers (2024–2025)
-        </h3>
+      {/* Office Bearers Grid */}
+      <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 sm:p-7 space-y-5">
+        <div className="flex items-center justify-between pb-3 border-b border-[#E7D6C1]">
+          <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
+            CEA Executive Committee
+          </h3>
+          <span className="px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/40 text-xs font-mono font-bold text-[#28052B]">
+            Tenure: 2024–2025
+          </span>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {bearers.map((b, idx) => (
-            <div key={idx} className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E7D6C1] space-y-1">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#28052B] text-white text-[10px] font-bold">
-                {b.role}
-              </span>
-              <div className="font-['Playfair_Display',serif] text-base font-bold text-[#28052B] pt-1">
-                {b.name}
+            <div key={idx} className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E7D6C1] space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-[10px] font-bold text-[#C79628] uppercase">{b.role}</span>
+                <div className="w-7 h-7 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center">
+                  {b.initials}
+                </div>
               </div>
-              <div className="text-xs text-[#7A647F]">{b.designation}</div>
+              <div>
+                <div className="font-bold text-xs text-[#28052B]">{b.name}</div>
+                <div className="text-[11px] text-[#7A647F] mt-0.5">{b.designation}</div>
+              </div>
             </div>
           ))}
         </div>
@@ -319,32 +295,23 @@ export const CeAssociationPage: React.FC = () => {
 
       {/* Flagship Activities */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div className="p-5 rounded-2xl bg-white border border-[#E7D6C1] shadow-xs space-y-2">
-          <div className="font-bold text-[#28052B] text-sm flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#C79628]" />
-            CONSTRUX Tech Fest
-          </div>
-          <p className="text-xs text-[#4A384F] font-light leading-relaxed">
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 space-y-2">
+          <h4 className="font-bold text-sm text-[#28052B]">CONSTRUX Tech Fest</h4>
+          <p className="text-xs text-[#4A384F] leading-relaxed font-light">
             Organizing the annual state-level civil festival featuring concrete casting competitions, CAD drafting, and structural paper symposia.
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-[#E7D6C1] shadow-xs space-y-2">
-          <div className="font-bold text-[#28052B] text-sm flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#C79628]" />
-            Community Outreach &amp; Habitat
-          </div>
-          <p className="text-xs text-[#4A384F] font-light leading-relaxed">
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 space-y-2">
+          <h4 className="font-bold text-sm text-[#28052B]">Community Outreach &amp; Habitat</h4>
+          <p className="text-xs text-[#4A384F] leading-relaxed font-light">
             Partnering with local panchayats to provide free structural stability surveys and low-cost building plans for underprivileged families.
           </p>
         </div>
 
-        <div className="p-5 rounded-2xl bg-white border border-[#E7D6C1] shadow-xs space-y-2">
-          <div className="font-bold text-[#28052B] text-sm flex items-center gap-2">
-            <CheckCircle2 className="w-4 h-4 text-[#C79628]" />
-            Software Masterclasses
-          </div>
-          <p className="text-xs text-[#4A384F] font-light leading-relaxed">
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 space-y-2">
+          <h4 className="font-bold text-sm text-[#28052B]">Software Masterclasses</h4>
+          <p className="text-xs text-[#4A384F] leading-relaxed font-light">
             Conducting weekend peer-learning tutorials on AutoCAD, Revit, SketchUp, Lumion, and STAAD.Pro for junior cohorts.
           </p>
         </div>
@@ -354,128 +321,77 @@ export const CeAssociationPage: React.FC = () => {
 };
 
 /* 5. Reach Us Page */
-interface ReachUsProps {
-  onOpenApply?: () => void;
-}
-
-export const CeReachUsPage: React.FC<ReachUsProps> = ({ onOpenApply }) => {
+export const CeReachUsPage: React.FC<{ onOpenApply?: () => void }> = ({ onOpenApply }) => {
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
+      {/* Section Title Block */}
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <Phone className="w-6 h-6" />
+            <div className="w-10 h-10 rounded-xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm shrink-0">
+              <MessageSquare className="w-5 h-5" />
             </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Connect With The Department</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Reach Us
-              </h2>
-            </div>
+            <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+              Reach the Department of Civil Engineering
+            </h2>
+            <div className="flex-1 h-px bg-[#DFC06A]/40 hidden md:block" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            Civil Engineering Block
-          </span>
+          {onOpenApply && (
+            <button
+              onClick={onOpenApply}
+              className="px-5 py-2.5 rounded-full bg-[#28052B] text-[#DFC06A] hover:bg-[#3B0A40] transition-colors font-bold text-xs shadow-sm cursor-pointer flex items-center gap-2 border border-[#DFC06A]/40"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#DFC06A]" />
+              <span>Admissions Inquiry</span>
+            </button>
+          )}
         </div>
-
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
-          Whether you are a prospective student inquiring about admissions, an industry enterprise requiring NABL-aligned material testing and geotechnical soil investigation, or an academic partner, our departmental secretariat is at your service.
+        <p className="text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
+          Whether you require material testing consultancy, structural audit services, academic admission guidance, or industry internship collaborations, we welcome your inquiries.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Contact Info Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-white border border-[#E7D6C1] shadow-sm space-y-5">
-          <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B] pb-2 border-b border-[#E7D6C1]">
-            Departmental Secretariat
-          </h3>
+      {/* Contact Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 sm:p-7 space-y-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] text-[#DFC06A] flex items-center justify-center">
+            <MapPin className="w-5 h-5" />
+          </div>
+          <h4 className="font-bold text-sm text-[#28052B]">Department Location</h4>
+          <p className="text-xs text-[#4A384F] leading-relaxed font-light">
+            Department of Civil Engineering<br />
+            Ground &amp; 1st Floor, Civil Engineering Block<br />
+            Jyothi Engineering College (Autonomous)<br />
+            Cheruthuruthy, Thrissur, Kerala – 679531
+          </p>
+        </div>
 
-          <div className="space-y-4 text-xs text-[#4A384F]">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-[#C79628] shrink-0 mt-0.5" />
-              <div>
-                <strong className="text-[#28052B] block text-sm">Department of Civil Engineering</strong>
-                Floor 2, Civil Engineering Block (South Wing),<br />
-                Jyothi Engineering College (Autonomous),<br />
-                Jyothi Hills, Panjal Road, Vettikkattiri P.O., Cheruthuruthy, Thrissur - 679531, Kerala, India.
-              </div>
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 sm:p-7 space-y-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] text-[#DFC06A] flex items-center justify-center">
+            <Mail className="w-5 h-5" />
+          </div>
+          <h4 className="font-bold text-sm text-[#28052B]">Email &amp; Direct Extensions</h4>
+          <div className="text-xs text-[#4A384F] space-y-2 font-light">
+            <div>
+              <div className="text-[10px] text-[#C79628] font-bold uppercase">HOD Email:</div>
+              <a href="mailto:jaisonmathew@jecc.ac.in" className="hover:underline text-[#28052B] font-semibold">jaisonmathew@jecc.ac.in</a>
             </div>
-
-            <div className="flex items-center gap-3">
-              <Mail className="w-5 h-5 text-[#C79628] shrink-0" />
-              <div>
-                <strong className="text-[#28052B] block">Official Email</strong>
-                <a href="mailto:ce@jecc.ac.in" className="text-[#28052B] hover:text-[#C79628] font-mono">
-                  ce@jecc.ac.in
-                </a>{' / '}
-                <a href="mailto:jaisonmathew@jecc.ac.in" className="text-[#28052B] hover:text-[#C79628] font-mono">
-                  hodce@jecc.ac.in
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Phone className="w-5 h-5 text-[#C79628] shrink-0" />
-              <div>
-                <strong className="text-[#28052B] block">Telephone &amp; Extensions</strong>
-                <span>+91 4884 259000 (Office PBX)</span><br />
-                <span className="text-[#7A647F]">HOD Desk: Ext. 210 • Lab Testing Cell: Ext. 215</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Clock className="w-5 h-5 text-[#C79628] shrink-0" />
-              <div>
-                <strong className="text-[#28052B] block">Visiting &amp; Consultation Hours</strong>
-                <span>Monday to Friday: 9:00 AM – 4:30 PM • Saturday: 9:00 AM – 1:00 PM</span>
-              </div>
+            <div>
+              <div className="text-[10px] text-[#C79628] font-bold uppercase">Testing &amp; Consultancy Cell:</div>
+              <a href="mailto:ceconsultancy@jecc.ac.in" className="hover:underline text-[#28052B] font-semibold">ceconsultancy@jecc.ac.in</a>
             </div>
           </div>
         </div>
 
-        {/* Action Panel: Material Testing & Admissions */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#28052B] to-[#3B0840] text-white shadow-sm space-y-6 flex flex-col justify-between">
-          <div className="space-y-4">
-            <span className="px-3 py-1 rounded-full bg-white/10 text-xs font-mono font-bold text-[#DFC06A] border border-white/15">
-              Testing &amp; Admissions Desk
-            </span>
-
-            <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-white">
-              Consultancy &amp; Admission Enquiries
-            </h3>
-
-            <p className="text-xs text-white/80 font-light leading-relaxed">
-              For testing requisitions regarding concrete compressive strength, steel tensile properties, soil plate load and bearing tests, or admissions to B.Tech Civil Engineering under Autonomous Merit and Management quotas:
-            </p>
-
-            <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs space-y-2">
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#DFC06A]" />
-                <span>Authorized Government &amp; PWD Structural Testing Center</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#DFC06A]" />
-                <span>Admissions Helpline: +91 95269 24455 / +91 95269 34455</span>
-              </div>
-            </div>
+        <div className="bg-white rounded-3xl border border-[#E7D6C1] shadow-xs p-6 sm:p-7 space-y-3.5">
+          <div className="w-10 h-10 rounded-xl bg-[#28052B] text-[#DFC06A] flex items-center justify-center">
+            <Phone className="w-5 h-5" />
           </div>
-
-          <div className="pt-2 flex flex-wrap gap-3">
-            {onOpenApply && (
-              <button
-                onClick={onOpenApply}
-                className="px-6 py-2.5 rounded-full bg-[#DFC06A] text-[#28052B] font-bold text-xs hover:bg-[#F3CF7A] transition-all cursor-pointer shadow-md"
-              >
-                Apply for B.Tech Admission
-              </button>
-            )}
-            <a
-              href="mailto:ce@jecc.ac.in?subject=Material Testing Inquiry"
-              className="px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-bold text-xs hover:bg-white/20 transition-all cursor-pointer inline-flex items-center gap-1.5"
-            >
-              Book Lab Testing <ArrowRight className="w-3.5 h-3.5" />
-            </a>
+          <h4 className="font-bold text-sm text-[#28052B]">Telephones &amp; Visiting Hours</h4>
+          <div className="text-xs text-[#4A384F] space-y-1.5 font-light">
+            <div>• College EPABX: <strong className="text-[#28052B] font-semibold">+91 4884 259000</strong> (Ext. 210)</div>
+            <div>• Testing Cell Direct: <strong className="text-[#28052B] font-semibold">+91 4884 259015</strong></div>
+            <div>• Working Hours: Monday – Friday, 9:00 AM – 4:30 PM</div>
           </div>
         </div>
       </div>

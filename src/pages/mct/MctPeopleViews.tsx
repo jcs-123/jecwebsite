@@ -3,127 +3,254 @@ import {
   ShieldCheck, Users, GraduationCap, Award, Mail, Phone,
   MapPin, CheckCircle2, Download, Search, Briefcase, Star,
   BookOpen, Compass, School, Sparkles, FileText, Bot, Cpu,
-  Cog, Eye, Activity, CircuitBoard, Gauge
+  Cog, Eye, Activity, CircuitBoard, Gauge, Layers, Check
 } from 'lucide-react';
 
-/* 1. BOS (Board of Studies) Page */
+/* 1. BOS (Board of Studies) Page - Matching Institutional Theme */
 export const MctBOSPage: React.FC = () => {
   return (
-    <div className="space-y-8 animate-fade-in">
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-[#E7D6C1]">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-sm">
-              <ShieldCheck className="w-6 h-6" />
-            </div>
-            <div>
-              <span className="text-[10px] uppercase font-bold tracking-widest text-[#C79628]">Statutory Academic Body</span>
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B]">
-                Board of Studies (BOS)
-              </h2>
-            </div>
+    <div className="space-y-7 animate-fade-in">
+      {/* 1. Section Title & Description Block matching screenshot */}
+      <div className="space-y-3">
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#28052B] text-white flex items-center justify-center shrink-0 shadow-xs">
+            <Users className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
-            UGC Autonomous Board
-          </span>
+          <div className="flex-1 flex items-center gap-4">
+            <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold text-[#28052B] tracking-tight">
+              Board of Studies (BOS)
+            </h2>
+            <div className="flex-1 h-px bg-[#E5D7B7] hidden sm:block" />
+          </div>
         </div>
 
-        <p className="mt-4 text-xs sm:text-sm text-[#4A384F] leading-relaxed font-light">
-          The Board of Studies (BOS) for Mechatronics Engineering oversees the autonomous academic curriculum synthesizing mechanical precision, electronics, control systems, and artificial intelligence. The board convenes periodically to benchmark courses against IEEE Robotics &amp; Automation Society (RAS) guidelines and global Industry 4.0 mandates, encompassing Industrial Manipulators, Autonomous Mobile Robots (AMRs), Robot Operating System (ROS 2), PLC/SCADA Automation, and Machine Vision.
+        <p className="text-xs sm:text-[13px] text-[#4A384F] leading-relaxed font-light pl-0 sm:pl-16">
+          The Board of Studies (BOS) for Mechatronics Engineering is the statutory governance body established under the UGC autonomous regulations and approved by the Academic Council. It is responsible for framing curriculum schemes, designing semester syllabi, introducing emerging robotics and cyber-physical technologies, and validating continuous evaluation frameworks.
         </p>
       </div>
 
-      {/* BOS Committee Table */}
-      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm space-y-5">
-        <div className="flex items-center justify-between pb-3 border-b border-[#E7D6C1]">
-          <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
+      {/* 2. BOS Committee Members Table Card */}
+      <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-5">
+        <div className="flex items-center justify-between pb-2">
+          <h3 className="font-['Playfair_Display',serif] text-xl font-bold text-[#28052B]">
             BOS Committee Members
           </h3>
-          <span className="text-xs text-[#7A647F] font-medium">Tenure: 2024–2027</span>
+          <span className="px-4 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E5D7B7] text-xs font-semibold text-[#28052B]">
+            Tenure: 2024–2027
+          </span>
         </div>
 
-        <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs border border-[#E7D6C1] rounded-2xl overflow-hidden">
+        <div className="overflow-x-auto rounded-2xl border border-[#E7D6C1]/80">
+          <table className="w-full text-left text-xs">
             <thead className="bg-[#28052B] text-white">
               <tr>
-                <th className="py-3 px-4 font-semibold">Sl. No.</th>
-                <th className="py-3 px-4 font-semibold">Member Name</th>
+                <th className="py-3 px-4 font-semibold w-16 text-center">Sl. No.</th>
+                <th className="py-3 px-4 font-semibold">Member</th>
                 <th className="py-3 px-4 font-semibold">Designation &amp; Institution</th>
                 <th className="py-3 px-4 font-semibold">Role in BOS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E7D6C1] bg-[#FAF7F2]/40">
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">1</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Jose P. Therattil</td>
-                <td className="py-3 px-4 text-[#4A384F]">Professor &amp; Head, Dept. of Mechatronics Engineering, JEC</td>
-                <td className="py-3 px-4 font-bold text-[#C79628]">Chairman</td>
+            <tbody className="divide-y divide-[#E7D6C1] bg-white">
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">1</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      JT
+                    </span>
+                    <span>Dr. Jose P. Therattil</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Professor &amp; Head, Dept. of Mechatronics Engineering, JEC</td>
+                <td className="py-3.5 px-4 font-semibold">
+                  <span className="px-4 py-1 rounded-full bg-[#F7EED8] text-[#8C6826] font-bold text-xs inline-block">
+                    Chairman
+                  </span>
+                </td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">2</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Sudheer A. P.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Associate Professor in Robotics, NIT Calicut</td>
-                <td className="py-3 px-4 text-[#4A384F]">University Nominee (KTU)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">2</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SA
+                    </span>
+                    <span>Dr. Sudheer A. P.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Associate Professor in Robotics, NIT Calicut</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">University Nominee (KTU)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">3</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Santhakumar Mohan</td>
-                <td className="py-3 px-4 text-[#4A384F]">Associate Professor in Robotics &amp; Autonomous Systems, IIT Palakkad</td>
-                <td className="py-3 px-4 text-[#4A384F]">Subject Expert (Manipulators &amp; Control)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">3</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      SM
+                    </span>
+                    <span>Dr. Santhakumar Mohan</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Associate Professor in Robotics &amp; Autonomous Systems, IIT Palakkad</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Subject Expert (Manipulators &amp; Control)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">4</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. T. Asokan</td>
-                <td className="py-3 px-4 text-[#4A384F]">Professor in Engineering Design &amp; Robotics, IIT Madras</td>
-                <td className="py-3 px-4 text-[#4A384F]">Subject Expert (Field &amp; Service Robotics)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">4</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      TA
+                    </span>
+                    <span>Dr. T. Asokan</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Professor in Engineering Design &amp; Robotics, IIT Madras</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Subject Expert (Field &amp; Service Robotics)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">5</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Er. Anand K. V.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Head of Industrial Robotics Solutions, Tata Technologies Limited</td>
-                <td className="py-3 px-4 text-[#4A384F]">Industry Representative</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">5</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      AK
+                    </span>
+                    <span>Er. Anand K. V.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Head of Industrial Robotics Solutions, Tata Technologies Limited</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Industry Representative</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">6</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Er. Rajeshwar Rao</td>
-                <td className="py-3 px-4 text-[#4A384F]">Senior Application Director, Festo India Private Limited</td>
-                <td className="py-3 px-4 text-[#4A384F]">Industry Representative (Pneumatics &amp; PLC)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">6</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      RR
+                    </span>
+                    <span>Er. Rajeshwar Rao</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Senior Application Director, Festo India Private Limited</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Industry Representative (Pneumatics &amp; PLC)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">7</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Er. Joel George</td>
-                <td className="py-3 px-4 text-[#4A384F]">Lead Roboticist, ABB Robotics / Ex-KUKA Robotics (Alumnus)</td>
-                <td className="py-3 px-4 text-[#4A384F]">Meritorious Alumnus Representative</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">7</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      JG
+                    </span>
+                    <span>Er. Joel George</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Lead Roboticist, ABB Robotics / Ex-KUKA Robotics (Alumnus)</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Meritorious Alumnus Representative</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">8</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Dr. Jarin T.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Professor in Electrical &amp; Embedded Systems, JEC</td>
-                <td className="py-3 px-4 text-[#4A384F]">Internal Member (Sensors &amp; Drives)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">8</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      JT
+                    </span>
+                    <span>Dr. Jarin T.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Professor in Electrical &amp; Embedded Systems, JEC</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Internal Member (Sensors &amp; Drives)</td>
               </tr>
-              <tr className="hover:bg-[#FAF7F2]">
-                <td className="py-3 px-4 font-bold text-[#28052B]">9</td>
-                <td className="py-3 px-4 font-bold text-[#28052B]">Prof. Melvinraj C. R.</td>
-                <td className="py-3 px-4 text-[#4A384F]">Associate Professor in Mechatronics, JEC</td>
-                <td className="py-3 px-4 text-[#4A384F]">Internal Member (Robotics In-Charge)</td>
+              <tr className="hover:bg-[#FAF7F2]/60 transition-colors">
+                <td className="py-3.5 px-4 font-semibold text-[#28052B] text-center">9</td>
+                <td className="py-3.5 px-4 font-bold text-[#28052B]">
+                  <div className="flex items-center gap-3">
+                    <span className="w-8 h-8 rounded-full bg-[#F5EEDB] text-[#7A5B28] font-bold text-xs flex items-center justify-center shrink-0">
+                      MR
+                    </span>
+                    <span>Prof. Melvinraj C. R.</span>
+                  </div>
+                </td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Associate Professor in Mechatronics, JEC</td>
+                <td className="py-3.5 px-4 text-[#4A384F]">Internal Member (Robotics In-Charge)</td>
               </tr>
             </tbody>
           </table>
         </div>
+      </div>
 
-        {/* BOS Mandate */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#E7D6C1]">
-          <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#DFC06A]/30">
-            <h4 className="font-bold text-xs text-[#28052B] mb-1">Robotics &amp; ROS 2 Integration</h4>
-            <p className="text-[11px] text-[#4A384F]">Every semester embeds hands-on kinematics, SLAM mapping, and Gazebo 3D simulation with 6-DOF industrial robot arms.</p>
+      {/* 3. Statutory Functions and Minutes & Key Resolutions Cards */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Statutory Functions Card */}
+        <div className="p-6 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-4">
+          <div className="flex items-center gap-3 pb-2 border-b border-[#FAF7F2]">
+            <div className="w-9 h-9 rounded-xl bg-[#FAF7F2] text-[#28052B] flex items-center justify-center border border-[#E5D7B7]">
+              <Layers className="w-4 h-4 text-[#C79628]" />
+            </div>
+            <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
+              Statutory Functions
+            </h3>
           </div>
-          <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#DFC06A]/30">
-            <h4 className="font-bold text-xs text-[#28052B] mb-1">Industry 4.0 &amp; Digital Twin</h4>
-            <p className="text-[11px] text-[#4A384F]">Complete hardware modules on Siemens S7-1200, Festo modular electro-pneumatics, and OPC-UA cyber-physical networking.</p>
+
+          <ul className="space-y-3 text-xs text-[#4A384F] leading-relaxed">
+            <li className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Formulating syllabi for 4-year B.Tech in Mechatronics Engineering in alignment with NEP 2020 and IEEE RAS guidelines.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Establishing credit structure, Choice Based Credit System (CBCS), and Autonomous Minor/Honours in AMR &amp; Vision AI.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Recommending panels of question paper setters and external subject experts for autonomous end-semester practical assessments.</span>
+            </li>
+            <li className="flex items-start gap-2.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C79628] shrink-0 mt-1.5" />
+              <span>Approving cutting-edge experiential labs in ROS 2 Humble, KUKA industrial arms, Festo CPX pneumatic modules, and machine vision.</span>
+            </li>
+          </ul>
+        </div>
+
+        {/* Minutes & Key Resolutions Card */}
+        <div className="p-6 sm:p-7 bg-white rounded-3xl border border-[#E7D6C1] shadow-xs space-y-4">
+          <div className="flex items-center gap-3 pb-2 border-b border-[#FAF7F2]">
+            <div className="w-9 h-9 rounded-xl bg-[#FAF7F2] text-[#28052B] flex items-center justify-center border border-[#E5D7B7]">
+              <FileText className="w-4 h-4 text-[#C79628]" />
+            </div>
+            <h3 className="font-['Playfair_Display',serif] text-lg font-bold text-[#28052B]">
+              Minutes &amp; Key Resolutions
+            </h3>
           </div>
-          <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#DFC06A]/30">
-            <h4 className="font-bold text-xs text-[#28052B] mb-1">Honours &amp; Minors</h4>
-            <p className="text-[11px] text-[#4A384F]">Autonomous degree minors in 'Autonomous Mobile Robots (AMR)' and 'Industrial IoT &amp; Machine Vision'.</p>
+
+          <div className="space-y-3">
+            <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5D7B7] space-y-1.5">
+              <div className="flex items-center justify-between">
+                <h4 className="font-bold text-xs text-[#28052B]">
+                  BOS 6th Meeting Resolutions (July 2024)
+                </h4>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#EAF5EA] text-[#2E7D32] font-bold text-[10px] flex items-center gap-1 border border-[#C8E6C9]">
+                  <Check className="w-3 h-3" />
+                  Approved
+                </span>
+              </div>
+              <p className="text-[11px] text-[#5A455F] leading-relaxed">
+                Ratification of 2024 autonomous curriculum scheme incorporating ROS 2 robotics stack and deep learning machine vision courses.
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5D7B7] space-y-1.5">
+              <div className="flex items-center justify-between">
+                <h4 className="font-bold text-xs text-[#28052B]">
+                  BOS 5th Meeting Resolutions (December 2023)
+                </h4>
+                <span className="px-2.5 py-0.5 rounded-full bg-[#EAF5EA] text-[#2E7D32] font-bold text-[10px] flex items-center gap-1 border border-[#C8E6C9]">
+                  <Check className="w-3 h-3" />
+                  Approved
+                </span>
+              </div>
+              <p className="text-[11px] text-[#5A455F] leading-relaxed">
+                Introduction of KUKA 6-axis industrial robot lab certification and joint training credits with Tata Technologies IIIC center.
+              </p>
+            </div>
           </div>
         </div>
       </div>

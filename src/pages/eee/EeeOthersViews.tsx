@@ -445,7 +445,7 @@ export const EeeAssociationPage: React.FC = () => {
 };
 
 /* 5. Reach Us Page */
-export const EeeReachUsPage: React.FC = () => {
+export const EeeReachUsPage: React.FC<{ onOpenApply?: () => void }> = ({ onOpenApply }) => {
   const [submitted, setSubmitted] = useState(false);
 
   return (

@@ -5,7 +5,6 @@ import {
   Download, ExternalLink, FileText, MapPin, Laptop, Briefcase,
   Layers, ArrowRight, ShieldCheck, UserCheck, Compass, Terminal, Server
 } from 'lucide-react';
-import { CseDepartmentSubNav, CseTabId } from '../components/CseDepartmentSubNav';
 
 // Subpage Views for Computer Science & Engineering
 import {
@@ -41,6 +40,8 @@ interface Props {
   onNavigate: (page: string, subId?: string) => void;
   onOpenApply: () => void;
 }
+
+export type CseTabId = 'people' | 'academics' | 'others';
 
 export type CsePeopleSectionId =
   | 'bos'
@@ -120,110 +121,79 @@ export const CseDepartmentPage: React.FC<Props> = ({ subSection, onNavigate, onO
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A]">
-      {/* 1. Institutional Top Brand Header */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-1">
-        <div className="flex flex-wrap items-center justify-between gap-4 py-3 border-b border-[#E7D6C1]/70">
+      {/* 1. Institutional Brand Strip with Category Selectors matching screenshot */}
+      <section className="bg-[#FAF7F2] border-b border-[#E8DFC8]/80 py-3.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#28052B] text-[#DFC06A] flex items-center justify-center font-bold text-lg shadow-sm border border-[#DFC06A]/40">
-              <Code2 className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-full bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-md ring-2 ring-[#DFC06A]/40 shrink-0">
+              <span className="font-['Playfair_Display',serif] font-bold text-lg">J</span>
             </div>
             <div>
-              <h1 className="font-['Playfair_Display',serif] text-xl sm:text-2xl font-bold text-[#28052B] tracking-tight">
-                Jyothi Engineering College
-              </h1>
-              <div className="text-[10px] sm:text-xs font-semibold tracking-widest text-[#7A647F] uppercase">
-                ( A U T O N O M O U S )
-              </div>
-            </div>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-3 text-xs italic font-serif text-[#C79628]">
-            <span className="w-10 h-px bg-[#DFC06A]" />
-            <span>Excellence. Integrity. Trust.</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Top Category Pill Tabs Bar (People, Academics, Others) */}
-      <CseDepartmentSubNav activeTab={activeTab} onSelectTab={handleTabChange} />
-
-      {/* 3. Hero Header Section for Computer Science & Engineering */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-5">
-        <div className="relative rounded-3xl bg-gradient-to-br from-[#28052B] via-[#350A3A] to-[#1E0221] text-white p-6 sm:p-9 lg:p-10 overflow-hidden shadow-xl border border-[#DFC06A]/40">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#DFC06A]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-10 right-20 w-80 h-80 bg-purple-600/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-[#F3CF7A] font-semibold">
-                <Terminal className="w-4 h-4 text-[#DFC06A]" />
-                <span>
-                  {activeTab === 'people' && 'Computer Science & Engineering • Algorithmic Thinkers & Industry Architects'}
-                  {activeTab === 'academics' && 'Computer Science & Engineering • Autonomous CBCS, Cloud & GPU Clusters'}
-                  {activeTab === 'others' && 'Computer Science & Engineering • HACK-JEC 24-Hr Hackathons & CSESA'}
+              <div className="flex items-center gap-2">
+                <span className="font-['Playfair_Display',serif] text-base sm:text-lg font-bold text-[#28052B] tracking-tight">
+                  Jyothi Engineering College
+                </span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#8A704C] bg-[#EFE7D8] px-2 py-0.5 rounded-full">
+                  Autonomous
                 </span>
               </div>
+              <div className="text-xs text-[#6B5E51] font-medium">
+                Department of Computer Science &amp; Engineering
+              </div>
+            </div>
+          </div>
 
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
-                {activeTab === 'people' && (
-                  <>Visionary <span className="italic text-[#DFC06A]">Computer Scientists</span>, Mentors &amp; Fellows</>
-                )}
-                {activeTab === 'academics' && (
-                  <>Cutting-Edge <span className="italic text-[#DFC06A]">Computing Curricula</span>, Labs &amp; Placements</>
-                )}
-                {activeTab === 'others' && (
-                  <>Dynamic <span className="italic text-[#DFC06A]">Codeathons, Bulletins</span> &amp; Chapters</>
-                )}
-              </h2>
-
-              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-light max-w-2xl">
-                Empowering the next generation of software innovators, cloud architects, and artificial intelligence researchers to build transformative digital solutions for the global tech economy.
-              </p>
+          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            {/* Top 3 Main Category Tabs: People | Academics | Others */}
+            <div className="inline-flex p-1 rounded-full bg-[#EFE8DA] border border-[#E0D4C0] shadow-inner text-xs font-semibold">
+              {[
+                { id: 'people', label: 'People' },
+                { id: 'academics', label: 'Academics' },
+                { id: 'others', label: 'Others' },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id as CseTabId)}
+                  className={`px-5 py-2 rounded-full transition-all cursor-pointer ${
+                    activeTab === tab.id
+                      ? 'bg-[#28052B] text-white shadow-sm font-bold'
+                      : 'text-[#5B4F43] hover:text-[#28052B] hover:bg-white/60'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
 
-            <div className="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 space-y-3">
-              <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">180</div>
-                  <div className="text-[10px] text-white/70">Seats Intake</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">24.5 LPA</div>
-                  <div className="text-[10px] text-white/70">Highest Package</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">96.4%</div>
-                  <div className="text-[10px] text-white/70">Placements</div>
-                </div>
-              </div>
-              <div className="text-[10.5px] text-white/70 text-center font-mono">
-                NBA Tier-1 Accredited • AWS &amp; Red Hat Academy • Nvidia GPU Lab
-              </div>
+            <div className="hidden lg:flex items-center gap-2 text-xs italic font-serif text-[#C79628] pl-2 border-l border-[#DFC06A]/40">
+              <span className="w-6 h-px bg-[#DFC06A]" />
+              <span>Excellence. Integrity. Trust.</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. MAIN BODY CONTAINER */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {/* 2. Secondary Sub-Navigation Bar matching exact pill capsules in screenshot */}
+      <section className="bg-white/80 backdrop-blur-xs border-b border-[#EADFC7] sticky top-16 z-30 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 shrink-0 pr-3 border-r border-[#DFC06A]/50">
+            <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#28052B]">
+              {activeTab === 'people' && 'People'}
+              {activeTab === 'academics' && 'Academics'}
+              {activeTab === 'others' && 'Others'}
+            </span>
+          </div>
 
-        {/* ----------------- SECTION 1: PEOPLE TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'people' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for People (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <Users className="w-4 h-4 text-[#C79628]" />
-                <span>People Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+          <div className="flex items-center gap-2 flex-nowrap">
+            {activeTab === 'people' && (
+              <>
                 {[
                   { id: 'bos', label: 'BOS' },
-                  { id: 'advisory-board', label: 'Department Advisory Board' },
-                  { id: 'faculty', label: 'Faculty Members' },
-                  { id: 'non-teaching', label: 'Non Teaching Staff' },
-                  { id: 'adjunct-faculty', label: 'Adjunct Faculty' },
-                  { id: 'students', label: 'Student List' },
+                  { id: 'advisory-board', label: 'Department Advisory board' },
+                  { id: 'faculty', label: 'Faculty members' },
+                  { id: 'non-teaching', label: 'Non teaching staff' },
+                  { id: 'adjunct-faculty', label: 'Adjunct faculty' },
+                  { id: 'students', label: 'Student list' },
                   { id: 'alumni', label: 'Alumni' },
                 ].map(item => {
                   const isActive = peopleSection === item.id;
@@ -231,125 +201,189 @@ export const CseDepartmentPage: React.FC<Props> = ({ subSection, onNavigate, onO
                     <button
                       key={item.id}
                       onClick={() => handleSelectPeopleSection(item.id as CsePeopleSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
-              </div>
-            </div>
+              </>
+            )}
 
-            {/* Separate Page Views for People */}
-            <div className="pt-1">
-              {peopleSection === 'bos' && <CseBOSPage />}
-              {peopleSection === 'advisory-board' && <CseAdvisoryBoardPage />}
-              {peopleSection === 'faculty' && <CseFacultyPage />}
-              {peopleSection === 'non-teaching' && <CseNonTeachingPage />}
-              {peopleSection === 'adjunct-faculty' && <CseAdjunctFacultyPage />}
-              {peopleSection === 'students' && <CseStudentListPage />}
-              {peopleSection === 'alumni' && <CseAlumniPage />}
-            </div>
-          </div>
-        )}
-
-        {/* ----------------- SECTION 2: ACADEMICS TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'academics' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for Academics (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <GraduationCap className="w-4 h-4 text-[#C79628]" />
-                <span>Academics Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+            {activeTab === 'academics' && (
+              <>
                 {[
-                  { id: 'course-btech', label: 'Course B.Tech' },
-                  { id: 'career-placement', label: 'Career & Placement' },
+                  { id: 'course-btech', label: 'Course (B.Tech)' },
+                  { id: 'career-placement', label: 'Career and placement' },
                   { id: 'facilities', label: 'Facilities' },
-                  { id: 'industry-tieup', label: 'Industry Tie-up' },
+                  { id: 'industry-tieup', label: 'Industry tie-up' },
                   { id: 'achievements', label: 'Achievements' },
                   { id: 'research', label: 'Research' },
-                  { id: 'syllabus', label: 'Syllabus and Curriculum' },
+                  { id: 'syllabus', label: 'Syllabus and curriculum' },
                 ].map(item => {
                   const isActive = academicsSection === item.id;
                   return (
                     <button
                       key={item.id}
                       onClick={() => handleSelectAcademicsSection(item.id as CseAcademicsSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
-              </div>
-            </div>
+              </>
+            )}
 
-            {/* Separate Page Views for Academics */}
-            <div className="pt-1">
-              {academicsSection === 'course-btech' && <CseCourseBtechPage />}
-              {academicsSection === 'career-placement' && <CseCareerPlacementPage />}
-              {academicsSection === 'facilities' && <CseFacilitiesPage />}
-              {academicsSection === 'industry-tieup' && <CseIndustryTieupPage />}
-              {academicsSection === 'achievements' && <CseAchievementsPage />}
-              {academicsSection === 'research' && <CseResearchPage />}
-              {academicsSection === 'syllabus' && <CseSyllabusPage />}
-            </div>
-          </div>
-        )}
-
-        {/* ----------------- SECTION 3: OTHERS TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'others' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for Others (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <Sparkles className="w-4 h-4 text-[#C79628]" />
-                <span>Others Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+            {activeTab === 'others' && (
+              <>
                 {[
-                  { id: 'events', label: 'Department Events' },
-                  { id: 'bulletin', label: 'Department Bulletin' },
+                  { id: 'events', label: 'Department events' },
+                  { id: 'bulletin', label: 'Department bulletin' },
                   { id: 'gallery', label: 'Gallery' },
                   { id: 'association', label: 'Association' },
-                  { id: 'reach-us', label: 'Reach Us' },
+                  { id: 'reach-us', label: 'Reach us' },
                 ].map(item => {
                   const isActive = othersSection === item.id;
                   return (
                     <button
                       key={item.id}
                       onClick={() => handleSelectOthersSection(item.id as CseOthersSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Hero Header Section (Deep Plum Gradient + CSE Computing Photo + Curved Gold SVG) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-6">
+        <div className="relative rounded-3xl bg-gradient-to-r from-[#28052B] via-[#350A3A] to-[#250328] text-white overflow-hidden shadow-xl border border-[#DFC06A]/30">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[260px] sm:min-h-[290px]">
+            {/* Left Column: Heading & Lead */}
+            <div className="lg:col-span-6 p-6 sm:p-9 lg:p-10 flex flex-col justify-center space-y-3 z-10">
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#DFC06A]">
+                <span className="w-5 h-px bg-[#DFC06A]" />
+                <span>Department of Computer Science &amp; Engineering</span>
               </div>
+
+              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+                {activeTab === 'people' && (
+                  <>
+                    Distinguished Faculty,<br />
+                    <span className="italic text-[#DFC06A] font-normal">Mentors &amp; Computer Scientists</span>
+                  </>
+                )}
+                {activeTab === 'academics' && (
+                  <>
+                    Autonomous Computing Schemes,<br />
+                    <span className="italic text-[#DFC06A] font-normal">NVIDIA GPU Clusters &amp; Placements</span>
+                  </>
+                )}
+                {activeTab === 'others' && (
+                  <>
+                    HACK-JEC Hackathons,<br />
+                    <span className="italic text-[#DFC06A] font-normal">CSI Chapters &amp; CSESA Nexus</span>
+                  </>
+                )}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-light max-w-xl">
+                Preparing forward-thinking computational innovators in Cloud Architecture, Full Stack Engineering, High-Performance Computing, and Distributed Systems on an autonomous UGC curriculum.
+              </p>
             </div>
 
-            {/* Separate Page Views for Others */}
-            <div className="pt-1">
-              {othersSection === 'events' && <CseEventsPage />}
-              {othersSection === 'bulletin' && <CseBulletinPage />}
-              {othersSection === 'gallery' && <CseGalleryPage />}
-              {othersSection === 'association' && <CseAssociationPage />}
-              {othersSection === 'reach-us' && <CseReachUsPage onOpenApply={onOpenApply} />}
+            {/* Right Column: Computing Photo with Golden Curved Mask */}
+            <div className="lg:col-span-6 relative overflow-hidden min-h-[240px] lg:min-h-full bg-gradient-to-br from-[#28052B] via-[#350A3A] to-[#1E0221] flex items-center justify-center">
+              {/* Subtle Tech Grid Pattern Fallback */}
+              <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#DFC06A_1px,transparent_1px)] [background-size:16px_16px]" />
+
+              {/* Golden Curved Border Accent on the left of photo */}
+              <div className="hidden lg:block absolute inset-y-0 left-0 w-16 z-10 pointer-events-none">
+                <svg viewBox="0 0 100 500" preserveAspectRatio="none" className="w-full h-full text-[#350A3A] fill-current">
+                  <path d="M0,0 L40,0 C10,200 90,300 10,500 L0,500 Z" />
+                </svg>
+                {/* Gold Highlight Line */}
+                <svg viewBox="0 0 100 500" preserveAspectRatio="none" className="absolute inset-0 w-full h-full stroke-[#DFC06A] fill-none stroke-[3]">
+                  <path d="M40,0 C10,200 90,300 10,500" />
+                </svg>
+              </div>
+
+              <img
+                src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1200"
+                alt="Computer Science and Engineering research and computing labs"
+                className="w-full h-full object-cover object-center lg:object-right filter brightness-95"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = '1';
+                    target.src = '/assets/library_hero_students.jpg';
+                  } else if (target.dataset.triedFallback === '1') {
+                    target.dataset.triedFallback = '2';
+                    target.src = 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1200';
+                  }
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent lg:hidden" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. MAIN CONTENT CONTAINER */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+        {/* ----------------- PEOPLE SECTION ----------------- */}
+        {activeTab === 'people' && (
+          <div className="pt-1">
+            {peopleSection === 'bos' && <CseBOSPage />}
+            {peopleSection === 'advisory-board' && <CseAdvisoryBoardPage />}
+            {peopleSection === 'faculty' && <CseFacultyPage />}
+            {peopleSection === 'non-teaching' && <CseNonTeachingPage />}
+            {peopleSection === 'adjunct-faculty' && <CseAdjunctFacultyPage />}
+            {peopleSection === 'students' && <CseStudentListPage />}
+            {peopleSection === 'alumni' && <CseAlumniPage />}
+          </div>
+        )}
+
+        {/* ----------------- ACADEMICS SECTION ----------------- */}
+        {activeTab === 'academics' && (
+          <div className="pt-1">
+            {academicsSection === 'course-btech' && <CseCourseBtechPage onOpenApply={onOpenApply} />}
+            {academicsSection === 'career-placement' && <CseCareerPlacementPage />}
+            {academicsSection === 'facilities' && <CseFacilitiesPage />}
+            {academicsSection === 'industry-tieup' && <CseIndustryTieupPage />}
+            {academicsSection === 'achievements' && <CseAchievementsPage />}
+            {academicsSection === 'research' && <CseResearchPage />}
+            {academicsSection === 'syllabus' && <CseSyllabusPage />}
+          </div>
+        )}
+
+        {/* ----------------- OTHERS SECTION ----------------- */}
+        {activeTab === 'others' && (
+          <div className="pt-1">
+            {othersSection === 'events' && <CseEventsPage />}
+            {othersSection === 'bulletin' && <CseBulletinPage />}
+            {othersSection === 'gallery' && <CseGalleryPage />}
+            {othersSection === 'association' && <CseAssociationPage />}
+            {othersSection === 'reach-us' && <CseReachUsPage onOpenApply={onOpenApply} />}
           </div>
         )}
 

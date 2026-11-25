@@ -6,8 +6,12 @@ import {
   Lightbulb, Compass, Star, Radio, ShieldCheck, CircuitBoard
 } from 'lucide-react';
 
+interface MctCourseProps {
+  onOpenApply?: () => void;
+}
+
 /* 1. Course B.Tech Page */
-export const MctCourseBtechPage: React.FC = () => {
+export const MctCourseBtechPage: React.FC<MctCourseProps> = ({ onOpenApply }) => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
@@ -23,13 +27,22 @@ export const MctCourseBtechPage: React.FC = () => {
               </h2>
             </div>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="px-3.5 py-1.5 rounded-full bg-[#FAF7F2] border border-[#DFC06A]/50 text-xs font-mono font-bold text-[#28052B]">
               Intake: 60 Seats
             </span>
             <span className="px-3.5 py-1.5 rounded-full bg-[#28052B] text-white text-xs font-mono font-bold">
               NBA Accredited Tier-1
             </span>
+            {onOpenApply && (
+              <button
+                onClick={onOpenApply}
+                className="px-4 py-1.5 rounded-full bg-gradient-to-r from-[#C79628] to-[#DFC06A] text-[#28052B] font-bold text-xs hover:opacity-90 shadow-xs cursor-pointer flex items-center gap-1.5"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Apply for B.Tech</span>
+              </button>
+            )}
           </div>
         </div>
 

@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 
 /* 1. Course B.Tech Page */
-export const CyberCourseBtechPage: React.FC = () => {
+export const CyberCourseBtechPage: React.FC<{ onOpenApply?: () => void }> = ({ onOpenApply }) => {
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="p-6 sm:p-8 bg-white rounded-3xl border border-[#E7D6C1] shadow-sm">
@@ -31,6 +31,14 @@ export const CyberCourseBtechPage: React.FC = () => {
             <span className="px-3 py-1 rounded-full bg-[#28052B] text-white text-xs font-mono font-bold">
               Autonomous Tier-1 Program
             </span>
+            {onOpenApply && (
+              <button
+                onClick={onOpenApply}
+                className="px-4 py-1.5 rounded-full bg-[#DFC06A] text-[#28052B] text-xs font-bold hover:bg-[#F3CF7A] transition-all cursor-pointer shadow-xs ml-1"
+              >
+                Apply Online
+              </button>
+            )}
           </div>
         </div>
 

@@ -4,9 +4,8 @@ import {
   Award, Phone, Mail, Calendar, CheckCircle2, ChevronRight,
   Download, ExternalLink, FileText, MapPin, Laptop, Briefcase,
   Layers, ArrowRight, ShieldCheck, UserCheck, Compass, BatteryCharging,
-  Sun, Gauge, Activity, PlugZap, Power
+  Sun, Gauge, Activity, PlugZap, Power, Server
 } from 'lucide-react';
-import { EeeDepartmentSubNav, EeeTabId } from '../components/EeeDepartmentSubNav';
 
 // Subpage Views for Electrical & Electronics Engineering
 import {
@@ -42,6 +41,8 @@ interface Props {
   onNavigate: (page: string, subId?: string) => void;
   onOpenApply: () => void;
 }
+
+export type EeeTabId = 'people' | 'academics' | 'others';
 
 export type EeePeopleSectionId =
   | 'bos'
@@ -121,110 +122,79 @@ export const EeeDepartmentPage: React.FC<Props> = ({ subSection, onNavigate, onO
 
   return (
     <div className="bg-[#FAF7F2] min-h-screen text-[#28052B] pb-24 selection:bg-[#28052B] selection:text-[#F3CF7A]">
-      {/* 1. Institutional Top Brand Header */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-1">
-        <div className="flex flex-wrap items-center justify-between gap-4 py-3 border-b border-[#E7D6C1]/70">
+      {/* 1. Institutional Brand Strip with Category Selectors matching screenshot */}
+      <section className="bg-[#FAF7F2] border-b border-[#E8DFC8]/80 py-3.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-[#28052B] text-[#DFC06A] flex items-center justify-center font-bold text-lg shadow-sm border border-[#DFC06A]/40">
-              <Zap className="w-5 h-5" />
+            <div className="w-10 h-10 rounded-full bg-[#28052B] flex items-center justify-center text-[#DFC06A] shadow-md ring-2 ring-[#DFC06A]/40 shrink-0">
+              <span className="font-['Playfair_Display',serif] font-bold text-lg">J</span>
             </div>
             <div>
-              <h1 className="font-['Playfair_Display',serif] text-xl sm:text-2xl font-bold text-[#28052B] tracking-tight">
-                Jyothi Engineering College
-              </h1>
-              <div className="text-[10px] sm:text-xs font-semibold tracking-widest text-[#7A647F] uppercase">
-                ( A U T O N O M O U S )
-              </div>
-            </div>
-          </div>
-
-          <div className="hidden sm:flex items-center gap-3 text-xs italic font-serif text-[#C79628]">
-            <span className="w-10 h-px bg-[#DFC06A]" />
-            <span>Powering the Green Energy &amp; EV Transition.</span>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Top Category Pill Tabs Bar (People, Academics, Others) */}
-      <EeeDepartmentSubNav activeTab={activeTab} onSelectTab={handleTabChange} />
-
-      {/* 3. Hero Header Section for Electrical & Electronics Engineering */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-3 pb-5">
-        <div className="relative rounded-3xl bg-gradient-to-br from-[#28052B] via-[#350A3A] to-[#1E0221] text-white p-6 sm:p-9 lg:p-10 overflow-hidden shadow-xl border border-[#DFC06A]/40">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-[#DFC06A]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-10 right-20 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-8 space-y-3">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-[#F3CF7A] font-semibold">
-                <Power className="w-4 h-4 text-[#DFC06A]" />
-                <span>
-                  {activeTab === 'people' && 'Electrical & Electronics • Grid Pioneers, EV Architects & Energy Fellows'}
-                  {activeTab === 'academics' && 'Electrical & Electronics • Autonomous B.Tech, EV Drives & 100 kW Solar Microgrid'}
-                  {activeTab === 'others' && 'Electrical & Electronics • DYNA-FEST, CURRENT Bulletin & EEEA / IEEE PES'}
+              <div className="flex items-center gap-2">
+                <span className="font-['Playfair_Display',serif] text-base sm:text-lg font-bold text-[#28052B] tracking-tight">
+                  Jyothi Engineering College
+                </span>
+                <span className="text-[10px] uppercase font-bold tracking-widest text-[#8A704C] bg-[#EFE7D8] px-2 py-0.5 rounded-full">
+                  Autonomous
                 </span>
               </div>
+              <div className="text-xs text-[#6B5E51] font-medium">
+                Department of Electrical &amp; Electronics Engineering
+              </div>
+            </div>
+          </div>
 
-              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
-                {activeTab === 'people' && (
-                  <>Visionary <span className="italic text-[#DFC06A]">Power Engineers</span>, Researchers &amp; Mentors</>
-                )}
-                {activeTab === 'academics' && (
-                  <>Future-Ready <span className="italic text-[#DFC06A]">Clean Energy Curricula</span>, EV Labs &amp; Placements</>
-                )}
-                {activeTab === 'others' && (
-                  <>Dynamic <span className="italic text-[#DFC06A]">DYNA-FEST Symposium, Publications</span> &amp; IEEE Chapters</>
-                )}
-              </h2>
-
-              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-light max-w-2xl">
-                Empowering the future through sustainable electrical engineering: smart grid automation, electric vehicle motor drives, 100 kWp campus solar microgrids, and high-voltage testing.
-              </p>
+          <div className="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            {/* Top 3 Main Category Tabs: People | Academics | Others */}
+            <div className="inline-flex p-1 rounded-full bg-[#EFE8DA] border border-[#E0D4C0] shadow-inner text-xs font-semibold">
+              {[
+                { id: 'people', label: 'People' },
+                { id: 'academics', label: 'Academics' },
+                { id: 'others', label: 'Others' },
+              ].map(tab => (
+                <button
+                  key={tab.id}
+                  onClick={() => handleTabChange(tab.id as EeeTabId)}
+                  className={`px-5 py-2 rounded-full transition-all cursor-pointer ${
+                    activeTab === tab.id
+                      ? 'bg-[#28052B] text-white shadow-sm font-bold'
+                      : 'text-[#5B4F43] hover:text-[#28052B] hover:bg-white/60'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
             </div>
 
-            <div className="lg:col-span-4 bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/15 space-y-3">
-              <div className="grid grid-cols-3 gap-2 text-center">
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">60</div>
-                  <div className="text-[10px] text-white/70">Seats Intake</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">16.5 LPA</div>
-                  <div className="text-[10px] text-white/70">Highest Package</div>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/20 border border-white/5">
-                  <div className="text-xl font-bold text-[#DFC06A]">91.5%</div>
-                  <div className="text-[10px] text-white/70">Placements</div>
-                </div>
-              </div>
-              <div className="text-[10.5px] text-white/70 text-center font-mono">
-                NBA Tier-1 Accredited • 100 kWp Solar Plant • Schneider Electric CoE
-              </div>
+            <div className="hidden lg:flex items-center gap-2 text-xs italic font-serif text-[#C79628] pl-2 border-l border-[#DFC06A]/40">
+              <span className="w-6 h-px bg-[#DFC06A]" />
+              <span>Excellence. Integrity. Trust.</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. MAIN BODY CONTAINER */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      {/* 2. Secondary Sub-Navigation Bar matching exact pill capsules in screenshot */}
+      <section className="bg-white/80 backdrop-blur-xs border-b border-[#EADFC7] sticky top-16 z-30 shadow-2xs">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center gap-4 overflow-x-auto no-scrollbar">
+          <div className="flex items-center gap-2 shrink-0 pr-3 border-r border-[#DFC06A]/50">
+            <span className="font-['Playfair_Display',serif] text-xl font-bold text-[#28052B]">
+              {activeTab === 'people' && 'People'}
+              {activeTab === 'academics' && 'Academics'}
+              {activeTab === 'others' && 'Others'}
+            </span>
+          </div>
 
-        {/* ----------------- SECTION 1: PEOPLE TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'people' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for People (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <Users className="w-4 h-4 text-[#C79628]" />
-                <span>People Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+          <div className="flex items-center gap-2 flex-nowrap">
+            {activeTab === 'people' && (
+              <>
                 {[
                   { id: 'bos', label: 'BOS' },
-                  { id: 'advisory-board', label: 'Department Advisory Board' },
-                  { id: 'faculty', label: 'Faculty Members' },
-                  { id: 'non-teaching', label: 'Non Teaching Staff' },
-                  { id: 'adjunct-faculty', label: 'Adjunct Faculty' },
-                  { id: 'students', label: 'Student List' },
+                  { id: 'advisory-board', label: 'Department Advisory board' },
+                  { id: 'faculty', label: 'Faculty members' },
+                  { id: 'non-teaching', label: 'Non teaching staff' },
+                  { id: 'adjunct-faculty', label: 'Adjunct faculty' },
+                  { id: 'students', label: 'Student list' },
                   { id: 'alumni', label: 'Alumni' },
                 ].map(item => {
                   const isActive = peopleSection === item.id;
@@ -232,161 +202,193 @@ export const EeeDepartmentPage: React.FC<Props> = ({ subSection, onNavigate, onO
                     <button
                       key={item.id}
                       onClick={() => handleSelectPeopleSection(item.id as EeePeopleSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
-              </div>
-            </div>
+              </>
+            )}
 
-            {/* Separate Page Views for People */}
-            <div className="pt-1">
-              {peopleSection === 'bos' && <EeeBOSPage />}
-              {peopleSection === 'advisory-board' && <EeeAdvisoryBoardPage />}
-              {peopleSection === 'faculty' && <EeeFacultyPage />}
-              {peopleSection === 'non-teaching' && <EeeNonTeachingPage />}
-              {peopleSection === 'adjunct-faculty' && <EeeAdjunctFacultyPage />}
-              {peopleSection === 'students' && <EeeStudentListPage />}
-              {peopleSection === 'alumni' && <EeeAlumniPage />}
-            </div>
-          </div>
-        )}
-
-        {/* ----------------- SECTION 2: ACADEMICS TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'academics' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for Academics (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <GraduationCap className="w-4 h-4 text-[#C79628]" />
-                <span>Academics Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+            {activeTab === 'academics' && (
+              <>
                 {[
-                  { id: 'course-btech', label: 'Course B.Tech' },
-                  { id: 'career-placement', label: 'Career & Placement' },
+                  { id: 'course-btech', label: 'Course (B.Tech)' },
+                  { id: 'career-placement', label: 'Career and placement' },
                   { id: 'facilities', label: 'Facilities' },
-                  { id: 'industry-tieup', label: 'Industry Tie-up' },
+                  { id: 'industry-tieup', label: 'Industry tie-up' },
                   { id: 'achievements', label: 'Achievements' },
                   { id: 'research', label: 'Research' },
-                  { id: 'syllabus', label: 'Syllabus & Curriculum' },
+                  { id: 'syllabus', label: 'Syllabus and curriculum' },
                 ].map(item => {
                   const isActive = academicsSection === item.id;
                   return (
                     <button
                       key={item.id}
                       onClick={() => handleSelectAcademicsSection(item.id as EeeAcademicsSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
-              </div>
-            </div>
+              </>
+            )}
 
-            {/* Separate Page Views for Academics */}
-            <div className="pt-1">
-              {academicsSection === 'course-btech' && <EeeCourseBtechPage />}
-              {academicsSection === 'career-placement' && <EeeCareerPlacementPage />}
-              {academicsSection === 'facilities' && <EeeFacilitiesPage />}
-              {academicsSection === 'industry-tieup' && <EeeIndustryTieupPage />}
-              {academicsSection === 'achievements' && <EeeAchievementsPage />}
-              {academicsSection === 'research' && <EeeResearchPage />}
-              {academicsSection === 'syllabus' && <EeeSyllabusPage />}
-            </div>
-          </div>
-        )}
-
-        {/* ----------------- SECTION 3: OTHERS TABS BAR & SEPARATE PAGES ----------------- */}
-        {activeTab === 'others' && (
-          <div className="space-y-6">
-            {/* Horizontal Sub-Navigation Bar for Others (Clean, unnumbered) */}
-            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-white rounded-2xl border border-[#E7D6C1] shadow-xs">
-              <span className="text-xs font-bold text-[#28052B] flex items-center gap-1.5 shrink-0">
-                <Sparkles className="w-4 h-4 text-[#C79628]" />
-                <span>Others Sections:</span>
-              </span>
-              <div className="flex flex-wrap gap-1.5 text-xs">
+            {activeTab === 'others' && (
+              <>
                 {[
-                  { id: 'events', label: 'Department Events' },
-                  { id: 'bulletin', label: 'Department Bulletin' },
+                  { id: 'events', label: 'Department events' },
+                  { id: 'bulletin', label: 'Department bulletin' },
                   { id: 'gallery', label: 'Gallery' },
                   { id: 'association', label: 'Association' },
-                  { id: 'reach-us', label: 'Reach Us' },
+                  { id: 'reach-us', label: 'Reach us' },
                 ].map(item => {
                   const isActive = othersSection === item.id;
                   return (
                     <button
                       key={item.id}
                       onClick={() => handleSelectOthersSection(item.id as EeeOthersSectionId)}
-                      className={`px-3.5 py-1.5 rounded-xl transition-all cursor-pointer text-xs ${
+                      className={`px-5 py-2 rounded-full transition-all cursor-pointer text-xs font-semibold whitespace-nowrap shadow-2xs ${
                         isActive
                           ? 'bg-[#28052B] text-white font-bold border border-[#28052B] shadow-xs'
-                          : 'bg-[#FAF7F2] text-[#28052B] font-medium border border-[#DFC06A]/40 hover:bg-[#28052B] hover:text-[#DFC06A]'
+                          : 'bg-white text-[#28052B] border border-[#E5D7B7] hover:bg-[#FAF7F2] hover:text-[#BD8E36]'
                       }`}
                     >
                       {item.label}
                     </button>
                   );
                 })}
+              </>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Hero Header Section (Deep Plum Gradient + EEE Clean Energy Photo + Curved Gold SVG) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-1 pb-6">
+        <div className="relative rounded-3xl bg-gradient-to-r from-[#28052B] via-[#350A3A] to-[#250328] text-white overflow-hidden shadow-xl border border-[#DFC06A]/30">
+          <div className="grid grid-cols-1 lg:grid-cols-12 items-stretch min-h-[260px] sm:min-h-[290px]">
+            {/* Left Column: Heading & Lead */}
+            <div className="lg:col-span-6 p-6 sm:p-9 lg:p-10 flex flex-col justify-center space-y-3 z-10">
+              <div className="flex items-center gap-2 text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-[#DFC06A]">
+                <span className="w-5 h-px bg-[#DFC06A]" />
+                <span>Department of Electrical &amp; Electronics Engineering</span>
               </div>
+
+              <h2 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white leading-tight">
+                {activeTab === 'people' && (
+                  <>
+                    Distinguished Power Engineers,<br />
+                    <span className="italic text-[#DFC06A] font-normal">Grid Researchers &amp; Mentors</span>
+                  </>
+                )}
+                {activeTab === 'academics' && (
+                  <>
+                    Clean Energy Curricula,<br />
+                    <span className="italic text-[#DFC06A] font-normal">Smart Microgrid &amp; EV Labs</span>
+                  </>
+                )}
+                {activeTab === 'others' && (
+                  <>
+                    DYNA-FEST Tech Fests,<br />
+                    <span className="italic text-[#DFC06A] font-normal">CURRENT Bulletins &amp; IEEE PES</span>
+                  </>
+                )}
+              </h2>
+
+              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-light max-w-xl">
+                Empowering the future through sustainable electrical engineering: smart grid automation, electric vehicle motor drives, 100 kWp campus solar microgrids, and high-voltage testing on an autonomous UGC curriculum.
+              </p>
             </div>
 
-            {/* Separate Page Views for Others */}
-            <div className="pt-1">
-              {othersSection === 'events' && <EeeEventsPage />}
-              {othersSection === 'bulletin' && <EeeBulletinPage />}
-              {othersSection === 'gallery' && <EeeGalleryPage />}
-              {othersSection === 'association' && <EeeAssociationPage />}
-              {othersSection === 'reach-us' && <EeeReachUsPage />}
+            {/* Right Column: Electrical & Electronics Photo with Golden Curved Mask */}
+            <div className="lg:col-span-6 relative overflow-hidden min-h-[240px] lg:min-h-full bg-gradient-to-br from-[#28052B] via-[#350A3A] to-[#1E0221] flex items-center justify-center">
+              {/* Subtle Tech Power Grid Pattern Fallback */}
+              <div className="absolute inset-0 opacity-15 pointer-events-none bg-[radial-gradient(#DFC06A_1px,transparent_1px)] [background-size:16px_16px]" />
+
+              {/* Golden Curved Border Accent on the left of photo */}
+              <div className="hidden lg:block absolute inset-y-0 left-0 w-16 z-10 pointer-events-none">
+                <svg viewBox="0 0 100 500" preserveAspectRatio="none" className="w-full h-full text-[#350A3A] fill-current">
+                  <path d="M0,0 L40,0 C10,200 90,300 10,500 L0,500 Z" />
+                </svg>
+                {/* Gold Highlight Line */}
+                <svg viewBox="0 0 100 500" preserveAspectRatio="none" className="absolute inset-0 w-full h-full stroke-[#DFC06A] fill-none stroke-[3]">
+                  <path d="M40,0 C10,200 90,300 10,500" />
+                </svg>
+              </div>
+
+              <img
+                src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&q=80&w=1200"
+                alt="Electrical and renewable energy power infrastructure"
+                className="w-full h-full object-cover object-center lg:object-right filter brightness-95"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.dataset.triedFallback) {
+                    target.dataset.triedFallback = '1';
+                    target.src = '/assets/library_hero_students.jpg';
+                  } else if (target.dataset.triedFallback === '1') {
+                    target.dataset.triedFallback = '2';
+                    target.src = 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&q=80&w=1200';
+                  }
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent lg:hidden" />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. MAIN CONTENT CONTAINER */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+        {/* ----------------- PEOPLE SECTION ----------------- */}
+        {activeTab === 'people' && (
+          <div className="pt-1">
+            {peopleSection === 'bos' && <EeeBOSPage />}
+            {peopleSection === 'advisory-board' && <EeeAdvisoryBoardPage />}
+            {peopleSection === 'faculty' && <EeeFacultyPage />}
+            {peopleSection === 'non-teaching' && <EeeNonTeachingPage />}
+            {peopleSection === 'adjunct-faculty' && <EeeAdjunctFacultyPage />}
+            {peopleSection === 'students' && <EeeStudentListPage />}
+            {peopleSection === 'alumni' && <EeeAlumniPage />}
+          </div>
+        )}
+
+        {/* ----------------- ACADEMICS SECTION ----------------- */}
+        {activeTab === 'academics' && (
+          <div className="pt-1">
+            {academicsSection === 'course-btech' && <EeeCourseBtechPage onOpenApply={onOpenApply} />}
+            {academicsSection === 'career-placement' && <EeeCareerPlacementPage />}
+            {academicsSection === 'facilities' && <EeeFacilitiesPage />}
+            {academicsSection === 'industry-tieup' && <EeeIndustryTieupPage />}
+            {academicsSection === 'achievements' && <EeeAchievementsPage />}
+            {academicsSection === 'research' && <EeeResearchPage />}
+            {academicsSection === 'syllabus' && <EeeSyllabusPage />}
+          </div>
+        )}
+
+        {/* ----------------- OTHERS SECTION ----------------- */}
+        {activeTab === 'others' && (
+          <div className="pt-1">
+            {othersSection === 'events' && <EeeEventsPage />}
+            {othersSection === 'bulletin' && <EeeBulletinPage />}
+            {othersSection === 'gallery' && <EeeGalleryPage />}
+            {othersSection === 'association' && <EeeAssociationPage />}
+            {othersSection === 'reach-us' && <EeeReachUsPage onOpenApply={onOpenApply} />}
           </div>
         )}
 
       </main>
-
-      {/* 5. Bottom Admissions CTA Strip */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
-        <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-r from-[#28052B] via-[#350A3A] to-[#1E0221] text-white border border-[#DFC06A]/40 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <span className="text-xs uppercase font-bold tracking-widest text-[#DFC06A]">
-              Admissions Open 2024–25
-            </span>
-            <h3 className="font-['Playfair_Display',serif] text-2xl sm:text-3xl font-bold">
-              Join B.Tech in Electrical &amp; Electronics Engineering
-            </h3>
-            <p className="text-xs sm:text-sm text-white/80 max-w-xl font-light">
-              Pioneer the future of electric mobility, renewable microgrids, and high-voltage power networks at Jyothi Engineering College.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3 shrink-0">
-            <button
-              onClick={onOpenApply}
-              className="px-6 py-3 rounded-xl bg-[#DFC06A] text-[#28052B] font-bold text-xs sm:text-sm hover:bg-[#F3CF7A] transition-all cursor-pointer shadow-md"
-            >
-              Apply for Admission
-            </button>
-            <button
-              onClick={() => handleSelectOthersSection('reach-us')}
-              className="px-6 py-3 rounded-xl bg-white/10 text-white border border-white/20 font-bold text-xs sm:text-sm hover:bg-white/20 transition-all cursor-pointer"
-            >
-              Contact EEE Desk
-            </button>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
